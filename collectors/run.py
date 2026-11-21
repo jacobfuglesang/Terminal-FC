@@ -24,7 +24,7 @@ JOBS = {
     "futures": ("Euronext (terminkurve)", lambda c, bf: futures.run(c)),
     "lice": ("BarentsWatch (lus og sykdom)", lambda c, bf: lice.run(c, weeks=26 if bf else 3)),
 }
-GROUPS = {"daily": ["shorts", "feed", "biomass", "futures", "lice"], "all": list(JOBS)}
+GROUPS = {"daily": ["shorts", "biomass", "futures", "lice", "feed"], "all": ["prices", "ssb", "shorts", "biomass", "futures", "lice", "feed"]}
 
 
 def main() -> int:

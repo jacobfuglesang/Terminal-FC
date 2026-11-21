@@ -23,9 +23,9 @@ UA = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) FUGLESANG/1.0", "Accept": "
 
 def _get(url: str) -> str:
     last = None
-    for attempt in range(3):
+    for attempt in range(2):
         try:
-            r = requests.get(url, headers=UA, timeout=(15, 90))
+            r = requests.get(url, headers=UA, timeout=(10, 40))
             r.raise_for_status()
             return r.text
         except requests.RequestException as e:  # noqa: PERF203
