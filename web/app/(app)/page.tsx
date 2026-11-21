@@ -1,13 +1,16 @@
 import Link from "next/link";
 import { Bars, LineChart } from "@/components/Charts";
-import { getQuotes, getSalmon, getStatus } from "@/lib/db";
+import { getDaily, getQuotes, getSalmon, getStatus } from "@/lib/db";
 import { compact, fmt, osloTime, pct, up } from "@/lib/format";
 import { COMPANIES } from "@/lib/menu";
 
 export const dynamic = "force-dynamic";
 
 export default async function Oversikt() {
-  const [quotes, salmon, status] = await Promise.all([getQuotes(), getSalmon(52), getStatus()]);
+  const [quotes, salmon, status, fxDaily] = await Promise.all([getQuotes(), getSalmon(52), getStatus(), getDaily("EURNOK=X", 260)]);
+  const fxFirst = fxDaily[0]?.close;
+  const fxLast = fxDaily[fxDaily.length - 1]?.close;
+  const fxYear = fxFirst && fxLast ? (fxLast / fxFirst - 1) * 100 : null;
   const bySym = Object.fromEntries(quotes.map((q) => [q.symbol, q]));
   const fx = bySym["EURNOK=X"];
   const last = salmon[salmon.length - 1];
@@ -85,6 +88,16 @@ export default async function Oversikt() {
           <LineChart values={salmon.filter((s) => s.fresh_price).map((s) => s.fresh_price as number)} labels={salmon.filter((s) => s.fresh_price).map((s) => `Uke ${s.week} ${s.year}`)} />
         </section>
       </div>
+
+      <section className="panel" aria-labelledby="h-fx">
+        <div className="ph">
+          <h2 id="h-fx">EUR/NOK siste år</h2>
+          <span className="src">
+            Yahoo Finance · endring siste år: <span className={`m ${up(fxYear) ? "upc" : "downc"}`}>{pct(fxYear)}</span> · høyere kurs = svakere krone = bedre laksepris i kroner
+          </span>
+        </div>
+        <LineChart values={fxDaily.map((d) => d.close)} labels={fxDaily.map((d) => d.day)} color="#5BA8FF" height={180} />
+      </section>
 
       <div className="row">
         <section className="panel" style={{ flex: "999 1 520px" }} aria-labelledby="h-uker">
