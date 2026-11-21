@@ -47,6 +47,7 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" = "push" ]; then
             echo "job=all" >> "$GITHUB_OUTPUT"
+            echo "flags=--backfill" >> "$GITHUB_OUTPUT"
           elif [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "job=${{ inputs.job }}" >> "$GITHUB_OUTPUT"
             if [ "${{ inputs.backfill }}" = "true" ]; then echo "flags=--backfill" >> "$GITHUB_OUTPUT"; fi

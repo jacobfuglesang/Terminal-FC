@@ -1,18 +1,13 @@
 import Link from "next/link";
 import { Bars } from "@/components/Charts";
 import TimeChart from "@/components/TimeChart";
+import { weekDate } from "@/lib/dates";
 import { getDaily, getIntraday, getQuotes, getSalmon, getStatus } from "@/lib/db";
 import { compact, fmt, osloTime, pct, up } from "@/lib/format";
 import { COMPANIES } from "@/lib/menu";
 
 export const dynamic = "force-dynamic";
 
-// Onsdagen i ISO-uken (SSB publiserer onsdager)
-function weekDate(year: number, week: number): string {
-  const jan4 = new Date(Date.UTC(year, 0, 4));
-  const monday = new Date(jan4.getTime() - ((jan4.getUTCDay() + 6) % 7) * 86400_000 + (week - 1) * 7 * 86400_000);
-  return new Date(monday.getTime() + 2 * 86400_000).toISOString();
-}
 
 export default async function Oversikt() {
   const [quotes, salmon, status, fxDaily] = await Promise.all([getQuotes(), getSalmon(52), getStatus(), getDaily("EURNOK=X", 260)]);

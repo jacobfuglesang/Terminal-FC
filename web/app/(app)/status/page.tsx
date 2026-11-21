@@ -4,14 +4,14 @@ import { osloTime } from "@/lib/format";
 export const dynamic = "force-dynamic";
 
 const PLAN = [
-  { k: "Yahoo Finance", d: "Kurser for 5 aksjer og EUR/NOK", w: "Hvert 15. min i børstiden", f: 1 },
+  { k: "Yahoo Finance", d: "Kurser for 5 aksjer, EUR/NOK og USD/NOK", w: "Hvert 15. min i børstiden", f: 1 },
   { k: "SSB", d: "Laksepris og eksportmengde (tabell 03024)", w: "Onsdag 08:30 + daglig sjekk", f: 1 },
-  { k: "Fish Pool / Sitagri", d: "SISALMON-indeks", w: "Tirsdag", f: 2 },
-  { k: "Euronext", d: "Terminkurve for laks", w: "Daglig", f: 2 },
-  { k: "Fiskeridirektoratet", d: "Biomasse", w: "Månedlig", f: 2 },
-  { k: "BarentsWatch", d: "Lus og sykdom", w: "Ukentlig", f: 2 },
-  { k: "Finanstilsynet", d: "Shortposisjoner", w: "Daglig", f: 2 },
-  { k: "IMF via FRED", d: "Fôrråvareindeks", w: "Månedlig", f: 2 },
+  { k: "Fish Pool / Sitagri", d: "SISALMON-indeks (krever abonnement, terminkurven brukes i stedet)", w: "Tirsdag", f: 9 },
+  { k: "Euronext", d: "Terminkurve for laks", w: "Daglig", f: 1 },
+  { k: "Fiskeridirektoratet", d: "Biomasse", w: "Månedlig", f: 1 },
+  { k: "BarentsWatch", d: "Lus og sykdom (krever gratis nøkkel)", w: "Daglig sjekk", f: 1 },
+  { k: "Finanstilsynet", d: "Shortposisjoner", w: "Daglig", f: 1 },
+  { k: "IMF via FRED", d: "Fôrråvareindeks", w: "Månedlig", f: 1 },
   { k: "RSS + KI", d: "Nyheter med sammendrag", w: "Hvert 15. min", f: 3 },
   { k: "Selskapenes IR-sider", d: "Rapporter, kalender, konsensus", w: "Ved rapporter", f: 4 },
 ];
@@ -80,7 +80,7 @@ export default async function StatusPage() {
                 <td style={{ textAlign: "left", paddingLeft: 16 }}>{p.d}</td>
                 <td style={{ textAlign: "left", paddingLeft: 16, color: "#A0A7B2" }}>{p.w}</td>
                 <td>
-                  <span className="tag" style={{ background: p.f === 1 ? "#16301F" : "#1E2A3D", color: p.f === 1 ? "#7BE3A6" : "#9CC8FF" }}>{p.f === 1 ? "I drift" : `Fase ${p.f}`}</span>
+                  <span className="tag" style={{ background: p.f === 1 ? "#16301F" : "#1E2A3D", color: p.f === 1 ? "#7BE3A6" : "#9CC8FF" }}>{p.f === 1 ? "I drift" : p.f === 9 ? "Utsatt" : `Fase ${p.f}`}</span>
                 </td>
               </tr>
             ))}

@@ -7,6 +7,8 @@ import csv
 import io
 from datetime import date
 
+import time
+
 import requests
 
 SERIES = {  # FRED-id: (navn, vekt)
@@ -16,21 +18,30 @@ SERIES = {  # FRED-id: (navn, vekt)
     "PWHEAMTUSDM": ("Hvete", 0.15),
 }
 BASE = date(2026, 1, 1)
+UA = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) FUGLESANG/1.0", "Accept": "text/csv,*/*"}
+
+
+def _get(url: str) -> str:
+    last = None
+    for attempt in range(3):
+        try:
+            r = requests.get(url, headers=UA, timeout=(15, 90))
+            r.raise_for_status()
+            return r.text
+        except requests.RequestException as e:  # noqa: PERF203
+            last = e
+            time.sleep(5 * (attempt + 1))
+    raise RuntimeError(f"FRED svarte ikke: {last}")
 
 
 def run(conn) -> int:
-    url = "https://fred.stlouisfed.org/graph/fredgraph.csv?id=" + ",".join(SERIES)
-    text = requests.get(url, headers={"User-Agent": "FUGLESANG/1.0"}, timeout=60).text
-    reader = csv.DictReader(io.StringIO(text))
     data: dict = {}
-    for r in reader:
-        d = date.fromisoformat(r["observation_date"])
-        if d.year < 2015:
-            continue
-        for s in SERIES:
+    for s in SERIES:  # én serie om gangen: raskere og mer robust enn ett stort kall
+        text = _get(f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={s}&cosd=2015-01-01")
+        for r in csv.DictReader(io.StringIO(text)):
             v = r.get(s)
             if v not in (None, "", "."):
-                data.setdefault(s, {})[d] = float(v)
+                data.setdefault(s, {})[date.fromisoformat(r["observation_date"])] = float(v)
     rows = 0
     with conn.cursor() as cur:
         for s, vals in data.items():
