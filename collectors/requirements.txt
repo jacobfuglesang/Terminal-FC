@@ -1,0 +1,4 @@
+yfinance>=0.2.60
+psycopg[binary]>=3.2
+requests>=2.32
+pandas>=2.2
