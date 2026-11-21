@@ -1,0 +1,317 @@
+{
+ "ilaks": {
+  "status": 200,
+  "type": "application/rss+xml; charset=UTF-8",
+  "n": 12,
+  "secs": 0.5,
+  "final_url": "https://ilaks.no/feed/",
+  "items": [
+   {
+    "title": "Sykdom på villaks sprer seg til elver i Rogaland og Hardanger",
+    "link": "https://ilaks.no/sykdom-pa-villaks-sprer-seg-til-elver-i-rogaland-og-hardanger/?mtm_campaign=feed_click&mtm_kwd=sykdom-pa-villaks-sprer-seg-til-elver-i-rogaland-og-hardanger&mtm_source=RSS2&mtm_medium=feed",
+    "published": "Sat, 21 Nov 2026 07:02:32 +0000",
+    "summary": "<a href=\"https://ilaks.no/sykdom-pa-villaks-sprer-seg-til-elver-i-rogaland-og-hardanger/?mtm_campaign=feed_click&amp;mtm_kwd=sykdom-pa-villaks-sprer-seg-til-elver-i-rogaland-og-hardanger&amp;mtm_source=RSS2&amp;mtm_medium=feed\"><img align=\"left\" alt=\"Sykdom på villaks sprer seg til elver i Rogaland ",
+    "source": null
+   },
+   {
+    "title": "Håpet lever for Isfjord: – Jobber med å få i gang produksjonen i løpet av en ukes tid",
+    "link": "https://ilaks.no/forventer-redning-for-isfjord-jobber-med-a-fa-i-gang-produksjonen-i-lopet-av-en-ukes-tid/?mtm_campaign=feed_click&mtm_kwd=forventer-redning-for-isfjord-jobber-med-a-fa-i-gang-produksjonen-i-lopet-av-en-ukes-tid&mtm_source=RSS2&mtm_medium=feed",
+    "published": "Fri, 20 Nov 2026 14:34:57 +0000",
+    "summary": "<a href=\"https://ilaks.no/forventer-redning-for-isfjord-jobber-med-a-fa-i-gang-produksjonen-i-lopet-av-en-ukes-tid/?mtm_campaign=feed_click&amp;mtm_kwd=forventer-redning-for-isfjord-jobber-med-a-fa-i-gang-produksjonen-i-lopet-av-en-ukes-tid&amp;mtm_source=RSS2&amp;mtm_medium=feed\"><img align=\"left\" ",
+    "source": null
+   },
+   {
+    "title": "Knappere tilgjengelighet av industristørrelsene sender lakseprisen oppover",
+    "link": "https://ilaks.no/knappere-tilgjengelighet-av-industristorrelsene-sender-lakseprisen-oppover/?mtm_campaign=feed_click&mtm_kwd=knappere-tilgjengelighet-av-industristorrelsene-sender-lakseprisen-oppover&mtm_source=RSS2&mtm_medium=feed",
+    "published": "Fri, 20 Nov 2026 13:15:38 +0000",
+    "summary": "<a href=\"https://ilaks.no/knappere-tilgjengelighet-av-industristorrelsene-sender-lakseprisen-oppover/?mtm_campaign=feed_click&amp;mtm_kwd=knappere-tilgjengelighet-av-industristorrelsene-sender-lakseprisen-oppover&amp;mtm_source=RSS2&amp;mtm_medium=feed\"><img align=\"left\" alt=\"Knappere tilgjengelighe",
+    "source": null
+   },
+   {
+    "title": "Biomassen over 900.000 tonn",
+    "link": "https://ilaks.no/biomassen-over-900-000-tonn/?mtm_campaign=feed_click&mtm_kwd=biomassen-over-900-000-tonn&mtm_source=RSS2&mtm_medium=feed",
+    "published": "Fri, 20 Nov 2026 11:36:12 +0000",
+    "summary": "<a href=\"https://ilaks.no/biomassen-over-900-000-tonn/?mtm_campaign=feed_click&amp;mtm_kwd=biomassen-over-900-000-tonn&amp;mtm_source=RSS2&amp;mtm_medium=feed\"><img align=\"left\" alt=\"Biomassen over 900.000 tonn\" height=\"235\" src=\"https://ilaks.no/wp-content/uploads/2026/02/Hammerhead-Under-vann-421x",
+    "source": null
+   }
+  ]
+ },
+ "salmonbusiness": {
+  "status": 404,
+  "type": "text/html; charset=utf-8",
+  "n": 0,
+  "secs": 0.2,
+  "final_url": "https://www.salmonbusiness.com/feed/",
+  "items": []
+ },
+ "fishfarmingexpert": {
+  "status": 404,
+  "type": "application/json",
+  "n": 0,
+  "secs": 0.7,
+  "final_url": "https://www.fishfarmingexpert.com/rss",
+  "items": []
+ },
+ "kyst": {
+  "status": 404,
+  "type": "application/json",
+  "n": 0,
+  "secs": 1.0,
+  "final_url": "https://www.kyst.no/feed",
+  "items": []
+ },
+ "intrafish_no": {
+  "status": 404,
+  "type": "text/html; charset=utf-8",
+  "n": 0,
+  "secs": 1.0,
+  "final_url": "https://www.intrafish.no/rss?zephr_sso_ott=Aemg5y",
+  "items": []
+ },
+ "seafood_no": {
+  "status": 404,
+  "type": "text/html; charset=utf-8",
+  "n": 0,
+  "secs": 0.4,
+  "final_url": "https://www.seafood.no/aktuelt/nyheter/rss/",
+  "items": []
+ },
+ "mattilsynet": {
+  "status": 200,
+  "type": "text/html",
+  "n": 0,
+  "secs": 0.6,
+  "final_url": "https://www.mattilsynet.no/rss",
+  "items": []
+ },
+ "regjeringen_rss": {
+  "status": 200,
+  "type": "application/rss+xml",
+  "n": 99,
+  "secs": 0.2,
+  "final_url": "https://www.regjeringen.no/no/rss/Rss/2581966/",
+  "items": [
+   {
+    "title": "Statsministeren deltek på G20-toppmøtet i Miami",
+    "link": "https://www.regjeringen.no/no/aktuelt/statsministeren-deltek-pa-g20-toppmotet-i-miami/id3192058/?utm_source=regjeringen.no&utm_medium=rss",
+    "published": "Mon, 14 Dec 2026 00:00:00 +0100",
+    "summary": "Statsminister Jonas Gahr Støre deltek på G20-toppmøtet i Miami, Florida i USA.",
+    "source": null
+   },
+   {
+    "title": "Utanriksministeren deltek på møte i Nato og OSSE",
+    "link": "https://www.regjeringen.no/no/aktuelt/utanriksministeren-deltek-pa-mote-i-nato-og-osse/id3193192/?utm_source=regjeringen.no&utm_medium=rss",
+    "published": "Wed, 02 Dec 2026 00:00:00 +0100",
+    "summary": "",
+    "source": null
+   },
+   {
+    "title": "Helse- og omsorgsministeren møter Storbritannias minister for sosial omsorg og psykisk helse",
+    "link": "https://www.regjeringen.no/no/aktuelt/helse-og-omsorgsministeren-moter-storbritannias-minister-for-sosial-omsorg-og-psykisk-helse/id3194191/?utm_source=regjeringen.no&utm_medium=rss",
+    "published": "Fri, 27 Nov 2026 14:30:00 +0100",
+    "summary": "",
+    "source": null
+   },
+   {
+    "title": "Helse- og omsorgsministeren møter Den Nasjonale Støttegruppen etter 22. juli",
+    "link": "https://www.regjeringen.no/no/aktuelt/helse-og-omsorgsministeren-moter-den-nasjonale-stottegruppen-etter-22.-juli/id3194190/?utm_source=regjeringen.no&utm_medium=rss",
+    "published": "Fri, 27 Nov 2026 13:30:00 +0100",
+    "summary": "",
+    "source": null
+   }
+  ]
+ },
+ "regjeringen_nfd": {
+  "status": 200,
+  "type": "application/rss+xml",
+  "n": 99,
+  "secs": 0.7,
+  "final_url": "https://www.regjeringen.no/no/rss/Rss/2581966/?departmentType=dep&department=nfd",
+  "items": [
+   {
+    "title": "Statsministeren deltek på G20-toppmøtet i Miami",
+    "link": "https://www.regjeringen.no/no/aktuelt/statsministeren-deltek-pa-g20-toppmotet-i-miami/id3192058/?utm_source=regjeringen.no&utm_medium=rss",
+    "published": "Mon, 14 Dec 2026 00:00:00 +0100",
+    "summary": "Statsminister Jonas Gahr Støre deltek på G20-toppmøtet i Miami, Florida i USA.",
+    "source": null
+   },
+   {
+    "title": "Utanriksministeren deltek på møte i Nato og OSSE",
+    "link": "https://www.regjeringen.no/no/aktuelt/utanriksministeren-deltek-pa-mote-i-nato-og-osse/id3193192/?utm_source=regjeringen.no&utm_medium=rss",
+    "published": "Wed, 02 Dec 2026 00:00:00 +0100",
+    "summary": "",
+    "source": null
+   },
+   {
+    "title": "Helse- og omsorgsministeren møter Storbritannias minister for sosial omsorg og psykisk helse",
+    "link": "https://www.regjeringen.no/no/aktuelt/helse-og-omsorgsministeren-moter-storbritannias-minister-for-sosial-omsorg-og-psykisk-helse/id3194191/?utm_source=regjeringen.no&utm_medium=rss",
+    "published": "Fri, 27 Nov 2026 14:30:00 +0100",
+    "summary": "",
+    "source": null
+   },
+   {
+    "title": "Helse- og omsorgsministeren møter Den Nasjonale Støttegruppen etter 22. juli",
+    "link": "https://www.regjeringen.no/no/aktuelt/helse-og-omsorgsministeren-moter-den-nasjonale-stottegruppen-etter-22.-juli/id3194190/?utm_source=regjeringen.no&utm_medium=rss",
+    "published": "Fri, 27 Nov 2026 13:30:00 +0100",
+    "summary": "",
+    "source": null
+   }
+  ]
+ },
+ "stortinget": {
+  "status": 200,
+  "type": "text/html; charset=utf-8",
+  "n": 0,
+  "secs": 1.4,
+  "final_url": "https://www.stortinget.no/no/Rss/",
+  "items": []
+ },
+ "google_laks": {
+  "status": 200,
+  "type": "application/xml; charset=utf-8",
+  "n": 30,
+  "secs": 0.3,
+  "final_url": "https://news.google.com/rss/search?hl=no&gl=NO&ceid=NO:no&q=lakseoppdrett+OR+havbruk+OR+lakseaksjer+when:7d",
+  "items": [
+   {
+    "title": "Vil åpne nye havområder for oppdrett - Regjeringen.no",
+    "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPYm0zeS1SdlE4U2NVWEgwbTFISzdDVkZWR1B6aHZzdS1sc2NaZE5YTTI2Yk9qN3pObTVrNzh1RzFhMGg4Q2YxT0x2NWtfWVZSbXlrcW0tWDFpRlAyaUpTc3lKbVZLU0J3dmsycmNlb0JxWmhuVW5sZDc5V1hqS1hOOGl4YktMX1NlZnRpSldB?oc=5",
+    "published": "Tue, 17 Nov 2026 09:00:00 GMT",
+    "summary": "<a href=\"https://news.google.com/rss/articles/CBMijgFBVV95cUxPYm0zeS1SdlE4U2NVWEgwbTFISzdDVkZWR1B6aHZzdS1sc2NaZE5YTTI2Yk9qN3pObTVrNzh1RzFhMGg4Q2YxT0x2NWtfWVZSbXlrcW0tWDFpRlAyaUpTc3lKbVZLU0J3dmsycmNlb0JxWmhuVW5sZDc5V1hqS1hOOGl4YktMX1NlZnRpSldB?oc=5\" target=\"_blank\">Vil åpne nye havområder for oppdret",
+    "source": "Regjeringen.no"
+   },
+   {
+    "title": "Lerøy kjøper 98,4 prosent av Sjøtroll Havbruk - iLaks",
+    "link": "https://news.google.com/rss/articles/CBMib0FVX3lxTE1yR3hkNGFEV1R3aE92UGVlN0Jtb0cxbEQwbExhYjV0eVd6R056bng3UW1na05MWXlpQ1BZM1dQOExqZXRTYjRpMHIzNl9MS0lsM0NHQ2ZHSlFOTmd6NlpoelJ2UE9Jd1R5Y0p4LUVpMA?oc=5",
+    "published": "Mon, 16 Nov 2026 06:10:02 GMT",
+    "summary": "<a href=\"https://news.google.com/rss/articles/CBMib0FVX3lxTE1yR3hkNGFEV1R3aE92UGVlN0Jtb0cxbEQwbExhYjV0eVd6R056bng3UW1na05MWXlpQ1BZM1dQOExqZXRTYjRpMHIzNl9MS0lsM0NHQ2ZHSlFOTmd6NlpoelJ2UE9Jd1R5Y0p4LUVpMA?oc=5\" target=\"_blank\">Lerøy kjøper 98,4 prosent av Sjøtroll Havbruk</a>&nbsp;&nbsp;<font color=\"#6f",
+    "source": "iLaks"
+   },
+   {
+    "title": "Vil opne nye havområde for oppdrett: – Sentral milepæl - NRK",
+    "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOcXMtUllkaVJlUmc2OElHYmdOSS1xMGtNblI2S3lxNHdnQlNhcTZBV3lFelNVOVd5aFFQbVppd0xDU0NDYkVfNGtaZUpHeVM1SzgyNE52akoxUEZoREdWWFNCbGVoeFJnSlBSMUh4MzdhY3V3Z3ktQjFKWFM5Wk1kRXlIOHdkcXRvNTFaRmtmcw?oc=5",
+    "published": "Tue, 17 Nov 2026 08:38:55 GMT",
+    "summary": "<a href=\"https://news.google.com/rss/articles/CBMijwFBVV95cUxOcXMtUllkaVJlUmc2OElHYmdOSS1xMGtNblI2S3lxNHdnQlNhcTZBV3lFelNVOVd5aFFQbVppd0xDU0NDYkVfNGtaZUpHeVM1SzgyNE52akoxUEZoREdWWFNCbGVoeFJnSlBSMUh4MzdhY3V3Z3ktQjFKWFM5Wk1kRXlIOHdkcXRvNTFaRmtmcw?oc=5\" target=\"_blank\">Vil opne nye havområde for oppdre",
+    "source": "NRK"
+   },
+   {
+    "title": "Milliardoppkjøp i oppdrett: Lerøy tar nesten full kontroll - Finansavisen",
+    "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxORjVXU2ZnUDNMZUZpVVdWRGMxMF9yTFVhUlZOdDBlMk9BNFV4YldqOVpzcFdzeGdfWExzcUZ6YUJieFpkbGlHdTFxT2c3MjFPNS1sTWZkVEVDajEzOVRrRk92ZGpMY00yR1dRRU5odFNRR1lJaHVTNS1RUklSWnJyZGVadlUxQ0xRb2s5VnlMT0dtSXVmMVFBS0ZyMmJiUE1HSjZKUkdnWTFoWDVTSGNVYw?oc=5",
+    "published": "Mon, 16 Nov 2026 06:12:37 GMT",
+    "summary": "<a href=\"https://news.google.com/rss/articles/CBMisAFBVV95cUxORjVXU2ZnUDNMZUZpVVdWRGMxMF9yTFVhUlZOdDBlMk9BNFV4YldqOVpzcFdzeGdfWExzcUZ6YUJieFpkbGlHdTFxT2c3MjFPNS1sTWZkVEVDajEzOVRrRk92ZGpMY00yR1dRRU5odFNRR1lJaHVTNS1RUklSWnJyZGVadlUxQ0xRb2s5VnlMT0dtSXVmMVFBS0ZyMmJiUE1HSjZKUkdnWTFoWDVTSGNVYw?oc=5\" targe",
+    "source": "Finansavisen"
+   }
+  ]
+ },
+ "google_dn": {
+  "status": 200,
+  "type": "application/xml; charset=utf-8",
+  "n": 7,
+  "secs": 0.2,
+  "final_url": "https://news.google.com/rss/search?hl=no&gl=NO&ceid=NO:no&q=site:dn.no+laks+when:14d",
+  "items": [
+   {
+    "title": "Man kan jaggu stille klokken etter disse emisjonene (+) - Dagens Næringsliv",
+    "link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQVkRzdG9Dc3RHOTRUS3dhU3o5UFN0QXZMckpRemlLamlsbldwMmYycmY3VlVnLTN4d29sckp1dDBodzN1WTdoVnd4YmxkLVNhZkVhLXhJTndBTHAxSkoybUw2R0RGdXhTY29QWnpKVGVYZHRrQkNTQVM1a1FST1E2bDFGdmNLcnJRcGZDcjVTQlNoM1ZhOTQ0TXdzQQ?oc=5",
+    "published": "Thu, 19 Nov 2026 01:07:00 GMT",
+    "summary": "<a href=\"https://news.google.com/rss/articles/CBMimwFBVV95cUxQVkRzdG9Dc3RHOTRUS3dhU3o5UFN0QXZMckpRemlLamlsbldwMmYycmY3VlVnLTN4d29sckp1dDBodzN1WTdoVnd4YmxkLVNhZkVhLXhJTndBTHAxSkoybUw2R0RGdXhTY29QWnpKVGVYZHRrQkNTQVM1a1FST1E2bDFGdmNLcnJRcGZDcjVTQlNoM1ZhOTQ0TXdzQQ?oc=5\" target=\"_blank\">Man kan jaggu sti",
+    "source": "Dagens Næringsliv"
+   },
+   {
+    "title": "Laksegründer Gustav Witzøe: – Hvorfor skal det være mer lukrativt for Trump å eie Salmar? (+) - Dagens Næringsliv",
+    "link": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxQNFdOaFAwTW10bnUxRENrQ1E3TmNWcTBfY01GMVNqV0NkMkIwT2l6SzQ5N01jaW5iVVk5dXNOblBlWlZyVzdRZjY2WHBhSVNUQ08tNG1SLTBNZk9TbHV3a0ZCVDMzZWhSc2FhODk2UmNyemZRMXdEa0JCaEx3QjNibG9Hd3NaTlhrRENMZlNOR2xHT21uMzRkSlVwMW4tRUhHdWVDa01jNzIySmlnREs1TVRNZm44azJ5NHQtNDNWTXpoYkJvVUZqS0lPSGg4TWN3dDBxdzk0ZkZmbzFUZ1lkQlZBN0sydw?oc=5",
+    "published": "Thu, 19 Nov 2026 10:32:00 GMT",
+    "summary": "<a href=\"https://news.google.com/rss/articles/CBMi5gFBVV95cUxQNFdOaFAwTW10bnUxRENrQ1E3TmNWcTBfY01GMVNqV0NkMkIwT2l6SzQ5N01jaW5iVVk5dXNOblBlWlZyVzdRZjY2WHBhSVNUQ08tNG1SLTBNZk9TbHV3a0ZCVDMzZWhSc2FhODk2UmNyemZRMXdEa0JCaEx3QjNibG9Hd3NaTlhrRENMZlNOR2xHT21uMzRkSlVwMW4tRUhHdWVDa01jNzIySmlnREs1TVRNZm44azJ5NH",
+    "source": "Dagens Næringsliv"
+   },
+   {
+    "title": "Fire år med lakseskatten: – Blir færre familieeide gründerbedrifter (+) - Dagens Næringsliv",
+    "link": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxQbF8zWVZSR0ppeW5ob1BPNk1qUlBKMkdPTGZzVHB0SHhOWm5QckxPb1c5UVJyT1pKdVVXblBwTTJOZmN2bmRDT3l0Y19TYjBXMDhnNjB4OFo0NGhnUndreUFwRWpMcFBBZWVGVDJPUndLVlR0YTdWRzFJRXNCdE1UcmVYS212UVgwdW4yTFJES0RfNElPb0Q0Y0NFUS1VNnlvZldJRDlVYktHX1RPZDlKZXc1U2stZm1RVUg1aV80S0tQcXJwU3g4YQ?oc=5",
+    "published": "Wed, 18 Nov 2026 12:32:00 GMT",
+    "summary": "<a href=\"https://news.google.com/rss/articles/CBMiyAFBVV95cUxQbF8zWVZSR0ppeW5ob1BPNk1qUlBKMkdPTGZzVHB0SHhOWm5QckxPb1c5UVJyT1pKdVVXblBwTTJOZmN2bmRDT3l0Y19TYjBXMDhnNjB4OFo0NGhnUndreUFwRWpMcFBBZWVGVDJPUndLVlR0YTdWRzFJRXNCdE1UcmVYS212UVgwdW4yTFJES0RfNElPb0Q0Y0NFUS1VNnlvZldJRDlVYktHX1RPZDlKZXc1U2stZm1RVU",
+    "source": "Dagens Næringsliv"
+   },
+   {
+    "title": "Statsråden til møte om laksedød uten en krone: – Skuffende (+) - Dagens Næringsliv",
+    "link": "https://news.google.com/rss/articles/CBMivAFBVV95cUxPRWtDMGxtd3M5MXRoeDZzN1k3UHYxOWxQb2g1ZW1zdWJrM3VoZGYwTUtPX1hoWDdwc1F1OVRFNHNjeFlOU0YzTjhDOUdFVVhyMmhfTEdEN25NekczbUZvcEUxMEZoLXdrWGxxdkhOb0dxTU9YNDBfXzA5eUwzdDdaWGFWMWVvV2N2THdjUjVRYXozS01aWkp0Q291ZVNCNVFHZm12ZDJJc191S1R0X0NOc0lHNmI0YklUdU5JTg?oc=5",
+    "published": "Fri, 13 Nov 2026 10:07:00 GMT",
+    "summary": "<a href=\"https://news.google.com/rss/articles/CBMivAFBVV95cUxPRWtDMGxtd3M5MXRoeDZzN1k3UHYxOWxQb2g1ZW1zdWJrM3VoZGYwTUtPX1hoWDdwc1F1OVRFNHNjeFlOU0YzTjhDOUdFVVhyMmhfTEdEN25NekczbUZvcEUxMEZoLXdrWGxxdkhOb0dxTU9YNDBfXzA5eUwzdDdaWGFWMWVvV2N2THdjUjVRYXozS01aWkp0Q291ZVNCNVFHZm12ZDJJc191S1R0X0NOc0lHNmI0YklUdU",
+    "source": "Dagens Næringsliv"
+   }
+  ]
+ },
+ "google_regjeringen": {
+  "status": 200,
+  "type": "application/xml; charset=utf-8",
+  "n": 36,
+  "secs": 0.2,
+  "final_url": "https://news.google.com/rss/search?hl=no&gl=NO&ceid=NO:no&q=site:regjeringen.no+havbruk+OR+laks+when:30d",
+  "items": [
+   {
+    "title": "Vil åpne nye havområder for oppdrett - Regjeringen.no",
+    "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPYm0zeS1SdlE4U2NVWEgwbTFISzdDVkZWR1B6aHZzdS1sc2NaZE5YTTI2Yk9qN3pObTVrNzh1RzFhMGg4Q2YxT0x2NWtfWVZSbXlrcW0tWDFpRlAyaUpTc3lKbVZLU0J3dmsycmNlb0JxWmhuVW5sZDc5V1hqS1hOOGl4YktMX1NlZnRpSldB?oc=5",
+    "published": "Tue, 17 Nov 2026 09:00:00 GMT",
+    "summary": "<a href=\"https://news.google.com/rss/articles/CBMijgFBVV95cUxPYm0zeS1SdlE4U2NVWEgwbTFISzdDVkZWR1B6aHZzdS1sc2NaZE5YTTI2Yk9qN3pObTVrNzh1RzFhMGg4Q2YxT0x2NWtfWVZSbXlrcW0tWDFpRlAyaUpTc3lKbVZLU0J3dmsycmNlb0JxWmhuVW5sZDc5V1hqS1hOOGl4YktMX1NlZnRpSldB?oc=5\" target=\"_blank\">Vil åpne nye havområder for oppdret",
+    "source": "Regjeringen.no"
+   },
+   {
+    "title": "Høringsinnspill fra Karasjok kommune til arbeidet med ny stortingsmelding om villaks - Regjeringen.no",
+    "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxOOUJXTFYwRFAyTXdCSXJScmtlVk4yU25XQ0xQM2FsSEFKTUxsemsxX2VCbGVaWktXQm1HWXI4YWNMRVl3V0dHUzlGQUhsQWVGV3B5ZnBJbktuR0o4MHlUN0VFVEQzUVhaZnhHUVpuOUVrbzFLdllhUlRHeTE3RzlGZkg4eGNaMVNEbXUtZDYySWo2a0ZYMWpjY2NB?oc=5",
+    "published": "Thu, 19 Nov 2026 19:09:31 GMT",
+    "summary": "<a href=\"https://news.google.com/rss/articles/CBMimgFBVV95cUxOOUJXTFYwRFAyTXdCSXJScmtlVk4yU25XQ0xQM2FsSEFKTUxsemsxX2VCbGVaWktXQm1HWXI4YWNMRVl3V0dHUzlGQUhsQWVGV3B5ZnBJbktuR0o4MHlUN0VFVEQzUVhaZnhHUVpuOUVrbzFLdllhUlRHeTE3RzlGZkg4eGNaMVNEbXUtZDYySWo2a0ZYMWpjY2NB?oc=5\" target=\"_blank\">Høringsinnspill fra",
+    "source": "Regjeringen.no"
+   },
+   {
+    "title": "_wwas.o ) - Regjeringen.no",
+    "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxNekxuRWt5X3ZEUFAtZmNHZHBXaVZXVUJYZTVabGhnb3NvVDV0ZTA1VS13ODgtY2U4RURIUmxKUHd4NnF6SFctVU8yRFQ4eXotXzh2NDBiUGZ2VnM3aHFQRWc4YkhfQldiVlQ4cDdMM2JHUjgzZWhvbjJkbk5PZDVDYm9xQWs4cU9CbEYzTzhpWlZuNXZKNDJMcXI0U1NvLXluX3QxYmQxSzBfZDA?oc=5",
+    "published": "Thu, 19 Nov 2026 19:09:32 GMT",
+    "summary": "<a href=\"https://news.google.com/rss/articles/CBMiqwFBVV95cUxNekxuRWt5X3ZEUFAtZmNHZHBXaVZXVUJYZTVabGhnb3NvVDV0ZTA1VS13ODgtY2U4RURIUmxKUHd4NnF6SFctVU8yRFQ4eXotXzh2NDBiUGZ2VnM3aHFQRWc4YkhfQldiVlQ4cDdMM2JHUjgzZWhvbjJkbk5PZDVDYm9xQWs4cU9CbEYzTzhpWlZuNXZKNDJMcXI0U1NvLXluX3QxYmQxSzBfZDA?oc=5\" target=\"_bla",
+    "source": "Regjeringen.no"
+   },
+   {
+    "title": "Høring av områdetildelingsforskrift, endringer i laksetildelingsforskriften, og utkast til veileder til områdeplan - Regjeringen.no",
+    "link": "https://news.google.com/rss/articles/CBMi9wFBVV95cUxOb2dSUWdqQUxlUVVWZ05leHZqeEZyU1FCM3dBY2ZQMXMxTzAwV0t2Tlk1Mm8ydWdaaG9RMUNwWVZiVFJpVUlXYjhwQzBuRVZzWVZ2N1lKVDFrUXB2ZWVVV1pMbzllamh2N2MyVzdfU1FLUk9HWU9UZ2tsZ2tidF9XRm0yblFjQ2Y3SFo4VmpBYmtpZ3F5U2RwTTFIUmd5aExsZFR1M2oxUUFWNEdnN28yUGhGQ0h1ci11U2dYNHd1NEVncGRqdHpDUGE0N1pDTlExWG5VNmphQXhzN1h4ZzVUZlBWR241MlUtOU1LeEdSSUFTRzB2eVhv?oc=5",
+    "published": "Tue, 17 Nov 2026 12:54:47 GMT",
+    "summary": "<a href=\"https://news.google.com/rss/articles/CBMi9wFBVV95cUxOb2dSUWdqQUxlUVVWZ05leHZqeEZyU1FCM3dBY2ZQMXMxTzAwV0t2Tlk1Mm8ydWdaaG9RMUNwWVZiVFJpVUlXYjhwQzBuRVZzWVZ2N1lKVDFrUXB2ZWVVV1pMbzllamh2N2MyVzdfU1FLUk9HWU9UZ2tsZ2tidF9XRm0yblFjQ2Y3SFo4VmpBYmtpZ3F5U2RwTTFIUmd5aExsZFR1M2oxUUFWNEdnN28yUGhGQ0h1ci11U2",
+    "source": "Regjeringen.no"
+   }
+  ]
+ },
+ "google_e24": {
+  "status": 200,
+  "type": "application/xml; charset=utf-8",
+  "n": 15,
+  "secs": 0.3,
+  "final_url": "https://news.google.com/rss/search?hl=no&gl=NO&ceid=NO:no&q=site:e24.no+laks+when:14d",
+  "items": [
+   {
+    "title": "Laksefabrikk konkurs – rundt 300 ansatte rammes - E24",
+    "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPSWJGU2tWQ2xRdWRXX1lHQm1SQUN0NTJpektIc0dOZER0cklYd3JtREJqR2ZaenJVM05HNk5XUVRSeHBxQmZydndvZ24zeDhOTFBSVWNYUWljSU8teE5yMmxsb3NJTVliVmd0MmdzaTd2SEs0eUs4NkczMTJ0N2FkOXlPWkhocGxG?oc=5",
+    "published": "Mon, 16 Nov 2026 13:17:37 GMT",
+    "summary": "<a href=\"https://news.google.com/rss/articles/CBMiiAFBVV95cUxPSWJGU2tWQ2xRdWRXX1lHQm1SQUN0NTJpektIc0dOZER0cklYd3JtREJqR2ZaenJVM05HNk5XUVRSeHBxQmZydndvZ24zeDhOTFBSVWNYUWljSU8teE5yMmxsb3NJTVliVmd0MmdzaTd2SEs0eUs4NkczMTJ0N2FkOXlPWkhocGxG?oc=5\" target=\"_blank\">Laksefabrikk konkurs – rundt 300 ansatte ra",
+    "source": "E24"
+   },
+   {
+    "title": "Lakseselskap konkurs - E24",
+    "link": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9FNkZ6TldheHNqdUw4djFQa2IzazVaSW5oZVlYVzRCV2VyWHFqR0RyWlVvYVN1TC1tVHRocTl6cm5xcXdvQjdXdGZqWDhKdVhCanQyOEZaN254QWdvUmhiY3hDQUlVblE?oc=5",
+    "published": "Wed, 18 Nov 2026 16:42:15 GMT",
+    "summary": "<a href=\"https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9FNkZ6TldheHNqdUw4djFQa2IzazVaSW5oZVlYVzRCV2VyWHFqR0RyWlVvYVN1TC1tVHRocTl6cm5xcXdvQjdXdGZqWDhKdVhCanQyOEZaN254QWdvUmhiY3hDQUlVblE?oc=5\" target=\"_blank\">Lakseselskap konkurs</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">E24</font>",
+    "source": "E24"
+   },
+   {
+    "title": "Stoler ikke på Støres vekstløfter: –⁠ Gjenstår å se - E24",
+    "link": "https://news.google.com/rss/articles/CBMilgFBVV95cUxON0tJeGl5eXhJUURPQlRzQ0h2M1V4TUlSWUh0cXhRRUc3UWhFWHBSZDRVcjlxMGJRd2NHS2tYdnpPM3lTaVQwalhLeTJxYzRMQ24ydV84ZzMycUpnQzF5SjBrTFVXOGZWamltMkNOU0c2Q2FrbmFOcTNoOThpQ1lnV1RNY2gwY2pBdkNCSC04dmZhY19YWFE?oc=5",
+    "published": "Thu, 19 Nov 2026 17:55:40 GMT",
+    "summary": "<a href=\"https://news.google.com/rss/articles/CBMilgFBVV95cUxON0tJeGl5eXhJUURPQlRzQ0h2M1V4TUlSWUh0cXhRRUc3UWhFWHBSZDRVcjlxMGJRd2NHS2tYdnpPM3lTaVQwalhLeTJxYzRMQ24ydV84ZzMycUpnQzF5SjBrTFVXOGZWamltMkNOU0c2Q2FrbmFOcTNoOThpQ1lnV1RNY2gwY2pBdkNCSC04dmZhY19YWFE?oc=5\" target=\"_blank\">Stoler ikke på Støres ve",
+    "source": "E24"
+   },
+   {
+    "title": "Selger seg ut av lakseoppdretter på grunn av dyrevelferd - E24",
+    "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQU1JYTmp6QnRRbEJvTWQybHZxbFV4RWpnZFVfdXFnYmtPdW9sS3lkVDNOYVBZdE1TWFItdkRCT2MtcGd5YnZlYjR5T0l4WDZ5RF95Umh0SGVFTzJmZkRpZzFsRDVyazI0NWVpX2ptTWhKNGJIWmhKeGNTdWk5bzlYbTRqN1dnUFJGazhjd1FhVl9NVTV2bmNhdlpTNF8?oc=5",
+    "published": "Wed, 18 Nov 2026 08:55:55 GMT",
+    "summary": "<a href=\"https://news.google.com/rss/articles/CBMinAFBVV95cUxQU1JYTmp6QnRRbEJvTWQybHZxbFV4RWpnZFVfdXFnYmtPdW9sS3lkVDNOYVBZdE1TWFItdkRCT2MtcGd5YnZlYjR5T0l4WDZ5RF95Umh0SGVFTzJmZkRpZzFsRDVyazI0NWVpX2ptTWhKNGJIWmhKeGNTdWk5bzlYbTRqN1dnUFJGazhjd1FhVl9NVTV2bmNhdlpTNF8?oc=5\" target=\"_blank\">Selger seg ut av",
+    "source": "E24"
+   }
+  ]
+ }
+}
