@@ -4,6 +4,7 @@ Hemmeligheter i GitHub: BW_CLIENT_ID og BW_CLIENT_SECRET.
 Klienten lages på barentswatch.no/minside under «BarentsWatch - API».
 """
 import os
+import re
 from datetime import date, timedelta
 
 import requests
@@ -40,39 +41,70 @@ def _find(d: dict, *needles):
     return None
 
 
+DISEASE = {
+    "ila": re.compile(r"\bila\b|lakseanemi", re.I),
+    "pd": re.compile(r"\bpd\b|pankreas", re.I),
+}
+
+
 def _has(d: dict, word: str) -> bool:
-    """Sant hvis anlegget har en aktiv sykdom som inneholder ordet (ila / pd)."""
-    for k, v in d.items():
-        kl = k.lower()
-        if kl in (f"has{word}", f"is{word}") and v:
-            return True
-        if isinstance(v, list) and "disease" in kl:
-            for item in v:
-                txt = str(item).lower()
-                if word in txt.replace("-", ""):
-                    return True
-    return False
+    """Sant hvis anlegget har ILA eller PD i sykdomslisten."""
+    if d.get(f"has{word.upper()}") or d.get(f"has{word}"):
+        return True
+    dis = d.get("diseases")
+    return bool(dis) and bool(DISEASE[word].search(str(dis)))
+
+
+def _deep(obj, needle: str):
+    """Let gjennom nøstede dict/list etter et tall der feltnavnet inneholder needle.
+    Foretrekker felt som heter noe med avg/average/mean/value."""
+    hits = []
+
+    def walk(o, path):
+        if isinstance(o, dict):
+            for k, v in o.items():
+                kl = k.lower()
+                if isinstance(v, (int, float)) and not isinstance(v, bool) and needle in (path + kl):
+                    hits.append((kl, float(v)))
+                walk(v, path + kl + ".")
+        elif isinstance(o, list):
+            for x in o:
+                walk(x, path)
+
+    walk(obj, "")
+    for pref in ("avg", "average", "mean", "value"):
+        for k, v in hits:
+            if pref in k:
+                return v
+    return hits[0][1] if hits else None
 
 
 def summarize(js, week: int) -> dict:
     locs = js.get("localities") if isinstance(js, dict) else js
     locs = [l for l in (locs or []) if isinstance(l, dict)]
+    # Bare matfiskanlegg for laks/ørret, ikke ventemerder ved slakteri
+    salmon = [l for l in locs if l.get("hasSalmonoidLicense", True) and not l.get("isSlaughterHoldingCage")]
     vals = []
-    for l in locs:
-        v = _find(l, "adultfemale")
-        if isinstance(v, dict):  # v2 kan pakke tallene inn
-            v = _find(v, "avg") if _find(v, "avg") is not None else _find(v, "value")
-        if isinstance(v, (int, float)):
-            vals.append(float(v))
+    for l in salmon:
+        rep = l.get("liceReport", l)
+        if not rep:
+            continue
+        v = _deep(rep, "adultfemale")
+        if v is not None and 0 <= v < 50:
+            vals.append(v)
     lim = limit_for(week)
+    sample = next((l.get("liceReport") for l in salmon if l.get("liceReport")), None)
+    dsample = next((l.get("diseases") for l in salmon if l.get("diseases")), None)
     return {
         "avg": round(sum(vals) / len(vals), 3) if vals else None,
         "reported": len(vals),
         "over": sum(1 for v in vals if v > lim),
-        "ila": sum(1 for l in locs if _has(l, "ila")),
-        "pd": sum(1 for l in locs if _has(l, "pd")),
-        "n": len(locs),
+        "ila": sum(1 for l in salmon if _has(l, "ila")),
+        "pd": sum(1 for l in salmon if _has(l, "pd")),
+        "n": len(salmon),
         "keys": sorted(locs[0].keys()) if locs else [],
+        "sample": str(sample)[:400],
+        "dsample": str(dsample)[:300],
     }
 
 
@@ -98,8 +130,10 @@ def run(conn, weeks: int = 3) -> int:
             if js is None:
                 continue
             s = summarize(js, w)
-            if back == 0:
-                print(f"  Felt i svaret: {s['keys']}")
+            if back <= 1:
+                print(f"  Uke {w}: {s['n']} anlegg, {s['reported']} med lusetall. Eksempel: {s['sample']}")
+                if s["dsample"] != "None":
+                    print(f"  Sykdomseksempel: {s['dsample']}")
             if not s["reported"]:
                 continue
             cur.execute(
