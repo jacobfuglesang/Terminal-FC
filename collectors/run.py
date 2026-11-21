@@ -43,7 +43,7 @@ def main() -> int:
                 n = fn(conn, backfill)
                 db.set_status(conn, label, True, n, f"{n} rader oppdatert")
                 print(f"  OK: {n} rader")
-            except lice.MissingKey as e:
+            except (lice.MissingKey, feed.SourceDown) as e:
                 conn.rollback()
                 db.set_status(conn, label, False, 0, str(e))
                 print(f"  Hoppet over: {e}")

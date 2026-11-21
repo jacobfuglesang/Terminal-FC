@@ -21,17 +21,21 @@ BASE = date(2026, 1, 1)
 UA = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) FUGLESANG/1.0", "Accept": "text/csv,*/*"}
 
 
+class SourceDown(Exception):
+    """FRED svarer ikke nå. Månedsdata, så vi prøver igjen ved neste daglige kjøring."""
+
+
 def _get(url: str) -> str:
     last = None
-    for attempt in range(2):
+    for attempt in range(3):
         try:
-            r = requests.get(url, headers=UA, timeout=(10, 40))
+            r = requests.get(url, headers=UA, timeout=(8, 20))
             r.raise_for_status()
             return r.text
         except requests.RequestException as e:  # noqa: PERF203
             last = e
-            time.sleep(5 * (attempt + 1))
-    raise RuntimeError(f"FRED svarte ikke: {last}")
+            time.sleep(10 * (attempt + 1))
+    raise SourceDown(f"FRED svarer ikke akkurat nå ({type(last).__name__}). Prøver igjen ved neste daglige henting.")
 
 
 def run(conn) -> int:
