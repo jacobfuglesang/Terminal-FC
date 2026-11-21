@@ -11,7 +11,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-      - run: pip install requests
+      - run: pip install requests openpyxl
       - run: python probe/probe.py
       - name: Lagre resultater
         run: |
