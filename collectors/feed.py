@@ -41,7 +41,7 @@ def _get(url: str) -> str:
 def run(conn) -> int:
     data: dict = {}
     for s in SERIES:  # én serie om gangen: raskere og mer robust enn ett stort kall
-        text = _get(f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={s}&cosd=2015-01-01")
+        text = _get(f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={s}&cosd=2024-01-01")
         for r in csv.DictReader(io.StringIO(text)):
             v = r.get(s)
             if v not in (None, "", "."):
