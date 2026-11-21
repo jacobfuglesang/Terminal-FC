@@ -1,0 +1,613 @@
+URL https://www.fiskeridir.no/statistikk-tall-og-analyse/data-og-statistikk-om-akvakultur/biomassestatistikk-etter-fylke
+STATUS 200
+TYPE text/html;charset=utf-8
+LEN 33075
+LINKS [
+"/statistikk-tall-og-analyse/data-og-statistikk-om-akvakultur/biomassestatistikk-etter-fylke/_/attachment/download/35bde95d-8303-4b26-9067-7da3da47a42b:8aa735b057b5ab28b6f21936db4ba16663ba7101/biostat-total-flk-2019.xlsx",
+"/statistikk-tall-og-analyse/data-og-statistikk-om-akvakultur/biomassestatistikk-etter-fylke/_/attachment/download/422fa084-c905-43b4-9446-a050e92e80e5:1c81cbe34307c35cb79e7dc5a55aae783ab17ac7/biostat-total-flk-2019.csv",
+"https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-behfisk01-flk.xlsx",
+"https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-behfisk02-flk-2023.xlsx",
+"https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-behfisk02-flk-2024.xlsx",
+"https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-behfisk02-flk-2025.xlsx",
+"https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-behfisk02-flk-2026.xlsx",
+"https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-drift01-flk.xlsx",
+"https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-drift02-flk-rensefisk.xlsx",
+"https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-forforbruk01-flk.xlsx",
+"https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-forforbruk02-flk.xlsx",
+"https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-forforbruk03-flk.xlsx",
+"https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-prodbev01-flk.xlsx",
+"https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-prodbev02-flk-2023.xlsx",
+"https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-prodbev02-flk-2024.xlsx",
+"https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-prodbev02-flk-2025.xlsx",
+"https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-prodbev02-flk-2026.xlsx",
+"https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-svinn01-flk.xlsx",
+"https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-svinn02-flk-2023.xlsx",
+"https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-svinn02-flk-2024.xlsx",
+"https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-svinn02-flk-2025.xlsx",
+"https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-svinn02-flk-2026.xlsx",
+"https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-total-flk.csv",
+"https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-total-flk.json",
+"https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-total-flk.xlsx",
+"https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-utsett01-flk.xlsx",
+"https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-utsett02-flk.xlsx",
+"https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-utsett02c-flk-rensefisk-lok.csv",
+"https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-utsett02c-flk-rensefisk-lok.xlsx",
+"https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-uttak01-flk.xlsx",
+"https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-uttak02-flk-2023.xlsx",
+"https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-uttak02-flk-2024.xlsx",
+"https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-uttak02-flk-2025.xlsx",
+"https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-uttak02-flk-2026.xlsx"
+]
+
+
+<!doctype html>
+<html lang="no" prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#14406b">
+  <meta name="turbo-refresh-scroll" content="preserve">
+  <meta name="fd-world-tile-url" content="/statistikk-tall-og-analyse/data-og-statistikk-om-akvakultur/biomassestatistikk-etter-fylke/_/service/no.fiskeridir/world-tiles">
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"GovernmentOrganization","@id":"https://www.fiskeridir.no/#organization","name":"Fiskeridirektoratet","alternateName":"Norwegian Directorate of Fisheries","url":"https://www.fiskeridir.no/","logo":"https://www.fiskeridir.no/statistikk-tall-og-analyse/data-og-statistikk-om-akvakultur/biomassestatistikk-etter-fylke/_/image/9f56b71c-18d9-41b4-aa59-a451eed6750d:e0304f7b4b862140025efcec9e93e2fe9be5b3bf/width-232/fiskeridir_logo.svg","sameAs":["https://www.linkedin.com/company/fiskeridirektoratet-fiskeridir-no-/","https://www.facebook.com/fiskeridirektoratet","https://www.youtube.com/FiskeridirektoratetNorge"]},{"@type":"WebSite","@id":"https://www.fiskeridir.no/#website","url":"https://www.fiskeridir.no/","name":"Fiskeridirektoratet","inLanguage":"no","publisher":{"@id":"https://www.fiskeridir.no/#organization"},"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://www.fiskeridir.no/sok?query={search_term_string}"},"query-input":"required name=search_term_string"}},{"@type":"WebPage","@id":"https://www.fiskeridir.no/statistikk-tall-og-analyse/data-og-statistikk-om-akvakultur/biomassestatistikk-etter-fylke","url":"https://www.fiskeridir.no/statistikk-tall-og-analyse/data-og-statistikk-om-akvakultur/biomassestatistikk-etter-fylke","inLanguage":"no","isPartOf":{"@id":"https://www.fiskeridir.no/#website"},"name":"Biomassestatistikk etter fylke"},{"@type":"BreadcrumbList","@id":"https://www.fiskeridir.no/statistikk-tall-og-analyse/data-og-statistikk-om-akvakultur/biomassestatistikk-etter-fylke#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Fiskeridirektoratet","item":"https://www.fiskeridir.no/"},{"@type":"ListItem","position":2,"name":"Tall og analyse","item":"https://www.fiskeridir.no/statistikk-tall-og-analyse"},{"@type":"ListItem","position":3,"name":"Data og statistikk om akvakultur","item":"https://www.fiskeridir.no/statistikk-tall-og-analyse/data-og-statistikk-om-akvakultur"},{"@type":"ListItem","position":4,"name":"Biomassestatistikk etter fylke","item":"https://www.fiskeridir.no/statistikk-tall-og-analyse/data-og-statistikk-om-akvakultur/biomassestatistikk-etter-fylke"}]}]}</script>
+
+  <link rel="preload" href="/_/service/no.fiskeridir/asset/000001a1f2f3f260/fonts/IBMPlexSans-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/_/service/no.fiskeridir/asset/000001a1f2f3f260/fonts/IBMPlexSans-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/_/service/no.fiskeridir/asset/000001a1f2f3f260/fonts/IBMPlexSerif-Medium.woff2" as="font" type="font/woff2" crossorigin>
+
+  <link href="/_/service/no.fiskeridir/asset/000001a1f2f3f260/css/main.min.css" rel="stylesheet">
+  <link rel="icon" href="/statistikk-tall-og-analyse/data-og-statistikk-om-akvakultur/biomassestatistikk-etter-fylke/_/image/434a88f5-6b85-43b4-b520-75010b48a8d6:2c71df53a881af3ee11e7b6b31ab98f8c3d45bdd/width-180/favicon-96x96.png">
+  <link rel="apple-touch-icon" href="/_/service/no.fiskeridir/asset/000001a1f2f3f260/images/apple-touch-icon.png">
+  <link rel="manifest" href="/_/service/no.fiskeridir/asset/000001a1f2f3f260/manifest.webmanifest">
+  <script type="module" src="/_/service/no.fiskeridir/asset/000001a1f2f3f260/hotwired__turbo/8.0.5/dist/turbo.es2017-esm.js"></script>
+  <script type="module" src="/_/service/no.fiskeridir/asset/000001a1f2f3f260/ts/main.mjs"></script>
+
+  <title>Biomassestatistikk etter fylke | Fiskeridirektoratet</title>
+<meta name="google-site-verification" content="google50dfa0f2c6d2607a">
+<meta name="description" content="Her finner du statistikk over innrapporterte biomassetall fra norske akvakulturanlegg med matfiskproduksjon av laks og regnbueørret i sjøvann etter fylke.
+">
+
+<meta property="og:title" content="Biomassestatistikk etter fylke">
+<meta property="og:description" content="Her finner du statistikk over innrapporterte biomassetall fra norske akvakulturanlegg med matfiskproduksjon av laks og regnbueørret i sjøvann etter fylke.
+">
+<meta property="og:site_name" content="Fiskeridirektoratet">
+
+
+<meta property="og:url" content="https://www.fiskeridir.no/statistikk-tall-og-analyse/data-og-statistikk-om-akvakultur/biomassestatistikk-etter-fylke">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="no">
+
+<meta property="og:image" content="https://www.fiskeridir.no/statistikk-tall-og-analyse/data-og-statistikk-om-akvakultur/biomassestatistikk-etter-fylke/_/image/8099ec06-40b1-47a5-80ad-14ed9e322933:986c8f91eca03c17d8cf2dc70075539ee2ef5742/block-1200-630/fiskeridirektoratet-banner.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+
+
+<meta property="article:modified_time" content="2026-11-20T10:56:45.868142954Z">
+<meta property="article:published_time" content="2024-11-11T13:19:46.246Z">
+
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Biomassestatistikk etter fylke">
+<meta name="twitter:description" content="Her finner du statistikk over innrapporterte biomassetall fra norske akvakulturanlegg med matfiskproduksjon av laks og regnbueørret i sjøvann etter fylke.
+">
+
+<meta name="twitter:image:src" content="https://www.fiskeridir.no/statistikk-tall-og-analyse/data-og-statistikk-om-akvakultur/biomassestatistikk-etter-fylke/_/image/8099ec06-40b1-47a5-80ad-14ed9e322933:986c8f91eca03c17d8cf2dc70075539ee2ef5742/block-1200-630/fiskeridirektoratet-banner.jpg">
+
+<meta name="twitter:site" content="@fiskeridir"></head>
+<body class="fd content-type-statistic-template" data-turbo="false" data-portal-component-type="page">
+  <a href="#main" class="skip-link sr-only">
+    Til hovedinnhold
+  </a>
+
+  <div role="dialog"
+       aria-labelledby="cookie-title"
+       aria-modal="true"
+       class="fd-cookieBanner content-grid"
+       style="display:block">
+      <span class="fd-h2" id="cookie-title">Vi bruker informasjonskapsler</span>
+      <div class="fd-preface">
+        <p>Vi bruker informasjonskapsler på fiskeridir.no for å forstå hvordan besøkende bruker nettsiden, slik at vi kan forbedre tjenestene våre. <a href="/om-oss/personvern/nettsidene-nyheitsbrev-og-sosiale-media">Les om hvilke informasjonskapsler vi bruker, og oppdater samtykket ditt her</a>.</p>
+
+      </div>
+    <form method="post" class="fd-actions" data-turbo="false">
+      <input
+        type="hidden"
+        name="action"
+        value="setTrackingConsent">
+      <input
+        type="submit"
+        value="Godta informasjonskapsler"
+        name="accepted"
+        class="fd-button fd-button-secondary">
+      <input
+        type="submit"
+        value="Avvis informasjonskapsler"
+        name="declined"
+        class="fd-button fd-button-secondary">
+    </form>
+  </div>
+
+  <header class="fd-header">
+      <div class="top-row container-lg-center">
+        <a id="home-logo" href="/" class="fd-logo">
+          <img
+            id="logo-image"
+            src="/statistikk-tall-og-analyse/data-og-statistikk-om-akvakultur/biomassestatistikk-etter-fylke/_/image/9f56b71c-18d9-41b4-aa59-a451eed6750d:e0304f7b4b862140025efcec9e93e2fe9be5b3bf/width-232/fiskeridir_logo.svg"
+            alt="Gå til forside">
+        </a>
+  <nav class="fd-language-links wide" aria-label="Språk">
+      <a class="language-link" href="https://www.fiskeridir.no/english">
+        <span class="flag flag-en"></span>
+        <span>English</span>
+      </a>
+  </nav>
+        <button
+          class="fd-toggle-narrow-menu icon-start icon-hamburger fd-menu-link button-border"
+          aria-label="Meny"
+          aria-expanded="false"
+          aria-controls="narrow-menu"
+          data-controller="header-toggle"
+          data-header-toggle-target-id-value="narrow-menu">
+          <span>Meny</span>
+        </button>
+      </div>
+
+    <div id="narrow-menu" class="middle-row container-lg-center">
+      <nav class="main-menu" aria-label="Hovedmeny">
+          <div class="fd-narrow-menu">
+            <auto-complete>
+
+  <template shadowrootmode="open">
+    <link href="/_/service/no.fiskeridir/asset/000001a1f2f3f260/css/main.min.css" rel="stylesheet">
+
+  <form
+    id="search-form"
+    class="search-input container-lg-old-center"
+    name="main_search"
+    action="/sok"
+    method="get"
+    role="search"
+  >
+      <input type="hidden" id="autocomplete-no-results-string" value="Ingen automatiske forslag tilgjengelig.">
+      <input type="hidden" id="autocomplete-results-string" value="Forslag tilgjengelig: {0}. Bruk pil opp og ned for å velge et forslag.">
+      <input type="hidden" id="autocomplete-see-all-string" value="Se alle treff">
+      <label for="search" class="sr-only">Søk</label>
+      <input
+        data-lang="no"
+        class="input-field"
+        type="search"
+        name="query"
+        id="search"
+        placeholder="Søk"
+        required=""
+        data-auto-complete-endpoint-url-value="/statistikk-tall-og-analyse/data-og-statistikk-om-akvakultur/biomassestatistikk-etter-fylke/_/service/no.fiskeridir/auto-complete"
+        autocomplete="off"
+      >
+      <ol id="search-result" class="auto-complete-results"></ol>
+    <input
+      id="search-resetButton"
+      type="reset"
+      tabindex="1"
+      class="action reset icon icon-circle-times-solid "
+      aria-label="Nullstill søk"
+    >
+    <button
+      type="submit"
+      tabindex="0"
+      class="action submit icon icon-search"
+      aria-label="Søk"
+    ></button>
+  </form>
+
+  </template>
+
+            </auto-complete>
+            <div class="search-status sr-only" role="status" aria-live="polite"></div>
+          </div>
+
+          <a class="fd-menu-link icon-end-small icon-single-arrow-right "
+             href="/yrkesfiske" >Yrkesfiske</a>
+          <a class="fd-menu-link icon-end-small icon-single-arrow-right "
+             href="/akvakultur" >Akvakultur</a>
+          <a class="fd-menu-link icon-end-small icon-single-arrow-right "
+             href="/areal-og-miljo" >Areal og miljø</a>
+          <a class="fd-menu-link icon-end-small icon-single-arrow-right "
+             href="/fritidsfiske" >Fritidsfiske</a>
+          <a class="fd-menu-link icon-end-small icon-single-arrow-right "
+             href="/turistfiske" >Turistfiske</a>
+      </nav>
+
+      <nav class="sub-menu" aria-label="Tilleggsmeny">
+  <div class="fd-language-links narrow">
+      <a class="language-link" href="https://www.fiskeridir.no/english">
+        <span class="flag flag-en"></span>
+        <span>English</span>
+      </a>
+  </div>
+            <a href="https://sikker.fiskeridir.no/minside/" class="icon-start icon-user fd-menu-link button-border">Logg inn</a>
+            <a
+              class="fd-button-search icon-start icon-search fd-menu-link button-border"
+              href="/sok"
+              aria-expanded="false"
+              aria-controls="search-input-wrapper"
+              data-controller="header-toggle"
+              data-header-toggle-target-id-value="search-input-wrapper"
+            >
+              Søk
+            </a>
+      </nav>
+    </div>
+
+      <div id="search-input-wrapper" class="fd-wide-menu hidden bottom-row">
+        <auto-complete>
+
+  <template shadowrootmode="open">
+    <link href="/_/service/no.fiskeridir/asset/000001a1f2f3f260/css/main.min.css" rel="stylesheet">
+
+  <form
+    id="search-form"
+    class="search-input container-lg-old-center"
+    name="main_search"
+    action="/sok"
+    method="get"
+    role="search"
+  >
+      <input type="hidden" id="autocomplete-no-results-string" value="Ingen automatiske forslag tilgjengelig.">
+      <input type="hidden" id="autocomplete-results-string" value="Forslag tilgjengelig: {0}. Bruk pil opp og ned for å velge et forslag.">
+      <input type="hidden" id="autocomplete-see-all-string" value="Se alle treff">
+      <label for="search" class="sr-only">Søk</label>
+      <input
+        data-lang="no"
+        class="input-field"
+        type="search"
+        name="query"
+        id="search"
+        placeholder="Søk"
+        required=""
+        data-auto-complete-endpoint-url-value="/statistikk-tall-og-analyse/data-og-statistikk-om-akvakultur/biomassestatistikk-etter-fylke/_/service/no.fiskeridir/auto-complete"
+        autocomplete="off"
+      >
+      <ol id="search-result" class="auto-complete-results"></ol>
+    <input
+      id="search-resetButton"
+      type="reset"
+      tabindex="1"
+      class="action reset icon icon-circle-times-solid "
+      aria-label="Nullstill søk"
+    >
+    <button
+      type="submit"
+      tabindex="0"
+      class="action submit icon icon-search"
+      aria-label="Søk"
+    ></button>
+  </form>
+
+  </template>
+
+        </auto-complete>
+        <div class="search-status sr-only" role="status" aria-live="polite"></div>
+      </div>
+
+  </header>
+
+    <div class="fd-breadcrumbs flex flex-space-between">
+      <nav class="container-lg-center" aria-label="Brødsmulesti">
+          <a href="/">Fiskeridirektoratet</a>
+          <a href="/statistikk-tall-og-analyse">Tall og analyse</a>
+          <a href="/statistikk-tall-og-analyse/data-og-statistikk-om-akvakultur">Data og statistikk om akvakultur</a>
+          <a href="">Biomassestatistikk etter fylke</a>
+      </nav>
+    </div>
+
+
+
+
+  <main id="main" tabindex="-1" class="content-grid-row-gap-md">
+
+
+      <header data-portal-region="header" class="fd-default-region default-region-header">
+
+<div data-portal-component-type="part" class="content-grid page">
+    <h1>Biomassestatistikk etter fylke</h1>
+    <div class="fd-preface">
+      <p>Her finner du statistikk&nbsp;over innrapporterte biomassetall fra norske akvakulturanlegg med matfiskproduksjon av laks og regnbueørret i sjøvann etter fylke.</p>
+
+    </div>
+</div>
+
+      </header>
+
+      <div data-portal-region="main" class="fd-default-region default-region-main">
+<div data-portal-component-type="part" class="content-grid content-grid-row-gap-md">
+
+
+      <div 
+        class="content block block-text ">
+
+  <div class="fd-flow fd-richtext">
+      <div class="fd-flow">
+        <p>Fra og med 1.1. 2026 overtok Mattilsynet rapportering av rensefisk. Det betyr at tabellene for utsett av rensefisk ikke lenger oppdateres. Tabellene dette gjelder er merket med "Avsluttet".<br>
+<br>
+Statistikken blir oppdatert den 20. i hver måned.&nbsp;</p>
+
+<p><a href="/statistikk-tall-og-analyse/lisens-for-bruk-av-fiskeridirektoratets-data">Lisens for bruk av Fiskeridirektoratets data</a>.</p>
+
+<p>Alle opplysninger samlet i en fil uten oppsett og summeringer:</p>
+
+<ul>
+	<li><a data-file-name="Biomassestatistikk 2005-2020 (Fylke f.o.m. 2020) (Excel)" data-object-id="27706" href="https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-total-flk.xlsx">Biomassestatistikk 2005-2026 (fylke) (xlsx)</a></li>
+	<li><a data-file-name="Biomassestatistikk 2005-2020 (Fylke f.o.m. 2020) (csv)" data-object-id="27707" href="https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-total-flk.csv">Biomassestatistikk 2005-2026 (fylke) (csv)</a></li>
+	<li><a href="https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-total-flk.json">Biomassestatistikk 2005-2026 (fylke) (json)</a></li>
+	<li><a data-file-name="Biomassestatistikk 2005-2019 (Fylke før 2020) (Excel)" data-object-id="19869" href="/statistikk-tall-og-analyse/data-og-statistikk-om-akvakultur/biomassestatistikk-etter-fylke/_/attachment/download/35bde95d-8303-4b26-9067-7da3da47a42b:8aa735b057b5ab28b6f21936db4ba16663ba7101/biostat-total-flk-2019.xlsx">Biomassestatistikk 2005-2019 (Fylke før 2020) (xlsx, 771.7 kB)</a></li>
+	<li><a data-file-name="Biomassestatistikk 2005-2019 (Fylke før 2020) (csv)" data-object-id="21256" href="/statistikk-tall-og-analyse/data-og-statistikk-om-akvakultur/biomassestatistikk-etter-fylke/_/attachment/download/422fa084-c905-43b4-9446-a050e92e80e5:1c81cbe34307c35cb79e7dc5a55aae783ab17ac7/biostat-total-flk-2019.csv">Biomassestatistikk 2005-2019 (Fylke før 2020) (csv, 745.5 kB)</a></li>
+</ul>
+
+      </div>
+  </div>
+      </div>
+      <div 
+        class="content block block-text ">
+
+  <div class="fd-flow fd-richtext">
+      <h2 id="innrapportert-i-drift">Innrapportert i drift</h2>
+      <div class="fd-flow">
+        <ul>
+	<li><a data-file-name="Antall merder og lokaliteter i bruk 2005-2020 (Fylke)" data-object-id="8934" href="https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-drift01-flk.xlsx">Antall merder og lokaliteter i bruk 2005-2026 (Fylke)</a></li>
+	<li><a href="https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-drift02-flk-rensefisk.xlsx">Antall lokaliteter med rensefisk 2019-2025 (Fylke) (Avsluttet)</a></li>
+</ul>
+
+      </div>
+  </div>
+      </div>
+      <div 
+        class="content block block-text ">
+
+  <div class="fd-flow fd-richtext">
+      <h2 id="innrapportert-beholdning-antall-og-biomasse-ved-manedslutt">Innrapportert beholdning (antall og biomasse) ved månedslutt</h2>
+      <div class="fd-flow">
+        <ul>
+	<li><a data-file-name="Beholdning ved månedslutt fordelt på art 2005-2020 (Fylke)" data-object-id="8914" href="https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-behfisk01-flk.xlsx">Beholdning ved månedslutt fordelt på art 2005-2026 (Fylke)</a></li>
+	<li><a href="https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-behfisk02-flk-2026.xlsx">Beholdning ved månedslutt fordelt på art og utsettsår 2026 (Fylke)</a></li>
+	<li><a href="https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-behfisk02-flk-2025.xlsx">Beholdning ved månedslutt fordelt på art og utsettsår 2025 (Fylke)</a></li>
+	<li><a href="https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-behfisk02-flk-2024.xlsx">Beholdning ved månedslutt fordelt på art og utsettsår 2024 (Fylke)</a></li>
+	<li><a href="https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-behfisk02-flk-2023.xlsx">Beholdning ved månedslutt fordelt på art og utsettsår 2023 (Fylke)</a></li>
+	<li><a href="/statistikk-tall-og-analyse/data-og-statistikk-om-akvakultur/biomassestatistikk-etter-fylke/beholdning-ved-manedslutt-2005-2022-fylke">Beholdning ved månedslutt fordelt på art og utsettsår 2005-2022 (Fylke)</a></li>
+</ul>
+
+      </div>
+  </div>
+      </div>
+      <div 
+        class="content block block-text ">
+
+  <div class="fd-flow fd-richtext">
+      <h2 id="innrapportert-forbruk-av-for">Innrapportert forbruk av fôr</h2>
+      <div class="fd-flow">
+        <ul>
+	<li><a data-file-name="Forbruk av fôr fordelt på år 2005-2020 " data-object-id="8937" href="https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-forforbruk01-flk.xlsx">Forbruk av fôr fordelt på år 2005-2026</a></li>
+	<li><a href="https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-forforbruk02-flk.xlsx">Forbruk av fôr fordelt på art 2005-2026 (Fylke)</a></li>
+	<li><a data-file-name="Forbruk av fôr fordelt på art og utsettsår 2005-2020 (Fylke)" data-object-id="8938" href="https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-forforbruk03-flk.xlsx">Forbruk av fôr fordelt på art og utsettsår 2005-2026 (Fylke)</a></li>
+</ul>
+
+      </div>
+  </div>
+      </div>
+      <div 
+        class="content block block-text ">
+
+  <div class="fd-flow fd-richtext">
+      <h2 id="innrapportert-utsett-av-fisk">Innrapportert utsett av fisk</h2>
+      <div class="fd-flow">
+        <ul>
+	<li><a data-file-name="Utsett av laks og regnbueørret 2005-2020 (Fylke)" data-object-id="8955" href="https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-utsett01-flk.xlsx">Utsett av laks og regnbueørret 2005-2026 (Fylke)</a></li>
+	<li><a data-file-name="Utsett av rensefisk 2019-2020 (fylke)" data-object-id="26578" href="https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-utsett02-flk.xlsx">Utsett av rensefisk 2019-2025 (Fylke) (Avsluttet)</a></li>
+	<li><a href="https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-utsett02c-flk-rensefisk-lok.xlsx">Utsett av rensefisk 2019-2025 pr lokalitet (Fylke) (xlsx) (Avsluttet)</a></li>
+	<li><a href="https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-utsett02c-flk-rensefisk-lok.csv">Utsett av rensefisk 2019-2025 pr lokalitet (Fylke) (csv) (Avsluttet)</a></li>
+</ul>
+
+      </div>
+  </div>
+      </div>
+      <div 
+        class="content block block-text ">
+
+  <div class="fd-flow fd-richtext">
+      <h2 id="innrapportert-uttak-av-slaktet-fisk-mengde">Innrapportert uttak av slaktet fisk (mengde)</h2>
+      <div class="fd-flow">
+        <ul>
+	<li><a data-file-name="Uttak av slaktet fisk fordelt på art 2005-2020 (Fylke)" data-object-id="8957" href="https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-uttak01-flk.xlsx">Uttak av slaktet fisk fordelt på art 2005-2026 (Fylke)</a></li>
+	<li><a href="https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-uttak02-flk-2026.xlsx">Uttak av slaktet fisk fordelt på art og utsettsår 2026 (Fylke)</a></li>
+	<li><a href="https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-uttak02-flk-2025.xlsx">Uttak av slaktet fisk fordelt på art og utsettsår 2025 (Fylke)</a></li>
+	<li><a href="https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-uttak02-flk-2024.xlsx">Uttak av slaktet fisk fordelt på art og utsettsår 2024 (Fylke)</a></li>
+	<li><a href="https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-uttak02-flk-2023.xlsx">Uttak av slaktet fisk fordelt på art og utsettsår 2023 (Fylke)</a></li>
+	<li><a href="/statistikk-tall-og-analyse/data-og-statistikk-om-akvakultur/biomassestatistikk-etter-fylke/uttak-av-slaktet-fisk-2005-2022-fylke">Uttak av slaktet fisk fordelt på art og utsettsår 2005-2022 (Fylke)</a></li>
+</ul>
+
+      </div>
+  </div>
+      </div>
+      <div 
+        class="content block block-text ">
+
+  <div class="fd-flow fd-richtext">
+      <h2 id="produksjonsoversikt">Produksjonsoversikt</h2>
+      <div class="fd-flow">
+        <ul>
+	<li><a data-file-name="Produksjonsoversikt fordelt på art 2005-2020 (Fylke)" data-object-id="18160" href="https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-prodbev01-flk.xlsx">Produksjonsoversikt fordelt på art 2005-2026 (Fylke)</a></li>
+	<li><a href="https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-prodbev02-flk-2026.xlsx">Produksjonsoversikt fordelt på art og utsettsår 2026 (Fylke)</a></li>
+	<li><a href="https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-prodbev02-flk-2025.xlsx">Produksjonsoversikt fordelt på art og utsettsår 2025 (Fylke)</a></li>
+	<li><a href="https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-prodbev02-flk-2024.xlsx">Produksjonsoversikt fordelt på art og utsettsår 2024 (Fylke)</a></li>
+	<li><a href="https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-prodbev02-flk-2023.xlsx">Produksjonsoversikt fordelt på art og utsettsår 2023 (Fylke)</a></li>
+	<li><a href="/statistikk-tall-og-analyse/data-og-statistikk-om-akvakultur/biomassestatistikk-etter-fylke/produksjonsoversikt-2005-2022-fylke">Produksjonsoversikt fordelt på art og utsettsår 2005-2022 (Fylke)</a></li>
+</ul>
+
+      </div>
+  </div>
+      </div>
+      <div 
+        class="content block block-text ">
+
+  <div class="fd-flow fd-richtext">
+      <h2 id="innrapportert-svinn-tap-i-produksjonen">Innrapportert svinn (tap) i produksjonen</h2>
+      <div class="fd-flow">
+        <ul>
+	<li><a data-file-name="Svinn i produksjonen fordelt på art og årsak 2005-2020 (Fylke)" data-object-id="8986" href="https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-svinn01-flk.xlsx">Svinn i produksjonen fordelt på art og årsak 2005-2026 (Fylke)</a></li>
+	<li><a href="https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-svinn02-flk-2026.xlsx">Svinn i produksjonen fordelt på art, årsak og utsettsår 2026 (Fylke)</a></li>
+	<li><a href="https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-svinn02-flk-2025.xlsx">Svinn i produksjonen fordelt på art, årsak og utsettsår 2025 (Fylke)</a></li>
+	<li><a href="https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-svinn02-flk-2024.xlsx">Svinn i produksjonen fordelt på art, årsak og utsettsår 2024 (Fylke)</a></li>
+	<li><a href="https://register.fiskeridir.no/biomassestatistikk/BIOSTAT-LAKS-FLK/biostat-svinn02-flk-2023.xlsx">Svinn i produksjonen fordelt på art, årsak og utsettsår 2023 (Fylke)</a></li>
+	<li><a href="/statistikk-tall-og-analyse/data-og-statistikk-om-akvakultur/biomassestatistikk-etter-fylke/svinn-i-produksjonen-2005-2022-fylke">Svinn i produksjonen fordelt på art, årsak og utsettsår 2005-2022 (Fylke)</a></li>
+</ul>
+
+      </div>
+  </div>
+      </div>
+      <div 
+        class="content block block-contentLinks ">
+
+
+    <div class="list-meta">
+      <h2 id="listTitle" class="list-title ">Les mer
+      </h2>
+
+
+
+    </div>
+
+    <ul aria-labelledby="listTitle" class="fd-item-list fd-item-list-border ">
+        <li class="fd-flow">
+  <a class="list-view-form fd-flow" href="/statistikk-tall-og-analyse/lisens-for-bruk-av-fiskeridirektoratets-data" data-turbo="false">
+    <h3 class="icon-start icon-single-arrow-right">Lisens for bruk av Fiskeridirektoratets data</h3>
+      <div><p>All bruk av data fra Fiskeridirektoratet er underlagt Norsk lisens for offentlige data (NLOD).
+</p></div>
+  </a>
+        </li>
+        <li class="fd-flow">
+  <a class="list-view-form fd-flow" href="/statistikk-tall-og-analyse/data-og-statistikk-om-akvakultur/om-biomassestatistikk" data-turbo="false">
+    <h3 class="icon-start icon-single-arrow-right">Om biomassestatistikk</h3>
+      <div><p>Her finner du mer informasjon om biomassestatistikken for matfiskproduksjon av laks, regnbueørret og ørret samt torsk i sjøvann.&nbsp;
+</p></div>
+  </a>
+        </li>
+        <li class="fd-flow">
+  <a class="list-view-form fd-flow" href="/statistikk-tall-og-analyse/data-og-statistikk-om-akvakultur/biomassestatistikk-for-torsk" data-turbo="false">
+    <h3 class="icon-start icon-statistic-template">Biomassestatistikk for torsk</h3>
+
+      <div><p>Her finner du statistikk over innrapporterte biomassetall fra norske akvakulturanlegg med matfiskproduksjon av torsk.</p>
+</div>
+
+    <div>
+        <span class="category">Akvakultur</span>
+        <span class="category">Biomasse (fisk i merd)</span>
+        <span class="category">Matfisk</span>
+    </div>
+  </a>
+        </li>
+        <li class="fd-flow">
+  <a class="list-view-form fd-flow" href="/statistikk-tall-og-analyse/data-og-statistikk-om-akvakultur/biomassestatistikk-etter-produksjonsomrade" data-turbo="false">
+    <h3 class="icon-start icon-statistic-template">Biomassestatistikk etter produksjonsområde</h3>
+
+      <div><p>Her finner du statistikk over innrapporterte biomassetall fra akvakulturanlegg med matfiskproduksjon av laks og regnbueørret i sjøvann etter produksjonsområde.</p>
+</div>
+
+    <div>
+        <span class="category">Akvakultur</span>
+        <span class="category">Biomasse (fisk i merd)</span>
+        <span class="category">Matfisk</span>
+    </div>
+  </a>
+        </li>
+  </ul>
+
+      </div>
+
+
+</div>
+      </div>
+
+
+      <aside data-portal-region="aside" class="fd-default-region default-region-aside">
+<div data-portal-component-type="part" class="content-grid content-grid-row-gap-md">
+
+
+      <div 
+        class="content block block-skyra ">
+
+    <div class="fd-skyra content-grid" data-controller="skyra">
+      <skyra-survey slug="fiskeridirektoratet/findability-survey"></skyra-survey>
+    </div>
+      </div>
+
+
+</div>
+      </aside>
+  </main>
+
+  <footer class="fd-footer content-grid">
+    <div class="fd-footer-columns feature">
+
+        <div class="fd-richtext">
+
+          <ul>
+	<li><a href="/om-oss">Om oss</a></li>
+	<li><a href="https://dfohr3610.jobs.hr.cloud.sap" target="_blank">Jobb hos oss<span class="sr-only"> (åpnes i ny fane)</span></a></li>
+	<li><a href="/om-oss/personvern">Personvern</a></li>
+	<li><a href="/om-oss/personvern/nettsidene-nyheitsbrev-og-sosiale-media">Innstillinger for informasjonskapsler</a></li>
+</ul>
+
+
+        </div>
+
+        <div class="fd-richtext">
+
+          <ul>
+	<li><a href="https://uustatus.no/nb/erklaringer/publisert/c6a3ce2c-c006-47cb-ae56-00da0c5abde5" target="_blank">Tilgjengelighetserklæring<span class="sr-only"> (åpnes i ny fane)</span></a></li>
+	<li><a href="/om-oss/kontakt-oss">Kontakt&nbsp;oss</a></li>
+	<li><a href="/tips-oss">Tips oss</a></li>
+	<li><a href="/om-oss/nyhetsbrev-og-varsler">Abonner på nyheter og varsler</a></li>
+	<li><a href="/om-oss/driftsmeldingar">Driftsmeldinger</a></li>
+</ul>
+
+
+        </div>
+
+        <div class="fd-richtext">
+            <div class="social-media">
+                <a href="https://www.linkedin.com/company/fiskeridirektoratet-fiskeridir-no-/" target="_blank" aria-label="LinkedIn (åpnes i ny fane)">
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <title>Linkedin</title>
+                    <path d="M25.3715 5H6.62422C5.72617 5 5 5.70898 5 6.58555V25.4102C5 26.2867 5.72617 27 6.62422 27H25.3715C26.2695 27 27 26.2867 27 25.4145V6.58555C27 5.70898 26.2695 5 25.3715 5ZM11.527 23.7473H8.26133V13.2457H11.527V23.7473ZM9.89414 11.8148C8.8457 11.8148 7.99922 10.9684 7.99922 9.92422C7.99922 8.88008 8.8457 8.03359 9.89414 8.03359C10.9383 8.03359 11.7848 8.88008 11.7848 9.92422C11.7848 10.9641 10.9383 11.8148 9.89414 11.8148ZM23.7473 23.7473H20.4859V18.6426C20.4859 17.4266 20.4645 15.8582 18.7887 15.8582C17.0914 15.8582 16.8336 17.1859 16.8336 18.5566V23.7473H13.5766V13.2457H16.7047V14.6809H16.7477C17.1816 13.8559 18.2473 12.9836 19.8328 12.9836C23.1371 12.9836 23.7473 15.1578 23.7473 17.9852V23.7473Z" fill="white"/>
+                  </svg>
+                </a>
+
+                <a href="https://www.facebook.com/fiskeridirektoratet" target="_blank" aria-label="Facebook (åpnes i ny fane)">
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <title>facebook</title>
+                    <path d="M27 16C27 9.92486 22.0751 5 16 5C9.92486 5 5 9.92486 5 16C5 21.4903 9.02252 26.0412 14.2813 26.8664V19.1797H11.4883V16H14.2813V13.5766C14.2813 10.8197 15.9235 9.29687 18.4361 9.29687C19.6392 9.29687 20.8984 9.51172 20.8984 9.51172V12.2187H19.5114C18.145 12.2187 17.7188 13.0667 17.7188 13.9375V16H20.7695L20.2818 19.1797H17.7188V26.8664C22.9775 26.0412 27 21.4903 27 16Z" fill="white"/>
+                  </svg>
+                </a>
+
+
+                <a href="https://www.youtube.com/FiskeridirektoratetNorge" target="_blank" aria-label="YouTube (åpnes i ny fane)">
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <title>youtube</title>
+                    <path d="M26.7809 11.6001C26.7809 11.6001 26.566 10.0833 25.9043 9.41733C25.0664 8.54077 24.1297 8.53647 23.7 8.48491C20.6234 8.26147 16.0043 8.26147 16.0043 8.26147H15.9957C15.9957 8.26147 11.3766 8.26147 8.3 8.48491C7.87031 8.53647 6.93359 8.54077 6.0957 9.41733C5.43398 10.0833 5.22344 11.6001 5.22344 11.6001C5.22344 11.6001 5 13.3833 5 15.1623V16.8294C5 18.6083 5.21914 20.3916 5.21914 20.3916C5.21914 20.3916 5.43398 21.9083 6.09141 22.5744C6.9293 23.4509 8.0293 23.4208 8.51914 23.5154C10.2809 23.683 16 23.7345 16 23.7345C16 23.7345 20.6234 23.7259 23.7 23.5068C24.1297 23.4552 25.0664 23.4509 25.9043 22.5744C26.566 21.9083 26.7809 20.3916 26.7809 20.3916C26.7809 20.3916 27 18.6126 27 16.8294V15.1623C27 13.3833 26.7809 11.6001 26.7809 11.6001ZM13.727 18.8533V12.6701L19.6695 15.7724L13.727 18.8533Z" fill="white"/>
+                  </svg>
+                </a>
+            </div>
+
+          <p>Org.nr.&nbsp;971 20 34 20</p>
+
+
+        </div>
+    </div>
+      <div id="live-fish" class="live-fish-container full-width" data-ws-url="/statistikk-tall-og-analyse/data-og-statistikk-om-akvakultur/biomassestatistikk-etter-fylke/_/service/no.fiskeridir/live-visitors"></div>
+  </footer>
+
+  <script type="module" src="/_/service/no.fiskeridir/asset/000001a1f2f3f260/ts/live-fish.mjs"></script>
+<script>window.SKYRA_CONFIG={org:"fiskeridirektoratet",consent:false};</script><script async src="https://survey.skyra.no/skyra-survey.js"></script></body>
+</html>

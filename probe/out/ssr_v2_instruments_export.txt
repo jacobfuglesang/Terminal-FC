@@ -1,0 +1,2187 @@
+URL https://ssr.finanstilsynet.no/api/v2/instruments/export-json
+STATUS 200
+TYPE application/json
+LEN 2509893
+LINKS []
+
+[
+  {
+    "isin": "BMG9156K1018",
+    "issuerName": "2020 BULKERS",
+    "events": [
+      {
+        "date": "2026-10-01",
+        "shortPercent": 0.0,
+        "shares": 0,
+        "activePositions": []
+      },
+      {
+        "date": "2026-09-30",
+        "shortPercent": 1.8,
+        "shares": 413635,
+        "activePositions": [
+          {
+            "date": "2026-09-30",
+            "shortPercent": 1.8,
+            "shares": 413635,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          }
+        ]
+      },
+      {
+        "date": "2026-09-29",
+        "shortPercent": 1.64,
+        "shares": 377008,
+        "activePositions": [
+          {
+            "date": "2026-09-29",
+            "shortPercent": 1.64,
+            "shares": 377008,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          }
+        ]
+      },
+      {
+        "date": "2026-09-25",
+        "shortPercent": 1.43,
+        "shares": 329408,
+        "activePositions": [
+          {
+            "date": "2026-09-25",
+            "shortPercent": 1.43,
+            "shares": 329408,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          }
+        ]
+      },
+      {
+        "date": "2026-09-24",
+        "shortPercent": 1.09,
+        "shares": 249963,
+        "activePositions": [
+          {
+            "date": "2026-09-24",
+            "shortPercent": 1.09,
+            "shares": 249963,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          }
+        ]
+      },
+      {
+        "date": "2026-09-23",
+        "shortPercent": 0.94,
+        "shares": 215588,
+        "activePositions": [
+          {
+            "date": "2026-09-23",
+            "shortPercent": 0.94,
+            "shares": 215588,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          }
+        ]
+      },
+      {
+        "date": "2026-09-22",
+        "shortPercent": 0.71,
+        "shares": 164820,
+        "activePositions": [
+          {
+            "date": "2026-09-22",
+            "shortPercent": 0.71,
+            "shares": 164820,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          }
+        ]
+      },
+      {
+        "date": "2026-08-27",
+        "shortPercent": 0.0,
+        "shares": 0,
+        "activePositions": []
+      },
+      {
+        "date": "2026-08-26",
+        "shortPercent": 0.58,
+        "shares": 134521,
+        "activePositions": [
+          {
+            "date": "2026-08-24",
+            "shortPercent": 0.58,
+            "shares": 134521,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          }
+        ]
+      },
+      {
+        "date": "2026-08-24",
+        "shortPercent": 1.12,
+        "shares": 260032,
+        "activePositions": [
+          {
+            "date": "2026-08-24",
+            "shortPercent": 0.54,
+            "shares": 125511,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-08-24",
+            "shortPercent": 0.58,
+            "shares": 134521,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          }
+        ]
+      },
+      {
+        "date": "2026-08-21",
+        "shortPercent": 1.42,
+        "shares": 328668,
+        "activePositions": [
+          {
+            "date": "2026-08-21",
+            "shortPercent": 0.74,
+            "shares": 171020,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-08-12",
+            "shortPercent": 0.68,
+            "shares": 157648,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          }
+        ]
+      },
+      {
+        "date": "2026-08-20",
+        "shortPercent": 1.52,
+        "shares": 352156,
+        "activePositions": [
+          {
+            "date": "2026-08-20",
+            "shortPercent": 0.84,
+            "shares": 194508,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-08-12",
+            "shortPercent": 0.68,
+            "shares": 157648,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          }
+        ]
+      },
+      {
+        "date": "2026-08-19",
+        "shortPercent": 1.65,
+        "shares": 381750,
+        "activePositions": [
+          {
+            "date": "2026-08-19",
+            "shortPercent": 0.97,
+            "shares": 224102,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-08-12",
+            "shortPercent": 0.68,
+            "shares": 157648,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          }
+        ]
+      },
+      {
+        "date": "2026-08-18",
+        "shortPercent": 1.68,
+        "shares": 387942,
+        "activePositions": [
+          {
+            "date": "2026-08-18",
+            "shortPercent": 1.0,
+            "shares": 230294,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-08-12",
+            "shortPercent": 0.68,
+            "shares": 157648,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          }
+        ]
+      },
+      {
+        "date": "2026-08-14",
+        "shortPercent": 1.87,
+        "shares": 431593,
+        "activePositions": [
+          {
+            "date": "2026-08-14",
+            "shortPercent": 1.19,
+            "shares": 273945,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-08-12",
+            "shortPercent": 0.68,
+            "shares": 157648,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          }
+        ]
+      },
+      {
+        "date": "2026-08-13",
+        "shortPercent": 1.92,
+        "shares": 443147,
+        "activePositions": [
+          {
+            "date": "2026-08-13",
+            "shortPercent": 1.24,
+            "shares": 285499,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-08-12",
+            "shortPercent": 0.68,
+            "shares": 157648,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          }
+        ]
+      },
+      {
+        "date": "2026-08-12",
+        "shortPercent": 2.06,
+        "shares": 475237,
+        "activePositions": [
+          {
+            "date": "2026-08-11",
+            "shortPercent": 1.38,
+            "shares": 317589,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-08-12",
+            "shortPercent": 0.68,
+            "shares": 157648,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          }
+        ]
+      },
+      {
+        "date": "2026-08-11",
+        "shortPercent": 2.11,
+        "shares": 486144,
+        "activePositions": [
+          {
+            "date": "2026-08-11",
+            "shortPercent": 1.38,
+            "shares": 317589,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-08-07",
+            "shortPercent": 0.73,
+            "shares": 168555,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          }
+        ]
+      },
+      {
+        "date": "2026-08-07",
+        "shortPercent": 2.2,
+        "shares": 507533,
+        "activePositions": [
+          {
+            "date": "2026-08-07",
+            "shortPercent": 1.47,
+            "shares": 338978,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-08-07",
+            "shortPercent": 0.73,
+            "shares": 168555,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          }
+        ]
+      },
+      {
+        "date": "2026-08-05",
+        "shortPercent": 2.27,
+        "shares": 521745,
+        "activePositions": [
+          {
+            "date": "2026-08-05",
+            "shortPercent": 1.65,
+            "shares": 378558,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-08-04",
+            "shortPercent": 0.62,
+            "shares": 143187,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          }
+        ]
+      },
+      {
+        "date": "2026-08-04",
+        "shortPercent": 2.91,
+        "shares": 670711,
+        "activePositions": [
+          {
+            "date": "2026-08-04",
+            "shortPercent": 1.74,
+            "shares": 399553,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-07-31",
+            "shortPercent": 0.55,
+            "shares": 127971,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-08-04",
+            "shortPercent": 0.62,
+            "shares": 143187,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          }
+        ]
+      },
+      {
+        "date": "2026-08-03",
+        "shortPercent": 2.88,
+        "shares": 663090,
+        "activePositions": [
+          {
+            "date": "2026-08-03",
+            "shortPercent": 1.8,
+            "shares": 413077,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-07-31",
+            "shortPercent": 0.55,
+            "shares": 127971,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-08-03",
+            "shortPercent": 0.53,
+            "shares": 122042,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          }
+        ]
+      },
+      {
+        "date": "2026-07-31",
+        "shortPercent": 2.47,
+        "shares": 570444,
+        "activePositions": [
+          {
+            "date": "2026-07-31",
+            "shortPercent": 1.92,
+            "shares": 442473,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-07-31",
+            "shortPercent": 0.55,
+            "shares": 127971,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-07-30",
+        "shortPercent": 3.31,
+        "shares": 763355,
+        "activePositions": [
+          {
+            "date": "2026-07-30",
+            "shortPercent": 2.07,
+            "shares": 476860,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-07-29",
+            "shortPercent": 0.64,
+            "shares": 147828,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-07-29",
+            "shortPercent": 0.6,
+            "shares": 138667,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          }
+        ]
+      },
+      {
+        "date": "2026-07-29",
+        "shortPercent": 3.47,
+        "shares": 799560,
+        "activePositions": [
+          {
+            "date": "2026-07-29",
+            "shortPercent": 2.23,
+            "shares": 513065,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-07-29",
+            "shortPercent": 0.64,
+            "shares": 147828,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-07-29",
+            "shortPercent": 0.6,
+            "shares": 138667,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          }
+        ]
+      },
+      {
+        "date": "2026-07-28",
+        "shortPercent": 3.94,
+        "shares": 907681,
+        "activePositions": [
+          {
+            "date": "2026-07-28",
+            "shortPercent": 2.36,
+            "shares": 542866,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-07-27",
+            "shortPercent": 0.79,
+            "shares": 181407,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-07-24",
+            "shortPercent": 0.79,
+            "shares": 183408,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          }
+        ]
+      },
+      {
+        "date": "2026-07-27",
+        "shortPercent": 4.01,
+        "shares": 922768,
+        "activePositions": [
+          {
+            "date": "2026-07-27",
+            "shortPercent": 2.43,
+            "shares": 557953,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-07-27",
+            "shortPercent": 0.79,
+            "shares": 181407,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-07-24",
+            "shortPercent": 0.79,
+            "shares": 183408,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          }
+        ]
+      },
+      {
+        "date": "2026-07-24",
+        "shortPercent": 4.26,
+        "shares": 981372,
+        "activePositions": [
+          {
+            "date": "2026-07-24",
+            "shortPercent": 2.55,
+            "shares": 586235,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-07-24",
+            "shortPercent": 0.92,
+            "shares": 211729,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-07-24",
+            "shortPercent": 0.79,
+            "shares": 183408,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          }
+        ]
+      },
+      {
+        "date": "2026-07-23",
+        "shortPercent": 4.47,
+        "shares": 1028996,
+        "activePositions": [
+          {
+            "date": "2026-07-23",
+            "shortPercent": 2.84,
+            "shares": 653171,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-07-22",
+            "shortPercent": 1.09,
+            "shares": 250101,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-07-21",
+            "shortPercent": 0.54,
+            "shares": 125724,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          }
+        ]
+      },
+      {
+        "date": "2026-07-22",
+        "shortPercent": 4.54,
+        "shares": 1044244,
+        "activePositions": [
+          {
+            "date": "2026-07-22",
+            "shortPercent": 2.91,
+            "shares": 668419,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-07-22",
+            "shortPercent": 1.09,
+            "shares": 250101,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-07-21",
+            "shortPercent": 0.54,
+            "shares": 125724,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          }
+        ]
+      },
+      {
+        "date": "2026-07-21",
+        "shortPercent": 4.72,
+        "shares": 1086526,
+        "activePositions": [
+          {
+            "date": "2026-07-21",
+            "shortPercent": 3.01,
+            "shares": 692066,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-07-21",
+            "shortPercent": 1.17,
+            "shares": 268736,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-07-21",
+            "shortPercent": 0.54,
+            "shares": 125724,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          }
+        ]
+      },
+      {
+        "date": "2026-07-20",
+        "shortPercent": 4.38,
+        "shares": 1006323,
+        "activePositions": [
+          {
+            "date": "2026-07-17",
+            "shortPercent": 3.14,
+            "shares": 720351,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-07-20",
+            "shortPercent": 1.24,
+            "shares": 285972,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-07-17",
+        "shortPercent": 4.5,
+        "shares": 1032384,
+        "activePositions": [
+          {
+            "date": "2026-07-17",
+            "shortPercent": 3.14,
+            "shares": 720351,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-07-16",
+            "shortPercent": 1.36,
+            "shares": 312033,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-07-16",
+        "shortPercent": 4.65,
+        "shares": 1067607,
+        "activePositions": [
+          {
+            "date": "2026-07-15",
+            "shortPercent": 3.29,
+            "shares": 755574,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-07-16",
+            "shortPercent": 1.36,
+            "shares": 312033,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-07-15",
+        "shortPercent": 4.73,
+        "shares": 1087590,
+        "activePositions": [
+          {
+            "date": "2026-07-15",
+            "shortPercent": 3.29,
+            "shares": 755574,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-07-14",
+            "shortPercent": 1.44,
+            "shares": 332016,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-07-14",
+        "shortPercent": 4.81,
+        "shares": 1106347,
+        "activePositions": [
+          {
+            "date": "2026-07-14",
+            "shortPercent": 3.37,
+            "shares": 774331,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-07-14",
+            "shortPercent": 1.44,
+            "shares": 332016,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-07-13",
+        "shortPercent": 5.0,
+        "shares": 1150648,
+        "activePositions": [
+          {
+            "date": "2026-07-13",
+            "shortPercent": 3.49,
+            "shares": 802401,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-07-10",
+            "shortPercent": 1.51,
+            "shares": 348247,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-07-10",
+        "shortPercent": 5.63,
+        "shares": 1293411,
+        "activePositions": [
+          {
+            "date": "2026-07-10",
+            "shortPercent": 3.59,
+            "shares": 823449,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-07-10",
+            "shortPercent": 1.51,
+            "shares": 348247,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-07-10",
+            "shortPercent": 0.53,
+            "shares": 121715,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          }
+        ]
+      },
+      {
+        "date": "2026-07-09",
+        "shortPercent": 5.74,
+        "shares": 1321207,
+        "activePositions": [
+          {
+            "date": "2026-07-07",
+            "shortPercent": 3.65,
+            "shares": 838748,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-07-01",
+            "shortPercent": 1.48,
+            "shares": 340625,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-07-09",
+            "shortPercent": 0.61,
+            "shares": 141834,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          }
+        ]
+      },
+      {
+        "date": "2026-07-07",
+        "shortPercent": 5.13,
+        "shares": 1179373,
+        "activePositions": [
+          {
+            "date": "2026-07-07",
+            "shortPercent": 3.65,
+            "shares": 838748,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-07-01",
+            "shortPercent": 1.48,
+            "shares": 340625,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-07-02",
+        "shortPercent": 5.18,
+        "shares": 1189217,
+        "activePositions": [
+          {
+            "date": "2026-07-02",
+            "shortPercent": 3.7,
+            "shares": 848592,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-07-01",
+            "shortPercent": 1.48,
+            "shares": 340625,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-07-01",
+        "shortPercent": 5.16,
+        "shares": 1186756,
+        "activePositions": [
+          {
+            "date": "2026-06-30",
+            "shortPercent": 3.68,
+            "shares": 846131,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-07-01",
+            "shortPercent": 1.48,
+            "shares": 340625,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-06-30",
+        "shortPercent": 5.22,
+        "shares": 1200364,
+        "activePositions": [
+          {
+            "date": "2026-06-30",
+            "shortPercent": 3.68,
+            "shares": 846131,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-06-30",
+            "shortPercent": 1.54,
+            "shares": 354233,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-06-29",
+        "shortPercent": 4.99,
+        "shares": 1147127,
+        "activePositions": [
+          {
+            "date": "2026-06-26",
+            "shortPercent": 3.5,
+            "shares": 803306,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-06-29",
+            "shortPercent": 1.49,
+            "shares": 343821,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-06-26",
+        "shortPercent": 5.0,
+        "shares": 1147357,
+        "activePositions": [
+          {
+            "date": "2026-06-26",
+            "shortPercent": 3.5,
+            "shares": 803306,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-06-26",
+            "shortPercent": 1.5,
+            "shares": 344051,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-06-25",
+        "shortPercent": 4.93,
+        "shares": 1131977,
+        "activePositions": [
+          {
+            "date": "2026-06-25",
+            "shortPercent": 3.45,
+            "shares": 792179,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-06-24",
+            "shortPercent": 1.48,
+            "shares": 339798,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-06-24",
+        "shortPercent": 5.34,
+        "shares": 1228597,
+        "activePositions": [
+          {
+            "date": "2026-06-22",
+            "shortPercent": 3.32,
+            "shares": 763505,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-06-24",
+            "shortPercent": 1.48,
+            "shares": 339798,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-06-24",
+            "shortPercent": 0.54,
+            "shares": 125294,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          }
+        ]
+      },
+      {
+        "date": "2026-06-23",
+        "shortPercent": 5.58,
+        "shares": 1285065,
+        "activePositions": [
+          {
+            "date": "2026-06-22",
+            "shortPercent": 3.32,
+            "shares": 763505,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-06-23",
+            "shortPercent": 1.5,
+            "shares": 345990,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-06-18",
+            "shortPercent": 0.76,
+            "shares": 175570,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          }
+        ]
+      },
+      {
+        "date": "2026-06-22",
+        "shortPercent": 5.57,
+        "shares": 1281988,
+        "activePositions": [
+          {
+            "date": "2026-06-22",
+            "shortPercent": 3.32,
+            "shares": 763505,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-06-22",
+            "shortPercent": 1.49,
+            "shares": 342913,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-06-18",
+            "shortPercent": 0.76,
+            "shares": 175570,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          }
+        ]
+      },
+      {
+        "date": "2026-06-19",
+        "shortPercent": 6.14,
+        "shares": 1412578,
+        "activePositions": [
+          {
+            "date": "2026-06-19",
+            "shortPercent": 3.24,
+            "shares": 744902,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-06-18",
+            "shortPercent": 1.55,
+            "shares": 355728,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-06-18",
+            "shortPercent": 0.76,
+            "shares": 175570,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          },
+          {
+            "date": "2026-06-17",
+            "shortPercent": 0.59,
+            "shares": 136378,
+            "positionHolder": "SQUAREPOINT OPS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-06-18",
+        "shortPercent": 6.06,
+        "shares": 1393955,
+        "activePositions": [
+          {
+            "date": "2026-06-18",
+            "shortPercent": 3.16,
+            "shares": 726279,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-06-18",
+            "shortPercent": 1.55,
+            "shares": 355728,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-06-18",
+            "shortPercent": 0.76,
+            "shares": 175570,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          },
+          {
+            "date": "2026-06-17",
+            "shortPercent": 0.59,
+            "shares": 136378,
+            "positionHolder": "SQUAREPOINT OPS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-06-17",
+        "shortPercent": 5.74,
+        "shares": 1322366,
+        "activePositions": [
+          {
+            "date": "2026-06-17",
+            "shortPercent": 3.05,
+            "shares": 701623,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-06-16",
+            "shortPercent": 1.47,
+            "shares": 337703,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-06-16",
+            "shortPercent": 0.63,
+            "shares": 146662,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          },
+          {
+            "date": "2026-06-17",
+            "shortPercent": 0.59,
+            "shares": 136378,
+            "positionHolder": "SQUAREPOINT OPS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-06-16",
+        "shortPercent": 5.67,
+        "shares": 1304882,
+        "activePositions": [
+          {
+            "date": "2026-06-16",
+            "shortPercent": 2.96,
+            "shares": 679515,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-06-16",
+            "shortPercent": 1.47,
+            "shares": 337703,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-06-16",
+            "shortPercent": 0.63,
+            "shares": 146662,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          },
+          {
+            "date": "2026-06-15",
+            "shortPercent": 0.61,
+            "shares": 141002,
+            "positionHolder": "SQUAREPOINT OPS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-06-15",
+        "shortPercent": 5.84,
+        "shares": 1345196,
+        "activePositions": [
+          {
+            "date": "2026-06-15",
+            "shortPercent": 2.88,
+            "shares": 660895,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-06-15",
+            "shortPercent": 1.56,
+            "shares": 360009,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-06-08",
+            "shortPercent": 0.79,
+            "shares": 183290,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          },
+          {
+            "date": "2026-06-15",
+            "shortPercent": 0.61,
+            "shares": 141002,
+            "positionHolder": "SQUAREPOINT OPS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-06-12",
+        "shortPercent": 5.74,
+        "shares": 1321133,
+        "activePositions": [
+          {
+            "date": "2026-06-12",
+            "shortPercent": 2.7,
+            "shares": 619906,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-06-11",
+            "shortPercent": 1.49,
+            "shares": 343601,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-06-08",
+            "shortPercent": 0.79,
+            "shares": 183290,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          },
+          {
+            "date": "2026-06-11",
+            "shortPercent": 0.76,
+            "shares": 174336,
+            "positionHolder": "SQUAREPOINT OPS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-06-11",
+        "shortPercent": 5.53,
+        "shares": 1274011,
+        "activePositions": [
+          {
+            "date": "2026-06-11",
+            "shortPercent": 2.49,
+            "shares": 572784,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-06-11",
+            "shortPercent": 1.49,
+            "shares": 343601,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-06-08",
+            "shortPercent": 0.79,
+            "shares": 183290,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          },
+          {
+            "date": "2026-06-11",
+            "shortPercent": 0.76,
+            "shares": 174336,
+            "positionHolder": "SQUAREPOINT OPS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-06-10",
+        "shortPercent": 5.37,
+        "shares": 1237461,
+        "activePositions": [
+          {
+            "date": "2026-06-10",
+            "shortPercent": 2.26,
+            "shares": 519497,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-06-10",
+            "shortPercent": 1.51,
+            "shares": 347119,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-06-08",
+            "shortPercent": 0.79,
+            "shares": 183290,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          },
+          {
+            "date": "2026-06-10",
+            "shortPercent": 0.81,
+            "shares": 187555,
+            "positionHolder": "SQUAREPOINT OPS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-06-09",
+        "shortPercent": 5.26,
+        "shares": 1213132,
+        "activePositions": [
+          {
+            "date": "2026-06-09",
+            "shortPercent": 2.12,
+            "shares": 488254,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-06-08",
+            "shortPercent": 1.4,
+            "shares": 323034,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-06-08",
+            "shortPercent": 0.79,
+            "shares": 183290,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          },
+          {
+            "date": "2026-06-08",
+            "shortPercent": 0.95,
+            "shares": 218554,
+            "positionHolder": "SQUAREPOINT OPS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-06-08",
+        "shortPercent": 4.99,
+        "shares": 1150647,
+        "activePositions": [
+          {
+            "date": "2026-06-08",
+            "shortPercent": 1.85,
+            "shares": 425769,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-06-08",
+            "shortPercent": 1.4,
+            "shares": 323034,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-06-08",
+            "shortPercent": 0.79,
+            "shares": 183290,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          },
+          {
+            "date": "2026-06-08",
+            "shortPercent": 0.95,
+            "shares": 218554,
+            "positionHolder": "SQUAREPOINT OPS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-06-05",
+        "shortPercent": 4.93,
+        "shares": 1134130,
+        "activePositions": [
+          {
+            "date": "2026-06-05",
+            "shortPercent": 1.68,
+            "shares": 386633,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-06-05",
+            "shortPercent": 1.54,
+            "shares": 354535,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-06-05",
+            "shortPercent": 0.68,
+            "shares": 156770,
+            "positionHolder": "CITADEL SECURITIES (EUROPE) LIMITED"
+          },
+          {
+            "date": "2026-06-05",
+            "shortPercent": 1.03,
+            "shares": 236192,
+            "positionHolder": "SQUAREPOINT OPS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-06-04",
+        "shortPercent": 4.17,
+        "shares": 960611,
+        "activePositions": [
+          {
+            "date": "2026-06-04",
+            "shortPercent": 1.52,
+            "shares": 350411,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-06-04",
+            "shortPercent": 1.46,
+            "shares": 335056,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-06-03",
+            "shortPercent": 1.19,
+            "shares": 275144,
+            "positionHolder": "SQUAREPOINT OPS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-06-03",
+        "shortPercent": 4.19,
+        "shares": 965245,
+        "activePositions": [
+          {
+            "date": "2026-06-03",
+            "shortPercent": 1.39,
+            "shares": 320417,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-06-03",
+            "shortPercent": 1.61,
+            "shares": 369684,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-06-03",
+            "shortPercent": 1.19,
+            "shares": 275144,
+            "positionHolder": "SQUAREPOINT OPS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-06-02",
+        "shortPercent": 4.0,
+        "shares": 920152,
+        "activePositions": [
+          {
+            "date": "2026-06-01",
+            "shortPercent": 1.29,
+            "shares": 297425,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-06-02",
+            "shortPercent": 1.46,
+            "shares": 335803,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-06-02",
+            "shortPercent": 1.25,
+            "shares": 286924,
+            "positionHolder": "SQUAREPOINT OPS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-06-01",
+        "shortPercent": 4.35,
+        "shares": 1002695,
+        "activePositions": [
+          {
+            "date": "2026-06-01",
+            "shortPercent": 1.29,
+            "shares": 297425,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-06-01",
+            "shortPercent": 1.68,
+            "shares": 387479,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-05-28",
+            "shortPercent": 1.38,
+            "shares": 317791,
+            "positionHolder": "SQUAREPOINT OPS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-05-29",
+        "shortPercent": 4.27,
+        "shares": 984312,
+        "activePositions": [
+          {
+            "date": "2026-05-29",
+            "shortPercent": 1.09,
+            "shares": 251924,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-05-29",
+            "shortPercent": 1.8,
+            "shares": 414597,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-05-28",
+            "shortPercent": 1.38,
+            "shares": 317791,
+            "positionHolder": "SQUAREPOINT OPS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-05-28",
+        "shortPercent": 3.63,
+        "shares": 836303,
+        "activePositions": [
+          {
+            "date": "2026-05-28",
+            "shortPercent": 0.79,
+            "shares": 182612,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-05-27",
+            "shortPercent": 1.46,
+            "shares": 335900,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-05-28",
+            "shortPercent": 1.38,
+            "shares": 317791,
+            "positionHolder": "SQUAREPOINT OPS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-05-27",
+        "shortPercent": 2.92,
+        "shares": 671490,
+        "activePositions": [
+          {
+            "date": "2026-05-27",
+            "shortPercent": 1.46,
+            "shares": 335900,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-05-27",
+            "shortPercent": 1.46,
+            "shares": 335590,
+            "positionHolder": "SQUAREPOINT OPS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-05-26",
+        "shortPercent": 3.15,
+        "shares": 724439,
+        "activePositions": [
+          {
+            "date": "2026-05-26",
+            "shortPercent": 1.56,
+            "shares": 358894,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-05-22",
+            "shortPercent": 1.59,
+            "shares": 365545,
+            "positionHolder": "SQUAREPOINT OPS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-05-22",
+        "shortPercent": 3.07,
+        "shares": 705731,
+        "activePositions": [
+          {
+            "date": "2026-05-21",
+            "shortPercent": 1.48,
+            "shares": 340186,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-05-22",
+            "shortPercent": 1.59,
+            "shares": 365545,
+            "positionHolder": "SQUAREPOINT OPS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-05-21",
+        "shortPercent": 3.15,
+        "shares": 723644,
+        "activePositions": [
+          {
+            "date": "2026-05-21",
+            "shortPercent": 1.48,
+            "shares": 340186,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-05-21",
+            "shortPercent": 1.67,
+            "shares": 383458,
+            "positionHolder": "SQUAREPOINT OPS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-05-20",
+        "shortPercent": 2.61,
+        "shares": 601252,
+        "activePositions": [
+          {
+            "date": "2026-05-20",
+            "shortPercent": 0.87,
+            "shares": 200917,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-05-20",
+            "shortPercent": 1.74,
+            "shares": 400335,
+            "positionHolder": "SQUAREPOINT OPS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-05-19",
+        "shortPercent": 2.25,
+        "shares": 518229,
+        "activePositions": [
+          {
+            "date": "2026-05-19",
+            "shortPercent": 0.58,
+            "shares": 133796,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-05-19",
+            "shortPercent": 1.67,
+            "shares": 384433,
+            "positionHolder": "SQUAREPOINT OPS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-05-18",
+        "shortPercent": 2.12,
+        "shares": 488465,
+        "activePositions": [
+          {
+            "date": "2026-05-18",
+            "shortPercent": 0.73,
+            "shares": 169350,
+            "positionHolder": "CITADEL ADVISORS LLC"
+          },
+          {
+            "date": "2026-05-18",
+            "shortPercent": 1.39,
+            "shares": 319115,
+            "positionHolder": "SQUAREPOINT OPS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-05-15",
+        "shortPercent": 1.16,
+        "shares": 268113,
+        "activePositions": [
+          {
+            "date": "2026-05-15",
+            "shortPercent": 1.16,
+            "shares": 268113,
+            "positionHolder": "SQUAREPOINT OPS LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-05-13",
+        "shortPercent": 1.27,
+        "shares": 293354,
+        "activePositions": [
+          {
+            "date": "2026-05-12",
+            "shortPercent": 1.27,
+            "shares": 293354,
+            "positionHolder": "Squarepoint Ops LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-05-12",
+        "shortPercent": 1.79,
+        "shares": 414066,
+        "activePositions": [
+          {
+            "date": "2026-05-12",
+            "shortPercent": 0.52,
+            "shares": 120712,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-05-12",
+            "shortPercent": 1.27,
+            "shares": 293354,
+            "positionHolder": "Squarepoint Ops LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-05-11",
+        "shortPercent": 1.73,
+        "shares": 397031,
+        "activePositions": [
+          {
+            "date": "2026-05-11",
+            "shortPercent": 1.73,
+            "shares": 397031,
+            "positionHolder": "Squarepoint Ops LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-05-08",
+        "shortPercent": 1.86,
+        "shares": 427308,
+        "activePositions": [
+          {
+            "date": "2026-05-07",
+            "shortPercent": 0.51,
+            "shares": 117086,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-05-08",
+            "shortPercent": 1.35,
+            "shares": 310222,
+            "positionHolder": "Squarepoint Ops LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-05-07",
+        "shortPercent": 1.35,
+        "shares": 311001,
+        "activePositions": [
+          {
+            "date": "2026-05-07",
+            "shortPercent": 0.51,
+            "shares": 117086,
+            "positionHolder": "GSA CAPITAL PARTNERS LLP"
+          },
+          {
+            "date": "2026-05-07",
+            "shortPercent": 0.84,
+            "shares": 193915,
+            "positionHolder": "Squarepoint Ops LLC"
+          }
+        ]
+      },
+      {
+        "date": "2026-05-05",
+        "shortPercent": 0.73,
+        "shares": 168526,
+        "activePositions": [
+          {
+            "date": "2026-05-05",
+            "shortPercent": 0.73,
+            "shares": 168526,
+            "positionHolder": "Squarepoint Ops LLC"
+          }
+        ]
+      },
+      {
+        "date": "2025-12-02",
+        "shortPercent": 0.0,
+        "shares": 0,
+        "activePositions": []
+      },
+      {
+        "date": "2025-10-28",
+        "shortPercent": 0.59,
+        "shares": 136524,
+        "activePositions": [
+          {
+            "date": "2025-10-28",
+            "shortPercent": 0.59,
+            "shares": 136524,
+            "positionHolder": "GSA Capital Partners LLP"
+          }
+        ]
+      },
+      {
+        "date": "2025-09-30",
+        "shortPercent": 0.69,
+        "shares": 159929,
+        "activePositions": [
+          {
+            "date": "2025-09-30",
+            "shortPercent": 0.69,
+            "shares": 159929,
+            "positionHolder": "GSA Capital Partners LLP"
+          }
+        ]
+      },
+      {
+        "date": "2025-08-07",
+        "shortPercent": 0.7,
+        "shares": 160179,
+        "activePositions": [
+          {
+            "date": "2025-04-24",
+            "shortPercent": 0.7,
+            "shares": 160179,
+            "positionHolder": "GSA Capital Partners LLP"
+          }
+        ]
+      },
+      {
+        "date": "2025-08-06",
+        "shortPercent": 1.2,
+        "shares": 274549,
+        "activePositions": [
+          {
+            "date": "2025-04-24",
+            "shortPercent": 0.7,
+            "shares": 160179,
+            "positionHolder": "GSA Capital Partners LLP"
+          },
+          {
+            "date": "2025-08-06",
+            "shortPercent": 0.5,
+            "shares": 114370,
+            "positionHolder": "PDT Partners, LLC"
+          }
+        ]
+      },
+      {
+        "date": "2025-08-05",
+        "shortPercent": 0.7,
+        "shares": 160179,
+        "activePositions": [
+          {
+            "date": "2025-04-24",
+            "shortPercent": 0.7,
+            "shares": 160179,
+            "positionHolder": "GSA Capital Partners LLP"
+          }
+        ]
+      },
+      {
+        "date": "2025-08-01",
+        "shortPercent": 1.28,
+        "shares": 294160,
+        "activePositions": [
+          {
+            "date": "2025-04-24",
+            "shortPercent": 0.7,
+            "shares": 160179,
+            "positionHolder": "GSA Capital Partners LLP"
+          },
+          {
+            "date": "2025-08-01",
+            "shortPercent": 0.58,
+            "shares": 133981,
+            "positionHolder": "PDT Partners, LLC"
+          }
+        ]
+      },
+      {
+        "date": "2025-07-24",
+        "shortPercent": 1.39,
+        "shares": 319787,
+        "activePositions": [
+          {
+            "date": "2025-04-24",
+            "shortPercent": 0.7,
+            "shares": 160179,
+            "positionHolder": "GSA Capital Partners LLP"
+          },
+          {
+            "date": "2025-07-24",
+            "shortPercent": 0.69,
+            "shares": 159608,
+            "positionHolder": "PDT Partners, LLC"
+          }
+        ]
+      },
+      {
+        "date": "2025-07-23",
+        "shortPercent": 1.46,
+        "shares": 334720,
+        "activePositions": [
+          {
+            "date": "2025-04-24",
+            "shortPercent": 0.7,
+            "shares": 160179,
+            "positionHolder": "GSA Capital Partners LLP"
+          },
+          {
+            "date": "2025-07-23",
+            "shortPercent": 0.76,
+            "shares": 174541,
+            "positionHolder": "PDT Partners, LLC"
+          }
+        ]
+      },
+      {
+        "date": "2025-07-22",
+        "shortPercent": 1.57,
+        "shares": 360065,
+        "activePositions": [
+          {
+            "date": "2025-04-24",
+            "shortPercent": 0.7,
+            "shares": 160179,
+            "positionHolder": "GSA Capital Partners LLP"
+          },
+          {
+            "date": "2025-07-22",
+            "shortPercent": 0.87,
+            "shares": 199886,
+            "positionHolder": "PDT Partners, LLC"
+          }
+        ]
+      },
+      {
+        "date": "2025-07-17",
+        "shortPercent": 1.68,
+        "shares": 386384,
+        "activePositions": [
+          {
+            "date": "2025-04-24",
+            "shortPercent": 0.7,
+            "shares": 160179,
+            "positionHolder": "GSA Capital Partners LLP"
+          },
+          {
+            "date": "2025-07-17",
+            "shortPercent": 0.98,
+            "shares": 226205,
+            "positionHolder": "PDT Partners, LLC"
+          }
+        ]
+      },
+      {
+        "date": "2025-07-15",
+        "shortPercent": 1.7,
+        "shares": 390516,
+        "activePositions": [
+          {
+            "date": "2025-04-24",
+            "shortPercent": 0.7,
+            "shares": 160179,
+            "positionHolder": "GSA Capital Partners LLP"
+          },
+          {
+            "date": "2025-07-15",
+            "shortPercent": 1.0,
+            "shares": 230337,
+            "positionHolder": "PDT Partners, LLC"
+          }
+        ]
+      },
+      {
+        "date": "2025-07-09",
+        "shortPercent": 1.6,
+        "shares": 367267,
+        "activePositions": [
+          {
+            "date": "2025-04-24",
+            "shortPercent": 0.7,
+            "shares": 160179,
+            "positionHolder": "GSA Capital Partners LLP"
+          },
+          {
+            "date": "2025-07-09",
+            "shortPercent": 0.9,
+            "shares": 207088,
+            "positionHolder": "PDT Partners, LLC"
+          }
+        ]
+      },
+      {
+        "date": "2025-07-08",
+        "shortPercent": 1.58,
+        "shares": 363579,
+        "activePositions": [
+          {
+            "date": "2025-04-24",
+            "shortPercent": 0.7,
+            "shares": 160179,
+            "positionHolder": "GSA Capital Partners LLP"
+          },
+          {
+            "date": "2025-07-08",
+            "shortPercent": 0.88,
+            "shares": 203400,
+            "positionHolder": "PDT Partners, LLC"
+          }
+        ]
+      },
+      {
+        "date": "2025-06-26",
+        "shortPercent": 1.6,
+        "shares": 366957,
+        "activePositions": [
+          {
+            "date": "2025-04-24",
+            "shortPercent": 0.7,
+            "shares": 160179,
+            "positionHolder": "GSA Capital Partners LLP"
+          },
+          {
+            "date": "2025-06-26",
+            "shortPercent": 0.9,
+            "shares": 206778,
+            "positionHolder": "PDT Partners, LLC"
+          }
+        ]
+      },
+      {
+        "date": "2025-06-23",
+        "shortPercent": 1.51,
+        "shares": 347398,
+        "activePositions": [
+          {
+            "date": "2025-04-24",
+            "shortPercent": 0.7,
+            "shares": 160179,
+            "positionHolder": "GSA Capital Partners LLP"
+          },
+          {
+            "date": "2025-06-23",
+            "shortPercent": 0.81,
+            "shares": 187219,
+            "positionHolder": "PDT Partners, LLC"
+          }
+        ]
+      },
+      {
+        "date": "2025-05-07",
+        "shortPercent": 1.31,
+        "shares": 300200,
+        "activePositions": [
+          {
+            "date": "2025-04-24",
+            "shortPercent": 0.7,
+            "shares": 160179,
+            "positionHolder": "GSA Capital Partners LLP"
+          },
+          {
+            "date": "2025-05-07",
+            "shortPercent": 0.61,
+            "shares": 140021,
+            "positionHolder": "PDT Partners, LLC"
+          }
+        ]
+      },
+      {
+        "date": "2025-04-28",
+        "shortPercent": 1.74,
+        "shares": 401150,
+        "activePositions": [
+          {
+            "date": "2025-04-24",
+            "shortPercent": 0.7,
+            "shares": 160179,
+            "positionHolder": "GSA Capital Partners LLP"
+          },
+          {
+            "date": "2025-04-24",
+            "shortPercent": 0.5,
+            "shares": 115296,
+            "positionHolder": "PDT Partners, LLC"
+          },
+          {
+            "date": "2025-04-28",
+            "shortPercent": 0.54,
+            "shares": 125675,
+            "positionHolder": "WorldQuant LLC"
+          }
+        ]
+      },
+      {
+        "date": "2025-04-25",
+        "shortPercent": 1.2,
+        "shares": 275475,
+        "activePositions": [
+          {
+            "date": "2025-04-24",
+            "shortPercent": 0.7,
+            "shares": 160179,
+            "positionHolder": "GSA Capital Partners LLP"
+          },
+          {
+            "date": "2025-04-24",
+            "shortPercent": 0.5,
+            "shares": 115296,
+            "positionHolder": "PDT Partners, LLC"
+          }
+        ]
+      },
+      {
+        "date": "2025-04-24",
+        "shortPercent": 1.71,
+        "shares": 392758,
+        "activePositions": [
+          {
+            "date": "2025-04-24",
+            "shortPercent": 0.7,
+            "shares": 160179,
+            "positionHolder": "GSA Capital Partners LLP"
+          },
+          {
+            "date": "2025-04-24",
+            "shortPercent": 0.5,
+            "shares": 115296,
+            "positionHolder": "PDT Partners, LLC"
+          },
+          {
+            "date": "2025-04-22",
+            "shortPercent": 0.51,
+            "shares": 117283,
+            "positionHolder": "WorldQuant LLC"
+          }
+        ]
+      },
+      {
+        "date": "2025-04-23",
+        "shortPercent": 1.2,
+        "shares": 276806,
+        "activePositions": [
+          {
+            "date": "2025-04-16",
+            "shortPercent": 0.69,
+            "shares": 159523,
+            "positionHolder": "GSA Capital Partners LLP"
+          },
+          {
+            "date": "2025-04-22",
+            "shortPercent": 0.51,
+            "shares": 117283,
+            "positionHolder": "WorldQuant LLC"
+          }
+        ]
+      },
+      {
+        "date": "2025-04-22",
+        "shortPercent": 1.7,
+        "shares": 392284,
+        "activePositions": [
+          {
+            "date": "2025-04-16",
+            "shortPercent": 0.69,
+            "shares": 159523,
+            "positionHolder": "GSA Capital Partners LLP"
+          },
+          {
+            "date": "2025-04-22",
+            "shortPercent": 0.5,
+            "shares": 115478,
+            "positionHolder": "PDT Partners, LLC"
+          },
+          {
+            "date": "2025-04-22",
+            "shortPercent": 0.51,
+            "shares": 117283,
+            "positionHolder": "WorldQuant LLC"
+          }
+        ]
+      },
+      {
+        "date": "2025-04-16",
+        "shortPercent": 0.69,
+        "shares": 159523,
+        "activePositions": [
+          {
+            "date": "2025-04-16",
+            "shortPercent": 0.69,
+            "shares": 159523,
+            "positionHolder": "GSA Capital Partners LLP"
+          }
+        ]
+      },
+      {
+        "date": "2025-04-11",
+        "shortPercent": 0.7,
+        "shares": 160410,
+        "activePositions": [
+          {
+            "date": "2025-04-11",
+            "shortPercent": 0.7,
+            "shares": 160410,
+            "positionHolder": "GSA Capital Partners LLP"
+          }
+        ]
+      },
+      {
+        "date": "2025-04-01",
+        "shortPercent": 0.69,
+        "shares": 159214,
+        "activePositions": [
+          {
+            "date": "2025-02-24",
+            "shortPercent": 0.69,
+            "shares": 159214,
+            "positionHolder": "GSA Capital Partners LLP"
+          }
+        ]
+      },
+      {
+        "date": "2025-03-31",
+        "shortPercent": 1.27,
+        "shares": 292399,
+        "activePositions": [
+          {
+            "date": "2025-02-24",
+            "shortPercent": 0.69,
+            "shares": 159214,
+            "positionHolder": "GSA Capital Partners LLP"
+          },
+          {
+            "date": "2025-03-31",
+            "shortPercent": 0.58,
+            "shares": 133185,
+            "positionHolder": "WorldQuant LLC"
+          }
+        ]
+      },
+      {
+        "date": "2025-03-05",
+        "shortPercent": 1.29,
+        "shares": 296511,
+        "activePositions": [
+          {
+            "date": "2025-02-24",
+            "shortPercent": 0.69,
+            "shares": 159214,
+            "positionHolder": "GSA Capital Partners LLP"
+          },
+          {
+            "date": "2025-03-05",
+            "shortPercent": 0.6,
+            "shares": 137297,
+            "positionHolder": "WorldQuant LLC"
+          }
+        ]
+      },
+      {
+        "date": "2025-03-03",
+        "shortPercent": 1.2,
+        "shares": 275510,
+        "activePositions": [
+          {
+            "date": "2025-02-24",
+            "shortPercent": 0.69,
+            "shares": 159214,
+            "positionHolder": "GSA Capital Partners LLP"
+          },
+          {
+            "date": "2025-03-03",
+        

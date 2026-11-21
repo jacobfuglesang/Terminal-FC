@@ -1,0 +1,162 @@
+URL https://ssr.finanstilsynet.no/swagger/v2/swagger.json
+STATUS 404
+TYPE text/html; charset=utf-8
+LEN 8746
+LINKS [
+"/manifest.json"
+]
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8" />
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0" />  b-64jecdtaat-->
+    <title>NotFound - Short Sale Register</title>
+    <link rel="stylesheet" href="/Content/bootstrap.css?v=WoSI9hyKdfw-GVXWscIb7GAdeMmFPJcpQ9oGOAyC-c0" />
+    <link rel="stylesheet" href="/Content/Style/font-styles.css?v=bfX83u1JjZ_dv5dE11ThH1EQ_vyPFcZN949X_ZBEjwg" />
+    <link rel="stylesheet" href="/Content/Style/generic.css?v=4WHYBhcQU2TGT-JxbRpD4WQc3Vk_-K2PV7kvmEtcCpY" />
+    <link rel="stylesheet" href="/Content/Style/header.css?v=dGDiZWXn58UIAGvFoMIuYNp7zmibHisAJlVx_xVCtSc" />
+    <link rel="stylesheet" href="/Content/Style/page-header.css?v=10RcHLe0fli0HlgQ8hWMlD6cr3mJxMBMZR4ZaYirlQg" />
+
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/Content/Favicons/apple-touch-icon-57x57.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/Content/Favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/Content/Favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/Content/Favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="60x60" href="/Content/Favicons/apple-touch-icon-60x60.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/Content/Favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="/Content/Favicons/apple-touch-icon-76x76.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/Content/Favicons/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="180x180" href="/Content/Favicons/apple-touch-icon-180x180.png" />
+    <link rel="icon" type="image/png" href="/Content/Favicons/favicon-196x196.png" sizes="196x196" />
+    <link rel="icon" type="image/png" href="/Content/Favicons/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/png" href="/Content/Favicons/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/Content/Favicons/favicon-16x16.png" sizes="16x16" />
+    <link rel="icon" type="image/png" href="/Content/Favicons/favicon-128.png" sizes="128x128" />
+    <link rel="icon" type="image/png" href="/Content/Favicons/android-chrome-384x384.png" sizes="384x384" />
+    <link rel="icon" type="image/png" href="/Content/Favicons/android-chrome-192x192.png" sizes="192x192" />
+    <meta name="msapplication-TileColor" content="#FFFFFF" />
+    <meta name="msapplication-TileImage" content="~/Content/Favicons/mstile-144x144.png" />
+    <meta name="msapplication-square70x70logo" content="~/Content/Favicons/mstile-70x70.png" />
+    <meta name="msapplication-square150x150logo" content="~/Content/Favicons/mstile-150x150.png" />
+    <meta name="msapplication-wide310x150logo" content="~/Content/Favicons/mstile-310x150.png" />
+    <meta name="msapplication-square310x310logo" content="~/Content/Favicons/mstile-310x310.png" />
+    <link rel="manifest" href="/manifest.json">
+    <link rel="mask-icon" href="/Content/Favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body id="settings">
+    <div b-64jecdtaat class="wrapper">
+        <header b-64jecdtaat>
+            <div b-64jecdtaat class="navbar">
+                <div b-64jecdtaat class="container">
+                    <div b-64jecdtaat class="navbar-header">
+                        <button b-64jecdtaat type="button" class="navbar-toggle" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
+                            <span b-64jecdtaat class="icon-bar"></span>
+                            <span b-64jecdtaat class="icon-bar"></span>
+                            <span b-64jecdtaat class="icon-bar"></span>
+                        </button>
+                        <a b-64jecdtaat href="http://www.finanstilsynet.no/" class="navbar-brand" aria-label="Go to Finanstilsynet.no">
+                            <img src="/Content/Images/FT_Logo_web.svg" class="header-logo" alt="logo">
+                        </a>
+                    </div>
+                    <div b-64jecdtaat class="navbar-collapse collapse">
+                        <ul b-64jecdtaat class="nav navbar-nav">
+                                <li b-64jecdtaat><a class="link-icon-info link-icon" href="/Home/About">About</a></li>
+                                <li b-64jecdtaat><a class="link-icon-login link-icon" href="/Dashboard">Log in</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div b-64jecdtaat class="content">
+            <div b-64jecdtaat class="page-header">
+                
+    
+<div class="breadcrumbs">
+    <div class="container">
+        <ul>
+        <li>
+                <span class="breadcrumb-link" title="Home page for Finanstilsynet.no">
+                    <a href="http://www.finanstilsynet.no" >Home</a>
+                </span>
+            </li>
+        <li>
+                <span class="breadcrumb-link" title="Short Sale Register">
+                    <a href="/" >Short Sale Register</a>
+                </span>
+            </li>
+        <li>
+                <span title="Not Found">Not Found</span>
+            </li>
+        </ul>
+    </div>
+</div>
+
+                <div b-64jecdtaat class="container">
+                    
+    <h1>Sorry, this page isn't available</h1>
+
+                </div>
+            </div>
+            <div b-64jecdtaat id="notifications-bar">
+
+            </div>
+            <div b-64jecdtaat class="main-container">
+                
+
+
+
+
+<div class="zebra-inverted">
+    <div class="container padded-30">
+        <p>The link you followed may be broken, or the page may have been removed. Please go to <a href="/">the front page</a> and try your action again.</p>
+        <p>If you experience this multiple times, you may contact Finanstilsynet for assistance.</p>
+    </div>
+</div>
+            </div>
+        </div>
+        <footer b-64jecdtaat class="grid">
+            <div b-64jecdtaat class="gradiant-bar"></div>
+            <div b-64jecdtaat class="container">
+                <div b-64jecdtaat class="footer-row row">
+                    <div b-64jecdtaat class="footer-col footer-image-container">
+                        <img src="/Content/Images/logo_hvit_footer.svg" alt="Finanstilsynet logo" />
+                    </div>
+                    <div b-64jecdtaat class="footer-col footer-content-cell footer-link-list">
+                        <h3 b-64jecdtaat>About the website</h3>
+                        <ul b-64jecdtaat>
+                            <li b-64jecdtaat><a b-64jecdtaat href="/Home/Privacy">Privacy Policy</a></li>
+                            <li b-64jecdtaat><a b-64jecdtaat href="/Home/Terms">Terms and conditions</a></li>
+                        </ul>
+                    </div>
+                    <div b-64jecdtaat class="footer-col footer-content-cell">
+                        <h3 b-64jecdtaat>Contact</h3>
+                        <p b-64jecdtaat>
+                            Revierstredet 3,<br b-64jecdtaat />
+                            P.O. Box 1187 Sentrum<br b-64jecdtaat />
+                            NO-0107 Oslo<br b-64jecdtaat />
+                        </p>
+                        <p b-64jecdtaat>
+                            <br b-64jecdtaat />
+                            Phone: +47 22 93 98 74<br b-64jecdtaat />
+                            Email: <a b-64jecdtaat href="mailto:ssr@finanstilsynet.no" title="ssr@finanstilsynet.no" class="footer-mailto">ssr@finanstilsynet.no</a>
+</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="/lib/jquery-validation/dist/additional-methods.min.js"></script>
+    <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/site.js?v=hRQyftXiu1lLX2P9Ly9xa4gHJgLeR1uGN5qegUobtGo"></script>
+    
+
+    <script type="text/javascript" src="/Scripts/SSR/actionMenu.js"></script>
+    <script type="text/javascript" src="/Scripts/SSR/navbar.js"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+{
+ "ssr_v2_instruments": {
+  "status": 200,
+  "type": "application/json; charset=utf-8",
+  "len": 1509378
+ },
+ "ssr_v2_instruments_export": {
+  "status": 200,
+  "type": "application/json",
+  "len": 2509893
+ },
+ "ssr_v1_instruments": {
+  "status": 404,
+  "type": "text/html; charset=utf-8",
+  "len": 8746
+ },
+ "ssr_swagger": {
+  "status": 404,
+  "type": "text/html; charset=utf-8",
+  "len": 8746
+ },
+ "ssr_swagger_v1": {
+  "status": 404,
+  "type": "text/html; charset=utf-8",
+  "len": 8746
+ },
+ "fred_csv": {
+  "status": 200,
+  "type": "application/csv",
+  "len": 42714
+ },
+ "fiskeridir_bio_po": {
+  "status": 200,
+  "type": "text/html;charset=utf-8",
+  "len": 33316
+ },
+ "fiskeridir_bio_fylke": {
+  "status": 200,
+  "type": "text/html;charset=utf-8",
+  "len": 33075
+ },
+ "euronext_esf_page": {
+  "status": 200,
+  "type": "text/html; charset=UTF-8",
+  "len": 247475
+ },
+ "euronext_esf_ajax": {
+  "status": 200,
+  "type": "text/html; charset=UTF-8",
+  "len": 69918
+ },
+ "euronext_esf_ajax2": {
+  "status": 404,
+  "type": "text/html; charset=UTF-8",
+  "len": 249028
+ },
+ "fishpool_sisalmon": {
+  "status": 200,
+  "type": "text/html;charset=ISO-8859-1",
+  "len": 605
+ },
+ "fishpool_forward": {
+  "status": 200,
+  "type": "text/html;charset=ISO-8859-1",
+  "len": 605
+ },
+ "fishpool_home": {
+  "status": 200,
+  "type": "text/html;charset=ISO-8859-1",
+  "len": 605
+ },
+ "fiskeridir_bio_root": {
+  "status": 200,
+  "type": "text/html;charset=utf-8",
+  "len": 23899
+ }
+}
