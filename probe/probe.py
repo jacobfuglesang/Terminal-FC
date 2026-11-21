@@ -31,3 +31,4 @@ for k, u in {"bw_docs": "https://developer.barentswatch.no/docs/fishhealth/", "b
         open(f"{OUT}/{k}.txt", "w", encoding="utf-8").write(f"STATUS {r.status_code}\n" + r.text[:400000])
     except Exception as e:
         open(f"{OUT}/{k}.txt", "w").write(str(e))
+# r3

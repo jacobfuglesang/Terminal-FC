@@ -16,4 +16,4 @@ jobs:
       - name: Lagre resultater
         run: |
           git config user.name probe-bot && git config user.email probe@users.noreply.github.com
-          git add -f probe/out && git commit -m "probe-resultater [skip ci]" && git push
+          git add -f probe/ && git commit -m "probe-resultater [skip ci]" && git push
