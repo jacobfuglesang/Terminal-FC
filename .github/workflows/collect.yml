@@ -7,12 +7,13 @@ on:
     - cron: "41 16 * * 1-5"             # Sluttkurs etter børsslutt
     - cron: "33 7 * * 3"                # SSB laksepris onsdag (publiseres 08:00 norsk tid)
     - cron: "13 9 * * *"                # SSB daglig sikkerhetsrunde (fanger forsinkede publiseringer)
+    - cron: "27 17 * * *"               # Daglig: short, fôr, biomasse, terminkurve, lus
   workflow_dispatch:
     inputs:
       job:
         description: "Hva skal hentes?"
         type: choice
-        options: [all, prices, ssb]
+        options: [all, prices, ssb, daily, shorts, feed, biomass, futures, lice]
         default: all
       backfill:
         description: "Hent lang historikk (første gang)"
@@ -47,6 +48,7 @@ jobs:
           else
             case "${{ github.event.schedule }}" in
               "33 7 * * 3"|"13 9 * * *") echo "job=ssb" >> "$GITHUB_OUTPUT" ;;
+              "27 17 * * *") echo "job=daily" >> "$GITHUB_OUTPUT" ;;
               *) echo "job=prices" >> "$GITHUB_OUTPUT" ;;
             esac
           fi
@@ -54,5 +56,7 @@ jobs:
       - name: Hent ${{ steps.pick.outputs.job }}
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          BW_CLIENT_ID: ${{ secrets.BW_CLIENT_ID }}
+          BW_CLIENT_SECRET: ${{ secrets.BW_CLIENT_SECRET }}
         working-directory: collectors
         run: python run.py ${{ steps.pick.outputs.job }} ${{ steps.pick.outputs.flags }}

@@ -59,3 +59,62 @@ CREATE TABLE IF NOT EXISTS login_guard (
   locked_until TIMESTAMPTZ
 );
 INSERT INTO login_guard (id) VALUES (1) ON CONFLICT (id) DO NOTHING;
+
+-- ===== Fase 2 =====
+
+-- Shortposisjoner fra Finanstilsynet (sum av offentlige posisjoner per dag)
+CREATE TABLE IF NOT EXISTS shorts (
+  symbol  TEXT NOT NULL,
+  day     DATE NOT NULL,
+  pct     NUMERIC,
+  holders INT,
+  PRIMARY KEY (symbol, day)
+);
+
+-- Fôrråvarer fra IMF (via FRED), USD per tonn, månedlig
+CREATE TABLE IF NOT EXISTS feed_raw (
+  series TEXT NOT NULL,
+  month  DATE NOT NULL,
+  usd    NUMERIC,
+  PRIMARY KEY (series, month)
+);
+
+-- Ferdig beregnet fôrråvareindeks (januar 2026 = 100)
+CREATE TABLE IF NOT EXISTS feed_index (
+  month     DATE PRIMARY KEY,
+  index_usd NUMERIC,
+  index_nok NUMERIC
+);
+
+-- Biomasse av laks per produksjonsområde, ved utgangen av hver måned
+CREATE TABLE IF NOT EXISTS biomass (
+  month   DATE NOT NULL,
+  po      INT NOT NULL,
+  name    TEXT,
+  count_k NUMERIC,
+  tonnes  NUMERIC,
+  PRIMARY KEY (month, po)
+);
+
+-- Terminpriser for laks (Euronext Salmon Futures), EUR per tonn
+CREATE TABLE IF NOT EXISTS futures (
+  snapshot DATE NOT NULL,
+  contract DATE NOT NULL,
+  settle   NUMERIC,
+  open_int INT,
+  PRIMARY KEY (snapshot, contract)
+);
+
+-- Lus og sykdom per uke, hele landet (BarentsWatch)
+CREATE TABLE IF NOT EXISTS lice_week (
+  year        INT NOT NULL,
+  week        INT NOT NULL,
+  avg_lice    NUMERIC,
+  reported    INT,
+  over_limit  INT,
+  ila         INT,
+  pd          INT,
+  localities  INT,
+  updated_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (year, week)
+);

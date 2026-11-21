@@ -14,6 +14,7 @@ SYMBOLS = {
     "LSG.OL": "Lerøy",
     "GSF.OL": "Grieg Seafood",
     "EURNOK=X": "EUR/NOK",
+    "NOK=X": "USD/NOK",
 }
 
 
