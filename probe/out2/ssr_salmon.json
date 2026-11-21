@@ -1,0 +1,475 @@
+{
+ "count_all": 105,
+ "salmon": [
+  {
+   "isin": "FO0000000179",
+   "issuerName": "BAKKAFROST",
+   "events": [
+    {
+     "date": "2026-11-19T00:00:00",
+     "shortPercent": 3.18,
+     "shares": 1892861,
+     "activePositions": [
+      {
+       "date": "2026-11-19T00:00:00",
+       "shortPercent": 1.89,
+       "shares": 1124535,
+       "positionHolder": "JPMORGAN ASSET MANAGEMENT (UK) LIMITED"
+      },
+      {
+       "date": "2026-09-14T00:00:00",
+       "shortPercent": 0.6,
+       "shares": 357516,
+       "positionHolder": "ARROWSTREET CAPITAL, LIMITED PARTNERSHIP"
+      },
+      {
+       "date": "2026-04-22T00:00:00",
+       "shortPercent": 0.69,
+       "shares": 410810,
+       "positionHolder": "Acadian Asset Management LLC"
+      }
+     ]
+    },
+    {
+     "date": "2026-09-14T00:00:00",
+     "shortPercent": 2.99,
+     "shares": 1781483,
+     "activePositions": [
+      {
+       "date": "2026-07-24T00:00:00",
+       "shortPercent": 1.7,
+       "shares": 1013157,
+       "positionHolder": "JPMORGAN ASSET MANAGEMENT (UK) LIMITED"
+      },
+      {
+       "date": "2026-09-14T00:00:00",
+       "shortPercent": 0.6,
+       "shares": 357516,
+       "positionHolder": "ARROWSTREET CAPITAL, LIMITED PARTNERSHIP"
+      },
+      {
+       "date": "2026-04-22T00:00:00",
+       "shortPercent": 0.69,
+       "shares": 410810,
+       "positionHolder": "Acadian Asset Management LLC"
+      }
+     ]
+    },
+    {
+     "date": "2026-07-24T00:00:00",
+     "shortPercent": 2.98,
+     "shares": 1776135,
+     "activePositions": [
+      {
+       "date": "2026-07-24T00:00:00",
+       "shortPercent": 1.7,
+       "shares": 1013157,
+       "positionHolder": "JPMORGAN ASSET MANAGEMENT (UK) LIMITED"
+      },
+      {
+       "date": "2026-04-10T00:00:00",
+       "shortPercent": 0.59,
+       "shares": 352168,
+       "positionHolder": "Arrowstreet Capital, Limited Partnership"
+      },
+      {
+       "date": "2026-04-22T00:00:00",
+       "shortPercent": 0.69,
+       "shares": 410810,
+       "positionHolder": "Acadian Asset Management LLC"
+      }
+     ]
+    },
+    {
+     "date": "2026-07-16T00:00:00",
+     "shortPercent": 2.92,
+     "shares": 1740626,
+     "activePositions": [
+      {
+       "date": "2026-07-01T00:00:00",
+       "shortPercent": 1.64,
+       "shares": 977648,
+       "positionHolder": "JPMORGAN ASSET MANAGEMENT (UK) LIMITED"
+      },
+      {
+       "date": "2026-04-10T00:00:00",
+       "shortPercent": 0.59,
+       "shares": 352168,
+       "positionHolder": "Arrowstreet Capital, Limited Partnership"
+      },
+      {
+       "date": "2026-04-22T00:00:00",
+       "shortPercent": 0.69,
+       "shares": 410810,
+       "positionHolder": "Acadian Asset Management LLC"
+      }
+     ]
+    },
+    {
+     "date": "2026-07-01T00:00:00",
+     "shortPercent": 3.43,
+     "shares": 2046552,
+     "activePositions": [
+      {
+       "date": "2026-06-29T00:00:00",
+       "shortPercent": 0.51,
+       "shares": 305926,
+       "positionHolder": "MARSHALL WACE LLP"
+      },
+      {
+       "date": "2026-07-01T00:00:00",
+       "shortPercent": 1.64,
+       "shares": 977648,
+       "positionHolder": "JPMORGAN ASSET MANAGEMENT (UK) LIMITED"
+      },
+      {
+       "date": "2026-04-10T00:00:00",
+       "shortPercent": 0.59,
+       "shares": 352168,
+       "positionHolder": "Arrowstreet Capital, Limited Partnership"
+      },
+      {
+       "date": "2026-04-22T00:00:00",
+       "shortPercent": 0.69,
+       "shares": 410810,
+       "positionHolder": "Acadian Asset Management LLC"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "isin": "NO0010365521",
+   "issuerName": "GRIEG SEAFOOD",
+   "events": [
+    {
+     "date": "2026-11-18T00:00:00",
+     "shortPercent": 1.49,
+     "shares": 1710661,
+     "activePositions": [
+      {
+       "date": "2026-10-15T00:00:00",
+       "shortPercent": 0.89,
+       "shares": 1020995,
+       "positionHolder": "ARROWSTREET CAPITAL, LIMITED PARTNERSHIP"
+      },
+      {
+       "date": "2026-11-18T00:00:00",
+       "shortPercent": 0.6,
+       "shares": 689666,
+       "positionHolder": "TWO SIGMA INVESTMENTS, LP"
+      }
+     ]
+    },
+    {
+     "date": "2026-10-15T00:00:00",
+     "shortPercent": 1.39,
+     "shares": 1592561,
+     "activePositions": [
+      {
+       "date": "2026-10-15T00:00:00",
+       "shortPercent": 0.89,
+       "shares": 1020995,
+       "positionHolder": "ARROWSTREET CAPITAL, LIMITED PARTNERSHIP"
+      },
+      {
+       "date": "2026-10-05T00:00:00",
+       "shortPercent": 0.5,
+       "shares": 571566,
+       "positionHolder": "TWO SIGMA INVESTMENTS, LP"
+      }
+     ]
+    },
+    {
+     "date": "2026-10-05T00:00:00",
+     "shortPercent": 1.48,
+     "shares": 1685540,
+     "activePositions": [
+      {
+       "date": "2026-09-23T00:00:00",
+       "shortPercent": 0.98,
+       "shares": 1113974,
+       "positionHolder": "ARROWSTREET CAPITAL, LIMITED PARTNERSHIP"
+      },
+      {
+       "date": "2026-10-05T00:00:00",
+       "shortPercent": 0.5,
+       "shares": 571566,
+       "positionHolder": "TWO SIGMA INVESTMENTS, LP"
+      }
+     ]
+    },
+    {
+     "date": "2026-09-23T00:00:00",
+     "shortPercent": 0.98,
+     "shares": 1113974,
+     "activePositions": [
+      {
+       "date": "2026-09-23T00:00:00",
+       "shortPercent": 0.98,
+       "shares": 1113974,
+       "positionHolder": "ARROWSTREET CAPITAL, LIMITED PARTNERSHIP"
+      }
+     ]
+    },
+    {
+     "date": "2026-09-17T00:00:00",
+     "shortPercent": 1.09,
+     "shares": 1243708,
+     "activePositions": [
+      {
+       "date": "2026-09-17T00:00:00",
+       "shortPercent": 1.09,
+       "shares": 1243708,
+       "positionHolder": "ARROWSTREET CAPITAL, LIMITED PARTNERSHIP"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "isin": "NO0003054108",
+   "issuerName": "MOWI",
+   "events": [
+    {
+     "date": "2026-11-12T00:00:00",
+     "shortPercent": 1.72,
+     "shares": 9098344,
+     "activePositions": [
+      {
+       "date": "2026-08-11T00:00:00",
+       "shortPercent": 0.61,
+       "shares": 3234624,
+       "positionHolder": "JPMORGAN ASSET MANAGEMENT (UK) LIMITED"
+      },
+      {
+       "date": "2026-11-12T00:00:00",
+       "shortPercent": 0.5,
+       "shares": 2645273,
+       "positionHolder": "CAPITAL FUND MANAGEMENT"
+      },
+      {
+       "date": "2026-09-22T00:00:00",
+       "shortPercent": 0.61,
+       "shares": 3218447,
+       "positionHolder": "TWO SIGMA INVESTMENTS, LP"
+      }
+     ]
+    },
+    {
+     "date": "2026-09-22T00:00:00",
+     "shortPercent": 1.22,
+     "shares": 6453071,
+     "activePositions": [
+      {
+       "date": "2026-08-11T00:00:00",
+       "shortPercent": 0.61,
+       "shares": 3234624,
+       "positionHolder": "JPMORGAN ASSET MANAGEMENT (UK) LIMITED"
+      },
+      {
+       "date": "2026-09-22T00:00:00",
+       "shortPercent": 0.61,
+       "shares": 3218447,
+       "positionHolder": "TWO SIGMA INVESTMENTS, LP"
+      }
+     ]
+    },
+    {
+     "date": "2026-09-16T00:00:00",
+     "shortPercent": 1.11,
+     "shares": 5888038,
+     "activePositions": [
+      {
+       "date": "2026-08-11T00:00:00",
+       "shortPercent": 0.61,
+       "shares": 3234624,
+       "positionHolder": "JPMORGAN ASSET MANAGEMENT (UK) LIMITED"
+      },
+      {
+       "date": "2026-08-31T00:00:00",
+       "shortPercent": 0.5,
+       "shares": 2653414,
+       "positionHolder": "TWO SIGMA INVESTMENTS, LP"
+      }
+     ]
+    },
+    {
+     "date": "2026-09-14T00:00:00",
+     "shortPercent": 1.61,
+     "shares": 8551488,
+     "activePositions": [
+      {
+       "date": "2026-09-14T00:00:00",
+       "shortPercent": 0.5,
+       "shares": 2663450,
+       "positionHolder": "AQR CAPITAL MANAGEMENT, LLC"
+      },
+      {
+       "date": "2026-08-11T00:00:00",
+       "shortPercent": 0.61,
+       "shares": 3234624,
+       "positionHolder": "JPMORGAN ASSET MANAGEMENT (UK) LIMITED"
+      },
+      {
+       "date": "2026-08-31T00:00:00",
+       "shortPercent": 0.5,
+       "shares": 2653414,
+       "positionHolder": "TWO SIGMA INVESTMENTS, LP"
+      }
+     ]
+    },
+    {
+     "date": "2026-08-31T00:00:00",
+     "shortPercent": 1.11,
+     "shares": 5888038,
+     "activePositions": [
+      {
+       "date": "2026-08-11T00:00:00",
+       "shortPercent": 0.61,
+       "shares": 3234624,
+       "positionHolder": "JPMORGAN ASSET MANAGEMENT (UK) LIMITED"
+      },
+      {
+       "date": "2026-08-31T00:00:00",
+       "shortPercent": 0.5,
+       "shares": 2653414,
+       "positionHolder": "TWO SIGMA INVESTMENTS, LP"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "isin": "NO0010310956",
+   "issuerName": "SALMAR",
+   "events": [
+    {
+     "date": "2026-11-18T00:00:00",
+     "shortPercent": 1.2,
+     "shares": 1646112,
+     "activePositions": [
+      {
+       "date": "2026-10-30T00:00:00",
+       "shortPercent": 0.61,
+       "shares": 839976,
+       "positionHolder": "JPMORGAN ASSET MANAGEMENT (UK) LIMITED"
+      },
+      {
+       "date": "2026-11-12T00:00:00",
+       "shortPercent": 0.59,
+       "shares": 806136,
+       "positionHolder": "MARSHALL WACE LLP"
+      }
+     ]
+    },
+    {
+     "date": "2026-11-12T00:00:00",
+     "shortPercent": 1.71,
+     "shares": 2330080,
+     "activePositions": [
+      {
+       "date": "2025-08-06T00:00:00",
+       "shortPercent": 0.51,
+       "shares": 683968,
+       "positionHolder": "Caisse de dépôt et placement du Québec"
+      },
+      {
+       "date": "2026-10-30T00:00:00",
+       "shortPercent": 0.61,
+       "shares": 839976,
+       "positionHolder": "JPMORGAN ASSET MANAGEMENT (UK) LIMITED"
+      },
+      {
+       "date": "2026-11-12T00:00:00",
+       "shortPercent": 0.59,
+       "shares": 806136,
+       "positionHolder": "MARSHALL WACE LLP"
+      }
+     ]
+    },
+    {
+     "date": "2026-10-30T00:00:00",
+     "shortPercent": 1.72,
+     "shares": 2341880,
+     "activePositions": [
+      {
+       "date": "2025-08-06T00:00:00",
+       "shortPercent": 0.51,
+       "shares": 683968,
+       "positionHolder": "Caisse de dépôt et placement du Québec"
+      },
+      {
+       "date": "2026-10-30T00:00:00",
+       "shortPercent": 0.61,
+       "shares": 839976,
+       "positionHolder": "JPMORGAN ASSET MANAGEMENT (UK) LIMITED"
+      },
+      {
+       "date": "2026-10-02T00:00:00",
+       "shortPercent": 0.6,
+       "shares": 817936,
+       "positionHolder": "MARSHALL WACE LLP"
+      }
+     ]
+    },
+    {
+     "date": "2026-10-27T00:00:00",
+     "shortPercent": 1.61,
+     "shares": 2183875,
+     "activePositions": [
+      {
+       "date": "2025-08-06T00:00:00",
+       "shortPercent": 0.51,
+       "shares": 683968,
+       "positionHolder": "Caisse de dépôt et placement du Québec"
+      },
+      {
+       "date": "2026-10-02T00:00:00",
+       "shortPercent": 0.6,
+       "shares": 817936,
+       "positionHolder": "MARSHALL WACE LLP"
+      },
+      {
+       "date": "2026-02-27T00:00:00",
+       "shortPercent": 0.5,
+       "shares": 681971,
+       "positionHolder": "JPMorgan Asset Management (UK) Ltd"
+      }
+     ]
+    },
+    {
+     "date": "2026-10-14T00:00:00",
+     "shortPercent": 2.11,
+     "shares": 2868804,
+     "activePositions": [
+      {
+       "date": "2026-10-14T00:00:00",
+       "shortPercent": 0.5,
+       "shares": 684929,
+       "positionHolder": "WORLDQUANT, LLC"
+      },
+      {
+       "date": "2025-08-06T00:00:00",
+       "shortPercent": 0.51,
+       "shares": 683968,
+       "positionHolder": "Caisse de dépôt et placement du Québec"
+      },
+      {
+       "date": "2026-10-02T00:00:00",
+       "shortPercent": 0.6,
+       "shares": 817936,
+       "positionHolder": "MARSHALL WACE LLP"
+      },
+      {
+       "date": "2026-02-27T00:00:00",
+       "shortPercent": 0.5,
+       "shares": 681971,
+       "positionHolder": "JPMorgan Asset Management (UK) Ltd"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
