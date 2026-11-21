@@ -1,7 +1,7 @@
 """Starter innsamlerne.
 
 Bruk: python run.py <jobb>[,<jobb>...] [--backfill]
-Jobber: prices, ssb, shorts, feed, biomass, futures, lice, daily (= shorts,feed,biomass,futures,lice), all
+Jobber: prices, news, ssb, shorts, feed, biomass, futures, lice, daily (= shorts,feed,biomass,futures,lice), all
 """
 import sys
 import traceback
@@ -11,6 +11,7 @@ import db
 import feed
 import futures
 import lice
+import news
 import prices
 import shorts
 import ssb
@@ -23,8 +24,9 @@ JOBS = {
     "biomass": ("Fiskeridirektoratet (biomasse)", lambda c, bf: biomass.run(c)),
     "futures": ("Euronext (terminkurve)", lambda c, bf: futures.run(c)),
     "lice": ("BarentsWatch (lus og sykdom)", lambda c, bf: lice.run(c, weeks=26 if bf else 3)),
+    "news": ("Nyheter (RSS)", lambda c, bf: news.run(c)),
 }
-GROUPS = {"daily": ["shorts", "biomass", "futures", "lice", "feed"], "all": ["prices", "ssb", "shorts", "biomass", "futures", "lice", "feed"]}
+GROUPS = {"daily": ["shorts", "biomass", "futures", "lice", "feed"], "all": ["prices", "ssb", "news", "shorts", "biomass", "futures", "lice", "feed"]}
 
 
 def main() -> int:

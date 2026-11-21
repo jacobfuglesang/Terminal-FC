@@ -2,7 +2,8 @@ import Link from "next/link";
 import { Bars } from "@/components/Charts";
 import TimeChart from "@/components/TimeChart";
 import { weekDate } from "@/lib/dates";
-import { getDaily, getIntraday, getQuotes, getSalmon, getStatus } from "@/lib/db";
+import NewsList from "@/components/NewsList";
+import { getDaily, getIntraday, getNews, getQuotes, getSalmon, getStatus } from "@/lib/db";
 import { compact, fmt, osloTime, pct, up } from "@/lib/format";
 import { COMPANIES } from "@/lib/menu";
 
@@ -11,7 +12,7 @@ export const dynamic = "force-dynamic";
 
 export default async function Oversikt() {
   const [quotes, salmon, status, fxDaily] = await Promise.all([getQuotes(), getSalmon(52), getStatus(), getDaily("EURNOK=X", 260)]);
-  const fxIntra = await getIntraday("EURNOK=X");
+  const [fxIntra, news] = await Promise.all([getIntraday("EURNOK=X"), getNews(6)]);
   const fxFirst = fxDaily[0]?.close;
   const fxLast = fxDaily[fxDaily.length - 1]?.close;
   const fxYear = fxFirst && fxLast ? (fxLast / fxFirst - 1) * 100 : null;
@@ -138,6 +139,15 @@ export default async function Oversikt() {
           <p className="note">Analyseverktøy, ikke investeringsråd.</p>
         </section>
       </div>
+      <section className="panel" aria-labelledby="h-snews">
+        <div className="ph">
+          <h2 id="h-snews">Siste nyheter</h2>
+          <Link href="/nyheter" className="src" style={{ color: "#FF8A5B" }}>
+            Alle nyheter →
+          </Link>
+        </div>
+        <NewsList items={news} filters={false} />
+      </section>
     </>
   );
 }

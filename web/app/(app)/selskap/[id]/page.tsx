@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import TimeChart from "@/components/TimeChart";
-import { getDaily, getIntraday, getQuotes } from "@/lib/db";
+import NewsList from "@/components/NewsList";
+import { getDaily, getIntraday, getNews, getQuotes } from "@/lib/db";
 import { compact, fmt, osloTime, pct, up } from "@/lib/format";
 import { COMPANIES } from "@/lib/menu";
 
@@ -10,7 +11,8 @@ export default async function Company({ params }: { params: Promise<{ id: string
   const { id } = await params;
   const co = COMPANIES.find((c) => c.id === id);
   if (!co) notFound();
-  const [quotes, daily, intra] = await Promise.all([getQuotes(), getDaily(co.symbol), getIntraday(co.symbol)]);
+  const [quotes, daily, intra, allNews] = await Promise.all([getQuotes(), getDaily(co.symbol), getIntraday(co.symbol), getNews(400)]);
+  const news = allNews.filter((n) => n.companies.includes(co.symbol));
   const q = quotes.find((x) => x.symbol === co.symbol);
   const first = daily[0]?.close;
   const lastClose = daily[daily.length - 1]?.close;
@@ -45,9 +47,16 @@ export default async function Company({ params }: { params: Promise<{ id: string
         </div>
         <TimeChart daily={daily.map((d) => ({ t: `${d.day}T16:00:00Z`, v: d.close }))} intraday={intra} decimals={2} />
       </section>
+      <section className="panel" aria-labelledby="h-conews">
+        <div className="ph">
+          <h2 id="h-conews">Nyheter om {co.name}</h2>
+          <span className="src">{news.length} saker siste 90 dager</span>
+        </div>
+        <NewsList items={news} filters={news.length > 8} />
+      </section>
       <section className="panel">
         <div className="empty">
-          Markedsposisjon, kvartalsrapporter, planer, forventet resultat, interne forhold og nyheter kommer i fase 4.
+          Markedsposisjon, kvartalsrapporter, planer, forventet resultat og interne forhold kommer i fase 4.
         </div>
       </section>
     </>

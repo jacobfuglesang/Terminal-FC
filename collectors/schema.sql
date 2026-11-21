@@ -118,3 +118,26 @@ CREATE TABLE IF NOT EXISTS lice_week (
   updated_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
   PRIMARY KEY (year, week)
 );
+
+-- Nyheter (fase 3)
+CREATE TABLE IF NOT EXISTS news (
+  id         TEXT PRIMARY KEY,
+  title_key  TEXT,
+  title      TEXT NOT NULL,
+  url        TEXT,
+  source     TEXT,
+  published  TIMESTAMPTZ,
+  excerpt    TEXT,
+  summary    TEXT,
+  category   TEXT,
+  companies  TEXT[],
+  feed       TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS news_published_idx ON news (published DESC);
+
+-- Antall stoppede analytikeranbefalinger per dag
+CREATE TABLE IF NOT EXISTS news_blocked (
+  day DATE PRIMARY KEY,
+  n   INT NOT NULL DEFAULT 0
+);

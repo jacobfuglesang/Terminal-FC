@@ -12,7 +12,7 @@ const PLAN = [
   { k: "BarentsWatch", d: "Lus og sykdom (krever gratis nøkkel)", w: "Daglig sjekk", f: 1 },
   { k: "Finanstilsynet", d: "Shortposisjoner", w: "Daglig", f: 1 },
   { k: "IMF via FRED", d: "Fôrråvareindeks", w: "Månedlig", f: 1 },
-  { k: "RSS + KI", d: "Nyheter med sammendrag", w: "Hvert 15. min", f: 3 },
+  { k: "RSS + KI", d: "Nyheter fra iLaks, regjeringen.no og Google News. KI-sammendrag hvis Groq-nøkkel er lagt inn", w: "Hvert 15. min i børstiden, ellers hver time", f: 1 },
   { k: "Selskapenes IR-sider", d: "Rapporter, kalender, konsensus", w: "Ved rapporter", f: 4 },
 ];
 

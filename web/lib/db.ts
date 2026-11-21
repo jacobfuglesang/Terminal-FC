@@ -163,3 +163,25 @@ export const getLice = () =>
       over: Number(r.over_limit), ila: Number(r.ila), pd: Number(r.pd), localities: Number(r.localities),
     }));
   }, [] as { year: number; week: number; avg: number | null; reported: number; over: number; ila: number; pd: number; localities: number }[]);
+
+export type NewsItem = {
+  id: string; title: string; url: string; source: string; published: string;
+  excerpt: string; summary: string | null; category: string; companies: string[];
+};
+
+export const getNews = (limit = 300) =>
+  safe(async () => {
+    const rows = await sql()`SELECT id, title, url, source, published, excerpt, summary, category, companies FROM news ORDER BY published DESC NULLS LAST LIMIT ${limit}`;
+    return (rows as Row[]).map((r) => ({
+      id: String(r.id), title: String(r.title), url: String(r.url ?? ""), source: String(r.source ?? ""),
+      published: r.published ? new Date(r.published as string).toISOString() : "",
+      excerpt: String(r.excerpt ?? ""), summary: r.summary ? String(r.summary) : null,
+      category: String(r.category ?? "Marked"), companies: (r.companies as string[] | null) ?? [],
+    }));
+  }, [] as NewsItem[]);
+
+export const getBlockedCount = () =>
+  safe(async () => {
+    const rows = await sql()`SELECT coalesce(sum(n),0)::int AS n FROM news_blocked WHERE day > now() - interval '30 days'`;
+    return Number((rows as Row[])[0]?.n ?? 0);
+  }, 0);
