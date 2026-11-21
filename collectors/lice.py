@@ -8,7 +8,8 @@ from datetime import date, timedelta
 import requests
 
 TOKEN = "https://id.barentswatch.no/connect/token"
-API = "https://www.barentswatch.no/bwapi/v1/geodata/fishhealth/locality/{y}/{w}"
+API_V2 = "https://www.barentswatch.no/bwapi/v2/geodata/fishhealth/locality/{y}/{w}"  # POST (gjeldende)
+API_V1 = "https://www.barentswatch.no/bwapi/v1/geodata/fishhealth/locality/{y}/{w}"  # GET (utgående, reserve)
 
 
 class MissingKey(Exception):
@@ -29,21 +30,60 @@ def limit_for(week: int) -> float:
     return 0.2 if 16 <= week <= 21 else 0.5
 
 
-def summarize(js: dict, week: int) -> dict:
+def _find(d: dict, *needles):
+    """Finn første felt der navnet inneholder alle ordene (tåler at API-et endrer feltnavn)."""
+    for k, v in d.items():
+        kl = k.lower()
+        if all(n in kl for n in needles):
+            return v
+    return None
+
+
+def _has(d: dict, word: str) -> bool:
+    """Sant hvis anlegget har en aktiv sykdom som inneholder ordet (ila / pd)."""
+    for k, v in d.items():
+        kl = k.lower()
+        if kl in (f"has{word}", f"is{word}") and v:
+            return True
+        if isinstance(v, list) and "disease" in kl:
+            for item in v:
+                txt = str(item).lower()
+                if word in txt.replace("-", ""):
+                    return True
+    return False
+
+
+def summarize(js, week: int) -> dict:
     locs = js.get("localities") if isinstance(js, dict) else js
-    locs = locs or []
-    reported = [l for l in locs if l.get("hasReportedLice") and l.get("avgAdultFemaleLice") is not None]
-    vals = [float(l["avgAdultFemaleLice"]) for l in reported]
+    locs = [l for l in (locs or []) if isinstance(l, dict)]
+    vals = []
+    for l in locs:
+        v = _find(l, "adultfemale")
+        if isinstance(v, dict):  # v2 kan pakke tallene inn
+            v = _find(v, "avg") if _find(v, "avg") is not None else _find(v, "value")
+        if isinstance(v, (int, float)):
+            vals.append(float(v))
     lim = limit_for(week)
     return {
         "avg": round(sum(vals) / len(vals), 3) if vals else None,
-        "reported": len(reported),
+        "reported": len(vals),
         "over": sum(1 for v in vals if v > lim),
-        "ila": sum(1 for l in locs if l.get("hasIla")),
-        "pd": sum(1 for l in locs if l.get("hasPd")),
+        "ila": sum(1 for l in locs if _has(l, "ila")),
+        "pd": sum(1 for l in locs if _has(l, "pd")),
         "n": len(locs),
         "keys": sorted(locs[0].keys()) if locs else [],
     }
+
+
+def fetch_week(tok: str, y: int, w: int):
+    h = {"Authorization": f"Bearer {tok}"}
+    r = requests.post(API_V2.format(y=y, w=w), json={}, headers=h, timeout=60)
+    if r.status_code in (404, 405):
+        r = requests.get(API_V1.format(y=y, w=w), headers=h, timeout=60)
+    if r.status_code == 404:
+        return None
+    r.raise_for_status()
+    return r.json()
 
 
 def run(conn, weeks: int = 3) -> int:
@@ -53,11 +93,10 @@ def run(conn, weeks: int = 3) -> int:
         for back in range(weeks):
             d = date.today() - timedelta(weeks=back)
             y, w, _ = d.isocalendar()
-            r = requests.get(API.format(y=y, w=w), headers={"Authorization": f"Bearer {tok}"}, timeout=60)
-            if r.status_code == 404:
+            js = fetch_week(tok, y, w)
+            if js is None:
                 continue
-            r.raise_for_status()
-            s = summarize(r.json(), w)
+            s = summarize(js, w)
             if back == 0:
                 print(f"  Felt i svaret: {s['keys']}")
             if not s["reported"]:
