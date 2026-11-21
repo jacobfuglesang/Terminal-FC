@@ -8,6 +8,9 @@ on:
     - cron: "33 7 * * 3"                # SSB laksepris onsdag (publiseres 08:00 norsk tid)
     - cron: "13 9 * * *"                # SSB daglig sikkerhetsrunde (fanger forsinkede publiseringer)
     - cron: "27 17 * * *"               # Daglig: short, fôr, biomasse, terminkurve, lus
+  push:
+    branches: [main]
+    paths: ["collectors/**"]   # Kjør alt én gang når innsamlerne endres
   workflow_dispatch:
     inputs:
       job:
@@ -42,7 +45,9 @@ jobs:
       - name: Velg jobb
         id: pick
         run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          if [ "${{ github.event_name }}" = "push" ]; then
+            echo "job=all" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "job=${{ inputs.job }}" >> "$GITHUB_OUTPUT"
             if [ "${{ inputs.backfill }}" = "true" ]; then echo "flags=--backfill" >> "$GITHUB_OUTPUT"; fi
           else
