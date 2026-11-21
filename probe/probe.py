@@ -16,7 +16,8 @@ URLS = {
  "euronext_esf_ajax2": "https://live.euronext.com/en/ajax/getFullDownloadAjax/commodities-futures/ESF/DPAR",
  "fishpool_sisalmon": "https://fishpool.eu/sisalmoni/",
  "fishpool_forward": "https://fishpool.eu/?p=838",
- "barentswatch_api": "https://www.barentswatch.no/bwapi/v1/geodata/fishhealth/locality/2026/46",
+ "fishpool_home": "https://fishpool.eu/",
+ "fiskeridir_bio_root": "https://www.fiskeridir.no/statistikk-tall-og-analyse/data-og-statistikk-om-akvakultur",
 }
 summary = {}
 for k, u in URLS.items():
