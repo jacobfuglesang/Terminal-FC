@@ -1,6 +1,7 @@
 """Lus og sykdom fra BarentsWatch Fish Health API (NLOD). Krever gratis API-klient.
 
 Hemmeligheter i GitHub: BW_CLIENT_ID og BW_CLIENT_SECRET.
+Klienten lages på barentswatch.no/minside under «BarentsWatch - API».
 """
 import os
 from datetime import date, timedelta
