@@ -17,7 +17,7 @@ def _url() -> str:
 
 @contextmanager
 def connect():
-    with psycopg.connect(_url(), autocommit=False) as conn:
+    with psycopg.connect(_url(), autocommit=False, prepare_threshold=None) as conn:
         yield conn
 
 
