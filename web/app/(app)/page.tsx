@@ -1,13 +1,22 @@
 import Link from "next/link";
-import { Bars, LineChart } from "@/components/Charts";
-import { getDaily, getQuotes, getSalmon, getStatus } from "@/lib/db";
+import { Bars } from "@/components/Charts";
+import TimeChart from "@/components/TimeChart";
+import { getDaily, getIntraday, getQuotes, getSalmon, getStatus } from "@/lib/db";
 import { compact, fmt, osloTime, pct, up } from "@/lib/format";
 import { COMPANIES } from "@/lib/menu";
 
 export const dynamic = "force-dynamic";
 
+// Onsdagen i ISO-uken (SSB publiserer onsdager)
+function weekDate(year: number, week: number): string {
+  const jan4 = new Date(Date.UTC(year, 0, 4));
+  const monday = new Date(jan4.getTime() - ((jan4.getUTCDay() + 6) % 7) * 86400_000 + (week - 1) * 7 * 86400_000);
+  return new Date(monday.getTime() + 2 * 86400_000).toISOString();
+}
+
 export default async function Oversikt() {
   const [quotes, salmon, status, fxDaily] = await Promise.all([getQuotes(), getSalmon(52), getStatus(), getDaily("EURNOK=X", 260)]);
+  const fxIntra = await getIntraday("EURNOK=X");
   const fxFirst = fxDaily[0]?.close;
   const fxLast = fxDaily[fxDaily.length - 1]?.close;
   const fxYear = fxFirst && fxLast ? (fxLast / fxFirst - 1) * 100 : null;
@@ -85,7 +94,7 @@ export default async function Oversikt() {
             <h2 id="h-laks">Laksepris siste 52 uker</h2>
             <span className="src">SSB tabell 03024 · kr/kg fersk laks · CC BY 4.0</span>
           </div>
-          <LineChart values={salmon.filter((s) => s.fresh_price).map((s) => s.fresh_price as number)} labels={salmon.filter((s) => s.fresh_price).map((s) => `Uke ${s.week} ${s.year}`)} />
+          <TimeChart daily={salmon.filter((s) => s.fresh_price).map((s) => ({ t: weekDate(s.year, s.week), v: s.fresh_price as number }))} periods={["1M", "3M", "6M", "1Å"]} initial="1Å" decimals={1} />
         </section>
       </div>
 
@@ -96,7 +105,7 @@ export default async function Oversikt() {
             Yahoo Finance · endring siste år: <span className={`m ${up(fxYear) ? "upc" : "downc"}`}>{pct(fxYear)}</span> · høyere kurs = svakere krone = bedre laksepris i kroner
           </span>
         </div>
-        <LineChart values={fxDaily.map((d) => d.close)} labels={fxDaily.map((d) => d.day)} color="#5BA8FF" height={180} />
+        <TimeChart daily={fxDaily.map((d) => ({ t: `${d.day}T16:00:00Z`, v: d.close }))} intraday={fxIntra} color="#5BA8FF" height={180} decimals={3} initial="1Å" />
       </section>
 
       <div className="row">

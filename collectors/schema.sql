@@ -22,6 +22,14 @@ CREATE TABLE IF NOT EXISTS price_daily (
   PRIMARY KEY (symbol, day)
 );
 
+-- Kurser per 15 minutter (siste ca. 10 dager, til 1D/1U-grafer)
+CREATE TABLE IF NOT EXISTS price_intraday (
+  symbol TEXT NOT NULL,
+  ts     TIMESTAMPTZ NOT NULL,
+  price  NUMERIC,
+  PRIMARY KEY (symbol, ts)
+);
+
 -- SSB tabell 03024: eksportpris og mengde for oppdrettslaks per uke
 CREATE TABLE IF NOT EXISTS ssb_salmon (
   period        TEXT PRIMARY KEY,         -- f.eks. 2026U47

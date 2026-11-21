@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
-import { LineChart } from "@/components/Charts";
-import { getDaily, getQuotes } from "@/lib/db";
+import TimeChart from "@/components/TimeChart";
+import { getDaily, getIntraday, getQuotes } from "@/lib/db";
 import { compact, fmt, osloTime, pct, up } from "@/lib/format";
 import { COMPANIES } from "@/lib/menu";
 
@@ -10,7 +10,7 @@ export default async function Company({ params }: { params: Promise<{ id: string
   const { id } = await params;
   const co = COMPANIES.find((c) => c.id === id);
   if (!co) notFound();
-  const [quotes, daily] = await Promise.all([getQuotes(), getDaily(co.symbol)]);
+  const [quotes, daily, intra] = await Promise.all([getQuotes(), getDaily(co.symbol), getIntraday(co.symbol)]);
   const q = quotes.find((x) => x.symbol === co.symbol);
   const first = daily[0]?.close;
   const lastClose = daily[daily.length - 1]?.close;
@@ -40,10 +40,10 @@ export default async function Company({ params }: { params: Promise<{ id: string
       </section>
       <section className="panel" aria-labelledby="h-graf">
         <div className="ph">
-          <h2 id="h-graf">Kurs siste år</h2>
-          <span className="src">Sluttkurs per dag · Yahoo Finance</span>
+          <h2 id="h-graf">Kursutvikling</h2>
+          <span className="src">15-minutters kurser for 1 dag og 1 uke, ellers sluttkurs · Yahoo Finance</span>
         </div>
-        <LineChart values={daily.map((d) => d.close)} labels={daily.map((d) => d.day)} />
+        <TimeChart daily={daily.map((d) => ({ t: `${d.day}T16:00:00Z`, v: d.close }))} intraday={intra} decimals={2} />
       </section>
       <section className="panel">
         <div className="empty">

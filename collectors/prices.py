@@ -32,6 +32,42 @@ def fetch(period: str = "5d") -> pd.DataFrame:
     return df
 
 
+def fetch_intraday() -> pd.DataFrame:
+    return yf.download(list(SYMBOLS), period="5d", interval="15m", group_by="ticker",
+                       auto_adjust=False, progress=False, threads=False)
+
+
+def store_intraday(conn) -> int:
+    """Lagrer 15-minutters kurser for siste 5 handelsdager. Feiler stille, siden dette er et tillegg."""
+    try:
+        df = fetch_intraday()
+    except Exception as e:  # noqa: BLE001
+        print(f"  ! intradag feilet: {e}")
+        return 0
+    if df is None or df.empty:
+        return 0
+    n = 0
+    with conn.cursor() as cur:
+        for sym in SYMBOLS:
+            if sym not in df.columns.get_level_values(0):
+                continue
+            d = df[sym].dropna(subset=["Close"])
+            for idx, r in d.iterrows():
+                ts = idx.to_pydatetime()
+                if ts.tzinfo is None:
+                    ts = ts.replace(tzinfo=timezone.utc)
+                cur.execute(
+                    """INSERT INTO price_intraday (symbol, ts, price) VALUES (%s,%s,%s)
+                       ON CONFLICT (symbol, ts) DO UPDATE SET price=EXCLUDED.price""",
+                    (sym, ts, float(r["Close"])),
+                )
+                n += 1
+        cur.execute("DELETE FROM price_intraday WHERE ts < now() - interval '12 days'")
+    conn.commit()
+    print(f"  Intradag: {n} punkter")
+    return n
+
+
 def run(conn, backfill: bool = False) -> int:
     df = fetch("1y" if backfill else "5d")
     rows = 0
@@ -71,4 +107,5 @@ def run(conn, backfill: bool = False) -> int:
             rows += 1
             print(f"  {name:<14} {price:>10.2f}  {chg if chg is not None else 0:+.2f} %")
     conn.commit()
+    store_intraday(conn)
     return rows

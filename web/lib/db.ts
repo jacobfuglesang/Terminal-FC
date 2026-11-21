@@ -84,6 +84,15 @@ export async function getDaily(symbol: string, days = 260): Promise<{ day: strin
   }
 }
 
+export async function getIntraday(symbol: string): Promise<{ t: string; v: number }[]> {
+  try {
+    const rows = await sql()`SELECT ts, price FROM price_intraday WHERE symbol = ${symbol} AND ts > now() - interval '10 days' ORDER BY ts`;
+    return rows.map((r: Record<string, unknown>) => ({ t: new Date(String(r.ts)).toISOString(), v: Number(r.price) }));
+  } catch {
+    return [];
+  }
+}
+
 export async function getStatus(): Promise<SourceStatus[]> {
   try {
     const rows = await sql()`SELECT * FROM source_status ORDER BY source`;
