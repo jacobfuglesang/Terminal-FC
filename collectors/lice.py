@@ -72,9 +72,10 @@ def _deep(obj, needle: str):
                 walk(x, path)
 
     walk(obj, "")
-    for pref in ("avg", "average", "mean", "value"):
+    hits = [(k, v) for k, v in hits if "previous" not in k and "prev" not in k]
+    for pref in ("average", "avg", "mean", "value"):
         for k, v in hits:
-            if pref in k:
+            if k == pref or k.startswith(pref):
                 return v
     return hits[0][1] if hits else None
 
@@ -100,10 +101,12 @@ def _stats(locs: list, week: int) -> dict:
         rep = l.get("liceReport")
         if not rep or rep.get("hasReported") is False:
             continue
-        v = _deep(rep, "adultfemale")
-        if v is None or not 0 <= v < 50:
+        afl = rep.get("adultFemaleLice")
+        # Bare denne ukens tall. (averageOfPreviousWeek må aldri brukes som erstatning.)
+        v = afl.get("average") if isinstance(afl, dict) else _deep(rep, "adultfemale")
+        if not isinstance(v, (int, float)) or isinstance(v, bool) or not 0 <= v < 50:
             continue
-        vals.append(v)
+        vals.append(float(v))
         cap = (l.get("aquaCultureRegister") or {}).get("capacity") or 0
         if cap > 0:
             wsum += v * cap

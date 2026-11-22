@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import NewsList from "@/components/NewsList";
 import TimeChart from "@/components/TimeChart";
 import { COMPANY_INFO, EVENTS } from "@/lib/companies";
-import { weekDate } from "@/lib/dates";
+import { completeWeekIndex, weekDate } from "@/lib/dates";
 import { getAnnouncements, getDaily, getFundamentals, getIntraday, getLice, getLiceCompanies, getNews, getQuotes } from "@/lib/db";
 import { compact, fmt, money, osloTime, pct, tonn, up } from "@/lib/format";
 import { COMPANIES } from "@/lib/menu";
@@ -45,10 +45,12 @@ export default async function Company({ params }: { params: Promise<{ id: string
   const insider = ann.filter((a) => a.kind === "Innsidehandel").slice(0, 10);
   const releases = ann.filter((a) => a.kind !== "Innsidehandel").slice(0, 14);
   const cur = fund?.info?.financialCurrency || info.currency;
-  const lc = liceCo.filter((l) => l.localities > 0);
-  const lw = lc[lc.length - 1];
-  const lp = lc[lc.length - 2];
-  const nat = lw ? liceAll.find((l) => l.year === lw.year && l.week === lw.week) : undefined;
+  const nci = completeWeekIndex(liceAll);
+  const nat = liceAll[nci];
+  const natPrev = liceAll[nci - 1];
+  const lc = liceCo.filter((l) => l.localities > 0 && (!nat || l.year < nat.year || (l.year === nat.year && l.week <= nat.week)));
+  const lw = nat ? lc.find((l) => l.year === nat.year && l.week === nat.week) : lc[lc.length - 1];
+  const lp = natPrev ? lc.find((l) => l.year === natPrev.year && l.week === natPrev.week) : undefined;
   const trend0 = fund?.eps_trend?.["0y"];
 
   return (

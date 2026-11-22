@@ -2,7 +2,7 @@ import TimeChart from "@/components/TimeChart";
 import Link from "next/link";
 import { getBiomass, getLice, getLiceCompanies } from "@/lib/db";
 import { COMPANIES } from "@/lib/menu";
-import { monthLabel, weekDate } from "@/lib/dates";
+import { completeWeekIndex, monthLabel, weekDate } from "@/lib/dates";
 import { fmt, pct, up } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
@@ -24,15 +24,17 @@ export default async function Biologi() {
         return { ...b, py: py?.tonnes ?? null, ch: py && py.tonnes ? (b.tonnes / py.tonnes - 1) * 100 : null };
       })
     : [];
-  const lw = lice[lice.length - 1];
-  const coWeek = liceCo.length ? liceCo[liceCo.length - 1] : undefined;
+  const ci = completeWeekIndex(lice);
+  const lw = lice[ci];
+  const partial = ci < lice.length - 1 ? lice[lice.length - 1] : undefined;
+  const coWeek = lw ? { year: lw.year, week: lw.week } : undefined;
   const coRows = COMPANIES.filter((c) => c.symbol !== "BAKKA.OL").map((c) => {
     const rows = liceCo.filter((l) => l.symbol === c.symbol);
     const cur = rows.find((l) => coWeek && l.year === coWeek.year && l.week === coWeek.week);
-    const prev = rows.find((l) => coWeek && l.year === coWeek.year && l.week === coWeek.week - 1);
+    const prev = lp ? rows.find((l) => l.year === lp.year && l.week === lp.week) : undefined;
     return { c, cur, prev };
   });
-  const lp = lice[lice.length - 2];
+  const lp = lice[ci - 1];
 
   return (
     <>
@@ -55,9 +57,9 @@ export default async function Biologi() {
           {lice.length === 0 ? (
             <div className="empty">Lusetall kommer når BarentsWatch-nøkkelen er lagt inn i GitHub.</div>
           ) : (
-            <TimeChart daily={lice.filter((l) => l.avg !== null).map((l) => ({ t: weekDate(l.year, l.week), v: l.avg as number }))} periods={["1M", "3M", "6M"]} initial="6M" color="#F2C94C" decimals={2} height={170} />
+            <TimeChart daily={lice.slice(0, ci + 1).filter((l) => l.avg !== null).map((l) => ({ t: weekDate(l.year, l.week), v: l.avg as number }))} periods={["1M", "3M", "6M"]} initial="6M" color="#F2C94C" decimals={2} height={170} />
           )}
-          <p className="note">Grensen er 0,5 voksne hunnlus per fisk, men 0,2 om våren (uke 16–21).</p>
+          <p className="note">Grensen er 0,5 voksne hunnlus per fisk, men 0,2 om våren (uke 16–21).{partial ? ` Uke ${partial.week} er foreløpig: ${partial.reported} av om lag ${lw?.reported ?? "–"} anlegg har rapportert så langt, så den vises ikke ennå.` : ""}</p>
         </section>
       </div>
 

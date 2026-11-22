@@ -164,17 +164,19 @@ NO_FETCH = re.compile(r"regjeringen\.no|theatlantic\.com", re.I)
 PAYWALL = re.compile(r"(^|\.)(dn\.no|altaposten\.no|vol\.no|ba\.no|bt\.no|aftenposten\.no|adressa\.no|intrafish\.no|fiskeribladet\.no|ft\.com|bloomberg\.com)$", re.I)
 
 
-def resolve(url: str) -> str:
+def resolve(url: str) -> str | None:
+    """Finner lenken bak Google Nyheter. None betyr at Google ikke svarte (prøv igjen senere)."""
     if "news.google.com" not in url:
         return url
     try:
         from googlenewsdecoder import gnewsdecoder
-        d = gnewsdecoder(url, interval=1)
+        d = gnewsdecoder(url, interval=2)
         if d.get("status") or d.get("success"):
-            return d.get("decoded_url") or url
+            return d.get("decoded_url") or None
+        print(f"  ! Google Nyheter: {str(d.get('message'))[:120]}")
     except Exception as e:  # noqa: BLE001
         print(f"  ! Klarte ikke å finne lenken bak Google Nyheter: {e}")
-    return url
+    return None
 
 
 def fetch_article(url: str) -> dict:
@@ -183,6 +185,8 @@ def fetch_article(url: str) -> dict:
     from urllib.parse import urlparse
 
     final = resolve(url)
+    if final is None:
+        return {"final_url": url, "body": None, "status": "retry", "image": None}
     host = urlparse(final).hostname or ""
     if "news.google.com" in host or NO_FETCH.search(host):
         return {"final_url": final, "body": None, "status": "none", "image": None}
@@ -210,8 +214,34 @@ def fetch_article(url: str) -> dict:
     return {"final_url": r.url or final, "body": body[:40000] or None, "status": status, "image": image}
 
 
+GROQ = "https://api.groq.com/openai/v1"
+PREFERRED = ["openai/gpt-oss-120b", "openai/gpt-oss-20b", "qwen/qwen3.8-27b", "llama-3.3-70b-versatile", "llama-3.1-8b-instant"]
+_models: list[str] | None = None
+
+
+def groq_models(key: str) -> list[str]:
+    """Velger modeller som faktisk finnes på kontoen (Groq bytter modeller med jevne mellomrom)."""
+    global _models
+    if _models is None:
+        try:
+            r = requests.get(f"{GROQ}/models", headers={"Authorization": f"Bearer {key}"}, timeout=20)
+            have = {m["id"] for m in r.json().get("data", [])}
+        except Exception as e:  # noqa: BLE001
+            print(f"  ! Fikk ikke modellisten fra Groq: {e}")
+            have = set()
+        wish = [os.environ.get("GROQ_MODEL", "")] + PREFERRED
+        _models = [m for m in dict.fromkeys(wish) if m and m in have] or PREFERRED[:2]
+        print(f"  Groq-modeller: {', '.join(_models[:3])}")
+    return _models
+
+
+def _clean_ai(text: str) -> str:
+    text = re.sub(r"<think>.*?</think>", "", text or "", flags=re.S).strip().strip('"').strip()
+    return re.sub(r"\s+", " ", text)
+
+
 def ai_summary(item: dict) -> str | None:
-    key = os.environ.get("GROQ_API_KEY")
+    key = (os.environ.get("GROQ_API_KEY") or "").strip()
     if not key:
         return None
     text = (item.get("body") or item.get("excerpt") or "").strip()
@@ -220,32 +250,34 @@ def ai_summary(item: dict) -> str | None:
         "Få med det viktigste: hva som skjedde, hvem det gjelder og eventuelle sentrale tall. "
         "Bruk bare informasjon som står i teksten, ikke finn på noe. "
         "Ikke nevn analytikeres anbefalinger, kursmål eller kjøps- og salgsråd. "
-        "Svar bare med sammendraget.\n\n"
-        f"Tittel: {item['title']}\nKilde: {item.get('source') or ''}\nTekst: {text[:3000] or '(bare tittel)'}"
+        "Svar bare med sammendraget, uten innledning.\n\n"
+        f"Tittel: {item['title']}\nKilde: {item.get('source') or ''}\nTekst: {text[:2500] or '(bare tittel)'}"
     )
-    models = [os.environ.get("GROQ_MODEL", "llama-3.3-70b-versatile"), "llama-3.1-8b-instant"]
-    for model in dict.fromkeys(models):
-        try:
-            r = requests.post(
-                "https://api.groq.com/openai/v1/chat/completions",
-                headers={"Authorization": f"Bearer {key}"},
-                json={"model": model, "messages": [{"role": "user", "content": prompt}], "temperature": 0.2, "max_tokens": 140},
-                timeout=40,
-            )
-            if r.status_code in (400, 404, 429, 503):
-                print(f"  ! Groq {model}: HTTP {r.status_code}, prøver neste modell")
+    for model in groq_models(key):
+        payload = {"model": model, "messages": [{"role": "user", "content": prompt}], "temperature": 0.2, "max_completion_tokens": 900}
+        if model.startswith("openai/gpt-oss"):
+            payload["reasoning_effort"] = "low"
+        for attempt in range(2):
+            try:
+                r = requests.post(f"{GROQ}/chat/completions", headers={"Authorization": f"Bearer {key}"}, json=payload, timeout=60)
+            except requests.RequestException as e:
+                print(f"  ! Groq {model}: {e}")
+                break
+            if r.status_code == 400 and attempt == 0 and "reasoning_effort" in payload:
+                payload.pop("reasoning_effort")
                 continue
-            r.raise_for_status()
-            out = r.json()["choices"][0]["message"]["content"].strip().strip('"')
-            if BLOCK.search(out):
-                out = BLOCK.sub("", out)
-            return out[:400] or None
-        except Exception as e:  # noqa: BLE001
-            print(f"  ! KI-sammendrag feilet ({model}): {e}")
+            if r.status_code != 200:
+                print(f"  ! Groq {model}: HTTP {r.status_code} {r.text[:160]}")
+                break
+            out = _clean_ai(r.json()["choices"][0]["message"].get("content") or "")
+            if out:
+                out = BLOCK.sub("", out).strip()
+                return out[:400] or None
+            break
     return None
 
 
-def enrich(conn, max_fetch: int = 30, max_ai: int = 30) -> tuple[int, int, int]:
+def enrich(conn, max_fetch: int = 20, max_ai: int = 30) -> tuple[int, int, int]:
     """Henter hele artikkelen og lager sammendrag for saker som mangler det."""
     import time
 
@@ -257,8 +289,14 @@ def enrich(conn, max_fetch: int = 30, max_ai: int = 30) -> tuple[int, int, int]:
             (max_fetch,),
         )
         todo = cur.fetchall()
+    google_ok = True
     for nid, url, title in todo:
+        if "news.google.com" in url and not google_ok:
+            continue
         a = fetch_article(url)
+        if a["status"] == "retry":
+            google_ok = False  # Google begrenser oss; resten tas ved neste kjøring
+            continue
         lead = (a["body"] or "")[:500]
         with conn.cursor() as cur:
             if BLOCK.search(lead):
@@ -274,7 +312,7 @@ def enrich(conn, max_fetch: int = 30, max_ai: int = 30) -> tuple[int, int, int]:
                 )
                 fetched += 1 if a["body"] else 0
         conn.commit()
-    if os.environ.get("GROQ_API_KEY"):
+    if (os.environ.get("GROQ_API_KEY") or "").strip():
         with conn.cursor() as cur:
             cur.execute(
                 """SELECT id, title, source, body, excerpt FROM news WHERE summary IS NULL
@@ -290,7 +328,7 @@ def enrich(conn, max_fetch: int = 30, max_ai: int = 30) -> tuple[int, int, int]:
                     cur.execute("UPDATE news SET summary = %s WHERE id = %s", (s, nid))
                 conn.commit()
                 summarized += 1
-            time.sleep(5)  # holder oss godt innenfor Groqs gratisgrense per minutt
+            time.sleep(8)  # holder oss innenfor Groqs gratisgrense per minutt
     return fetched, blocked, summarized
 
 
