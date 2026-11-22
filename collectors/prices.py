@@ -45,6 +45,7 @@ def store_intraday(conn) -> int:
         return 0
     n = 0
     with conn.cursor() as cur:
+        batch = []
         for sym in INTRADAY:
             if sym not in df.columns.get_level_values(0):
                 continue
@@ -53,12 +54,14 @@ def store_intraday(conn) -> int:
                 ts = idx.to_pydatetime()
                 if ts.tzinfo is None:
                     ts = ts.replace(tzinfo=timezone.utc)
-                cur.execute(
-                    """INSERT INTO price_intraday (symbol, ts, price) VALUES (%s,%s,%s)
-                       ON CONFLICT (symbol, ts) DO UPDATE SET price=EXCLUDED.price""",
-                    (sym, ts, float(r["Close"])),
-                )
-                n += 1
+                batch.append((sym, ts, float(r["Close"])))
+        # executemany sender alt i én pipeline i stedet for én rundtur per rad
+        cur.executemany(
+            """INSERT INTO price_intraday (symbol, ts, price) VALUES (%s,%s,%s)
+               ON CONFLICT (symbol, ts) DO UPDATE SET price=EXCLUDED.price""",
+            batch,
+        )
+        n = len(batch)
         cur.execute("DELETE FROM price_intraday WHERE ts < now() - interval '12 days'")
     conn.commit()
     print(f"  Intradag: {n} punkter")
@@ -77,13 +80,12 @@ def run(conn, backfill: bool = False) -> int:
             if d.empty:
                 print(f"  ! {sym}: tom serie")
                 continue
-            for idx, r in d.iterrows():
-                vol = r.get("Volume")
-                cur.execute(
-                    """INSERT INTO price_daily (symbol, day, close, volume) VALUES (%s,%s,%s,%s)
-                       ON CONFLICT (symbol, day) DO UPDATE SET close=EXCLUDED.close, volume=EXCLUDED.volume""",
-                    (sym, idx.date(), float(r["Close"]), int(vol) if pd.notna(vol) else None),
-                )
+            cur.executemany(
+                """INSERT INTO price_daily (symbol, day, close, volume) VALUES (%s,%s,%s,%s)
+                   ON CONFLICT (symbol, day) DO UPDATE SET close=EXCLUDED.close, volume=EXCLUDED.volume""",
+                [(sym, idx.date(), float(r["Close"]), int(r["Volume"]) if pd.notna(r.get("Volume")) else None)
+                 for idx, r in d.iterrows()],
+            )
             last = d.iloc[-1]
             prev = float(d.iloc[-2]["Close"]) if len(d) > 1 else None
             price = float(last["Close"])

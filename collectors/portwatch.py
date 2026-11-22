@@ -43,8 +43,7 @@ def run(conn, backfill: bool = False) -> int:
             feats = [f["attributes"] for f in r.json().get("features", [])]
             if not feats:
                 break
-            for a in feats:
-                cur.execute(
+            cur.executemany(
                     """INSERT INTO chokepoints (day, portid, name, n_total, n_tanker, n_container, n_dry_bulk, n_cargo, n_roro,
                          capacity, cap_tanker, cap_container, cap_dry_bulk)
                        VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
@@ -52,12 +51,12 @@ def run(conn, backfill: bool = False) -> int:
                          n_container=EXCLUDED.n_container, n_dry_bulk=EXCLUDED.n_dry_bulk, n_cargo=EXCLUDED.n_cargo,
                          n_roro=EXCLUDED.n_roro, capacity=EXCLUDED.capacity, cap_tanker=EXCLUDED.cap_tanker,
                          cap_container=EXCLUDED.cap_container, cap_dry_bulk=EXCLUDED.cap_dry_bulk""",
-                    (a["date"][:10], a["portid"], KEEP.get(a["portid"], a.get("portname")), a.get("n_total"), a.get("n_tanker"),
-                     a.get("n_container"), a.get("n_dry_bulk"), a.get("n_cargo"), a.get("n_roro"), a.get("capacity"),
-                     a.get("capacity_tanker"), a.get("capacity_container"), a.get("capacity_dry_bulk")),
-                )
-                rows += 1
-                newest = max(newest or a["date"], a["date"])
+                [(a["date"][:10], a["portid"], KEEP.get(a["portid"], a.get("portname")), a.get("n_total"), a.get("n_tanker"),
+                  a.get("n_container"), a.get("n_dry_bulk"), a.get("n_cargo"), a.get("n_roro"), a.get("capacity"),
+                  a.get("capacity_tanker"), a.get("capacity_container"), a.get("capacity_dry_bulk")) for a in feats],
+            )
+            rows += len(feats)
+            newest = max([newest or feats[0]["date"]] + [a["date"] for a in feats])
             conn.commit()
             if len(feats) < 1000:
                 break

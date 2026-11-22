@@ -81,15 +81,15 @@ def run(conn, seconds: int = 70) -> int:
     now = datetime.now(timezone.utc)
     counts: dict[str, dict[str, int]] = {z: {"total": 0, "tank": 0, "last": 0} for z in ZONES}
     with conn.cursor() as cur:
-        for mmsi, s in static.items():
-            cur.execute(
+        cur.executemany(
                 """INSERT INTO ais_ships (mmsi, name, ship_type, dest, draught, updated_at) VALUES (%s,%s,%s,%s,%s, now())
                    ON CONFLICT (mmsi) DO UPDATE SET name=COALESCE(NULLIF(EXCLUDED.name,''), ais_ships.name), ship_type=EXCLUDED.ship_type,
                      dest=EXCLUDED.dest, draught=EXCLUDED.draught, updated_at=now()""",
-                (mmsi, s["name"], s["type"], s["dest"], s["draught"]),
+                [(mmsi, s["name"], s["type"], s["dest"], s["draught"]) for mmsi, s in static.items()],
             )
         cur.execute("SELECT mmsi, ship_type FROM ais_ships WHERE mmsi = ANY(%s)", (list(pos),))
         types = dict(cur.fetchall())
+        rows = []
         for mmsi, p in pos.items():
             if p["lat"] is None or p["lon"] is None:
                 continue
@@ -100,11 +100,12 @@ def run(conn, seconds: int = 70) -> int:
             counts[z]["total"] += 1
             if k in ("tank", "last"):
                 counts[z][k] += 1
-            cur.execute(
+            rows.append((mmsi, p["name"], p["lat"], p["lon"], p["sog"], z, k, now))
+        cur.executemany(
                 """INSERT INTO ais_positions (mmsi, name, lat, lon, sog, zone, kind, seen) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)
                    ON CONFLICT (mmsi) DO UPDATE SET name=COALESCE(NULLIF(EXCLUDED.name,''), ais_positions.name), lat=EXCLUDED.lat,
                      lon=EXCLUDED.lon, sog=EXCLUDED.sog, zone=EXCLUDED.zone, kind=EXCLUDED.kind, seen=EXCLUDED.seen""",
-                (mmsi, p["name"], p["lat"], p["lon"], p["sog"], z, k, now),
+                rows,
             )
         for z, c in counts.items():
             cur.execute("INSERT INTO ais_zone (ts, zone, total, tankers, cargo) VALUES (%s,%s,%s,%s,%s)",
