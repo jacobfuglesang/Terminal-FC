@@ -36,7 +36,7 @@ SKIP = re.compile(r"invitation|invitasjon|webcast|conference call|to be held|wil
 REPORTISH = re.compile(r"result|quarter|kvartal|half[- ]year|halvår|annual report|årsrapport|interim|"
                        r"presentation|\bq[1-4]\b|financial information|financial statements|nine[- ]month|six[- ]month", re.I)
 MAX_PDF_BYTES = 25_000_000
-VERSION = 3  # økes når leseren forbedres, så gamle uttrekk leses på nytt
+VERSION = 4  # økes når leseren forbedres, så gamle uttrekk leses på nytt
 
 # Groq: én forespørsel må holde seg under 8 000 tokens (inn + ut). Ca. 3,6 tegn per token i rapporttekst.
 CHUNK_CHARS = 11_000
@@ -280,7 +280,9 @@ REGLER:
 - ALLE tekstfelt (headline, summary, outlook, watch, fleet, label, note) skal være på norsk bokmål, selv om rapporten er på engelsk.
   Oversett, ikke kopier engelske setninger. Skipstyper (VLCC, Suezmax, LR2, PCTC) og tall kan stå som i rapporten.
 - Kort og enkelt språk.
-- "bookings" er det viktigste: andel av dagene i NESTE periode som er booket/covered/fixed, og snittraten. Ta med hver skipstype
+- "bookings" er det viktigste: andel av dagene i NESTE periode som er booket/covered/fixed/done, og snittraten for de dagene.
+  Ikke bland med oppnådd rate for kvartalet som rapporteres (det hører i "tce"). I tabeller står raten rett før prosenten:
+  «Q4 2026 Spot % done … $562,600 68%» betyr 68 % booket til 562 600 USD/dag. Ta med hver skipstype
   og både spot- og totaldager hvis begge er oppgitt. I tabeller heter kolonnene ofte «% covered» og «TCE currently contracted».
 - Settes "is_report" til false hvis teksten ikke er en finansiell rapport (f.eks. bare ny dato, invitasjon eller kalender).
 
@@ -332,6 +334,8 @@ def final(name: str, sym_segment: str, period: str, material: str) -> tuple[dict
 
 FIX_PROMPT = """Noen tall i et uttrekk fra kvartalsrapporten til {name} ({period}) står ikke i rapporten, eller hører ikke sammen.
 Finn de riktige tallene i NØKKELLINJENE under. Kopier dem nøyaktig, også hvis de virker ekstreme. Finnes de ikke, bruk null.
+Booking gjelder NESTE kvartal. I tabeller står raten rett før prosenten («$562,600 68%» = 68 % til 562 600).
+I setninger står den etter («74% of Q4 days are covered at USD 55,148»). Oppnådd rate for rapportert kvartal hører i "tce".
 Svar KUN med JSON med de samme listene rettet: {{"bookings": [...], "tce": [...], "breakeven": [...]}}
 
 FEIL ELLER USIKRE TALL:
@@ -425,15 +429,32 @@ def found(value, pool: set[float]) -> bool:
     return any(_match(v, p) for p in pool)
 
 
-def found_near(a, b, pos: list[tuple[int, set[float]]], window: int = 350) -> bool:
-    """Står tallene a og b nær hverandre i teksten? Brukes for «X % booket til Y per dag»."""
+def _is_year(c: set[float]) -> bool:
+    return any(1990 <= x <= 2035 and x == int(x) for x in c)
+
+
+def found_pair(share, rate, pos: list[tuple[int, set[float]]], text: str) -> bool:
+    """Hører raten til andelen? I tekst står raten etter prosenten («74 % ... covered at USD 55,148»),
+    i tabeller rett foran («$562,600 68%»). Godtar bare nærmeste store tall i én av de to retningene."""
     try:
-        va, vb = abs(float(a)), abs(float(b))
+        vs, vr = abs(float(share)), abs(float(rate))
     except (TypeError, ValueError):
         return False
-    pa = [i for i, c in pos if any(_match(va, x) for x in c)]
-    pb = [i for i, c in pos if any(_match(vb, x) for x in c)]
-    return any(abs(i - j) <= window for i in pa for j in pb)
+    big = [(i, c) for i, c in pos if any(x >= 1000 for x in c) and not _is_year(c)]
+    for i, c in pos:
+        if not any(abs(x - vs) < 0.51 for x in c):
+            continue
+        tail = text[i:i + 8]
+        if "%" not in tail and "pct" not in tail.lower() and "per cent" not in text[i:i + 14].lower():
+            continue
+        after = next(((j, cj) for j, cj in big if j > i), None)
+        before = next(((j, cj) for j, cj in reversed(big) if j < i), None)
+        if after and after[0] - i <= 220 and any(_match(vr, x) for x in after[1]):
+            return True
+        # Tabell: tallet rett foran, med bare mellomrom eller tegn imellom (ingen ord)
+        if before and i - before[0] <= 40 and not re.search(r"[A-Za-z]", text[before[0]:i]) and any(_match(vr, x) for x in before[1]):
+            return True
+    return False
 
 
 def verify(data: dict, source: str) -> dict:
@@ -457,9 +478,9 @@ def verify(data: dict, source: str) -> dict:
     for row in data.get("bookings") or []:
         mark(row, "rate")
         mark(row, "share_pct")
-        # Raten må stå nær andelen, ellers er det trolig to tall som ikke hører sammen
+        # Raten må høre til andelen, ellers er det trolig to tall fra ulike kolonner eller kvartaler
         if row.get("rate") is not None and row.get("share_pct") is not None and row.get("rate_ok"):
-            if not found_near(row["share_pct"], row["rate"], pos):
+            if not found_pair(row["share_pct"], row["rate"], pos, source):
                 row["rate_ok"] = False
                 missing += 1
     for row in data.get("breakeven") or []:
