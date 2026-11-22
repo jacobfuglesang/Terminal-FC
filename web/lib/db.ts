@@ -166,22 +166,98 @@ export const getLice = () =>
 
 export type NewsItem = {
   id: string; title: string; url: string; source: string; published: string;
-  excerpt: string; summary: string | null; category: string; companies: string[];
+  lead: string; ai: boolean; category: string; companies: string[]; hasBody: boolean;
 };
+
+const newsRow = (r: Row): NewsItem => ({
+  id: String(r.id), title: String(r.title), url: String(r.final_url || r.url || ""), source: String(r.source ?? ""),
+  published: r.published ? new Date(r.published as string).toISOString() : "",
+  lead: String(r.lead ?? ""), ai: Boolean(r.summary_present), category: String(r.category ?? "Marked"),
+  companies: (r.companies as string[] | null) ?? [], hasBody: Boolean(r.has_body),
+});
 
 export const getNews = (limit = 300) =>
   safe(async () => {
-    const rows = await sql()`SELECT id, title, url, source, published, excerpt, summary, category, companies FROM news ORDER BY published DESC NULLS LAST LIMIT ${limit}`;
-    return (rows as Row[]).map((r) => ({
-      id: String(r.id), title: String(r.title), url: String(r.url ?? ""), source: String(r.source ?? ""),
-      published: r.published ? new Date(r.published as string).toISOString() : "",
-      excerpt: String(r.excerpt ?? ""), summary: r.summary ? String(r.summary) : null,
-      category: String(r.category ?? "Marked"), companies: (r.companies as string[] | null) ?? [],
-    }));
+    const rows = await sql()`SELECT id, title, url, final_url, source, published, category, companies,
+      summary IS NOT NULL AS summary_present, body IS NOT NULL AS has_body,
+      coalesce(summary, left(coalesce(nullif(excerpt, ''), body, ''), 420)) AS lead
+      FROM news WHERE body_status IS DISTINCT FROM 'blocked' ORDER BY published DESC NULLS LAST LIMIT ${limit}`;
+    return (rows as Row[]).map(newsRow);
   }, [] as NewsItem[]);
+
+export type NewsFull = NewsItem & { body: string | null; bodyStatus: string | null; excerpt: string; summary: string | null; image: string | null; feed: string };
+
+export const getNewsItem = (id: string) =>
+  safe(async () => {
+    const rows = await sql()`SELECT id, title, url, final_url, source, published, category, companies, summary, excerpt, body, body_status, image, feed,
+      summary IS NOT NULL AS summary_present, body IS NOT NULL AS has_body, coalesce(summary, left(coalesce(nullif(excerpt, ''), body, ''), 420)) AS lead
+      FROM news WHERE id = ${id} AND body_status IS DISTINCT FROM 'blocked'`;
+    const r = (rows as Row[])[0];
+    if (!r) return null;
+    return {
+      ...newsRow(r), body: r.body ? String(r.body) : null, bodyStatus: r.body_status ? String(r.body_status) : null,
+      excerpt: String(r.excerpt ?? ""), summary: r.summary ? String(r.summary) : null, image: r.image ? String(r.image) : null, feed: String(r.feed ?? ""),
+    } as NewsFull;
+  }, null as NewsFull | null);
 
 export const getBlockedCount = () =>
   safe(async () => {
     const rows = await sql()`SELECT coalesce(sum(n),0)::int AS n FROM news_blocked WHERE day > now() - interval '30 days'`;
     return Number((rows as Row[])[0]?.n ?? 0);
   }, 0);
+
+export type LiceCo = { year: number; week: number; symbol: string; localities: number; reported: number; avg: number | null; avgW: number | null; over: number; ila: number; pd: number };
+
+export const getLiceCompanies = (symbol?: string) =>
+  safe(async () => {
+    const rows = symbol
+      ? await sql()`SELECT * FROM lice_company WHERE symbol = ${symbol} ORDER BY year, week`
+      : await sql()`SELECT * FROM lice_company ORDER BY year, week`;
+    return (rows as Row[]).map((r) => ({
+      year: Number(r.year), week: Number(r.week), symbol: String(r.symbol), localities: Number(r.localities), reported: Number(r.reported),
+      avg: r.avg_lice === null ? null : Number(r.avg_lice), avgW: r.avg_w === null ? null : Number(r.avg_w),
+      over: Number(r.over_limit), ila: Number(r.ila), pd: Number(r.pd),
+    }));
+  }, [] as LiceCo[]);
+
+export type Announcement = { id: number; symbol: string; title: string; kind: string; category: string; published: string; attachments: number };
+
+export const getAnnouncements = (symbol?: string, limit = 60) =>
+  safe(async () => {
+    const rows = symbol
+      ? await sql()`SELECT id, symbol, title, kind, category, published, attachments FROM announcements WHERE symbol = ${symbol} ORDER BY published DESC LIMIT ${limit}`
+      : await sql()`SELECT id, symbol, title, kind, category, published, attachments FROM announcements ORDER BY published DESC LIMIT ${limit}`;
+    return (rows as Row[]).map((r) => ({
+      id: Number(r.id), symbol: String(r.symbol), title: String(r.title), kind: String(r.kind ?? "Annet"), category: String(r.category ?? ""),
+      published: r.published ? new Date(r.published as string).toISOString() : "", attachments: Number(r.attachments ?? 0),
+    }));
+  }, [] as Announcement[]);
+
+export const getAnnouncement = (id: number) =>
+  safe(async () => {
+    const rows = await sql()`SELECT id, symbol, title, kind, category, published, attachments, body FROM announcements WHERE id = ${id}`;
+    const r = (rows as Row[])[0];
+    if (!r) return null;
+    return {
+      id: Number(r.id), symbol: String(r.symbol), title: String(r.title), kind: String(r.kind ?? "Annet"), category: String(r.category ?? ""),
+      published: r.published ? new Date(r.published as string).toISOString() : "", attachments: Number(r.attachments ?? 0), body: String(r.body ?? ""),
+    };
+  }, null as (Announcement & { body: string }) | null);
+
+type Est = { avg?: number | null; low?: number | null; high?: number | null; numberOfAnalysts?: number | null; yearAgoEps?: number | null; yearAgoRevenue?: number | null; growth?: number | null; currency?: string };
+export type Fundamentals = {
+  fetched: string;
+  info: { marketCap?: number | null; enterpriseValue?: number | null; fullTimeEmployees?: number | null; currency?: string; financialCurrency?: string; trailingPE?: number | null; forwardPE?: number | null; dividendYield?: number | null; sharesOutstanding?: number | null };
+  eps: Record<string, Est>;
+  revenue: Record<string, Est>;
+  eps_trend: Record<string, Record<string, number | null>>;
+  quarters: { end: string; revenue: number | null; ebit: number | null; net: number | null; eps: number | null }[];
+  next_report: { date: string; eps_estimate: number | null } | null;
+};
+
+export const getFundamentals = (symbol: string) =>
+  safe(async () => {
+    const rows = await sql()`SELECT data, updated_at FROM fundamentals WHERE symbol = ${symbol}`;
+    const r = (rows as Row[])[0];
+    return r ? { ...(r.data as Fundamentals), updated: String(r.updated_at) } : null;
+  }, null as (Fundamentals & { updated: string }) | null);

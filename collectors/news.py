@@ -153,58 +153,172 @@ def collect() -> tuple[list[dict], int]:
     return items, blocked
 
 
+# ---------- Hele artikkelen ----------
+FETCH_UA = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36",
+    "Accept-Language": "nb-NO,nb;q=0.9,no;q=0.8,en;q=0.6",
+}
+# Nettsteder som stenger for automatisk henting (bruk utdraget fra strømmen)
+NO_FETCH = re.compile(r"regjeringen\.no|theatlantic\.com", re.I)
+# Kjente betalingsmurer: vi får bare ingressen
+PAYWALL = re.compile(r"(^|\.)(dn\.no|altaposten\.no|vol\.no|ba\.no|bt\.no|aftenposten\.no|adressa\.no|intrafish\.no|fiskeribladet\.no|ft\.com|bloomberg\.com)$", re.I)
+
+
+def resolve(url: str) -> str:
+    if "news.google.com" not in url:
+        return url
+    try:
+        from googlenewsdecoder import gnewsdecoder
+        d = gnewsdecoder(url, interval=1)
+        if d.get("status") or d.get("success"):
+            return d.get("decoded_url") or url
+    except Exception as e:  # noqa: BLE001
+        print(f"  ! Klarte ikke å finne lenken bak Google Nyheter: {e}")
+    return url
+
+
+def fetch_article(url: str) -> dict:
+    """Returnerer {final_url, body, status, image}. status: full, partial eller none."""
+    import trafilatura
+    from urllib.parse import urlparse
+
+    final = resolve(url)
+    host = urlparse(final).hostname or ""
+    if "news.google.com" in host or NO_FETCH.search(host):
+        return {"final_url": final, "body": None, "status": "none", "image": None}
+    try:
+        r = requests.get(final, headers=FETCH_UA, timeout=(8, 20))
+    except requests.RequestException:
+        return {"final_url": final, "body": None, "status": "none", "image": None}
+    if r.status_code != 200:
+        return {"final_url": final, "body": None, "status": "none", "image": None}
+    if "charset" not in (r.headers.get("content-type") or "").lower():
+        r.encoding = "utf-8"
+    page = r.text
+    body = trafilatura.extract(page, favor_recall=True, include_comments=False, include_tables=False) or ""
+    if "Enable JavaScript and cookies" in body or "confirming your site connection" in body:
+        body = ""
+    meta = trafilatura.extract_metadata(page)
+    image = meta.image if meta and meta.image and meta.image.startswith("https://") else None
+    body = body.strip()
+    if not body:
+        status = "none"
+    elif PAYWALL.search(host) or len(body) < 900:
+        status = "partial"
+    else:
+        status = "full"
+    return {"final_url": r.url or final, "body": body[:40000] or None, "status": status, "image": image}
+
+
 def ai_summary(item: dict) -> str | None:
     key = os.environ.get("GROQ_API_KEY")
     if not key:
         return None
-    model = os.environ.get("GROQ_MODEL", "llama-3.1-8b-instant")
+    text = (item.get("body") or item.get("excerpt") or "").strip()
     prompt = (
-        "Skriv et nøytralt sammendrag på norsk bokmål, maks to korte setninger, av nyhetssaken under. "
-        "Bruk bare informasjonen som står der, ikke finn på tall eller fakta, og gi ingen kjøps- eller salgsråd. "
-        "Hvis det er for lite informasjon, forklar kort hva saken handler om ut fra tittelen.\n\n"
-        f"Tittel: {item['title']}\nKilde: {item['source']}\nUtdrag: {item['excerpt'] or '(ingen)'}"
+        "Oppsummer nyhetssaken under på norsk bokmål i én eller to korte setninger (maks 40 ord). "
+        "Få med det viktigste: hva som skjedde, hvem det gjelder og eventuelle sentrale tall. "
+        "Bruk bare informasjon som står i teksten, ikke finn på noe. "
+        "Ikke nevn analytikeres anbefalinger, kursmål eller kjøps- og salgsråd. "
+        "Svar bare med sammendraget.\n\n"
+        f"Tittel: {item['title']}\nKilde: {item.get('source') or ''}\nTekst: {text[:3000] or '(bare tittel)'}"
     )
-    try:
-        r = requests.post(
-            "https://api.groq.com/openai/v1/chat/completions",
-            headers={"Authorization": f"Bearer {key}"},
-            json={"model": model, "messages": [{"role": "user", "content": prompt}], "temperature": 0.2, "max_tokens": 160},
-            timeout=30,
+    models = [os.environ.get("GROQ_MODEL", "llama-3.3-70b-versatile"), "llama-3.1-8b-instant"]
+    for model in dict.fromkeys(models):
+        try:
+            r = requests.post(
+                "https://api.groq.com/openai/v1/chat/completions",
+                headers={"Authorization": f"Bearer {key}"},
+                json={"model": model, "messages": [{"role": "user", "content": prompt}], "temperature": 0.2, "max_tokens": 140},
+                timeout=40,
+            )
+            if r.status_code in (400, 404, 429, 503):
+                print(f"  ! Groq {model}: HTTP {r.status_code}, prøver neste modell")
+                continue
+            r.raise_for_status()
+            out = r.json()["choices"][0]["message"]["content"].strip().strip('"')
+            if BLOCK.search(out):
+                out = BLOCK.sub("", out)
+            return out[:400] or None
+        except Exception as e:  # noqa: BLE001
+            print(f"  ! KI-sammendrag feilet ({model}): {e}")
+    return None
+
+
+def enrich(conn, max_fetch: int = 30, max_ai: int = 30) -> tuple[int, int, int]:
+    """Henter hele artikkelen og lager sammendrag for saker som mangler det."""
+    import time
+
+    fetched = blocked = summarized = 0
+    with conn.cursor() as cur:
+        cur.execute(
+            """SELECT id, url, title FROM news WHERE body IS NULL AND fetch_tries < 2 AND feed <> 'newsweb'
+               AND published > now() - interval '14 days' ORDER BY published DESC LIMIT %s""",
+            (max_fetch,),
         )
-        r.raise_for_status()
-        text = r.json()["choices"][0]["message"]["content"].strip()
-        return text[:500] or None
-    except Exception as e:  # noqa: BLE001
-        print(f"  ! KI-sammendrag feilet: {e}")
-        return None
+        todo = cur.fetchall()
+    for nid, url, title in todo:
+        a = fetch_article(url)
+        lead = (a["body"] or "")[:500]
+        with conn.cursor() as cur:
+            if BLOCK.search(lead):
+                # Skjules (ikke slettes), ellers ville saken komme tilbake ved neste henting
+                cur.execute("UPDATE news SET body_status = 'blocked', fetch_tries = fetch_tries + 1 WHERE id = %s", (nid,))
+                blocked += 1
+            else:
+                cur.execute(
+                    """UPDATE news SET body = %s, body_status = %s, final_url = %s, image = %s, fetch_tries = fetch_tries + 1,
+                       source = CASE WHEN source IN ('Google Nyheter','Google News') THEN split_part(split_part(%s, '://', 2), '/', 1) ELSE source END
+                       WHERE id = %s""",
+                    (a["body"], a["status"], a["final_url"], a["image"], a["final_url"], nid),
+                )
+                fetched += 1 if a["body"] else 0
+        conn.commit()
+    if os.environ.get("GROQ_API_KEY"):
+        with conn.cursor() as cur:
+            cur.execute(
+                """SELECT id, title, source, body, excerpt FROM news WHERE summary IS NULL
+                   AND published > now() - interval '14 days' AND body_status IS DISTINCT FROM 'blocked' AND (body IS NOT NULL OR fetch_tries >= 1 OR feed = 'newsweb' OR excerpt <> '')
+                   ORDER BY published DESC LIMIT %s""",
+                (max_ai,),
+            )
+            rows = cur.fetchall()
+        for nid, title, source, body, excerpt in rows:
+            s = ai_summary({"title": title, "source": source, "body": body, "excerpt": excerpt})
+            if s:
+                with conn.cursor() as cur:
+                    cur.execute("UPDATE news SET summary = %s WHERE id = %s", (s, nid))
+                conn.commit()
+                summarized += 1
+            time.sleep(5)  # holder oss godt innenfor Groqs gratisgrense per minutt
+    return fetched, blocked, summarized
 
 
-def run(conn, max_ai: int = 40) -> int:
+def run(conn) -> int:
     items, blocked = collect()
     new = 0
-    ai_done = 0
     with conn.cursor() as cur:
         for it in items:
             cur.execute("SELECT 1 FROM news WHERE id = %s", (it["id"],))
             if cur.fetchone():
                 continue
-            summary = None
-            if ai_done < max_ai:
-                summary = ai_summary(it)
-                ai_done += 1 if summary else 0
             cur.execute(
-                """INSERT INTO news (id, title_key, title, url, source, published, excerpt, summary, category, companies, feed)
-                   VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) ON CONFLICT (id) DO NOTHING""",
+                """INSERT INTO news (id, title_key, title, url, source, published, excerpt, category, companies, feed)
+                   VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) ON CONFLICT (id) DO NOTHING""",
                 (it["id"], it["title_key"], it["title"], it["url"], it["source"], it["published"], it["excerpt"],
-                 summary, it["category"], it["companies"], it["feed"]),
+                 it["category"], it["companies"], it["feed"]),
             )
             new += 1
         cur.execute("DELETE FROM news WHERE published < now() - interval '90 days'")
+    conn.commit()
+    fetched, blocked2, summarized = enrich(conn)
+    with conn.cursor() as cur:
         cur.execute(
             """INSERT INTO news_blocked (day, n) VALUES (CURRENT_DATE, %s)
-               ON CONFLICT (day) DO UPDATE SET n = GREATEST(news_blocked.n, EXCLUDED.n)""",
-            (blocked,),
+               ON CONFLICT (day) DO UPDATE SET n = GREATEST(news_blocked.n, EXCLUDED.n) + %s""",
+            (blocked, blocked2),
         )
     conn.commit()
-    print(f"  Nyheter: {len(items)} relevante, {new} nye, {ai_done} med KI-sammendrag, {blocked} anbefalinger stoppet")
+    ki = "KI-sammendrag" if os.environ.get("GROQ_API_KEY") else "KI-sammendrag (venter på Groq-nøkkel)"
+    print(f"  Nyheter: {len(items)} relevante, {new} nye, {fetched} hele artikler hentet, {summarized} {ki}, {blocked + blocked2} anbefalinger stoppet")
     return new

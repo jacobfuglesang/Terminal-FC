@@ -1,12 +1,14 @@
 import TimeChart from "@/components/TimeChart";
-import { getBiomass, getLice } from "@/lib/db";
+import Link from "next/link";
+import { getBiomass, getLice, getLiceCompanies } from "@/lib/db";
+import { COMPANIES } from "@/lib/menu";
 import { monthLabel, weekDate } from "@/lib/dates";
 import { fmt, pct, up } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 
 export default async function Biologi() {
-  const [bio, lice] = await Promise.all([getBiomass(), getLice()]);
+  const [bio, lice, liceCo] = await Promise.all([getBiomass(), getLice(), getLiceCompanies()]);
   const byMonth = new Map<string, number>();
   for (const b of bio) byMonth.set(b.month, (byMonth.get(b.month) ?? 0) + b.tonnes);
   const months = [...byMonth.keys()].sort();
@@ -23,6 +25,13 @@ export default async function Biologi() {
       })
     : [];
   const lw = lice[lice.length - 1];
+  const coWeek = liceCo.length ? liceCo[liceCo.length - 1] : undefined;
+  const coRows = COMPANIES.filter((c) => c.symbol !== "BAKKA.OL").map((c) => {
+    const rows = liceCo.filter((l) => l.symbol === c.symbol);
+    const cur = rows.find((l) => coWeek && l.year === coWeek.year && l.week === coWeek.week);
+    const prev = rows.find((l) => coWeek && l.year === coWeek.year && l.week === coWeek.week - 1);
+    return { c, cur, prev };
+  });
   const lp = lice[lice.length - 2];
 
   return (
@@ -51,6 +60,42 @@ export default async function Biologi() {
           <p className="note">Grensen er 0,5 voksne hunnlus per fisk, men 0,2 om våren (uke 16–21).</p>
         </section>
       </div>
+
+      <section className="panel" aria-labelledby="h-co">
+        <div className="ph"><h2 id="h-co">Lus og sykdom per selskap {coWeek ? `uke ${coWeek.week}` : ""}</h2><span className="src">BarentsWatch · anlegg koblet til selskap via akvakulturregisteret</span></div>
+        {!coWeek ? <div className="empty">Selskapstallene hentes ved neste daglige kjøring.</div> : (
+          <div style={{ overflowX: "auto" }}>
+            <table className="tbl" style={{ minWidth: 640 }}>
+              <thead><tr><th>Selskap</th><th>Anlegg</th><th>Rapporterte</th><th>Snitt hunnlus</th><th>Vektet</th><th>Over grensen</th><th>ILA</th><th>PD</th></tr></thead>
+              <tbody>
+                {coRows.map(({ c, cur, prev }) => (
+                  <tr key={c.symbol}>
+                    <td><Link href={`/selskap/${c.id}`}>{c.name}</Link></td>
+                    <td className="m">{cur?.localities ?? "–"}</td>
+                    <td className="m" style={{ color: "#A0A7B2" }}>{cur?.reported ?? "–"}</td>
+                    <td className="m">{fmt(cur?.avg, 2)} {cur?.avg != null && prev?.avg != null ? <span style={{ color: cur.avg > prev.avg ? "#FFB08F" : "#7BE3A6" }}>{cur.avg > prev.avg ? "▲" : "▼"}</span> : null}</td>
+                    <td className="m" style={{ color: "#A0A7B2" }}>{fmt(cur?.avgW, 2)}</td>
+                    <td className="m" style={{ color: cur?.over ? "#FFB08F" : undefined }}>{cur?.over ?? "–"}</td>
+                    <td className="m">{cur?.ila ?? "–"}</td>
+                    <td className="m">{cur?.pd ?? "–"}</td>
+                  </tr>
+                ))}
+                <tr>
+                  <td style={{ color: "#A0A7B2" }}>Hele Norge</td>
+                  <td className="m" style={{ color: "#A0A7B2" }}>{lw?.localities ?? "–"}</td>
+                  <td className="m" style={{ color: "#A0A7B2" }}>{lw?.reported ?? "–"}</td>
+                  <td className="m" style={{ color: "#A0A7B2" }}>{fmt(lw?.avg, 2)}</td>
+                  <td className="m" style={{ color: "#A0A7B2" }}>–</td>
+                  <td className="m" style={{ color: "#A0A7B2" }}>{lw?.over ?? "–"}</td>
+                  <td className="m" style={{ color: "#A0A7B2" }}>{lw?.ila ?? "–"}</td>
+                  <td className="m" style={{ color: "#A0A7B2" }}>{lw?.pd ?? "–"}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        )}
+        <p className="note">«Vektet» betyr at store anlegg teller mer (etter tillatt biomasse). Bakkafrost har ingen anlegg i Norge og er ikke med. Anlegg som eies sammen med andre telles hos alle eierne.</p>
+      </section>
 
       <section className="panel" aria-labelledby="h-po">
         <div className="ph"><h2 id="h-po">Biomasse per produksjonsområde</h2><span className="src">{lastM ? monthLabel(lastM) : ""} mot samme måned i fjor</span></div>

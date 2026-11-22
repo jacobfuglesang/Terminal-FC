@@ -9,11 +9,13 @@ const PLAN = [
   { k: "Fish Pool / Sitagri", d: "SISALMON-indeks (krever abonnement, terminkurven brukes i stedet)", w: "Tirsdag", f: 9 },
   { k: "Euronext", d: "Terminkurve for laks", w: "Daglig", f: 1 },
   { k: "Fiskeridirektoratet", d: "Biomasse", w: "Månedlig", f: 1 },
-  { k: "BarentsWatch", d: "Lus og sykdom (krever gratis nøkkel)", w: "Daglig sjekk", f: 1 },
+  { k: "BarentsWatch", d: "Lus og sykdom, totalt og per selskap", w: "Daglig", f: 1 },
   { k: "Finanstilsynet", d: "Shortposisjoner", w: "Daglig", f: 1 },
   { k: "IMF via FRED", d: "Fôrråvareindeks", w: "Månedlig", f: 1 },
-  { k: "RSS + KI", d: "Nyheter fra iLaks, regjeringen.no og Google News. KI-sammendrag hvis Groq-nøkkel er lagt inn", w: "Hvert 15. min i børstiden, ellers hver time", f: 1 },
-  { k: "Selskapenes IR-sider", d: "Rapporter, kalender, konsensus", w: "Ved rapporter", f: 4 },
+  { k: "RSS + Groq", d: "Nyheter med hel artikkel og KI-sammendrag (iLaks, E24, NRK, DN-ingress m.fl.)", w: "Hvert 15. min i børstiden, ellers hver time", f: 1 },
+  { k: "Oslo Børs Newsweb", d: "Børsmeldinger, rapporter, trading updates og innsidehandel", w: "Hvert 15. min i børstiden, ellers hver time", f: 1 },
+  { k: "Yahoo Finance", d: "Konsensus for resultat og omsetning, kvartalsregnskap", w: "Daglig", f: 1 },
+  { k: "Selskapenes rapporter", d: "Guiding, siste kvartal og finanskalender (kontrollert manuelt)", w: "Ved hver kvartalsrapport", f: 1 },
 ];
 
 export default async function StatusPage() {

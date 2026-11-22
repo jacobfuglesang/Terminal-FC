@@ -79,33 +79,60 @@ def _deep(obj, needle: str):
     return hits[0][1] if hits else None
 
 
+# Selskapene kobles til anlegg via organisasjonene i akvakulturregisteret.
+# Bakkafrost har ingen anlegg i Norge og dekkes ikke av BarentsWatch.
+OWNERS = {
+    "MOWI.OL": re.compile(r"\bMOWI\b|\bNOVA SEA\b", re.I),
+    "SALM.OL": re.compile(r"\bSALMAR\b", re.I),
+    "LSG.OL": re.compile(r"\bLER[ØO]Y\b", re.I),
+    "GSF.OL": re.compile(r"\bGRIEG SEAFOOD\b", re.I),
+}
+
+
+def owners(loc: dict) -> list[str]:
+    orgs = " | ".join((loc.get("aquaCultureRegister") or {}).get("organizations") or [])
+    return [sym for sym, rx in OWNERS.items() if rx.search(orgs)]
+
+
+def _stats(locs: list, week: int) -> dict:
+    vals, wsum, wtot = [], 0.0, 0.0
+    for l in locs:
+        rep = l.get("liceReport")
+        if not rep or rep.get("hasReported") is False:
+            continue
+        v = _deep(rep, "adultfemale")
+        if v is None or not 0 <= v < 50:
+            continue
+        vals.append(v)
+        cap = (l.get("aquaCultureRegister") or {}).get("capacity") or 0
+        if cap > 0:
+            wsum += v * cap
+            wtot += cap
+    lim = limit_for(week)
+    return {
+        "avg": round(sum(vals) / len(vals), 3) if vals else None,
+        "avg_w": round(wsum / wtot, 3) if wtot else None,
+        "reported": len(vals),
+        "over": sum(1 for v in vals if v > lim),
+        "ila": sum(1 for l in locs if _has(l, "ila")),
+        "pd": sum(1 for l in locs if _has(l, "pd")),
+        "n": len(locs),
+    }
+
+
 def summarize(js, week: int) -> dict:
     locs = js.get("localities") if isinstance(js, dict) else js
     locs = [l for l in (locs or []) if isinstance(l, dict)]
     # Bare matfiskanlegg for laks/ørret, ikke ventemerder ved slakteri
     salmon = [l for l in locs if l.get("hasSalmonoidLicense", True) and not l.get("isSlaughterHoldingCage")]
-    vals = []
-    for l in salmon:
-        rep = l.get("liceReport", l)
-        if not rep:
-            continue
-        v = _deep(rep, "adultfemale")
-        if v is not None and 0 <= v < 50:
-            vals.append(v)
-    lim = limit_for(week)
-    sample = next((l.get("liceReport") for l in salmon if l.get("liceReport")), None)
-    dsample = next((l.get("diseases") for l in salmon if l.get("diseases")), None)
-    return {
-        "avg": round(sum(vals) / len(vals), 3) if vals else None,
-        "reported": len(vals),
-        "over": sum(1 for v in vals if v > lim),
-        "ila": sum(1 for l in salmon if _has(l, "ila")),
-        "pd": sum(1 for l in salmon if _has(l, "pd")),
-        "n": len(salmon),
-        "keys": sorted(locs[0].keys()) if locs else [],
-        "sample": str(sample)[:400],
-        "dsample": str(dsample)[:300],
-    }
+    out = _stats(salmon, week)
+    out["companies"] = {sym: _stats([l for l in salmon if sym in owners(l)], week) for sym in OWNERS}
+    # Til kontroll i loggen: største organisasjoner som ikke er koblet til noe selskap
+    from collections import Counter
+    c = Counter(o for l in salmon if not owners(l) for o in (l.get("aquaCultureRegister") or {}).get("organizations") or [])
+    out["top_other"] = c.most_common(8)
+    out["matched_orgs"] = sorted({o for l in salmon if owners(l) for o in (l.get("aquaCultureRegister") or {}).get("organizations") or []})
+    return out
 
 
 def fetch_week(tok: str, y: int, w: int):
@@ -130,20 +157,28 @@ def run(conn, weeks: int = 3) -> int:
             if js is None:
                 continue
             s = summarize(js, w)
-            if back <= 1:
-                print(f"  Uke {w}: {s['n']} anlegg, {s['reported']} med lusetall. Eksempel: {s['sample']}")
-                if s["dsample"] != "None":
-                    print(f"  Sykdomseksempel: {s['dsample']}")
+            if back == 0:
+                print(f"  Koblede organisasjoner: {s['matched_orgs']}")
+                print(f"  Største ukoblede: {s['top_other']}")
             if not s["reported"]:
                 continue
             cur.execute(
-                """INSERT INTO lice_week (year, week, avg_lice, reported, over_limit, ila, pd, localities, updated_at)
-                   VALUES (%s,%s,%s,%s,%s,%s,%s,%s, now())
-                   ON CONFLICT (year, week) DO UPDATE SET avg_lice=EXCLUDED.avg_lice, reported=EXCLUDED.reported,
+                """INSERT INTO lice_week (year, week, avg_lice, avg_w, reported, over_limit, ila, pd, localities, updated_at)
+                   VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s, now())
+                   ON CONFLICT (year, week) DO UPDATE SET avg_lice=EXCLUDED.avg_lice, avg_w=EXCLUDED.avg_w, reported=EXCLUDED.reported,
                      over_limit=EXCLUDED.over_limit, ila=EXCLUDED.ila, pd=EXCLUDED.pd, localities=EXCLUDED.localities, updated_at=now()""",
-                (y, w, s["avg"], s["reported"], s["over"], s["ila"], s["pd"], s["n"]),
+                (y, w, s["avg"], s["avg_w"], s["reported"], s["over"], s["ila"], s["pd"], s["n"]),
             )
+            for sym, c in s["companies"].items():
+                cur.execute(
+                    """INSERT INTO lice_company (year, week, symbol, localities, reported, avg_lice, avg_w, over_limit, ila, pd, updated_at)
+                       VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s, now())
+                       ON CONFLICT (year, week, symbol) DO UPDATE SET localities=EXCLUDED.localities, reported=EXCLUDED.reported,
+                         avg_lice=EXCLUDED.avg_lice, avg_w=EXCLUDED.avg_w, over_limit=EXCLUDED.over_limit, ila=EXCLUDED.ila, pd=EXCLUDED.pd, updated_at=now()""",
+                    (y, w, sym, c["n"], c["reported"], c["avg"], c["avg_w"], c["over"], c["ila"], c["pd"]),
+                )
             rows += 1
-            print(f"  Uke {w}/{y}: snitt {s['avg']} lus, {s['over']} over grensen, ILA {s['ila']}, PD {s['pd']}")
+            per = ", ".join(f"{k.split('.')[0]} {v['avg']} ({v['n']} anl, ILA {v['ila']}, PD {v['pd']})" for k, v in s["companies"].items())
+            print(f"  Uke {w}/{y}: snitt {s['avg']} (vektet {s['avg_w']}), {s['over']} over grensen, ILA {s['ila']}, PD {s['pd']} | {per}")
     conn.commit()
     return rows

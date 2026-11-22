@@ -5,3 +5,6 @@ pandas>=2.2
 openpyxl>=3.1
 
 feedparser>=6.0
+trafilatura
+lxml_html_clean
+googlenewsdecoder

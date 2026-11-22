@@ -1,13 +1,14 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { NewsItem } from "@/lib/db";
 import { COMPANIES } from "@/lib/menu";
 
-const CATS = ["Alle", "Politikk", "Toll og handel", "Marked", "Selskap", "Biologi"];
+const CATS = ["Alle", "Børsmelding", "Politikk", "Toll og handel", "Marked", "Selskap", "Biologi"];
 const NAME: Record<string, string> = Object.fromEntries(COMPANIES.map((c) => [c.symbol, c.name]));
 
-function ago(iso: string) {
+export function ago(iso: string) {
   if (!iso) return "";
   const m = Math.round((Date.now() - new Date(iso).getTime()) / 60000);
   if (m < 1) return "nå";
@@ -19,37 +20,32 @@ function ago(iso: string) {
   return new Date(iso).toLocaleDateString("nb-NO", { day: "numeric", month: "short", timeZone: "Europe/Oslo" });
 }
 
+// Maks to setninger og ca. 260 tegn i listen
+export function shortLead(text: string) {
+  const t = (text || "").replace(/\s+/g, " ").trim();
+  if (!t) return "";
+  const parts = t.match(/[^.!?]+[.!?]+(\s|$)/g) ?? [t];
+  let out = parts.slice(0, 2).join("").trim();
+  if (out.length > 260) out = out.slice(0, 260).replace(/\s+\S*$/, "") + " …";
+  return out;
+}
+
 function Card({ n }: { n: NewsItem }) {
-  const [open, setOpen] = useState(false);
-  const text = n.summary || n.excerpt;
-  const long = text.length > 220;
+  const lead = shortLead(n.lead);
   return (
-    <article style={{ padding: "12px 0", borderTop: "1px solid var(--line2)" }}>
-      <div className="src" style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 4 }}>
-        <span style={{ color: "var(--accent)" }}>{n.category}</span>
-        <span>{n.source}</span>
-        <span>{ago(n.published)}</span>
-        {n.companies.map((c) => (
-          <span key={c} style={{ border: "1px solid var(--line)", borderRadius: 4, padding: "0 5px" }}>{NAME[c] ?? c}</span>
-        ))}
-      </div>
-      <h3 style={{ margin: "0 0 4px", fontSize: 14, fontWeight: 600, lineHeight: 1.4 }}>
-        <a href={n.url} target="_blank" rel="noopener noreferrer" style={{ color: "var(--text)" }}>{n.title}</a>
-      </h3>
-      {text && (
-        <p style={{ margin: "0 0 6px", color: "var(--muted)", lineHeight: 1.55 }}>
-          {open || !long ? text : text.slice(0, 220).replace(/\s+\S*$/, "") + " …"}
-          {n.summary && <span className="src"> · AI-sammendrag</span>}
-        </p>
-      )}
-      <div style={{ display: "flex", gap: 14, fontSize: 12 }}>
-        {long && (
-          <button type="button" onClick={() => setOpen(!open)} style={{ background: "none", border: 0, padding: 0, color: "var(--muted)", fontSize: 12 }}>
-            {open ? "Vis mindre" : "Les mer"}
-          </button>
-        )}
-        <a href={n.url} target="_blank" rel="noopener noreferrer">Åpne hos {n.source || "kilden"} ↗</a>
-      </div>
+    <article style={{ borderTop: "1px solid var(--line2)" }}>
+      <Link href={`/nyheter/${n.id}`} className="newscard" style={{ display: "block", padding: "12px 6px", color: "inherit", borderRadius: 6 }}>
+        <div className="src" style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 4 }}>
+          <span style={{ color: "var(--accent)" }}>{n.category}</span>
+          <span>{n.source}</span>
+          <span>{ago(n.published)}</span>
+          {n.companies.map((c) => (
+            <span key={c} style={{ border: "1px solid var(--line)", borderRadius: 4, padding: "0 5px" }}>{NAME[c] ?? c}</span>
+          ))}
+        </div>
+        <h3 style={{ margin: "0 0 4px", fontSize: 14, fontWeight: 600, lineHeight: 1.4, color: "var(--text)" }}>{n.title}</h3>
+        {lead && <p style={{ margin: 0, color: "var(--muted)", lineHeight: 1.55 }}>{lead}</p>}
+      </Link>
     </article>
   );
 }
@@ -71,7 +67,7 @@ export default function NewsList({ items, filters = true, limit }: { items: News
       (n) =>
         (cat === "Alle" || n.category === cat) &&
         (!co || n.companies.includes(co)) &&
-        (!s || `${n.title} ${n.excerpt} ${n.summary ?? ""}`.toLowerCase().includes(s)),
+        (!s || `${n.title} ${n.lead}`.toLowerCase().includes(s)),
     );
     if (limit) out = out.slice(0, limit);
     return out;
@@ -83,7 +79,7 @@ export default function NewsList({ items, filters = true, limit }: { items: News
     <>
       {filters && (
         <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 10, alignItems: "center" }}>
-          {CATS.map((c) => (
+          {CATS.filter((c) => c === "Alle" || counts[c]).map((c) => (
             <button key={c} type="button" className="btn" aria-pressed={c === cat} onClick={() => setCat(c)}
               style={{ background: c === cat ? "#2A2E36" : undefined, borderColor: c === cat ? "#4A505A" : undefined }}>
               {c} <span className="src">{counts[c] ?? 0}</span>
