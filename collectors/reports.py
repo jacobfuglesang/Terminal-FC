@@ -31,10 +31,12 @@ SEGMENT = {c["symbol"]: c["segment"] for c in COMPANIES}
 # Ikke selve rapporten: invitasjoner, webcast-lenker, kalender, utbyttedetaljer
 SKIP = re.compile(r"invitation|invitasjon|webcast|conference call|to be held|will be held|key information|"
                   r"financial calendar|finansiell kalender|ex[- ]dividend|reminder|påminnelse|general meeting|"
-                  r"generalforsamling|\begm\b|\bagm\b|notice of|innkalling|mandatory notification|share buy", re.I)
+                  r"generalforsamling|\begm\b|\bagm\b|notice of|innkalling|mandatory notification|share buy|change of (date|publication)|"
+                  r"publication date|postpone|reschedul|new date|ny dato|endring av dato|utsatt", re.I)
 REPORTISH = re.compile(r"result|quarter|kvartal|half[- ]year|halvår|annual report|årsrapport|interim|"
                        r"presentation|\bq[1-4]\b|financial information|financial statements|nine[- ]month|six[- ]month", re.I)
 MAX_PDF_BYTES = 25_000_000
+VERSION = 2  # økes når leseren forbedres, så gamle uttrekk leses på nytt
 
 # Groq: én forespørsel må holde seg under 8 000 tokens (inn + ut). Ca. 3,6 tegn per token i rapporttekst.
 CHUNK_CHARS = 11_000
@@ -109,8 +111,8 @@ def fetch_sources(message_ids: list[int]) -> tuple[list[dict], list[dict]]:
         msg = _get_json(f"{BASE}/message", {"messageId": mid}).get("data", {}).get("message", {})
         body = re.sub(r"<[^>]+>", " ", msg.get("body") or "")
         body = re.sub(r"[ \t]+", " ", body).strip()
-        if body:
-            parts.append({"src": f"Melding: {msg.get('title', '')}", "text": body, "first": True})
+        for k in range(0, len(body), 3500):
+            parts.append({"src": f"Melding: {msg.get('title', '')} ({k // 3500 + 1})", "text": body[k:k + 3500], "first": k < 7000})
         for a in (msg.get("attachments") or [])[:4]:
             name = a.get("name") or ""
             url = f"{BASE}/attachment?messageId={mid}&attachmentId={a.get('id')}"
@@ -146,8 +148,43 @@ SCORE = [
 ]
 
 
+KEYLINE = re.compile(r"\bcover(ed|age)\b|\bbooked\b|\bfixed\b|\bcontracted\b|break[- ]?even|\btce\b|"
+                     r"per (operating |calendar |available )?day|/day|dividend of|dividend per share|declared a (cash )?dividend|"
+                     r"booket|dekket|dødpunkt|utbytte på", re.I)
+
+
+def key_lines(parts: list[dict], budget: int = 5000) -> str:
+    """Tekstbiter rundt setninger om booking, dagrater, dødpunkt og utbytte, fra hele rapporten.
+    Sendes alltid med, så de viktigste tallene ikke forsvinner når rapporten er lang."""
+    out, seen, used = [], set(), 0
+    for p in parts:
+        t = re.sub(r"\s+", " ", p["text"])
+        spans = []
+        for m in KEYLINE.finditer(t):
+            a, b = max(0, m.start() - 250), min(len(t), m.end() + 450)
+            if spans and a <= spans[-1][1]:
+                spans[-1][1] = b
+            else:
+                spans.append([a, b])
+        for a, b in spans:
+            snip = t[a:b].strip()
+            sig = re.sub(r"[^a-z0-9]", "", snip.lower())[:160]
+            if sig in seen or used + len(snip) > budget:
+                continue
+            seen.add(sig)
+            out.append(f"…{snip}…")
+            used += len(snip) + 4
+    return "\n".join(out)
+
+
+def _shingles(text: str) -> set[str]:
+    w = re.findall(r"[a-z0-9]+", text.lower())
+    return {" ".join(w[i:i + 8]) for i in range(0, max(0, len(w) - 7), 3)}
+
+
 def pick_text(parts: list[dict], budget: int = SOURCE_BUDGET) -> str:
-    """Velger de mest nyttige delene innenfor budsjettet, i opprinnelig rekkefølge."""
+    """Velger de mest nyttige delene innenfor budsjettet, i opprinnelig rekkefølge.
+    Hopper over deler som stort sett gjentar noe som allerede er valgt (meldingen og PDF-en er ofte like)."""
     scored = []
     for i, p in enumerate(parts):
         t = p["text"].lower()
@@ -155,14 +192,18 @@ def pick_text(parts: list[dict], budget: int = SOURCE_BUDGET) -> str:
         s += 6 if p["first"] else 0
         s += min(4, len(re.findall(r"\d[\d,.\s]{2,}", t)) // 15)  # tallrike sider er ofte nyttige
         scored.append((s, i))
-    chosen, used = set(), 0
+    chosen, used, seen = set(), 0, set()
     for s, i in sorted(scored, reverse=True):
         if s <= 0:
+            continue
+        sh = _shingles(parts[i]["text"][:6000])
+        if sh and len(sh & seen) / len(sh) > 0.6:
             continue
         n = min(len(parts[i]["text"]), 6000) + 40
         if used + n > budget:
             continue
         chosen.add(i)
+        seen |= sh
         used += n
     return "\n\n".join(f"[{parts[i]['src']}]\n{parts[i]['text'][:6000]}" for i in sorted(chosen))
 
@@ -227,6 +268,7 @@ NOTES_PROMPT = (
 )
 
 FINAL_PROMPT = """Du er analytiker i en privat shippingterminal. Under er utdrag fra kvartalsrapporten til {name} ({segment}), periode {period}.
+Først kommer NØKKELLINJER (setninger om booking, dagrater, dødpunkt og utbytte hentet fra hele rapporten), deretter mer tekst eller notater.
 Lag et nøkternt sammendrag for en privatinvestor som holder aksjer i uker til måneder.
 
 REGLER:
@@ -236,9 +278,13 @@ REGLER:
 - ALLE tekstfelt (headline, summary, outlook, watch, fleet, label, note) skal være på norsk bokmål, selv om rapporten er på engelsk.
   Oversett, ikke kopier engelske setninger. Skipstyper (VLCC, Suezmax, LR2, PCTC) og tall kan stå som i rapporten.
 - Kort og enkelt språk.
+- "bookings" er det viktigste: andel av dagene i NESTE periode som er booket/covered/fixed, og snittraten. Ta med hver skipstype
+  og både spot- og totaldager hvis begge er oppgitt. I tabeller heter kolonnene ofte «% covered» og «TCE currently contracted».
+- Settes "is_report" til false hvis teksten ikke er en finansiell rapport (f.eks. bare ny dato, invitasjon eller kalender).
 
 Svar KUN med gyldig JSON i dette formatet:
 {{
+ "is_report": true,
  "period": "{period}",
  "headline": "én setning på norsk om det viktigste",
  "tone": "positiv | nøytral | negativ (hvordan rapporten selv beskriver kvartalet og utsiktene)",
@@ -282,13 +328,14 @@ def final(name: str, sym_segment: str, period: str, material: str) -> tuple[dict
     return json.loads(m.group(0)), model
 
 
-def ask(name: str, segment: str, period: str, source: str) -> tuple[dict, str]:
-    if len(source) <= DIRECT_CHARS:
+def ask(name: str, segment: str, period: str, source: str, keys: str) -> tuple[dict, str]:
+    head = f"NØKKELLINJER:\n{keys}\n\n" if keys else ""
+    if len(source) + len(head) <= DIRECT_CHARS:
         try:
-            return final(name, segment, period, source)
+            return final(name, segment, period, head + "TEKST:\n" + source)
         except TooLarge:
             pass  # tallrik tekst gir flere tokens enn antatt: les i biter i stedet
-    return final(name, segment, period, notes_for(name, period, source))
+    return final(name, segment, period, head + notes_for(name, period, source))
 
 
 # ---------------------------------------------------------------- kontroll av tall
@@ -387,6 +434,10 @@ def discover(conn, days: int = 200) -> int:
                 (f"{sym}|{period}", sym, period, g["published"], " · ".join(dict.fromkeys(g["titles"]))[:400], sorted(g["ids"])),
             )
             added += 1 if cur.fetchone()[0] else 0
+        keys = [f"{sym}|{period}" for sym, period in groups]
+        cur.execute("""DELETE FROM reports WHERE published > now() - make_interval(days => %s) AND NOT (key = ANY(%s))""", (days, keys))
+        cur.execute("""UPDATE reports SET status = 'pending', tries = 0 WHERE status IN ('ok', 'skip')
+                       AND coalesce((data->>'v')::int, 1) < %s""", (VERSION,))
     conn.commit()
     return added
 
@@ -413,14 +464,17 @@ def run(conn, max_reports: int = 2, budget_s: int = 420) -> int:
         try:
             parts, files = fetch_sources(list(ids))
             source = pick_text(parts)
+            keys = key_lines(parts)
             if len(source) < 400:
                 raise RuntimeError("Fant nesten ingen tekst i meldingen eller vedleggene")
-            data, model = ask(name, SEGMENT.get(sym, ""), period, source)
-            data = verify(data, source)
+            data, model = ask(name, SEGMENT.get(sym, ""), period, source, keys)
+            data = verify(data, keys + "\n" + source)
             data["files"] = files
+            data["v"] = VERSION
+            status = "ok" if data.get("is_report", True) is not False else "skip"
             with conn.cursor() as cur:
-                cur.execute("""UPDATE reports SET status = 'ok', data = %s, model = %s, source_chars = %s, error = NULL,
-                               updated_at = now() WHERE key = %s""", (json.dumps(data, ensure_ascii=False), model, len(source), key))
+                cur.execute("""UPDATE reports SET status = %s, data = %s, model = %s, source_chars = %s, error = NULL,
+                               updated_at = now() WHERE key = %s""", (status, json.dumps(data, ensure_ascii=False), model, len(source), key))
             conn.commit()
             done += 1
             c = data["check"]
@@ -433,7 +487,7 @@ def run(conn, max_reports: int = 2, budget_s: int = 420) -> int:
             dv = data.get("dividend") or {}
             if dv.get("per_share") is not None:
                 print(f"      utbytte {dv.get('per_share')} {dv.get('unit', '')}{'' if dv.get('per_share_ok', True) else '  (?)'}")
-            print(f"      kilde: {len(source)} tegn fra {len(parts)} deler")
+            print(f"      kilde: {len(source)} tegn fra {len(parts)} deler, {len(keys)} tegn nøkkellinjer{'' if status == 'ok' else ' (ikke en rapport, skjules)'}")
         except RateLimited as e:
             print(f"  ! {e}. Fortsetter neste kjøring.")
             with conn.cursor() as cur:
