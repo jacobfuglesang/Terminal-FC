@@ -20,6 +20,7 @@ from datetime import timedelta
 
 import requests
 
+import db
 import news
 from universe import COMPANIES
 
@@ -611,13 +612,19 @@ def run(conn, max_reports: int = 3, budget_s: int = 480) -> int:
         cur.execute("SELECT count(*) FROM reports WHERE status = 'pending' AND tries < 3")
         queue = cur.fetchone()[0]
     print(f"  Rapporter: {added} nye i køen, {queue} venter, leser {len(todo)} nå")
+    conn.commit()
+
+    def write(sql: str, params: tuple) -> None:
+        # Frisk tilkobling for hver skriving: lesingen kan ta minutter, og Neon lukker ubrukte tilkoblinger
+        with db.connect() as c2, c2.cursor() as cur:
+            cur.execute(sql, params)
+            c2.commit()
+
     for key, sym, period, ids in todo:
         if time.time() - t0 > budget_s:
             break
         name = NAMES.get(sym, sym)
-        with conn.cursor() as cur:
-            cur.execute("UPDATE reports SET tries = tries + 1, updated_at = now() WHERE key = %s", (key,))
-        conn.commit()
+        write("UPDATE reports SET tries = tries + 1, updated_at = now() WHERE key = %s", (key,))
         try:
             parts, files = fetch_sources(list(ids))
             source = pick_text(parts)
@@ -637,10 +644,8 @@ def run(conn, max_reports: int = 3, budget_s: int = 480) -> int:
             data["files"] = files
             data["v"] = VERSION
             status = "ok" if data.get("is_report", True) is not False else "skip"
-            with conn.cursor() as cur:
-                cur.execute("""UPDATE reports SET status = %s, data = %s, model = %s, source_chars = %s, error = NULL,
-                               updated_at = now() WHERE key = %s""", (status, json.dumps(data, ensure_ascii=False), model, len(source), key))
-            conn.commit()
+            write("""UPDATE reports SET status = %s, data = %s, model = %s, source_chars = %s, error = NULL,
+                     updated_at = now() WHERE key = %s""", (status, json.dumps(data, ensure_ascii=False), model, len(source), key))
             done += 1
             c = data["check"]
             print(f"  ✓ {name} {period}: {data.get('headline', '')[:110]} ({c['checked'] - c['unverified']}/{c['checked']} tall funnet i kilden)")
@@ -655,16 +660,12 @@ def run(conn, max_reports: int = 3, budget_s: int = 480) -> int:
             print(f"      kilde: {len(source)} tegn fra {len(parts)} deler, {len(keys)} tegn nøkkellinjer{'' if status == 'ok' else ' (ikke en rapport, skjules)'}")
         except RateLimited as e:
             print(f"  ! {e}. Fortsetter neste kjøring.")
-            with conn.cursor() as cur:
-                cur.execute("UPDATE reports SET tries = greatest(tries - 1, 0) WHERE key = %s", (key,))
-            conn.commit()
+            write("UPDATE reports SET tries = greatest(tries - 1, 0) WHERE key = %s", (key,))
             break
         except Exception as e:  # noqa: BLE001
             print(f"  ! {name} {period}: {e}")
-            with conn.cursor() as cur:
-                cur.execute("UPDATE reports SET error = %s, status = CASE WHEN tries >= 3 THEN 'error' ELSE 'pending' END WHERE key = %s",
-                            (str(e)[:300], key))
-            conn.commit()
+            write("UPDATE reports SET error = %s, status = CASE WHEN tries >= 3 THEN 'error' ELSE 'pending' END WHERE key = %s",
+                  (str(e)[:300], key))
         if todo and time.time() - t0 < budget_s:
             time.sleep(30)
     return done

@@ -54,22 +54,24 @@ def main() -> int:
     failed = 0
     with db.connect() as conn:
         db.ensure_schema(conn)
-        for name in names:
-            label, fn = JOBS[name]
-            print(f"== {label} ==")
+    # Ny tilkobling per jobb: Neon lukker tilkoblinger som står ubrukt lenge (f.eks. mens KI leser en rapport)
+    for name in names:
+        label, fn = JOBS[name]
+        print(f"== {label} ==")
+        with db.connect() as conn:
             try:
                 n = fn(conn, backfill)
-                db.set_status(conn, label, True, n, f"{n} rader oppdatert")
+                ok, msg, rows = True, f"{n} rader oppdatert", n
                 print(f"  OK: {n} rader")
             except SOFT as e:
-                conn.rollback()
-                db.set_status(conn, label, False, 0, str(e))
+                ok, msg, rows = False, str(e), 0
                 print(f"  Hoppet over: {e}")
             except Exception as e:  # noqa: BLE001
-                conn.rollback()
                 failed += 1
                 traceback.print_exc()
-                db.set_status(conn, label, False, 0, f"{type(e).__name__}: {e}")
+                ok, msg, rows = False, f"{type(e).__name__}: {e}", 0
+        with db.connect() as conn:  # status skrives på en frisk tilkobling, i tilfelle den gamle ble brutt
+            db.set_status(conn, label, ok, rows, msg)
     return 1 if failed else 0
 
 
