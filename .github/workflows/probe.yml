@@ -16,6 +16,7 @@ jobs:
         env:
           BW_CLIENT_ID: ${{ secrets.BW_CLIENT_ID }}
           BW_CLIENT_SECRET: ${{ secrets.BW_CLIENT_SECRET }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
       - name: Lagre resultater
         run: |
           git config user.name probe-bot && git config user.email probe@users.noreply.github.com
