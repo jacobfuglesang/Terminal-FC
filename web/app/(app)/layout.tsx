@@ -1,12 +1,13 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import AutoLock from "@/components/AutoLock";
 import Sidebar from "@/components/Sidebar";
 import TopBar, { type TickerItem } from "@/components/TopBar";
 import { getQuotes } from "@/lib/db";
 import { fmt, pct, up } from "@/lib/format";
 import { COMPANIES } from "@/lib/menu";
 import { MARKET_NAME } from "@/lib/universe";
-import { COOKIE, verifySession } from "@/lib/session";
+import { COOKIE, idleMinutes, verifySession } from "@/lib/session";
 
 export const dynamic = "force-dynamic";
 
@@ -32,6 +33,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
   return (
     <div className="shell">
+      <AutoLock idleMinutes={idleMinutes()} />
       <Sidebar changes={changes} />
       <div className="content">
         <TopBar ticker={ticker} />

@@ -1,6 +1,15 @@
 // Enkel signert innloggings-cookie (HMAC-SHA256). Ingen passord lagres i cookien.
 export const COOKIE = "fs_session";
-export const SESSION_HOURS = 12;
+// Hvor lenge en innlogging varer, uansett aktivitet. Kan endres med LOGIN_SESSION_MINUTES i Vercel (5–720).
+export function sessionMinutes(): number {
+  const m = Number(process.env.LOGIN_SESSION_MINUTES ?? "30");
+  return Number.isFinite(m) ? Math.min(720, Math.max(5, Math.round(m))) : 30;
+}
+// Låses etter så mange minutter uten aktivitet (mus, tastatur, berøring), og når fanen har vært skjult like lenge.
+export function idleMinutes(): number {
+  const m = Number(process.env.LOGIN_IDLE_MINUTES ?? "10");
+  return Number.isFinite(m) ? Math.min(240, Math.max(1, Math.round(m))) : 10;
+}
 
 const enc = new TextEncoder();
 
@@ -20,7 +29,7 @@ async function sign(data: string): Promise<string> {
 }
 
 export async function createSession(): Promise<{ token: string; maxAge: number }> {
-  const maxAge = SESSION_HOURS * 3600;
+  const maxAge = sessionMinutes() * 60;
   const exp = Math.floor(Date.now() / 1000) + maxAge;
   const payload = `v1.${exp}`;
   return { token: `${payload}.${await sign(payload)}`, maxAge };

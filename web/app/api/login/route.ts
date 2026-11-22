@@ -91,7 +91,9 @@ export async function POST(req: Request) {
     await g.db`UPDATE login_guard SET fails = 0, level = 0, locked_until = NULL WHERE id = 1`;
     const { token, maxAge } = await createSession();
     const res = NextResponse.json({ ok: true });
-    res.cookies.set(COOKIE, token, { httpOnly: true, secure: true, sameSite: "strict", path: "/", maxAge });
+    // Øktcookie (ingen maxAge): slettes når nettleseren lukkes. Tokenet utløper uansett etter LOGIN_SESSION_MINUTES.
+    void maxAge;
+    res.cookies.set(COOKIE, token, { httpOnly: true, secure: true, sameSite: "strict", path: "/" });
     return res;
   }
 
