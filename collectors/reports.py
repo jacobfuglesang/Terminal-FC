@@ -36,7 +36,7 @@ SKIP = re.compile(r"invitation|invitasjon|webcast|conference call|to be held|wil
 REPORTISH = re.compile(r"result|quarter|kvartal|half[- ]year|halvår|annual report|årsrapport|interim|"
                        r"presentation|\bq[1-4]\b|financial information|financial statements|nine[- ]month|six[- ]month", re.I)
 MAX_PDF_BYTES = 25_000_000
-VERSION = 6  # økes når leseren forbedres, så gamle uttrekk leses på nytt
+VERSION = 7  # økes når leseren forbedres, så gamle uttrekk leses på nytt
 
 # Groq: én forespørsel må holde seg under 8 000 tokens (inn + ut). Ca. 3,6 tegn per token i rapporttekst.
 CHUNK_CHARS = 11_000
@@ -476,13 +476,56 @@ def found_pair(share, rate, pos: list[tuple[int, set[float]]], text: str) -> boo
 
 
 def tidy(data: dict) -> dict:
-    """Fjerner tomme rader (uten tall), som modellen av og til lager for skipstyper uten opplysninger."""
-    for field, keys in (("bookings", ("rate", "share_pct")), ("tce", ("rate",)), ("breakeven", ("rate",)),
+    """Fjerner tomme rader (uten tall eller med 0), som modellen av og til lager for skipstyper uten opplysninger."""
+    def has(r, k):
+        try:
+            return r.get(k) is not None and float(r[k]) != 0
+        except (TypeError, ValueError):
+            return False
+    for field, keys in (("bookings", ("rate",)), ("tce", ("rate",)), ("breakeven", ("rate",)),
                         ("numbers", ("value",)), ("balance", ("value",))):
         rows = data.get(field)
         if isinstance(rows, list):
-            data[field] = [r for r in rows if isinstance(r, dict) and any(r.get(k) is not None for k in keys)]
+            data[field] = [r for r in rows if isinstance(r, dict) and any(has(r, k) for k in keys)]
     return data
+
+
+SEG = r"(VLCC|Suezmax|Aframax|LR2|LR1|MR2|MR1|MR|Handy(?:size)?|Capesize|Panamax|Kamsarmax|Ultramax|Supramax|Newcastlemax|PCTC|VLGC|LPG|LNG|chemical|product)"
+BOOK = re.compile(
+    r"(?P<share>\d{1,3}(?:[.,]\d)?)\s?%\s(?:of\s)?(?P<what>[^.%;]{0,90}?)(?:days?|earning days|operating days|spot days|voyage days)"
+    r"[^.%;]{0,40}?(?:have been|has been|are|were|is)?\s?(?:covered|booked|fixed|contracted)\s(?:for\s(?:Q[1-4]\s?(?:20\d\d)?|the\s\w+\squarter)\s)?"
+    r"at\s(?:an\s)?(?:average\s)?(?:(?:daily\s)?TCE\s(?:rate\s)?)?(?:of\s)?(?:USD|US\$|\$)\s?(?P<rate>\d{1,3}(?:[,.\s]\d{3})+|\d{4,6})",
+    re.I)
+
+
+def rule_bookings(text: str, default_period: str) -> list[dict]:
+    """Faste regler for setninger som «74% of our Q4 earning days are covered at an average of USD 55,148 per day»."""
+    out, seen = [], set()
+    t = re.sub(r"\s+", " ", text)
+    for m in BOOK.finditer(t):
+        ctx = t[max(0, m.start() - 120): m.end()]
+        seg = re.findall(SEG, ctx, re.I)
+        per = re.search(r"\bQ([1-4])\s?(20\d\d)?", t[max(0, m.start() - 160): m.end()])
+        period = f"Q{per.group(1)} {per.group(2) or default_period.split()[-1]}" if per else default_period
+        share = float(m.group("share").replace(",", "."))
+        rate = float(re.sub(r"[,.\s]", "", m.group("rate")))
+        key = (share, rate)
+        if key in seen or not (0 < share <= 100) or rate < 1000:
+            continue
+        seen.add(key)
+        whole = m.group(0).lower()
+        note = "spotdager" if "spot" in whole else ("operative dager" if "operating" in whole else "")
+        out.append({"segment": seg[-1] if seg else "flåtesnitt", "period": period, "share_pct": share, "rate": rate,
+                    "unit": "USD/dag", "note": note or "fra teksten", "rate_ok": True, "share_pct_ok": True, "rule": True})
+    return out[:8]
+
+
+def next_period(period: str) -> str:
+    m = re.match(r"Q([1-4]) (\d{4})", period)
+    if not m:
+        return period
+    q, y = int(m.group(1)), int(m.group(2))
+    return f"Q{q % 4 + 1} {y + (1 if q == 4 else 0)}"
 
 
 def verify(data: dict, source: str) -> dict:
@@ -585,6 +628,12 @@ def run(conn, max_reports: int = 3, budget_s: int = 480) -> int:
             data = verify(data, keys + "\n" + source)
             if data["check"]["unverified"]:
                 data = verify(fix(name, period, data, keys), keys + "\n" + source)
+            # Sikring uten KI: hvis ingen bookingrad er bekreftet, bruk setningene som kan leses med faste regler
+            if not any(b.get("rate_ok") and b.get("share_pct_ok", True) for b in data.get("bookings") or []):
+                rb = rule_bookings(keys + "\n" + source, next_period(period))
+                if rb:
+                    data["bookings"] = rb
+                    data["bookings_by_rule"] = True
             data["files"] = files
             data["v"] = VERSION
             status = "ok" if data.get("is_report", True) is not False else "skip"
