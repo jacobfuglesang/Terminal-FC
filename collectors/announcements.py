@@ -82,7 +82,8 @@ def run(conn, days: int = 45, max_bodies: int = 60) -> int:
                        VALUES (%s,%s,%s,%s,%s,%s,%s,%s) ON CONFLICT (id) DO NOTHING""",
                     (mid, sym, title, ", ".join(cats), kind, published, body, m.get("numbAttachments") or 0),
                 )
-                if kind not in ("Innsidehandel",) and not dup:
+                recent = published and datetime.fromisoformat(published.replace("Z", "+00:00")) > datetime.now(timezone.utc) - timedelta(days=7)
+                if kind not in ("Innsidehandel",) and not dup and recent:
                     key = f"newsweb-{mid}"
                     nid = hashlib.sha1(key.encode()).hexdigest()[:20]
                     excerpt = " ".join(body.split())[:400]

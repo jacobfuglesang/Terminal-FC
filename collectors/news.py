@@ -10,11 +10,13 @@ import hashlib
 import html
 import os
 import re
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 
 import feedparser
 import requests
+
+MAX_AGE_DAYS = 7  # nyheter eldre enn en uke slettes automatisk
 
 UA = {"User-Agent": "Mozilla/5.0 (FUGLESANG; privat nyhetsleser)"}
 G_NO = "https://news.google.com/rss/search?hl=no&gl=NO&ceid=NO:no&q="
@@ -87,7 +89,7 @@ def _key(title: str) -> str:
     return re.sub(r"\s+", " ", t).strip()[:90]
 
 
-def _published(e) -> datetime:
+def _published(e) -> datetime | None:
     for k in ("published", "updated"):
         if e.get(k):
             try:
@@ -95,7 +97,10 @@ def _published(e) -> datetime:
                 return d if d.tzinfo else d.replace(tzinfo=timezone.utc)
             except (TypeError, ValueError):
                 pass
-    return datetime.now(timezone.utc)
+    for k in ("published_parsed", "updated_parsed"):
+        if e.get(k):
+            return datetime(*e[k][:6], tzinfo=timezone.utc)
+    return None
 
 
 def categorize(text: str) -> str:
@@ -137,6 +142,9 @@ def collect() -> tuple[list[dict], int]:
             if key in seen:
                 continue
             seen.add(key)
+            pub = _published(e)
+            if pub is None:
+                continue  # uten dato kan saken ikke sorteres riktig
             link = e.get("link", "")
             items.append({
                 "id": hashlib.sha1(key.encode()).hexdigest()[:20],
@@ -144,7 +152,7 @@ def collect() -> tuple[list[dict], int]:
                 "title": title[:400],
                 "url": link,
                 "source": (src or feed_name)[:80],
-                "published": _published(e),
+                "published": pub,
                 "excerpt": excerpt[:600],
                 "category": categorize(text),
                 "companies": companies(text),
@@ -338,7 +346,10 @@ def run(conn) -> int:
     items, blocked = collect()
     new = 0
     with conn.cursor() as cur:
+        cutoff = datetime.now(timezone.utc) - timedelta(days=MAX_AGE_DAYS)
         for it in items:
+            if it["published"] < cutoff or it["published"] > datetime.now(timezone.utc) + timedelta(hours=2):
+                continue  # for gammel (slettes etter en uke) eller ugyldig dato
             cur.execute("SELECT 1 FROM news WHERE id = %s", (it["id"],))
             if cur.fetchone():
                 continue
@@ -349,7 +360,7 @@ def run(conn) -> int:
                  it["category"], it["companies"], it["feed"]),
             )
             new += 1
-        cur.execute("DELETE FROM news WHERE published < now() - interval '90 days'")
+        cur.execute("DELETE FROM news WHERE published < now() - interval '7 days'")
     conn.commit()
     fetched, blocked2, summarized = enrich(conn)
     with conn.cursor() as cur:

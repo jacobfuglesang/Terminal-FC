@@ -181,7 +181,8 @@ export const getNews = (limit = 300) =>
     const rows = await sql()`SELECT id, title, url, final_url, source, published, category, companies,
       summary IS NOT NULL AS summary_present, body IS NOT NULL AS has_body,
       coalesce(summary, left(coalesce(nullif(excerpt, ''), body, ''), 420)) AS lead
-      FROM news WHERE body_status IS DISTINCT FROM 'blocked' ORDER BY published DESC NULLS LAST LIMIT ${limit}`;
+      FROM news WHERE body_status IS DISTINCT FROM 'blocked' AND published > now() - interval '7 days'
+      ORDER BY published DESC NULLS LAST LIMIT ${limit}`;
     return (rows as Row[]).map(newsRow);
   }, [] as NewsItem[]);
 

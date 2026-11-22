@@ -229,7 +229,7 @@ export default async function Company({ params }: { params: Promise<{ id: string
       <section className="panel" aria-labelledby="h-conews">
         <div className="ph">
           <h2 id="h-conews">Nyheter om {co.name}</h2>
-          <span className="src">{news.length} saker siste 90 dager</span>
+          <span className="src">{news.length} saker siste 7 dager</span>
         </div>
         <NewsList items={news} filters={news.length > 8} />
       </section>

@@ -10,7 +10,7 @@ export default async function Nyheter() {
       <div className="ph">
         <h2 id="h-nyheter">Nyheter</h2>
         <span className="src">
-          iLaks, regjeringen.no og Google News (DN, E24 m.fl.) · {blocked} saker med anbefalinger eller kursmål filtrert bort siste 30 dager
+          Siste 7 dager, nyeste først · eldre saker slettes automatisk · {blocked} saker med anbefalinger eller kursmål filtrert bort siste 30 dager
         </span>
       </div>
       <NewsList items={news} />

@@ -1,12 +1,24 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import type { NewsItem } from "@/lib/db";
 import { COMPANIES } from "@/lib/menu";
 
 const CATS = ["Alle", "Børsmelding", "Politikk", "Toll og handel", "Marked", "Selskap", "Biologi"];
 const NAME: Record<string, string> = Object.fromEntries(COMPANIES.map((c) => [c.symbol, c.name]));
+
+const osloDay = (iso: string) => new Date(iso).toLocaleDateString("en-CA", { timeZone: "Europe/Oslo" });
+
+function dayHeading(iso: string) {
+  const d = osloDay(iso);
+  const today = osloDay(new Date().toISOString());
+  const yesterday = osloDay(new Date(Date.now() - 86400000).toISOString());
+  if (d === today) return "I dag";
+  if (d === yesterday) return "I går";
+  const s = new Date(iso).toLocaleDateString("nb-NO", { weekday: "long", day: "numeric", month: "long", timeZone: "Europe/Oslo" });
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
 
 export function ago(iso: string) {
   if (!iso) return "";
@@ -69,11 +81,12 @@ export default function NewsList({ items, filters = true, limit }: { items: News
         (!co || n.companies.includes(co)) &&
         (!s || `${n.title} ${n.lead}`.toLowerCase().includes(s)),
     );
+    out = [...out].sort((a, b) => (b.published || "").localeCompare(a.published || ""));
     if (limit) out = out.slice(0, limit);
     return out;
   }, [items, cat, co, q, limit]);
 
-  if (!items.length) return <div className="empty">Ingen nyheter ennå. De hentes automatisk hvert kvarter i børstiden og hver time ellers.</div>;
+  if (!items.length) return <div className="empty">Ingen nyheter siste 7 dager. Nye saker hentes hvert kvarter i børstiden og hver time ellers.</div>;
 
   return (
     <>
@@ -94,7 +107,23 @@ export default function NewsList({ items, filters = true, limit }: { items: News
             style={{ flex: "1 1 160px", background: "var(--inset)", color: "var(--text)", border: "1px solid var(--line)", borderRadius: 6, padding: "6px 10px" }} />
         </div>
       )}
-      {shown.length ? shown.map((n) => <Card key={n.id} n={n} />) : <div className="empty">Ingen treff med dette filteret.</div>}
+      {shown.length ? (
+        shown.map((n, i) => {
+          const showDay = filters && n.published && (i === 0 || osloDay(shown[i - 1].published) !== osloDay(n.published));
+          return (
+            <Fragment key={n.id}>
+              {showDay && (
+                <h3 className="src" style={{ margin: i === 0 ? "4px 0 2px" : "18px 0 2px", fontSize: 12, letterSpacing: ".06em", textTransform: "uppercase", color: "var(--muted)" }}>
+                  {dayHeading(n.published)}
+                </h3>
+              )}
+              <Card n={n} />
+            </Fragment>
+          );
+        })
+      ) : (
+        <div className="empty">Ingen treff med dette filteret.</div>
+      )}
     </>
   );
 }
