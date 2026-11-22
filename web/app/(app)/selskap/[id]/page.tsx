@@ -2,9 +2,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import CompareChart, { type Series } from "@/components/CompareChart";
 import NewsList from "@/components/NewsList";
+import ReportCard from "@/components/ReportCard";
 import TimeChart from "@/components/TimeChart";
 import { change, runRateYield, ttmYield, weeklyCorr } from "@/lib/calc";
-import { getAllDaily, getAnnouncements, getFreight, getFundamentals, getIntraday, getNews, getQuotes, getShorts } from "@/lib/db";
+import { getAllDaily, getAnnouncements, getFreight, getFundamentals, getIntraday, getNews, getQuotes, getReports, getShorts } from "@/lib/db";
 import { compact, fmt, money, osloTime, pct, up } from "@/lib/format";
 import { COMPANIES, SEGMENT_NOTE, SEGMENT_PROXY } from "@/lib/universe";
 
@@ -33,9 +34,10 @@ export default async function Company({ params }: { params: Promise<{ id: string
   if (!co) notFound();
   const proxy = SEGMENT_PROXY[co.segment];
   const syms = [co.symbol, "OSEBX.OL", ...(proxy?.kind === "price" ? [proxy.id] : [])];
-  const [quotes, daily, intra, allNews, fund, ann, shorts, fr] = await Promise.all([
+  const [quotes, daily, intra, allNews, fund, ann, shorts, fr, reps] = await Promise.all([
     getQuotes(), getAllDaily(syms), getIntraday(co.symbol), getNews(500), getFundamentals(co.symbol),
     getAnnouncements(co.symbol, 80), getShorts(), proxy?.kind === "freight" ? getFreight([proxy.id]) : Promise.resolve({} as Record<string, { day: string; value: number }[]>),
+    getReports({ symbol: co.symbol, limit: 6 }),
   ]);
   const q = quotes.find((x) => x.symbol === co.symbol);
   const pts = daily[co.symbol] ?? [];
@@ -90,6 +92,25 @@ export default async function Company({ params }: { params: Promise<{ id: string
         </div>
         <CompareChart series={series} initialOn={series.map((s) => s.id)} refs={proxy ? [{ id: proxy.id, label: proxy.name.toLowerCase() }] : [{ id: "OSEBX.OL", label: "Oslo Børs" }]} />
         {!proxy && <p className="note">Det finnes ingen gratis daglig fraktserie for {co.segment.toLowerCase()}, så aksjen sammenlignes bare med Oslo Børs.</p>}
+      </section>
+
+      <section className="panel" aria-labelledby="h-kvr">
+        <div className="ph">
+          <h2 id="h-kvr">Siste kvartalsrapport, lest av KI</h2>
+          {reps.length > 0 && <Link href={`/rapporter?selskap=${co.id}`} className="src" style={{ color: "#FF8A5B" }}>Alle {reps.length} perioder →</Link>}
+        </div>
+        {reps[0] ? (
+          <>
+            <ReportCard r={reps[0]} showCompany={false} />
+            {reps.length > 1 && (
+              <div className="src">
+                Tidligere: {reps.slice(1).map((r) => r.period + (r.data?.headline ? ` (${r.data.headline.slice(0, 70)}…)` : "")).join(" · ")}
+              </div>
+            )}
+          </>
+        ) : (
+          <div className="empty">Ingen rapport lest ennå. KI leser nye kvartalsrapporter fra Newsweb automatisk.</div>
+        )}
       </section>
 
       <div className="grid2">

@@ -33,11 +33,27 @@ export async function POST(req: Request) {
   const quotes = (await db`SELECT name, symbol, price, change_pct FROM quotes ORDER BY name`) as { name: string; symbol: string; price: number; change_pct: number | null }[];
   const news = (await db`SELECT title, source, coalesce(summary, left(coalesce(nullif(excerpt,''), body, ''), 220)) AS s FROM news
     WHERE published > now() - interval '3 days' AND body_status IS DISTINCT FROM 'blocked' ORDER BY published DESC LIMIT 30`) as { title: string; source: string; s: string }[];
+  // Siste kvartalsrapport per selskap, lest av KI-rapportleseren (kort form)
+  type Rep = { symbol: string; period: string; data: { headline?: string; outlook?: string; bookings?: { segment?: string; period?: string; share_pct?: number; rate?: number; unit?: string }[]; breakeven?: { segment?: string; rate?: number; unit?: string }[]; dividend?: { per_share?: number; unit?: string } } };
+  let reps: Rep[] = [];
+  try {
+    reps = (await db`SELECT DISTINCT ON (symbol) symbol, period, data FROM reports WHERE status = 'ok' ORDER BY symbol, published DESC`) as Rep[];
+  } catch {
+    reps = []; // tabellen finnes ikke før rapportleseren har kjørt første gang
+  }
+  const repText = reps.map((r) => {
+    const d = r.data ?? {};
+    const bk = (d.bookings ?? []).filter((b) => b.rate).slice(0, 3).map((b) => `${b.segment} ${b.share_pct ?? "?"} % til ${b.rate} ${b.unit ?? ""} (${b.period ?? ""})`).join("; ");
+    const be = (d.breakeven ?? []).filter((b) => b.rate).slice(0, 2).map((b) => `${b.segment} ${b.rate} ${b.unit ?? ""}`).join("; ");
+    const dv = d.dividend?.per_share ? `utbytte ${d.dividend.per_share} ${d.dividend.unit ?? ""}` : "";
+    return `- ${r.symbol} ${r.period}: ${d.headline ?? ""}${bk ? ` Booket: ${bk}.` : ""}${be ? ` Dødpunkt: ${be}.` : ""}${dv ? ` ${dv}.` : ""}${d.outlook ? ` Utsikter: ${d.outlook}` : ""}`;
+  }).join("\n").slice(0, 3500);
   const context = [
     snap ? `Datagrunnlag fra ${snap.day}:\n${snap.snapshot}` : "Ingen morgenrapport ennå.",
     "\nSiste kurser:\n" + quotes.map((q) => `- ${q.name} (${q.symbol}): ${q.price} (${q.change_pct === null ? "–" : q.change_pct.toFixed(2)} % i dag)`).join("\n"),
+    repText ? `\nSiste kvartalsrapporter (lest av KI):\n${repText}` : "",
     "\nNyheter siste 3 dager:\n" + news.map((n) => `- ${n.title} (${n.source}): ${(n.s ?? "").trim()}`).join("\n"),
-  ].join("\n").slice(0, 16000);
+  ].join("\n").slice(0, 15000);
 
   const system =
     "Du er analytiker i en privat shippingterminal. Svar på norsk bokmål, kort og konkret, ut fra dataene du får. " +

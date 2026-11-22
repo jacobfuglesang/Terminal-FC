@@ -1,12 +1,14 @@
 import Link from "next/link";
 import Markdown from "@/components/Markdown";
 import NewsList from "@/components/NewsList";
+import ReadAloud from "@/components/ReadAloud";
 import ScreenerTable from "@/components/ScreenerTable";
 import TimeChart from "@/components/TimeChart";
 import { change } from "@/lib/calc";
-import { getAlerts, getBriefs, getChokepoints, getDaily, getFreight, getIntraday, getNews, getQuotes, getStatus } from "@/lib/db";
+import { getAlerts, getBriefs, getChokepoints, getDaily, getFreight, getIntraday, getNews, getQuotes, getReports, getStatus } from "@/lib/db";
 import { fmt, osloTime, pct, up } from "@/lib/format";
 import { screenRows } from "@/lib/screen";
+import { COMPANIES } from "@/lib/universe";
 
 export const dynamic = "force-dynamic";
 
@@ -21,9 +23,9 @@ function Kpi({ label, value, sub, ch }: { label: string; value: string; sub: str
 }
 
 export default async function Oversikt() {
-  const [quotes, rows, freight, chokes, bwet, bdry, bwetI, bdryI, alerts, briefs, news, status] = await Promise.all([
+  const [quotes, rows, freight, chokes, bwet, bdry, bwetI, bdryI, alerts, briefs, news, status, reports] = await Promise.all([
     getQuotes(), screenRows(), getFreight(["BDI", "SCFI", "WCI"]), getChokepoints(60), getDaily("BWET", 400), getDaily("BDRY", 400),
-    getIntraday("BWET"), getIntraday("BDRY"), getAlerts(8), getBriefs(1), getNews(6), getStatus(),
+    getIntraday("BWET"), getIntraday("BDRY"), getAlerts(8), getBriefs(1), getNews(6), getStatus(), getReports({ limit: 5 }),
   ]);
   const q = Object.fromEntries(quotes.map((x) => [x.symbol, x]));
   const pts = (d: { day: string; close: number }[]) => d.map((x) => ({ t: `${x.day}T16:00:00Z`, v: x.close }));
@@ -49,11 +51,12 @@ export default async function Oversikt() {
       <div className="row">
         <section className="panel" style={{ flex: "999 1 520px" }} aria-labelledby="h-brief">
           <div className="ph">
-            <h2 id="h-brief">Analytikerens morgenrapport</h2>
-            <Link href="/analytiker" className="src" style={{ color: "#FF8A5B" }}>Hele rapporten og spørsmål →</Link>
+            <h2 id="h-brief">Morgenrapport</h2>
+            <Link href="/morgenrapport" className="src" style={{ color: "#FF8A5B" }}>Hele rapporten og arkiv →</Link>
           </div>
           {brief ? (
             <>
+              <div style={{ marginBottom: 8 }}><ReadAloud text={brief.text} /></div>
               <Markdown text={brief.text} limitSections={2} />
               <p className="note">Skrevet av KI {new Date(brief.created).toLocaleString("nb-NO", { dateStyle: "short", timeStyle: "short", timeZone: "Europe/Oslo" })} ut fra dataene i terminalen. Ikke investeringsråd.</p>
             </>
@@ -74,6 +77,26 @@ export default async function Oversikt() {
           ))}
         </section>
       </div>
+
+      {reports.length > 0 && (
+        <section className="panel" aria-labelledby="h-kvartal">
+          <div className="ph">
+            <h2 id="h-kvartal">Siste kvartalsrapporter, lest av KI</h2>
+            <Link href="/rapporter" className="src" style={{ color: "#FF8A5B" }}>Alle med booking, dagrater og dødpunkt →</Link>
+          </div>
+          {reports.map((r) => {
+            const c = COMPANIES.find((x) => x.symbol === r.symbol);
+            const bk = (r.data?.bookings ?? []).find((b) => b.rate);
+            return (
+              <div key={r.key} style={{ padding: "8px 0", borderTop: "1px solid var(--line2)" }}>
+                <div className="src">{c?.name ?? r.symbol} · {r.period} · {osloTime(r.published)}</div>
+                <Link href={c ? `/rapporter?selskap=${c.id}` : "/rapporter"}>{r.data?.headline ?? r.title}</Link>
+                {bk && <div className="src">Booket {bk.segment}: {bk.share_pct ?? "?"} % til {Number(bk.rate).toLocaleString("nb-NO")} {bk.unit ?? ""} ({bk.period})</div>}
+              </div>
+            );
+          })}
+        </section>
+      )}
 
       <section className="panel" aria-labelledby="h-rederier">
         <div className="ph">

@@ -6,6 +6,7 @@ export const COMPANIES = UNIVERSE;
 
 export const MARKET: MenuItem[] = [
   { href: "/", label: "Oversikt", sub: "Frakt, trafikk, rederier og varsler på én side", icon: "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z" },
+  { href: "/morgenrapport", label: "Morgenrapport", sub: "Dagens KI-rapport, kan leses høyt, med arkiv", icon: "M12 4v2M5.6 6.6l1.4 1.4M4 13h2M18 13h2M17 8l1.4-1.4M7 17a5 5 0 0 1 10 0M3 20h18" },
   { href: "/frakt", label: "Fraktrater", sub: "Tank, tørrbulk og container, daglig og ukentlig", icon: "M3 17l5-5 4 3 7-8M14 7h5v5" },
   { href: "/trafikk", label: "Trafikk og kart", sub: "Skip gjennom sundene og posisjoner i nøkkelområder", icon: "M3 7l6-3 6 3 6-3v13l-6 3-6-3-6 3zM9 4v13M15 7v13" },
   { href: "/ravarer", label: "Råvarer og makro", sub: "Olje, gass, jernmalm, metaller, korn og valuta", icon: "M12 3c4 5 6 8 6 11a6 6 0 0 1-12 0c0-3 2-6 6-11z" },
@@ -16,7 +17,8 @@ export const MARKET: MenuItem[] = [
 ];
 
 export const TOOLS: MenuItem[] = [
-  { href: "/analytiker", label: "Analytiker", sub: "Daglig KI-rapport og spørsmål om dataene", icon: "M12 3l2.5 5 5.5.8-4 3.9.9 5.5-4.9-2.6-4.9 2.6.9-5.5-4-3.9 5.5-.8z" },
+  { href: "/rapporter", label: "Kvartalsrapporter", sub: "Rapportene lest av KI: booking, dagrater, dødpunkt og utsikter", icon: "M7 3h8l4 4v14H7zM15 3v4h4M10 12h6M10 16h6M10 8h2" },
+  { href: "/analytiker", label: "Analytiker", sub: "Spør KI om dataene, rapportene og nyhetene", icon: "M12 3l2.5 5 5.5.8-4 3.9.9 5.5-4.9-2.6-4.9 2.6.9-5.5-4-3.9 5.5-.8z" },
   { href: "/varsler", label: "Varsler", sub: "Det som har skjedd som er verdt å se på", icon: "M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10 21h4" },
   { href: "/notater", label: "Notater", sub: "Dine notater, sortert i mapper", icon: "M6 3h9l4 4v14H6zM14 3v5h5M9 13h7M9 17h5" },
   { href: "/status", label: "Systemstatus", sub: "Datakilder og siste henting", icon: "M3 12h4l3-7 4 14 3-7h4" },

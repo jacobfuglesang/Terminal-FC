@@ -260,3 +260,39 @@ export const getBriefs = (limit = 14) =>
     const rows = await sql()`SELECT day::text AS day, text, model, snapshot, created_at FROM briefs WHERE text <> '' ORDER BY day DESC LIMIT ${limit}`;
     return (rows as Row[]).map((r) => ({ day: String(r.day), text: String(r.text), model: String(r.model ?? ""), snapshot: String(r.snapshot ?? ""), created: new Date(String(r.created_at)).toISOString() }));
   }, [] as Brief[]);
+
+// ---- KI-rapportleser
+export type RepNum = { label?: string; value?: number | null; unit?: string; period?: string; value_ok?: boolean };
+export type RepRate = { segment?: string; rate?: number | null; unit?: string; period?: string; note?: string; share_pct?: number | null; rate_ok?: boolean; share_pct_ok?: boolean };
+export type ReportData = {
+  period?: string; headline?: string; tone?: string; summary?: string[]; numbers?: RepNum[]; tce?: RepRate[]; bookings?: RepRate[];
+  breakeven?: RepRate[]; dividend?: { per_share?: number | null; unit?: string; note?: string; per_share_ok?: boolean } | null;
+  balance?: RepNum[]; fleet?: string | null; outlook?: string | null; watch?: string[];
+  check?: { checked: number; unverified: number }; files?: { name: string; url: string }[];
+};
+export type Report = {
+  key: string; symbol: string; period: string; published: string; title: string; messageIds: number[];
+  status: string; data: ReportData | null; model: string; error: string | null; updated: string;
+};
+
+export const getReports = (opts: { symbol?: string; limit?: number; all?: boolean } = {}) =>
+  safe(async () => {
+    const limit = opts.limit ?? 60;
+    const rows = opts.symbol
+      ? await sql()`SELECT * FROM reports WHERE symbol = ${opts.symbol} ORDER BY published DESC LIMIT ${limit}`
+      : await sql()`SELECT * FROM reports ORDER BY published DESC LIMIT ${limit}`;
+    return (rows as Row[])
+      .filter((r) => opts.all || r.status === "ok")
+      .map((r) => ({
+        key: String(r.key), symbol: String(r.symbol), period: String(r.period), published: new Date(String(r.published)).toISOString(),
+        title: String(r.title ?? ""), messageIds: ((r.message_ids as number[] | null) ?? []).map(Number), status: String(r.status),
+        data: (r.data as ReportData | null) ?? null, model: String(r.model ?? ""), error: r.error ? String(r.error) : null,
+        updated: new Date(String(r.updated_at)).toISOString(),
+      }));
+  }, [] as Report[]);
+
+export const getReportQueue = () =>
+  safe(async () => {
+    const rows = await sql()`SELECT status, count(*)::int AS n FROM reports GROUP BY status`;
+    return Object.fromEntries((rows as Row[]).map((r) => [String(r.status), Number(r.n)])) as Record<string, number>;
+  }, {} as Record<string, number>);
