@@ -233,12 +233,14 @@ REGLER:
 - Bruk BARE tall som står i teksten. Skriv dem nøyaktig som de står (samme tall og enhet). Ikke regn ut nye tall.
 - Mangler et tall, bruk null. Ikke gjett.
 - Ingen kjøps- eller salgsråd, ingen kursmål, ikke gjengi analytikeres anbefalinger.
-- Tekstfelter på norsk bokmål, kort og enkelt.
+- ALLE tekstfelt (headline, summary, outlook, watch, fleet, label, note) skal være på norsk bokmål, selv om rapporten er på engelsk.
+  Oversett, ikke kopier engelske setninger. Skipstyper (VLCC, Suezmax, LR2, PCTC) og tall kan stå som i rapporten.
+- Kort og enkelt språk.
 
 Svar KUN med gyldig JSON i dette formatet:
 {{
  "period": "{period}",
- "headline": "én setning om det viktigste",
+ "headline": "én setning på norsk om det viktigste",
  "tone": "positiv | nøytral | negativ (hvordan rapporten selv beskriver kvartalet og utsiktene)",
  "summary": ["4–6 korte punkter"],
  "numbers": [{{"label": "f.eks. Resultat per aksje", "value": 2.38, "unit": "USD", "period": "Q3 2026"}}],
@@ -423,6 +425,15 @@ def run(conn, max_reports: int = 2, budget_s: int = 420) -> int:
             done += 1
             c = data["check"]
             print(f"  ✓ {name} {period}: {data.get('headline', '')[:110]} ({c['checked'] - c['unverified']}/{c['checked']} tall funnet i kilden)")
+            for b in (data.get("bookings") or [])[:4]:
+                print(f"      booket {b.get('segment')} {b.get('period')}: {b.get('share_pct')} % til {b.get('rate')} {b.get('unit', '')}"
+                      f"{'' if b.get('rate_ok', True) else '  (?)'}")
+            for b in (data.get("breakeven") or [])[:3]:
+                print(f"      dødpunkt {b.get('segment')}: {b.get('rate')} {b.get('unit', '')}{'' if b.get('rate_ok', True) else '  (?)'}")
+            dv = data.get("dividend") or {}
+            if dv.get("per_share") is not None:
+                print(f"      utbytte {dv.get('per_share')} {dv.get('unit', '')}{'' if dv.get('per_share_ok', True) else '  (?)'}")
+            print(f"      kilde: {len(source)} tegn fra {len(parts)} deler")
         except RateLimited as e:
             print(f"  ! {e}. Fortsetter neste kjøring.")
             with conn.cursor() as cur:
