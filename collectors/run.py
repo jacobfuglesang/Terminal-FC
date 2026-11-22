@@ -1,39 +1,44 @@
 """Starter innsamlerne.
 
 Bruk: python run.py <jobb>[,<jobb>...] [--backfill]
-Jobber: prices, news, announcements, fundamentals, ssb, shorts, feed, biomass, futures, lice, daily, all
+Jobber: prices, announcements, news, shorts, fundamentals, freight, portwatch, ais, alerts, brief
+Grupper: market (kurser, børsmeldinger, nyheter, varsler), daily (short, nøkkeltall, frakt, sund, AIS, varsler),
+         morning (som daily + analytikerrapport), all (alt)
 """
 import sys
 import traceback
 
+import ais
+import alerts
 import announcements
-import biomass
+import brief
 import db
-import feed
+import freight
 import fundamentals
-import futures
-import lice
 import news
+import portwatch
 import prices
 import shorts
-import ssb
 
 JOBS = {
-    "prices": ("Yahoo Finance (kurser)", lambda c, bf: prices.run(c, backfill=bf)),
-    "ssb": ("SSB laksepris", lambda c, bf: ssb.run(c, weeks=520 if bf else 60)),
-    "shorts": ("Finanstilsynet (short)", lambda c, bf: shorts.run(c)),
-    "feed": ("IMF/FRED (fôrråvarer)", lambda c, bf: feed.run(c)),
-    "biomass": ("Fiskeridirektoratet (biomasse)", lambda c, bf: biomass.run(c)),
-    "futures": ("Euronext (terminkurve)", lambda c, bf: futures.run(c)),
-    "lice": ("BarentsWatch (lus og sykdom)", lambda c, bf: lice.run(c, weeks=26 if bf else 3)),
+    "prices": ("Yahoo Finance (kurser og fraktfutures)", lambda c, bf: prices.run(c, backfill=bf)),
+    "announcements": ("Oslo Børs Newsweb (børsmeldinger)", lambda c, bf: announcements.run(c, days=200 if bf else 10, max_bodies=300 if bf else 60)),
     "news": ("Nyheter (RSS)", lambda c, bf: news.run(c)),
-    "announcements": ("Oslo Børs Newsweb (børsmeldinger)", lambda c, bf: announcements.run(c, days=200 if bf else 30, max_bodies=250 if bf else 60)),
-    "fundamentals": ("Yahoo Finance (konsensus og nøkkeltall)", lambda c, bf: fundamentals.run(c)),
+    "shorts": ("Finanstilsynet (short)", lambda c, bf: shorts.run(c)),
+    "fundamentals": ("Yahoo Finance (konsensus, utbytte og nøkkeltall)", lambda c, bf: fundamentals.run(c)),
+    "freight": ("Fraktrater (Drewry, SCFI, BDI, EIA)", lambda c, bf: freight.run(c, backfill=bf)),
+    "portwatch": ("IMF PortWatch (sund)", lambda c, bf: portwatch.run(c, backfill=bf)),
+    "ais": ("aisstream.io (skip i nøkkelområder)", lambda c, bf: ais.run(c)),
+    "alerts": ("Varsler", lambda c, bf: alerts.run(c)),
+    "brief": ("KI-analytiker (morgenrapport)", lambda c, bf: brief.run(c)),
 }
 GROUPS = {
-    "daily": ["shorts", "biomass", "futures", "lice", "feed", "fundamentals"],
-    "all": ["prices", "ssb", "announcements", "news", "shorts", "biomass", "futures", "lice", "feed", "fundamentals"],
+    "market": ["prices", "announcements", "news", "alerts"],
+    "daily": ["prices", "shorts", "fundamentals", "freight", "portwatch", "ais", "alerts"],
+    "morning": ["prices", "announcements", "news", "shorts", "fundamentals", "freight", "portwatch", "ais", "alerts", "brief"],
+    "all": ["prices", "announcements", "news", "shorts", "fundamentals", "freight", "portwatch", "ais", "alerts", "brief"],
 }
+SOFT = (ais.MissingKey, brief.MissingKey)
 
 
 def main() -> int:
@@ -41,7 +46,8 @@ def main() -> int:
     backfill = "--backfill" in sys.argv
     names: list = []
     for part in (args[0] if args else "all").split(","):
-        names += GROUPS.get(part, [part])
+        names += GROUPS.get(part.strip(), [part.strip()])
+    names = list(dict.fromkeys(n for n in names if n in JOBS))
     failed = 0
     with db.connect() as conn:
         db.ensure_schema(conn)
@@ -52,7 +58,7 @@ def main() -> int:
                 n = fn(conn, backfill)
                 db.set_status(conn, label, True, n, f"{n} rader oppdatert")
                 print(f"  OK: {n} rader")
-            except (lice.MissingKey, feed.SourceDown) as e:
+            except SOFT as e:
                 conn.rollback()
                 db.set_status(conn, label, False, 0, str(e))
                 print(f"  Hoppet over: {e}")

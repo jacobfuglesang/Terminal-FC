@@ -29,7 +29,7 @@ function corr(a: number[], b: number[]): number | null {
 const f1 = (v: number) => v.toFixed(1).replace(".", ",");
 const f2 = (v: number) => v.toFixed(2).replace(".", ",");
 
-export default function CompareChart({ series, initialOn }: { series: Series[]; initialOn: string[] }) {
+export default function CompareChart({ series, initialOn, refs = [], note }: { series: Series[]; initialOn: string[]; refs?: { id: string; label: string }[]; note?: string }) {
   const [period, setPeriod] = useState<Period>("6M");
   const [on, setOn] = useState<Set<string>>(new Set(initialOn));
 
@@ -59,8 +59,7 @@ export default function CompareChart({ series, initialOn }: { series: Series[]; 
   const ticks = n > 1 ? [0, 0.25, 0.5, 0.75, 1].map((f) => Math.round(f * (n - 1))) : [];
   const tickLabel = (i: number) =>
     new Intl.DateTimeFormat("nb-NO", period === "1Å" ? { month: "short", year: "2-digit", timeZone: "Europe/Oslo" } : { day: "2-digit", month: "2-digit", timeZone: "Europe/Oslo" }).format(new Date(calc.grid[i]));
-  const laks = calc.lines.find((l) => l.id === "laks");
-  const fôr = calc.lines.find((l) => l.id === "for");
+  const refLines = refs.map((r) => ({ ...r, line: calc.lines.find((l) => l.id === r.id) }));
   const clean = (a: (number | null)[], b: (number | null)[]) => {
     const A: number[] = [], B: number[] = [];
     a.forEach((v, i) => { if (v !== null && b[i] !== null) { A.push(v); B.push(b[i] as number); } });
@@ -120,27 +119,25 @@ export default function CompareChart({ series, initialOn }: { series: Series[]; 
       <div style={{ overflowX: "auto", marginTop: 16 }}>
         <table className="tbl" style={{ minWidth: 520 }}>
           <thead>
-            <tr><th>Serie</th><th>Endring i perioden</th><th>Korrelasjon med laksepris</th><th>Korrelasjon med fôr</th></tr>
+            <tr><th>Serie</th><th>Endring i perioden</th>{refLines.map((r) => <th key={r.id}>Korrelasjon med {r.label}</th>)}</tr>
           </thead>
           <tbody>
             {calc.lines.map((l) => {
               const last = [...l.idx].reverse().find((v) => v !== null);
               const ch = last !== undefined && last !== null ? last - 100 : null;
-              const cl = laks && l.id !== "laks" ? corr(...clean(l.idx, laks.idx)) : null;
-              const cf = fôr && l.id !== "for" ? corr(...clean(l.idx, fôr.idx)) : null;
+              const cs = refLines.map((r) => (r.line && l.id !== r.id ? corr(...clean(l.idx, r.line.idx)) : null));
               return (
                 <tr key={l.id}>
                   <td><span style={{ display: "inline-block", width: 14, height: 3, borderRadius: 2, background: l.color, marginRight: 8, verticalAlign: "middle" }} />{l.name}</td>
                   <td className={`m ${ch !== null && ch >= 0 ? "upc" : "downc"}`}>{ch === null ? "–" : `${ch >= 0 ? "+" : "−"}${f1(Math.abs(ch))} %`}</td>
-                  <td className="m">{cl === null ? "–" : f2(cl)}</td>
-                  <td className="m">{cf === null ? "–" : f2(cf)}</td>
+                  {cs.map((c, k) => <td key={k} className="m">{c === null ? "–" : f2(c)}</td>)}
                 </tr>
               );
             })}
           </tbody>
         </table>
       </div>
-      <p className="note">Alle linjer = 100 ved periodens start. Laksepris (ukentlig) og fôrindeks (månedlig) går i trapper. Korrelasjon fra −1 til 1: nær 1 betyr at linjene beveger seg likt. Sammenheng er ikke det samme som årsak.</p>
+      <p className="note">Alle linjer = 100 ved periodens start. {note ?? ""} Korrelasjon fra −1 til 1: nær 1 betyr at linjene beveger seg likt. Sammenheng er ikke det samme som årsak.</p>
     </div>
   );
 }

@@ -1,14 +1,18 @@
 """Shortposisjoner fra Finanstilsynets åpne SSR-API (data under 0,5 % per aktør publiseres ikke)."""
+import re
+
 import requests
 
+from universe import COMPANIES
+
 URL = "https://ssr.finanstilsynet.no/api/v2/instruments"
-ISIN = {
-    "NO0003054108": "MOWI.OL",
-    "NO0010310956": "SALM.OL",
-    "FO0000000179": "BAKKA.OL",
-    "NO0003096208": "LSG.OL",
-    "NO0010365521": "GSF.OL",
-}
+
+
+def match(issuer: str) -> str | None:
+    for c in COMPANIES:
+        if re.search(c["ssr"], issuer or "", re.I):
+            return c["symbol"]
+    return None
 
 
 def run(conn) -> int:
@@ -17,7 +21,7 @@ def run(conn) -> int:
     found = set()
     with conn.cursor() as cur:
         for inst in data:
-            sym = ISIN.get(inst.get("isin"))
+            sym = match(inst.get("issuerName") or inst.get("name") or "")
             if not sym:
                 continue
             found.add(sym)
@@ -32,6 +36,6 @@ def run(conn) -> int:
                 )
                 rows += 1
     conn.commit()
-    missing = sorted(set(ISIN.values()) - found)
+    missing = sorted({c["symbol"] for c in COMPANIES} - found)
     print(f"  Short: {rows} hendelser. Uten offentlige posisjoner: {', '.join(missing) or 'ingen'}")
     return rows

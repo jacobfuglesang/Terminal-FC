@@ -155,3 +155,23 @@ CREATE INDEX IF NOT EXISTS announcements_sym_idx ON announcements (symbol, publi
 CREATE TABLE IF NOT EXISTS fundamentals (symbol TEXT PRIMARY KEY, data JSONB NOT NULL, updated_at TIMESTAMPTZ NOT NULL DEFAULT now());
 CREATE TABLE IF NOT EXISTS note_folders (id SERIAL PRIMARY KEY, name TEXT NOT NULL, created_at TIMESTAMPTZ NOT NULL DEFAULT now());
 CREATE TABLE IF NOT EXISTS notes (id SERIAL PRIMARY KEY, folder_id INT REFERENCES note_folders(id) ON DELETE SET NULL, title TEXT NOT NULL DEFAULT '', body TEXT NOT NULL DEFAULT '', symbol TEXT, pinned BOOLEAN NOT NULL DEFAULT false, created_at TIMESTAMPTZ NOT NULL DEFAULT now(), updated_at TIMESTAMPTZ NOT NULL DEFAULT now());
+
+-- Shipping
+CREATE TABLE IF NOT EXISTS freight (series TEXT NOT NULL, day DATE NOT NULL, value DOUBLE PRECISION NOT NULL, unit TEXT, source TEXT, note TEXT, updated_at TIMESTAMPTZ NOT NULL DEFAULT now(), PRIMARY KEY (series, day));
+CREATE TABLE IF NOT EXISTS chokepoints (day DATE NOT NULL, portid TEXT NOT NULL, name TEXT, n_total INT, n_tanker INT, n_container INT, n_dry_bulk INT, n_cargo INT, n_roro INT, capacity DOUBLE PRECISION, cap_tanker DOUBLE PRECISION, cap_container DOUBLE PRECISION, cap_dry_bulk DOUBLE PRECISION, PRIMARY KEY (day, portid));
+CREATE TABLE IF NOT EXISTS ais_ships (mmsi BIGINT PRIMARY KEY, name TEXT, ship_type INT, dest TEXT, draught REAL, updated_at TIMESTAMPTZ NOT NULL DEFAULT now());
+CREATE TABLE IF NOT EXISTS ais_positions (mmsi BIGINT PRIMARY KEY, name TEXT, lat DOUBLE PRECISION, lon DOUBLE PRECISION, sog REAL, zone TEXT, kind TEXT, seen TIMESTAMPTZ NOT NULL);
+CREATE TABLE IF NOT EXISTS ais_zone (ts TIMESTAMPTZ NOT NULL, zone TEXT NOT NULL, total INT, tankers INT, cargo INT, PRIMARY KEY (ts, zone));
+CREATE TABLE IF NOT EXISTS alerts (key TEXT PRIMARY KEY, kind TEXT, symbol TEXT, title TEXT NOT NULL, body TEXT, url TEXT, level INT NOT NULL DEFAULT 1, created_at TIMESTAMPTZ NOT NULL DEFAULT now());
+CREATE INDEX IF NOT EXISTS alerts_created_idx ON alerts (created_at DESC);
+CREATE TABLE IF NOT EXISTS briefs (day DATE PRIMARY KEY, text TEXT NOT NULL DEFAULT '', model TEXT, snapshot TEXT, created_at TIMESTAMPTZ NOT NULL DEFAULT now());
+ALTER TABLE quotes ADD COLUMN IF NOT EXISTS currency TEXT;
+-- Kilder fra laksterminalen som ikke lenger hentes
+DELETE FROM source_status WHERE source IN ('SSB laksepris', 'Fiskeridirektoratet (biomasse)', 'BarentsWatch (lus og sykdom)', 'Euronext (terminkurve)', 'IMF/FRED (fôrråvarer)', 'Yahoo Finance (kurser)', 'Yahoo Finance (konsensus og nøkkeltall)');
+-- Engangsopprydding etter overgangen fra laks til shipping (trygt å kjøre flere ganger)
+DELETE FROM quotes WHERE symbol IN ('MOWI.OL', 'SALM.OL', 'BAKKA.OL', 'LSG.OL', 'GSF.OL');
+DELETE FROM price_intraday WHERE symbol IN ('MOWI.OL', 'SALM.OL', 'BAKKA.OL', 'LSG.OL', 'GSF.OL', 'EURNOK=X');
+DELETE FROM fundamentals WHERE symbol IN ('MOWI.OL', 'SALM.OL', 'BAKKA.OL', 'LSG.OL', 'GSF.OL');
+DELETE FROM announcements WHERE symbol IN ('MOWI.OL', 'SALM.OL', 'BAKKA.OL', 'LSG.OL', 'GSF.OL');
+DELETE FROM shorts WHERE symbol IN ('MOWI.OL', 'SALM.OL', 'BAKKA.OL', 'LSG.OL', 'GSF.OL');
+DELETE FROM news WHERE created_at < '2026-11-22T10:24:00Z';

@@ -12,7 +12,9 @@ import requests
 
 BASE = "https://api3.oslo.oslobors.no/v1/newsreader"
 H = {"User-Agent": "Mozilla/5.0 (FUGLESANG; privat terminal)", "Accept": "application/json"}
-ISSUERS = {"MOWI": "MOWI.OL", "SALM": "SALM.OL", "BAKKA": "BAKKA.OL", "LSG": "LSG.OL", "GSF": "GSF.OL"}
+from universe import COMPANIES
+
+ISSUERS = {c["newsweb"]: c["symbol"] for c in COMPANIES}
 
 
 def kind_of(title: str, cats: list[str]) -> str:
@@ -20,7 +22,7 @@ def kind_of(title: str, cats: list[str]) -> str:
     c = " ".join(cats).upper()
     if "MELDEPLIKTIG HANDEL" in c or "MANAGERS" in c:
         return "Innsidehandel"
-    if "trading update" in t or "produksjonsresultat" in t or "production results" in t or "operational update" in t:
+    if "trading update" in t or "produksjonsresultat" in t or "production results" in t or "operational update" in t or "fleet update" in t:
         return "Trading update"
     if any(x in c for x in ("KVARTALSRAPPORT", "HALVÅRSRAPPORT", "ÅRSRAPPORT")) or "results" in t or "resultat" in t or "quarter" in t or "kvartal" in t:
         return "Rapport"
@@ -53,9 +55,16 @@ def run(conn, days: int = 45, max_bodies: int = 60) -> int:
         have = {r[0] for r in cur.fetchall()}
     new = 0
     seen_slots = set()
+    span = {"fromDate": frm.isoformat(), "toDate": (today + timedelta(days=1)).isoformat()}
+    everything = None
     for issuer, sym in ISSUERS.items():
-        js = _get(f"{BASE}/list", {"issuer": issuer, "fromDate": frm.isoformat(), "toDate": (today + timedelta(days=1)).isoformat()})
+        js = _get(f"{BASE}/list", {"issuer": issuer, **span})
         msgs = (js.get("data") or {}).get("messages") or []
+        if not msgs:
+            # Noen koder (f.eks. 2020) treffer ikke filteret; let i den samlede listen i stedet
+            if everything is None:
+                everything = ((_get(f"{BASE}/list", span).get("data") or {}).get("messages") or [])
+            msgs = [m for m in everything if (m.get("issuerSign") or "").upper() == issuer]
         for m in sorted(msgs, key=lambda x: x.get("publishedTime") or ""):
             mid = int(m.get("messageId") or m.get("id"))
             if (m.get("issuerSign") or "").upper() != issuer:

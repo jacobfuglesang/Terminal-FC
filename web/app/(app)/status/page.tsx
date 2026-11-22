@@ -4,18 +4,16 @@ import { osloTime } from "@/lib/format";
 export const dynamic = "force-dynamic";
 
 const PLAN = [
-  { k: "Yahoo Finance", d: "Kurser for 5 aksjer, EUR/NOK og USD/NOK", w: "Hvert 15. min i børstiden", f: 1 },
-  { k: "SSB", d: "Laksepris og eksportmengde (tabell 03024)", w: "Onsdag 08:30 + daglig sjekk", f: 1 },
-  { k: "Fish Pool / Sitagri", d: "SISALMON-indeks (krever abonnement, terminkurven brukes i stedet)", w: "Tirsdag", f: 9 },
-  { k: "Euronext", d: "Terminkurve for laks", w: "Daglig", f: 1 },
-  { k: "Fiskeridirektoratet", d: "Biomasse", w: "Månedlig", f: 1 },
-  { k: "BarentsWatch", d: "Lus og sykdom, totalt og per selskap", w: "Daglig", f: 1 },
+  { k: "Yahoo Finance", d: "Kurser for 15 rederier, fraktfutures (BWET, BDRY), råvarer og valuta", w: "Hver halvtime i børstiden", f: 1 },
+  { k: "Oslo Børs Newsweb", d: "Børsmeldinger, rapporter, utbytte og innsidehandel", w: "Hver halvtime i børstiden", f: 1 },
+  { k: "Nyheter + Groq", d: "Splash247, Hellenic, gCaptain, Maritime Executive, FreightWaves, TradeWinds, Lloyd's List, DN, E24", w: "Hver halvtime i børstiden", f: 1 },
+  { k: "Drewry, SCFI, BDI, EIA", d: "Containerrater, tørrbulkindeks og USAs oljelagre", w: "Daglig", f: 1 },
+  { k: "IMF PortWatch", d: "Skip gjennom ti viktige sund", w: "Daglig (data med noen dagers forsinkelse)", f: 1 },
+  { k: "aisstream.io", d: "Skip i åtte nøkkelområder (krever gratis nøkkel)", w: "Daglig", f: 1 },
   { k: "Finanstilsynet", d: "Shortposisjoner", w: "Daglig", f: 1 },
-  { k: "IMF via FRED", d: "Fôrråvareindeks", w: "Månedlig", f: 1 },
-  { k: "RSS + Groq", d: "Nyheter med hel artikkel og KI-sammendrag (iLaks, E24, NRK, DN-ingress m.fl.)", w: "Hvert 15. min i børstiden, ellers hver time", f: 1 },
-  { k: "Oslo Børs Newsweb", d: "Børsmeldinger, rapporter, trading updates og innsidehandel", w: "Hvert 15. min i børstiden, ellers hver time", f: 1 },
-  { k: "Yahoo Finance", d: "Konsensus for resultat og omsetning, kvartalsregnskap", w: "Daglig", f: 1 },
-  { k: "Selskapenes rapporter", d: "Guiding, siste kvartal og finanskalender (kontrollert manuelt)", w: "Ved hver kvartalsrapport", f: 1 },
+  { k: "Yahoo Finance", d: "Konsensus, utbytte, rapportdatoer og kvartalstall", w: "Daglig", f: 1 },
+  { k: "Groq", d: "Morgenrapport fra KI-analytikeren", w: "Hver morgen", f: 1 },
+  { k: "Baltic Exchange, Clarksons", d: "Fullstendige rater for alle segmenter (betalt)", w: "–", f: 9 },
 ];
 
 export default async function StatusPage() {

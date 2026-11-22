@@ -1,153 +1,121 @@
 import Link from "next/link";
-import { Bars } from "@/components/Charts";
-import TimeChart from "@/components/TimeChart";
-import { weekDate } from "@/lib/dates";
+import Markdown from "@/components/Markdown";
 import NewsList from "@/components/NewsList";
-import { getDaily, getIntraday, getNews, getQuotes, getSalmon, getStatus } from "@/lib/db";
-import { compact, fmt, osloTime, pct, up } from "@/lib/format";
-import { COMPANIES } from "@/lib/menu";
+import ScreenerTable from "@/components/ScreenerTable";
+import TimeChart from "@/components/TimeChart";
+import { change } from "@/lib/calc";
+import { getAlerts, getBriefs, getChokepoints, getDaily, getFreight, getIntraday, getNews, getQuotes, getStatus } from "@/lib/db";
+import { fmt, osloTime, pct, up } from "@/lib/format";
+import { screenRows } from "@/lib/screen";
 
 export const dynamic = "force-dynamic";
 
+function Kpi({ label, value, sub, ch }: { label: string; value: string; sub: string; ch?: number | null }) {
+  return (
+    <div className="kpi">
+      <div className="l">{label}</div>
+      <div className="v m">{value}</div>
+      <div className={`d m ${ch === undefined || ch === null ? "" : up(ch) ? "upc" : "downc"}`} style={ch === undefined || ch === null ? { color: "#A0A7B2" } : undefined}>{sub}</div>
+    </div>
+  );
+}
 
 export default async function Oversikt() {
-  const [quotes, salmon, status, fxDaily] = await Promise.all([getQuotes(), getSalmon(52), getStatus(), getDaily("EURNOK=X", 260)]);
-  const [fxIntra, news] = await Promise.all([getIntraday("EURNOK=X"), getNews(6)]);
-  const fxFirst = fxDaily[0]?.close;
-  const fxLast = fxDaily[fxDaily.length - 1]?.close;
-  const fxYear = fxFirst && fxLast ? (fxLast / fxFirst - 1) * 100 : null;
-  const bySym = Object.fromEntries(quotes.map((q) => [q.symbol, q]));
-  const fx = bySym["EURNOK=X"];
-  const last = salmon[salmon.length - 1];
-  const prev = salmon[salmon.length - 2];
-  const wChange = last?.fresh_price && prev?.fresh_price ? (last.fresh_price / prev.fresh_price - 1) * 100 : null;
-  const vChange = last?.fresh_tonnes && prev?.fresh_tonnes ? (last.fresh_tonnes / prev.fresh_tonnes - 1) * 100 : null;
-  const lastUpdate = quotes.map((q) => q.updated_at).sort().pop();
-  const recent = salmon.slice(-8);
+  const [quotes, rows, freight, chokes, bwet, bdry, bwetI, bdryI, alerts, briefs, news, status] = await Promise.all([
+    getQuotes(), screenRows(), getFreight(["BDI", "SCFI", "WCI"]), getChokepoints(60), getDaily("BWET", 400), getDaily("BDRY", 400),
+    getIntraday("BWET"), getIntraday("BDRY"), getAlerts(8), getBriefs(1), getNews(6), getStatus(),
+  ]);
+  const q = Object.fromEntries(quotes.map((x) => [x.symbol, x]));
+  const pts = (d: { day: string; close: number }[]) => d.map((x) => ({ t: `${x.day}T16:00:00Z`, v: x.close }));
+  const fpts = (s: string) => (freight[s] ?? []).map((x) => ({ t: `${x.day}T12:00:00Z`, v: x.value }));
+  const last = (s: string) => freight[s]?.[freight[s].length - 1];
+  const hz = chokes.filter((c) => c.portid === "chokepoint6");
+  const hz7 = hz.slice(-7), hzPrev = hz.slice(-28, -7);
+  const avg = (a: typeof hz) => (a.length ? a.reduce((s, x) => s + x.total, 0) / a.length : null);
+  const hzA = avg(hz7), hzB = avg(hzPrev);
+  const brief = briefs[0];
 
   return (
     <>
       <div className="kpis">
-        <div className="kpi">
-          <div className="l">SSB laksepris {last ? `uke ${last.week}` : ""}</div>
-          <div className="v m">{last ? `${fmt(last.fresh_price)} kr` : "–"}</div>
-          <div className={`d m ${up(wChange) ? "upc" : "downc"}`}>{wChange === null ? "Venter på data" : `${pct(wChange)} fra uke ${prev?.week}`}</div>
-        </div>
-        <div className="kpi">
-          <div className="l">Eksportert fersk laks {last ? `uke ${last.week}` : ""}</div>
-          <div className="v m">{last ? `${fmt(last.fresh_tonnes, 0)} t` : "–"}</div>
-          <div className={`d m ${up(vChange) ? "upc" : "downc"}`}>{vChange === null ? "Venter på data" : `${pct(vChange)} fra uke ${prev?.week}`}</div>
-        </div>
-        <div className="kpi">
-          <div className="l">EUR/NOK</div>
-          <div className="v m">{fx ? fmt(fx.price, 4) : "–"}</div>
-          <div className={`d m ${up(fx?.change_pct) ? "upc" : "downc"}`}>{fx ? `${pct(fx.change_pct)} i dag` : "Venter på data"}</div>
-        </div>
+        <Kpi label="Tankfrakt (BWET)" value={fmt(q.BWET?.price, 2)} sub={`${pct(change(pts(bwet), 7))} på en uke`} ch={change(pts(bwet), 7)} />
+        <Kpi label="Tørrbulkfrakt (BDRY)" value={fmt(q.BDRY?.price, 2)} sub={`${pct(change(pts(bdry), 7))} på en uke`} ch={change(pts(bdry), 7)} />
+        <Kpi label={`Baltic Dry ${last("BDI") ? new Date(last("BDI")!.day).toLocaleDateString("nb-NO", { day: "numeric", month: "short" }) : ""}`} value={fmt(last("BDI")?.value, 0)} sub={`${pct(change(fpts("BDI"), 7))} på en uke`} ch={change(fpts("BDI"), 7)} />
+        <Kpi label="Containerrater (SCFI)" value={fmt(last("SCFI")?.value, 0)} sub={`${pct(change(fpts("SCFI"), 6))} siste uke`} ch={change(fpts("SCFI"), 6)} />
+        <Kpi label="Brent" value={`${fmt(q["BZ=F"]?.price, 2)} $`} sub={pct(q["BZ=F"]?.change_pct)} ch={q["BZ=F"]?.change_pct} />
+        <Kpi label="Hormuz, skip per dag" value={hzA === null ? "–" : fmt(hzA, 0)} sub={hzA !== null && hzB ? `${pct((hzA / hzB - 1) * 100)} mot 3 uker før` : "Snitt siste 7 dager"} ch={hzA !== null && hzB ? (hzA / hzB - 1) * 100 : null} />
       </div>
 
       <div className="row">
-        <section className="panel" style={{ flex: "1 1 360px" }} aria-labelledby="h-kurser">
+        <section className="panel" style={{ flex: "999 1 520px" }} aria-labelledby="h-brief">
           <div className="ph">
-            <h2 id="h-kurser">Kurser</h2>
-            <span className="src">Yahoo Finance · sist hentet {osloTime(lastUpdate)}</span>
+            <h2 id="h-brief">Analytikerens morgenrapport</h2>
+            <Link href="/analytiker" className="src" style={{ color: "#FF8A5B" }}>Hele rapporten og spørsmål →</Link>
           </div>
-          {quotes.length === 0 ? (
-            <div className="empty">Ingen kurser ennå. De kommer etter første automatiske henting.</div>
+          {brief ? (
+            <>
+              <Markdown text={brief.text} limitSections={2} />
+              <p className="note">Skrevet av KI {new Date(brief.created).toLocaleString("nb-NO", { dateStyle: "short", timeStyle: "short", timeZone: "Europe/Oslo" })} ut fra dataene i terminalen. Ikke investeringsråd.</p>
+            </>
           ) : (
-            <table className="tbl">
-              <thead>
-                <tr>
-                  <th>Selskap</th>
-                  <th>Siste</th>
-                  <th>I dag</th>
-                  <th>Volum</th>
-                </tr>
-              </thead>
-              <tbody>
-                {COMPANIES.map((c) => {
-                  const q = bySym[c.symbol];
-                  return (
-                    <tr key={c.id}>
-                      <td>
-                        <Link href={`/selskap/${c.id}`} style={{ color: "#E8EAED", fontWeight: 600 }}>
-                          {c.name}
-                        </Link>{" "}
-                        <span style={{ color: "#8A919C", fontSize: 11 }}>{c.ticker}</span>
-                      </td>
-                      <td className="m">{fmt(q?.price)}</td>
-                      <td className={`m ${up(q?.change_pct) ? "upc" : "downc"}`}>{pct(q?.change_pct)}</td>
-                      <td className="m" style={{ color: "#A0A7B2" }}>{compact(q?.volume)}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+            <div className="empty">Første rapport skrives ved neste morgenkjøring (krever Groq-nøkkel i GitHub).</div>
           )}
         </section>
-
-        <section className="panel" style={{ flex: "999 1 520px" }} aria-labelledby="h-laks">
+        <section className="panel" style={{ flex: "1 1 320px" }} aria-labelledby="h-alerts">
           <div className="ph">
-            <h2 id="h-laks">Laksepris siste 52 uker</h2>
-            <span className="src">SSB tabell 03024 · kr/kg fersk laks · CC BY 4.0</span>
+            <h2 id="h-alerts">Siste varsler</h2>
+            <Link href="/varsler" className="src" style={{ color: "#FF8A5B" }}>Alle →</Link>
           </div>
-          <TimeChart daily={salmon.filter((s) => s.fresh_price).map((s) => ({ t: weekDate(s.year, s.week), v: s.fresh_price as number }))} periods={["1M", "3M", "6M", "1Å"]} initial="1Å" decimals={1} />
+          {alerts.length === 0 ? <div className="empty">Ingen varsler ennå.</div> : alerts.map((a) => (
+            <div key={a.key} style={{ padding: "8px 0", borderTop: "1px solid var(--line2)" }}>
+              <div className="src">{a.kind} · {osloTime(a.created)}</div>
+              {a.url ? <Link href={a.url} style={{ color: a.level >= 2 ? "#FFB08F" : "var(--text)" }}>{a.title}</Link> : <span style={{ color: a.level >= 2 ? "#FFB08F" : undefined }}>{a.title}</span>}
+            </div>
+          ))}
         </section>
       </div>
 
-      <section className="panel" aria-labelledby="h-fx">
+      <section className="panel" aria-labelledby="h-rederier">
         <div className="ph">
-          <h2 id="h-fx">EUR/NOK siste år</h2>
-          <span className="src">
-            Yahoo Finance · endring siste år: <span className={`m ${up(fxYear) ? "upc" : "downc"}`}>{pct(fxYear)}</span> · høyere kurs = svakere krone = bedre laksepris i kroner
-          </span>
+          <h2 id="h-rederier">Rederiene i dag</h2>
+          <Link href="/selskaper" className="src" style={{ color: "#FF8A5B" }}>Full tabell med utbytte, P/E og short →</Link>
         </div>
-        <TimeChart daily={fxDaily.map((d) => ({ t: `${d.day}T16:00:00Z`, v: d.close }))} intraday={fxIntra} color="#5BA8FF" height={180} decimals={3} initial="1Å" />
+        <ScreenerTable rows={rows} compact />
       </section>
 
       <div className="row">
-        <section className="panel" style={{ flex: "999 1 520px" }} aria-labelledby="h-uker">
+        <section className="panel" style={{ flex: "1 1 420px" }} aria-labelledby="h-bwet">
+          <div className="ph"><h2 id="h-bwet">Tankfrakt: BWET</h2><span className="src">Fond som eier VLCC-fraktfutures (Midtøsten–Kina) · USD</span></div>
+          <TimeChart daily={pts(bwet)} intraday={bwetI} decimals={2} initial="6M" />
+        </section>
+        <section className="panel" style={{ flex: "1 1 420px" }} aria-labelledby="h-bdry">
+          <div className="ph"><h2 id="h-bdry">Tørrbulkfrakt: BDRY</h2><span className="src">Fond som eier Capesize/Panamax/Supramax-futures · USD</span></div>
+          <TimeChart daily={pts(bdry)} intraday={bdryI} decimals={2} initial="6M" color="#5BA8FF" />
+        </section>
+      </div>
+
+      <div className="row">
+        <section className="panel" style={{ flex: "999 1 520px" }} aria-labelledby="h-snews">
           <div className="ph">
-            <h2 id="h-uker">Siste åtte onsdager</h2>
-            <span className="src">Pris kr/kg · eksportert mengde i tusen tonn</span>
+            <h2 id="h-snews">Siste nyheter</h2>
+            <Link href="/nyheter" className="src" style={{ color: "#FF8A5B" }}>Alle nyheter →</Link>
           </div>
-          <Bars
-            items={recent.map((s, i) => ({
-              label: `U${s.week}`,
-              value: s.fresh_price ?? 0,
-              sub: s.fresh_tonnes ? `${(s.fresh_tonnes / 1000).toFixed(1).replace(".", ",")} t` : undefined,
-              highlight: i === recent.length - 1,
-            }))}
-          />
+          <NewsList items={news} filters={false} />
         </section>
         <section className="panel" style={{ flex: "1 1 300px" }} aria-labelledby="h-kilder">
           <div className="ph">
             <h2 id="h-kilder">Datakilder</h2>
-            <Link href="/status" className="src" style={{ color: "#FF8A5B" }}>
-              Systemstatus →
-            </Link>
+            <Link href="/status" className="src" style={{ color: "#FF8A5B" }}>Systemstatus →</Link>
           </div>
-          {status.length === 0 ? (
-            <div className="empty">Ingen hentinger registrert ennå.</div>
-          ) : (
-            status.map((s) => (
-              <div key={s.source} style={{ display: "flex", justifyContent: "space-between", gap: 8, padding: "8px 0", borderBottom: "1px solid #1C1F25", fontSize: 12 }}>
-                <span>{s.source}</span>
-                <span className={s.ok ? "upc" : "downc"}>{s.ok ? `OK ${osloTime(s.last_run)}` : "Feil"}</span>
-              </div>
-            ))
-          )}
+          {status.length === 0 ? <div className="empty">Ingen hentinger registrert ennå.</div> : status.map((s) => (
+            <div key={s.source} style={{ display: "flex", justifyContent: "space-between", gap: 8, padding: "7px 0", borderBottom: "1px solid #1C1F25", fontSize: 12 }}>
+              <span>{s.source}</span>
+              <span className={s.ok ? "upc" : "downc"}>{s.ok ? `OK ${osloTime(s.last_run)}` : "Venter / feil"}</span>
+            </div>
+          ))}
           <p className="note">Analyseverktøy, ikke investeringsråd.</p>
         </section>
       </div>
-      <section className="panel" aria-labelledby="h-snews">
-        <div className="ph">
-          <h2 id="h-snews">Siste nyheter</h2>
-          <Link href="/nyheter" className="src" style={{ color: "#FF8A5B" }}>
-            Alle nyheter →
-          </Link>
-        </div>
-        <NewsList items={news} filters={false} />
-      </section>
     </>
   );
 }

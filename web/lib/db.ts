@@ -15,16 +15,7 @@ export type Quote = {
   volume: number | null;
   market_time: string | null;
   updated_at: string;
-};
-
-export type SalmonWeek = {
-  period: string;
-  year: number;
-  week: number;
-  fresh_price: number | null;
-  fresh_tonnes: number | null;
-  frozen_price: number | null;
-  frozen_tonnes: number | null;
+  currency: string | null;
 };
 
 export type SourceStatus = {
@@ -50,26 +41,8 @@ export async function getQuotes(): Promise<Quote[]> {
       volume: num(r.volume),
       market_time: r.market_time ? String(r.market_time) : null,
       updated_at: String(r.updated_at),
+      currency: r.currency ? String(r.currency) : null,
     }));
-  } catch {
-    return [];
-  }
-}
-
-export async function getSalmon(weeks = 52): Promise<SalmonWeek[]> {
-  try {
-    const rows = await sql()`SELECT * FROM ssb_salmon ORDER BY year DESC, week DESC LIMIT ${weeks}`;
-    return rows
-      .map((r: Record<string, unknown>) => ({
-        period: String(r.period),
-        year: Number(r.year),
-        week: Number(r.week),
-        fresh_price: num(r.fresh_price),
-        fresh_tonnes: num(r.fresh_tonnes),
-        frozen_price: num(r.frozen_price),
-        frozen_tonnes: num(r.frozen_tonnes),
-      }))
-      .reverse();
   } catch {
     return [];
   }
@@ -119,9 +92,11 @@ const safe = async <T,>(f: () => Promise<T>, empty: T): Promise<T> => {
   }
 };
 
-export const getAllDaily = () =>
+export const getAllDaily = (symbols?: string[]) =>
   safe(async () => {
-    const rows = await sql()`SELECT symbol, day::text AS day, close FROM price_daily WHERE day > now() - interval '400 days' ORDER BY day`;
+    const rows = symbols
+      ? await sql()`SELECT symbol, day::text AS day, close FROM price_daily WHERE symbol = ANY(${symbols}) AND day > now() - interval '760 days' ORDER BY day`
+      : await sql()`SELECT symbol, day::text AS day, close FROM price_daily WHERE day > now() - interval '760 days' ORDER BY day`;
     const out: Record<string, { t: string; v: number }[]> = {};
     for (const r of rows as Row[]) (out[String(r.symbol)] ||= []).push({ t: `${r.day}T16:00:00Z`, v: Number(r.close) });
     return out;
@@ -129,40 +104,9 @@ export const getAllDaily = () =>
 
 export const getShorts = () =>
   safe(async () => {
-    const rows = await sql()`SELECT symbol, day::text AS day, pct, holders FROM shorts WHERE day > now() - interval '400 days' ORDER BY day`;
+    const rows = await sql()`SELECT symbol, day::text AS day, pct, holders FROM shorts WHERE day > now() - interval '760 days' ORDER BY day`;
     return (rows as Row[]).map((r) => ({ symbol: String(r.symbol), day: String(r.day), pct: Number(r.pct), holders: Number(r.holders) }));
   }, [] as { symbol: string; day: string; pct: number; holders: number }[]);
-
-export const getFeed = () =>
-  safe(async () => {
-    const idx = await sql()`SELECT month::text AS month, index_usd, index_nok FROM feed_index ORDER BY month`;
-    const raw = await sql()`SELECT series, month::text AS month, usd FROM feed_raw WHERE month > now() - interval '30 months' ORDER BY month`;
-    return {
-      index: (idx as Row[]).map((r) => ({ month: String(r.month), usd: Number(r.index_usd), nok: r.index_nok === null ? null : Number(r.index_nok) })),
-      raw: (raw as Row[]).map((r) => ({ series: String(r.series), month: String(r.month), usd: Number(r.usd) })),
-    };
-  }, { index: [] as { month: string; usd: number; nok: number | null }[], raw: [] as { series: string; month: string; usd: number }[] });
-
-export const getBiomass = () =>
-  safe(async () => {
-    const rows = await sql()`SELECT month::text AS month, po, name, count_k, tonnes FROM biomass ORDER BY month, po`;
-    return (rows as Row[]).map((r) => ({ month: String(r.month), po: Number(r.po), name: String(r.name), count: Number(r.count_k), tonnes: Number(r.tonnes) }));
-  }, [] as { month: string; po: number; name: string; count: number; tonnes: number }[]);
-
-export const getFutures = () =>
-  safe(async () => {
-    const rows = await sql()`SELECT snapshot::text AS snapshot, contract::text AS contract, settle, open_int FROM futures WHERE snapshot = (SELECT max(snapshot) FROM futures) ORDER BY contract`;
-    return (rows as Row[]).map((r) => ({ snapshot: String(r.snapshot), contract: String(r.contract), settle: Number(r.settle), oi: r.open_int === null ? null : Number(r.open_int) }));
-  }, [] as { snapshot: string; contract: string; settle: number; oi: number | null }[]);
-
-export const getLice = () =>
-  safe(async () => {
-    const rows = await sql()`SELECT year, week, avg_lice, reported, over_limit, ila, pd, localities FROM lice_week ORDER BY year, week`;
-    return (rows as Row[]).map((r) => ({
-      year: Number(r.year), week: Number(r.week), avg: r.avg_lice === null ? null : Number(r.avg_lice), reported: Number(r.reported),
-      over: Number(r.over_limit), ila: Number(r.ila), pd: Number(r.pd), localities: Number(r.localities),
-    }));
-  }, [] as { year: number; week: number; avg: number | null; reported: number; over: number; ila: number; pd: number; localities: number }[]);
 
 export type NewsItem = {
   id: string; title: string; url: string; source: string; published: string;
@@ -207,20 +151,6 @@ export const getBlockedCount = () =>
     return Number((rows as Row[])[0]?.n ?? 0);
   }, 0);
 
-export type LiceCo = { year: number; week: number; symbol: string; localities: number; reported: number; avg: number | null; avgW: number | null; over: number; ila: number; pd: number };
-
-export const getLiceCompanies = (symbol?: string) =>
-  safe(async () => {
-    const rows = symbol
-      ? await sql()`SELECT * FROM lice_company WHERE symbol = ${symbol} ORDER BY year, week`
-      : await sql()`SELECT * FROM lice_company ORDER BY year, week`;
-    return (rows as Row[]).map((r) => ({
-      year: Number(r.year), week: Number(r.week), symbol: String(r.symbol), localities: Number(r.localities), reported: Number(r.reported),
-      avg: r.avg_lice === null ? null : Number(r.avg_lice), avgW: r.avg_w === null ? null : Number(r.avg_w),
-      over: Number(r.over_limit), ila: Number(r.ila), pd: Number(r.pd),
-    }));
-  }, [] as LiceCo[]);
-
 export type Announcement = { id: number; symbol: string; title: string; kind: string; category: string; published: string; attachments: number };
 
 export const getAnnouncements = (symbol?: string, limit = 60) =>
@@ -254,6 +184,8 @@ export type Fundamentals = {
   eps_trend: Record<string, Record<string, number | null>>;
   quarters: { end: string; revenue: number | null; ebit: number | null; net: number | null; eps: number | null }[];
   next_report: { date: string; eps_estimate: number | null } | null;
+  dividends?: { date: string; value: number | null }[];
+  ex_dividend?: string | null;
 };
 
 export const getFundamentals = (symbol: string) =>
@@ -262,3 +194,69 @@ export const getFundamentals = (symbol: string) =>
     const r = (rows as Row[])[0];
     return r ? { ...(r.data as Fundamentals), updated: String(r.updated_at) } : null;
   }, null as (Fundamentals & { updated: string }) | null);
+
+export const getAllFundamentals = () =>
+  safe(async () => {
+    const rows = await sql()`SELECT symbol, data, updated_at FROM fundamentals`;
+    return Object.fromEntries((rows as Row[]).map((r) => [String(r.symbol), { ...(r.data as Fundamentals), updated: String(r.updated_at) }]));
+  }, {} as Record<string, Fundamentals & { updated: string }>);
+
+export type FreightPt = { series: string; day: string; value: number; note: string | null };
+
+export const getFreight = (series?: string[]) =>
+  safe(async () => {
+    const rows = series
+      ? await sql()`SELECT series, day::text AS day, value, note FROM freight WHERE series = ANY(${series}) AND day > now() - interval '800 days' ORDER BY day`
+      : await sql()`SELECT series, day::text AS day, value, note FROM freight WHERE day > now() - interval '800 days' ORDER BY day`;
+    const out: Record<string, FreightPt[]> = {};
+    for (const r of rows as Row[]) (out[String(r.series)] ||= []).push({ series: String(r.series), day: String(r.day), value: Number(r.value), note: r.note ? String(r.note) : null });
+    return out;
+  }, {} as Record<string, FreightPt[]>);
+
+export type Choke = { day: string; portid: string; name: string; total: number; tanker: number; container: number; bulk: number; capacity: number };
+
+export const getChokepoints = (days = 800) =>
+  safe(async () => {
+    const rows = await sql()`SELECT day::text AS day, portid, name, n_total, n_tanker, n_container, n_dry_bulk, capacity
+      FROM chokepoints WHERE day > now() - make_interval(days => ${days}) ORDER BY day`;
+    return (rows as Row[]).map((r) => ({
+      day: String(r.day), portid: String(r.portid), name: String(r.name), total: Number(r.n_total ?? 0), tanker: Number(r.n_tanker ?? 0),
+      container: Number(r.n_container ?? 0), bulk: Number(r.n_dry_bulk ?? 0), capacity: Number(r.capacity ?? 0),
+    }));
+  }, [] as Choke[]);
+
+export type AisPos = { mmsi: number; name: string; lat: number; lon: number; sog: number | null; zone: string; kind: string; seen: string };
+
+export const getAis = () =>
+  safe(async () => {
+    const rows = await sql()`SELECT mmsi, name, lat, lon, sog, zone, kind, seen FROM ais_positions WHERE seen > now() - interval '36 hours'`;
+    return (rows as Row[]).map((r) => ({
+      mmsi: Number(r.mmsi), name: String(r.name ?? ""), lat: Number(r.lat), lon: Number(r.lon), sog: r.sog === null ? null : Number(r.sog),
+      zone: String(r.zone ?? ""), kind: String(r.kind ?? "ukjent"), seen: new Date(String(r.seen)).toISOString(),
+    }));
+  }, [] as AisPos[]);
+
+export const getAisZones = () =>
+  safe(async () => {
+    const rows = await sql()`SELECT ts, zone, total, tankers, cargo FROM ais_zone WHERE ts > now() - interval '90 days' ORDER BY ts`;
+    return (rows as Row[]).map((r) => ({ ts: new Date(String(r.ts)).toISOString(), zone: String(r.zone), total: Number(r.total), tankers: Number(r.tankers), cargo: Number(r.cargo) }));
+  }, [] as { ts: string; zone: string; total: number; tankers: number; cargo: number }[]);
+
+export type Alert = { key: string; kind: string; symbol: string | null; title: string; body: string; url: string | null; level: number; created: string };
+
+export const getAlerts = (limit = 100) =>
+  safe(async () => {
+    const rows = await sql()`SELECT key, kind, symbol, title, body, url, level, created_at FROM alerts ORDER BY created_at DESC LIMIT ${limit}`;
+    return (rows as Row[]).map((r) => ({
+      key: String(r.key), kind: String(r.kind ?? ""), symbol: r.symbol ? String(r.symbol) : null, title: String(r.title), body: String(r.body ?? ""),
+      url: r.url ? String(r.url) : null, level: Number(r.level ?? 1), created: new Date(String(r.created_at)).toISOString(),
+    }));
+  }, [] as Alert[]);
+
+export type Brief = { day: string; text: string; model: string; snapshot: string; created: string };
+
+export const getBriefs = (limit = 14) =>
+  safe(async () => {
+    const rows = await sql()`SELECT day::text AS day, text, model, snapshot, created_at FROM briefs WHERE text <> '' ORDER BY day DESC LIMIT ${limit}`;
+    return (rows as Row[]).map((r) => ({ day: String(r.day), text: String(r.text), model: String(r.model ?? ""), snapshot: String(r.snapshot ?? ""), created: new Date(String(r.created_at)).toISOString() }));
+  }, [] as Brief[]);

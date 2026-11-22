@@ -1,4 +1,4 @@
-"""Henter kurser for de fem lakseaksjene og EUR/NOK fra Yahoo Finance (15 min forsinket).
+"""Henter kurser for rederiene, fraktfondene og råvarer fra Yahoo Finance (15 min forsinket).
 
 Ett samlet kall per kjøring for å holde oss langt unna Yahoos grenser.
 """
@@ -7,15 +7,11 @@ from datetime import timezone
 import pandas as pd
 import yfinance as yf
 
-SYMBOLS = {
-    "MOWI.OL": "Mowi",
-    "SALM.OL": "SalMar",
-    "BAKKA.OL": "Bakkafrost",
-    "LSG.OL": "Lerøy",
-    "GSF.OL": "Grieg Seafood",
-    "EURNOK=X": "EUR/NOK",
-    "NOK=X": "USD/NOK",
-}
+from universe import COMPANIES, MARKET
+
+SYMBOLS = {**{c["symbol"]: c["name"] for c in COMPANIES}, **{k: v[0] for k, v in MARKET.items()}}
+CURRENCY = {**{c["symbol"]: "NOK" for c in COMPANIES}, **{k: v[1] for k, v in MARKET.items()}}
+INTRADAY = [c["symbol"] for c in COMPANIES] + ["BWET", "BDRY", "BZ=F", "NOK=X"]
 
 
 def fetch(period: str = "5d") -> pd.DataFrame:
@@ -34,7 +30,7 @@ def fetch(period: str = "5d") -> pd.DataFrame:
 
 
 def fetch_intraday() -> pd.DataFrame:
-    return yf.download(list(SYMBOLS), period="5d", interval="15m", group_by="ticker",
+    return yf.download(INTRADAY, period="5d", interval="15m", group_by="ticker",
                        auto_adjust=False, progress=False, threads=False)
 
 
@@ -49,7 +45,7 @@ def store_intraday(conn) -> int:
         return 0
     n = 0
     with conn.cursor() as cur:
-        for sym in SYMBOLS:
+        for sym in INTRADAY:
             if sym not in df.columns.get_level_values(0):
                 continue
             d = df[sym].dropna(subset=["Close"])
@@ -70,7 +66,7 @@ def store_intraday(conn) -> int:
 
 
 def run(conn, backfill: bool = False) -> int:
-    df = fetch("1y" if backfill else "5d")
+    df = fetch("2y" if backfill else "5d")
     rows = 0
     with conn.cursor() as cur:
         for sym, name in SYMBOLS.items():
@@ -103,10 +99,10 @@ def run(conn, backfill: bool = False) -> int:
                      prev_close=EXCLUDED.prev_close, change_pct=EXCLUDED.change_pct, volume=EXCLUDED.volume,
                      currency=EXCLUDED.currency, market_time=EXCLUDED.market_time, updated_at=now()""",
                 (sym, name, price, prev, chg, int(vol) if pd.notna(vol) else None,
-                 "NOK", ts),
+                 CURRENCY.get(sym, "NOK"), ts),
             )
             rows += 1
-            print(f"  {name:<14} {price:>10.2f}  {chg if chg is not None else 0:+.2f} %")
+            print(f"  {name[:28]:<28} {price:>10.2f}  {chg if chg is not None else 0:+.2f} %")
     conn.commit()
     store_intraday(conn)
     return rows

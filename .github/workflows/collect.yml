@@ -1,27 +1,22 @@
 name: Hent data
 
 on:
+  # GitHub sin egen klokke er upålitelig for dette repoet, så hovedtakten styres utenfra
+  # (cron-job.org kaller workflow_dispatch). Disse to er en reserve.
   schedule:
-    # Tidene er i UTC. Oslo er UTC+1 om vinteren og UTC+2 om sommeren.
-    - cron: "7,22,37,52 7-15 * * 1-5"   # Kurser hvert 15. min i børstiden (ikke på hel time, da er GitHub travlest)
-    - cron: "41 16 * * 1-5"             # Sluttkurs etter børsslutt
-    - cron: "33 7 * * 3"                # SSB laksepris onsdag (publiseres 08:00 norsk tid)
-    - cron: "13 9 * * *"                # SSB daglig sikkerhetsrunde (fanger forsinkede publiseringer)
-    - cron: "27 17 * * *"               # Daglig: short, fôr, biomasse, terminkurve, lus
-    - cron: "47 0-6,16-23 * * *"        # Nyheter hver time utenom børstiden
-    - cron: "47 7-15 * * 0,6"           # Nyheter hver time i helgene
+    - cron: "23 */3 * * *"   # Hver tredje time: kurser, børsmeldinger, nyheter, varsler
+    - cron: "35 5 * * *"     # Morgen (06:35/07:35 norsk tid): alt + analytikerrapport
   push:
     branches: [main]
     paths: ["collectors/**", ".github/workflows/collect.yml"]   # Kjør alt én gang når innsamlerne endres
   workflow_dispatch:
     inputs:
       job:
-        description: "Hva skal hentes?"
-        type: choice
-        options: [all, prices, news, announcements, fundamentals, ssb, daily, shorts, feed, biomass, futures, lice]
-        default: all
+        description: "Jobb: market, daily, morning, all, eller enkeltjobber skilt med komma"
+        type: string
+        default: market
       backfill:
-        description: "Hent lang historikk (første gang)"
+        description: "Hent lang historikk"
         type: boolean
         default: false
 
@@ -35,7 +30,7 @@ concurrency:
 jobs:
   collect:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
 
@@ -49,28 +44,31 @@ jobs:
 
       - name: Velg jobb
         id: pick
+        env:
+          INPUT_JOB: ${{ inputs.job }}
         run: |
           if [ "${{ github.event_name }}" = "push" ]; then
             echo "job=all" >> "$GITHUB_OUTPUT"
             echo "flags=--backfill" >> "$GITHUB_OUTPUT"
           elif [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "job=${{ inputs.job }}" >> "$GITHUB_OUTPUT"
+            JOB="$INPUT_JOB"
+            # Bare små bokstaver og komma, så ingen kan sende inn kommandoer via jobbnavnet
+            if ! echo "$JOB" | grep -Eq '^[a-z,]{1,80}$'; then JOB=market; fi
+            echo "job=$JOB" >> "$GITHUB_OUTPUT"
             if [ "${{ inputs.backfill }}" = "true" ]; then echo "flags=--backfill" >> "$GITHUB_OUTPUT"; fi
           else
             case "${{ github.event.schedule }}" in
-              "33 7 * * 3"|"13 9 * * *") echo "job=ssb" >> "$GITHUB_OUTPUT" ;;
-              "27 17 * * *") echo "job=daily,announcements,news" >> "$GITHUB_OUTPUT" ;;
-              "47 0-6,16-23 * * *"|"47 7-15 * * 0,6") echo "job=announcements,news" >> "$GITHUB_OUTPUT" ;;
-              *) echo "job=prices,announcements,news" >> "$GITHUB_OUTPUT" ;;
+              "35 5 * * *") echo "job=morning" >> "$GITHUB_OUTPUT" ;;
+              *) echo "job=market" >> "$GITHUB_OUTPUT" ;;
             esac
           fi
 
       - name: Hent ${{ steps.pick.outputs.job }}
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          BW_CLIENT_ID: ${{ secrets.BW_CLIENT_ID }}
-          BW_CLIENT_SECRET: ${{ secrets.BW_CLIENT_SECRET }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          AISSTREAM_API_KEY: ${{ secrets.AISSTREAM_API_KEY }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
         working-directory: collectors
         run: |
           set -o pipefail

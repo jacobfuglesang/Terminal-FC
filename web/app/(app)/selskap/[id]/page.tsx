@@ -1,18 +1,19 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import CompareChart, { type Series } from "@/components/CompareChart";
 import NewsList from "@/components/NewsList";
 import TimeChart from "@/components/TimeChart";
-import { COMPANY_INFO, EVENTS } from "@/lib/companies";
-import { completeWeekIndex, weekDate } from "@/lib/dates";
-import { getAnnouncements, getDaily, getFundamentals, getIntraday, getLice, getLiceCompanies, getNews, getQuotes } from "@/lib/db";
-import { compact, fmt, money, osloTime, pct, tonn, up } from "@/lib/format";
-import { COMPANIES } from "@/lib/menu";
+import { change, runRateYield, ttmYield, weeklyCorr } from "@/lib/calc";
+import { getAllDaily, getAnnouncements, getFreight, getFundamentals, getIntraday, getNews, getQuotes, getShorts } from "@/lib/db";
+import { compact, fmt, money, osloTime, pct, up } from "@/lib/format";
+import { COMPANIES, SEGMENT_NOTE, SEGMENT_PROXY } from "@/lib/universe";
 
 export const dynamic = "force-dynamic";
 
 const day = (iso: string) => new Date(iso.length === 10 ? `${iso}T12:00:00Z` : iso).toLocaleDateString("nb-NO", { day: "numeric", month: "short", year: "numeric", timeZone: "Europe/Oslo" });
 
-function EstRow({ label, e, cur, money: isMoney }: { label: string; e?: { avg?: number | null; low?: number | null; high?: number | null; numberOfAnalysts?: number | null; yearAgoEps?: number | null; yearAgoRevenue?: number | null }; cur: string; money?: boolean }) {
+type Est = { avg?: number | null; low?: number | null; high?: number | null; numberOfAnalysts?: number | null; yearAgoEps?: number | null; yearAgoRevenue?: number | null };
+function EstRow({ label, e, cur, isMoney }: { label: string; e?: Est; cur: string; isMoney?: boolean }) {
   if (!e || e.avg === null || e.avg === undefined) return <tr><td>{label}</td><td colSpan={3} className="src">Ingen data</td></tr>;
   const f = (v?: number | null) => (isMoney ? money(v, cur) : `${fmt(v, 2)} ${cur}`);
   const prev = isMoney ? e.yearAgoRevenue : e.yearAgoEps;
@@ -30,133 +31,124 @@ export default async function Company({ params }: { params: Promise<{ id: string
   const { id } = await params;
   const co = COMPANIES.find((c) => c.id === id);
   if (!co) notFound();
-  const info = COMPANY_INFO[co.symbol];
-  const [quotes, daily, intra, allNews, fund, ann, liceCo, liceAll] = await Promise.all([
-    getQuotes(), getDaily(co.symbol), getIntraday(co.symbol), getNews(500), getFundamentals(co.symbol),
-    getAnnouncements(co.symbol, 60), getLiceCompanies(co.symbol), getLice(),
+  const proxy = SEGMENT_PROXY[co.segment];
+  const syms = [co.symbol, "OSEBX.OL", ...(proxy?.kind === "price" ? [proxy.id] : [])];
+  const [quotes, daily, intra, allNews, fund, ann, shorts, fr] = await Promise.all([
+    getQuotes(), getAllDaily(syms), getIntraday(co.symbol), getNews(500), getFundamentals(co.symbol),
+    getAnnouncements(co.symbol, 80), getShorts(), proxy?.kind === "freight" ? getFreight([proxy.id]) : Promise.resolve({} as Record<string, { day: string; value: number }[]>),
   ]);
   const q = quotes.find((x) => x.symbol === co.symbol);
-  const first = daily[0]?.close;
-  const lastClose = daily[daily.length - 1]?.close;
-  const yearChange = first && lastClose ? (lastClose / first - 1) * 100 : null;
+  const pts = daily[co.symbol] ?? [];
+  const price = q?.price ?? pts[pts.length - 1]?.v ?? null;
+  const proxyPts = proxy ? (proxy.kind === "price" ? daily[proxy.id] ?? [] : (fr[proxy.id] ?? []).map((x) => ({ t: `${x.day}T12:00:00Z`, v: x.value }))) : [];
+  const c6 = proxy ? weeklyCorr(pts, proxyPts, 183) : null;
+  const cOse = weeklyCorr(pts, daily["OSEBX.OL"] ?? [], 183);
   const news = allNews.filter((n) => n.companies.includes(co.symbol) && n.category !== "Børsmelding");
-  const today = new Date().toLocaleDateString("en-CA", { timeZone: "Europe/Oslo" });
-  const events = EVENTS.filter((e) => e.symbol === co.symbol && e.date >= today);
   const insider = ann.filter((a) => a.kind === "Innsidehandel").slice(0, 10);
-  const releases = ann.filter((a) => a.kind !== "Innsidehandel").slice(0, 14);
-  const cur = fund?.info?.financialCurrency || info.currency;
-  const nci = completeWeekIndex(liceAll);
-  const nat = liceAll[nci];
-  const natPrev = liceAll[nci - 1];
-  const lc = liceCo.filter((l) => l.localities > 0 && (!nat || l.year < nat.year || (l.year === nat.year && l.week <= nat.week)));
-  const lw = nat ? lc.find((l) => l.year === nat.year && l.week === nat.week) : lc[lc.length - 1];
-  const lp = natPrev ? lc.find((l) => l.year === natPrev.year && l.week === natPrev.week) : undefined;
+  const releases = ann.filter((a) => a.kind !== "Innsidehandel").slice(0, 16);
+  const cur = fund?.info?.financialCurrency || "USD";
+  const divs = fund?.dividends ?? [];
+  const ttm = ttmYield(divs, price), run = runRateYield(divs, price);
+  const sh = shorts.filter((s) => s.symbol === co.symbol);
+  const shortNow = sh[sh.length - 1];
   const trend0 = fund?.eps_trend?.["0y"];
+
+  const series: Series[] = [
+    { id: co.symbol, name: co.name, color: "#FF8A5B", pts },
+    ...(proxy ? [{ id: proxy.id, name: proxy.name, color: "#F4F5F7", dash: "6 4", pts: proxyPts }] : []),
+    { id: "OSEBX.OL", name: "Oslo Børs", color: "#6E7581", dash: "1 3", pts: daily["OSEBX.OL"] ?? [] },
+  ];
 
   return (
     <>
-      <section className="panel" style={{ display: "flex", flexWrap: "wrap", gap: "20px 36px", alignItems: "center" }}>
+      <section className="panel" style={{ display: "flex", flexWrap: "wrap", gap: "20px 34px", alignItems: "center" }}>
         <div>
-          <div className="src">Kurs · {co.ticker}</div>
+          <div className="src">Kurs · {co.ticker} · {co.segment}</div>
           <div className="m" style={{ fontSize: 26, fontWeight: 600 }}>
-            {fmt(q?.price)} <span className={up(q?.change_pct) ? "upc" : "downc"} style={{ fontSize: 13 }}>{pct(q?.change_pct)}</span>
+            {fmt(price)} <span className={up(q?.change_pct) ? "upc" : "downc"} style={{ fontSize: 13 }}>{pct(q?.change_pct)}</span>
           </div>
         </div>
-        <div><div className="src">Børsverdi</div><div className="m" style={{ fontSize: 18 }}>{money(fund?.info?.marketCap, "NOK")}</div></div>
-        <div><div className="src">Siste år</div><div className={`m ${up(yearChange) ? "upc" : "downc"}`} style={{ fontSize: 18 }}>{pct(yearChange)}</div></div>
-        <div><div className="src">Volum i dag</div><div className="m" style={{ fontSize: 18 }}>{compact(q?.volume)}</div></div>
-        <div><div className="src">Neste rapport</div><div className="m" style={{ fontSize: 18 }}>{events.find((e) => e.kind === "Rapport") ? day(events.find((e) => e.kind === "Rapport")!.date) : "–"}</div></div>
-        <div><div className="src">Sist hentet</div><div className="m" style={{ fontSize: 18 }}>{osloTime(q?.updated_at)}</div></div>
+        <div><div className="src">1 mnd / 3 mnd</div><div className="m" style={{ fontSize: 16 }}><span className={up(change(pts, 30)) ? "upc" : "downc"}>{pct(change(pts, 30))}</span> / <span className={up(change(pts, 91)) ? "upc" : "downc"}>{pct(change(pts, 91))}</span></div></div>
+        <div><div className="src">Børsverdi</div><div className="m" style={{ fontSize: 16 }}>{money(fund?.info?.marketCap, "NOK")}</div></div>
+        <div><div className="src">Utbytte 12 m / siste ×</div><div className="m" style={{ fontSize: 16 }}>{ttm === null ? "–" : `${fmt(ttm, 1)} %`} / {run === null ? "–" : `${fmt(run, 1)} %`}</div></div>
+        <div><div className="src">Neste rapport</div><div className="m" style={{ fontSize: 16 }}>{fund?.next_report?.date ? day(fund.next_report.date) : "–"}</div></div>
+        <div><div className="src">Short</div><div className="m" style={{ fontSize: 16 }}>{shortNow ? `${fmt(shortNow.pct, 2)} %` : "Ingen offentlig"}</div></div>
+        <div><div className="src">Volum i dag</div><div className="m" style={{ fontSize: 16 }}>{compact(q?.volume)}</div></div>
       </section>
 
       <section className="panel" aria-labelledby="h-graf">
+        <div className="ph"><h2 id="h-graf">Kursutvikling</h2><span className="src">NOK · 15-minutters kurser for 1 dag og 1 uke · Yahoo Finance · {osloTime(q?.updated_at)}</span></div>
+        <TimeChart daily={pts} intraday={intra} decimals={2} initial="6M" />
+      </section>
+
+      <section className="panel" aria-labelledby="h-mot">
         <div className="ph">
-          <h2 id="h-graf">Kursutvikling</h2>
-          <span className="src">15-minutters kurser for 1 dag og 1 uke, ellers sluttkurs · Yahoo Finance</span>
+          <h2 id="h-mot">Aksjen mot {proxy ? proxy.name.toLowerCase() : "Oslo Børs"}</h2>
+          <span className="src">
+            Korrelasjon i ukentlige endringer siste 6 mnd: {proxy ? `${proxy.name} ${c6 === null ? "–" : fmt(c6, 2)} · ` : ""}Oslo Børs {cOse === null ? "–" : fmt(cOse, 2)}
+          </span>
         </div>
-        <TimeChart daily={daily.map((d) => ({ t: `${d.day}T16:00:00Z`, v: d.close }))} intraday={intra} decimals={2} />
+        <CompareChart series={series} initialOn={series.map((s) => s.id)} refs={proxy ? [{ id: proxy.id, label: proxy.name.toLowerCase() }] : [{ id: "OSEBX.OL", label: "Oslo Børs" }]} />
+        {!proxy && <p className="note">Det finnes ingen gratis daglig fraktserie for {co.segment.toLowerCase()}, så aksjen sammenlignes bare med Oslo Børs.</p>}
       </section>
 
       <div className="grid2">
         <section className="panel" aria-labelledby="h-om">
-          <div className="ph"><h2 id="h-om">Markedsposisjon</h2><span className="src">Rapporterer i {info.currency}</span></div>
-          <p style={{ margin: "0 0 10px", lineHeight: 1.6 }}>{info.about}</p>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 10 }}>
-            {info.regions.map((r) => <span key={r} className="chip">{r}</span>)}
-          </div>
-          <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.6, color: "var(--muted)" }}>
-            {info.facts.map((f) => <li key={f}>{f}</li>)}
-            {fund?.info?.fullTimeEmployees ? <li>Om lag {fmt(fund.info.fullTimeEmployees, 0)} ansatte (Yahoo Finance).</li> : null}
-          </ul>
+          <div className="ph"><h2 id="h-om">Om {co.name}</h2><span className="src">{co.segment}</span></div>
+          <p style={{ margin: "0 0 10px", lineHeight: 1.6 }}>{co.about}</p>
+          <p style={{ margin: 0, lineHeight: 1.6, color: "var(--muted)" }}><b style={{ color: "#C9CED6" }}>Hva du bør følge:</b> {SEGMENT_NOTE[co.segment]}</p>
+          {fund?.info?.fullTimeEmployees ? <p className="note">Om lag {fmt(fund.info.fullTimeEmployees, 0)} ansatte (Yahoo Finance).</p> : null}
         </section>
 
-        <section className="panel" aria-labelledby="h-guid">
-          <div className="ph"><h2 id="h-guid">Planer: guidet slaktevolum</h2><span className="src">Fra selskapet, {day(info.quarter.published)}</span></div>
-          <table className="tbl">
-            <thead><tr><th></th><th>2026</th><th>2027</th><th>Endring</th></tr></thead>
-            <tbody>
-              {info.guidance.map((g) => (
-                <tr key={g.label}>
-                  <td>{g.label}{g.note && <div className="src">{g.note}</div>}</td>
-                  <td className="m">{tonn(g.y2026)}</td>
-                  <td className="m">{tonn(g.y2027)}</td>
-                  <td className={`m ${up(g.y2026 && g.y2027 ? g.y2027 - g.y2026 : 0) ? "upc" : "downc"}`}>{g.y2026 && g.y2027 ? pct((g.y2027 / g.y2026 - 1) * 100) : "–"}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <p className="note">{info.guidanceNote}</p>
+        <section className="panel" aria-labelledby="h-utb">
+          <div className="ph"><h2 id="h-utb">Utbytte</h2><span className="src">Per aksje i kroner · Yahoo Finance</span></div>
+          {divs.length === 0 ? <div className="empty">Ingen utbytte registrert.</div> : (
+            <table className="tbl">
+              <thead><tr><th>Dato (eks.)</th><th>Per aksje</th><th>Av dagens kurs</th></tr></thead>
+              <tbody>
+                {[...divs].reverse().slice(0, 8).map((d) => (
+                  <tr key={d.date}><td className="m">{day(d.date)}</td><td className="m">{fmt(d.value, 2)} kr</td><td className="m" style={{ color: "#A0A7B2" }}>{d.value && price ? `${fmt((d.value / price) * 100, 2)} %` : "–"}</td></tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+          <p className="note">
+            {fund?.ex_dividend ? `Neste eller siste eks-utbyttedag ifølge Yahoo: ${day(fund.ex_dividend)}. ` : ""}
+            Shippingutbytter følger ratene og kan endre seg mye fra kvartal til kvartal.
+          </p>
         </section>
       </div>
 
       <div className="grid2">
-        <section className="panel" aria-labelledby="h-kv">
-          <div className="ph"><h2 id="h-kv">Siste kvartal: {info.quarter.label}</h2><span className="src">Publisert {day(info.quarter.published)}</span></div>
-          <div className="kpis" style={{ marginBottom: 10 }}>
-            {info.quarter.metrics.map((m) => (
-              <div className="kpi" key={m.label}>
-                <div className="l">{m.label}</div>
-                <div className="v m" style={{ fontSize: 17 }}>{m.value}</div>
-                {m.prev && <div className="d m" style={{ color: "#A0A7B2" }}>i fjor: {m.prev}</div>}
-              </div>
-            ))}
-          </div>
-          <p style={{ margin: 0, lineHeight: 1.6, color: "var(--muted)" }}>{info.quarter.comment}</p>
-        </section>
-
         <section className="panel" aria-labelledby="h-kons">
           <div className="ph"><h2 id="h-kons">Forventet resultat (konsensus)</h2><span className="src">Snitt av analytikernes estimater · Yahoo Finance</span></div>
-          {!fund ? (
-            <div className="empty">Konsensus hentes ved neste daglige kjøring.</div>
-          ) : (
+          {!fund ? <div className="empty">Hentes ved neste daglige kjøring.</div> : (
             <>
               <table className="tbl">
                 <thead><tr><th></th><th>Snitt</th><th>Spenn</th><th>Analytikere</th></tr></thead>
                 <tbody>
-                  <EstRow label="Resultat per aksje 2026" e={fund.eps?.["0y"]} cur={cur} />
-                  <EstRow label="Resultat per aksje 2027" e={fund.eps?.["+1y"]} cur={cur} />
-                  <EstRow label="Omsetning 2026" e={fund.revenue?.["0y"]} cur={cur} money />
-                  <EstRow label="Omsetning 2027" e={fund.revenue?.["+1y"]} cur={cur} money />
+                  <EstRow label="Resultat per aksje i år" e={fund.eps?.["0y"]} cur={cur} />
+                  <EstRow label="Resultat per aksje neste år" e={fund.eps?.["+1y"]} cur={cur} />
+                  <EstRow label="Omsetning i år" e={fund.revenue?.["0y"]} cur={cur} isMoney />
+                  <EstRow label="Omsetning neste år" e={fund.revenue?.["+1y"]} cur={cur} isMoney />
                 </tbody>
               </table>
               <p className="note">
-                {fund.next_report?.date ? `Neste rapport ifølge Yahoo: ${day(fund.next_report.date)}${fund.next_report.eps_estimate !== null ? `, ventet resultat per aksje ${fmt(fund.next_report.eps_estimate, 2)} ${cur}` : ""}. ` : ""}
-                {trend0?.current && trend0?.["90daysAgo"] ? `Estimatet for i år er ${trend0.current > trend0["90daysAgo"] ? "justert opp" : "justert ned"} fra ${fmt(trend0["90daysAgo"], 2)} for 90 dager siden. ` : ""}
-                Bare forventet inntjening vises, ingen anbefalinger eller kursmål. Få analytikere gir usikre tall.
+                {fund.next_report?.eps_estimate !== null && fund.next_report?.eps_estimate !== undefined ? `Ventet resultat per aksje i neste rapport: ${fmt(fund.next_report.eps_estimate, 2)} ${cur}. ` : ""}
+                {trend0?.current && trend0?.["30daysAgo"] ? `Estimatet for i år er ${trend0.current >= trend0["30daysAgo"] ? "justert opp" : "justert ned"} fra ${fmt(trend0["30daysAgo"], 2)} for 30 dager siden. ` : ""}
+                Bare forventet inntjening vises, ingen anbefalinger eller kursmål.
               </p>
             </>
           )}
         </section>
-      </div>
 
-      {fund?.quarters?.length ? (
         <section className="panel" aria-labelledby="h-reg">
-          <div className="ph"><h2 id="h-reg">Kvartalsregnskap</h2><span className="src">Yahoo Finance · {cur} · EBIT etter IFRS, inkludert verdijustering av fisk</span></div>
-          <div style={{ overflowX: "auto" }}>
-            <table className="tbl" style={{ minWidth: 520 }}>
+          <div className="ph"><h2 id="h-reg">Kvartalsregnskap</h2><span className="src">{cur} · Yahoo Finance</span></div>
+          {!fund?.quarters?.length ? <div className="empty">Ingen data ennå.</div> : (
+            <table className="tbl">
               <thead><tr><th>Kvartal</th><th>Omsetning</th><th>EBIT</th><th>Resultat</th><th>Per aksje</th></tr></thead>
               <tbody>
-                {fund.quarters.filter((r) => r.revenue !== null || r.ebit !== null).map((r) => (
+                {fund.quarters.filter((r) => r.revenue !== null || r.ebit !== null).slice(0, 6).map((r) => (
                   <tr key={r.end}>
                     <td className="m">{day(r.end)}</td>
                     <td className="m">{money(r.revenue)}</td>
@@ -167,47 +159,33 @@ export default async function Company({ params }: { params: Promise<{ id: string
                 ))}
               </tbody>
             </table>
-          </div>
-          <p className="note">Operasjonelt EBIT (uten verdijustering) står i «Siste kvartal» over. Yahoo kan mangle enkelte kvartaler.</p>
+          )}
         </section>
-      ) : null}
+      </div>
 
-      <section className="panel" aria-labelledby="h-lus">
-        <div className="ph"><h2 id="h-lus">Lus og sykdom i {co.name} sine anlegg</h2><span className="src">BarentsWatch · anlegg koblet til selskapet via akvakulturregisteret</span></div>
-        {co.symbol === "BAKKA.OL" ? (
-          <div className="empty">Bakkafrost har ingen anlegg i Norge, så BarentsWatch har ikke lusetall for selskapet. Selskapet publiserer egne tall for Færøyene på bakkafrost.com.</div>
-        ) : !lw ? (
-          <div className="empty">Selskapstallene hentes ved neste daglige kjøring.</div>
-        ) : (
-          <>
-            <div className="kpis" style={{ marginBottom: 12 }}>
-              <div className="kpi"><div className="l">Snitt hunnlus uke {lw.week}</div><div className="v m">{fmt(lw.avg, 2)}</div><div className="d m" style={{ color: "#A0A7B2" }}>Hele Norge: {fmt(nat?.avg, 2)}</div></div>
-              <div className="kpi"><div className="l">Vektet etter kapasitet</div><div className="v m">{fmt(lw.avgW, 2)}</div><div className="d m" style={{ color: "#A0A7B2" }}>Store anlegg teller mer</div></div>
-              <div className="kpi"><div className="l">Over lusegrensen</div><div className="v m" style={{ color: lw.over ? "#FFB08F" : undefined }}>{lw.over}</div><div className="d m" style={{ color: "#A0A7B2" }}>{lp ? `${lw.over - lp.over >= 0 ? "▲" : "▼"} ${Math.abs(lw.over - lp.over)} fra forrige uke` : ""}</div></div>
-              <div className="kpi"><div className="l">Anlegg med ILA / PD</div><div className="v m">{lw.ila} / {lw.pd}</div><div className="d m" style={{ color: "#A0A7B2" }}>{lw.reported} av {lw.localities} anlegg rapporterte</div></div>
-            </div>
-            <TimeChart daily={lc.filter((l) => l.avg !== null).map((l) => ({ t: weekDate(l.year, l.week), v: l.avg as number }))} periods={["1M", "3M", "6M"]} initial="6M" color="#F2C94C" decimals={2} height={170} />
-            <p className="note">Grensen er 0,5 voksne hunnlus (0,2 i uke 16–21). Anlegg som eies sammen med andre telles med hos alle eierne.</p>
-          </>
-        )}
-      </section>
+      {sh.length > 1 && (
+        <section className="panel" aria-labelledby="h-short">
+          <div className="ph"><h2 id="h-short">Shortandel</h2><span className="src">Finanstilsynet · posisjoner over 0,5 % per aktør</span></div>
+          <TimeChart daily={sh.map((s) => ({ t: `${s.day}T12:00:00Z`, v: s.pct }))} periods={["3M", "6M", "1Å"]} initial="1Å" color="#FF6B6B" decimals={2} height={150} />
+          <p className="note">Nå {fmt(shortNow?.pct, 2)} % fordelt på {shortNow?.holders ?? 0} aktører.</p>
+        </section>
+      )}
 
       <div className="grid2">
-        <section className="panel" aria-labelledby="h-kal">
-          <div className="ph"><h2 id="h-kal">Kalender</h2><Link href="/kalender" className="src" style={{ color: "#FF8A5B" }}>Hele kalenderen →</Link></div>
-          {events.length === 0 ? <div className="empty">Ingen kjente datoer ennå.</div> : events.map((e) => (
-            <div key={e.date + e.title} style={{ display: "flex", gap: 10, padding: "8px 0", borderTop: "1px solid var(--line2)", alignItems: "baseline" }}>
-              <span className="m" style={{ minWidth: 100 }}>{day(e.date)}</span>
-              <span style={{ flex: 1 }}>{e.title}{e.note && <div className="src">{e.note}</div>}</span>
-              <span className="tag" style={e.confirmed ? { background: "#16301F", color: "#7BE3A6" } : { background: "#3A2A12", color: "#F2C94C" }}>{e.confirmed ? "Bekreftet" : "Anslått"}</span>
+        <section className="panel" aria-labelledby="h-bm">
+          <div className="ph"><h2 id="h-bm">Børsmeldinger</h2><span className="src">Oslo Børs Newsweb</span></div>
+          {releases.length === 0 ? <div className="empty">Hentes ved neste kjøring.</div> : releases.map((a) => (
+            <div key={a.id} style={{ display: "flex", gap: 10, padding: "7px 0", borderTop: "1px solid var(--line2)", alignItems: "baseline", flexWrap: "wrap" }}>
+              <span className="m src" style={{ minWidth: 86 }}>{day(a.published)}</span>
+              <span className="chip" style={{ color: "var(--accent)" }}>{a.kind}</span>
+              <Link href={`/melding/${a.id}`} style={{ color: "var(--text)", flex: "1 1 220px" }}>{a.title}</Link>
             </div>
           ))}
         </section>
-
         <section className="panel" aria-labelledby="h-intern">
-          <div className="ph"><h2 id="h-intern">Interne forhold: innsidehandel</h2><span className="src">Meldepliktig handel · Newsweb</span></div>
-          {insider.length === 0 ? <div className="empty">Ingen meldepliktige handler registrert siste måneder.</div> : insider.map((a) => (
-            <div key={a.id} style={{ display: "flex", gap: 10, padding: "8px 0", borderTop: "1px solid var(--line2)", alignItems: "baseline" }}>
+          <div className="ph"><h2 id="h-intern">Innsidehandel</h2><span className="src">Meldepliktige handler · Newsweb</span></div>
+          {insider.length === 0 ? <div className="empty">Ingen meldepliktige handler registrert.</div> : insider.map((a) => (
+            <div key={a.id} style={{ display: "flex", gap: 10, padding: "7px 0", borderTop: "1px solid var(--line2)", alignItems: "baseline" }}>
               <span className="m src" style={{ minWidth: 86 }}>{day(a.published)}</span>
               <Link href={`/melding/${a.id}`} style={{ color: "var(--text)" }}>{a.title}</Link>
             </div>
@@ -215,30 +193,9 @@ export default async function Company({ params }: { params: Promise<{ id: string
         </section>
       </div>
 
-      <section className="panel" aria-labelledby="h-bm">
-        <div className="ph"><h2 id="h-bm">Børsmeldinger</h2><span className="src">Rapporter, trading updates og andre meldinger · Oslo Børs Newsweb</span></div>
-        {releases.length === 0 ? <div className="empty">Børsmeldingene hentes ved neste kjøring.</div> : releases.map((a) => (
-          <div key={a.id} style={{ display: "flex", gap: 10, padding: "8px 0", borderTop: "1px solid var(--line2)", alignItems: "baseline", flexWrap: "wrap" }}>
-            <span className="m src" style={{ minWidth: 86 }}>{day(a.published)}</span>
-            <span className="chip" style={{ color: "var(--accent)" }}>{a.kind}</span>
-            <Link href={`/melding/${a.id}`} style={{ color: "var(--text)", flex: "1 1 280px" }}>{a.title}</Link>
-          </div>
-        ))}
-      </section>
-
       <section className="panel" aria-labelledby="h-conews">
-        <div className="ph">
-          <h2 id="h-conews">Nyheter om {co.name}</h2>
-          <span className="src">{news.length} saker siste 7 dager</span>
-        </div>
+        <div className="ph"><h2 id="h-conews">Nyheter om {co.name}</h2><span className="src">{news.length} saker siste 7 dager</span></div>
         <NewsList items={news} filters={news.length > 8} />
-      </section>
-
-      <section className="panel" aria-labelledby="h-kilder">
-        <div className="ph"><h2 id="h-kilder">Kilder for selskapsdataene</h2><span className="src">Kontrollert 22.11.2026</span></div>
-        <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.7 }}>
-          {info.sources.map((s) => <li key={s.url}><a href={s.url} target="_blank" rel="noopener noreferrer">{s.title} ↗</a></li>)}
-        </ul>
         <p className="note">Analyseverktøy, ikke investeringsråd.</p>
       </section>
     </>

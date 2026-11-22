@@ -1,27 +1,36 @@
 import CompareChart, { type Series } from "@/components/CompareChart";
-import { getAllDaily, getFeed, getSalmon } from "@/lib/db";
-import { weekDate } from "@/lib/dates";
-import { COMPANIES } from "@/lib/menu";
+import { getAllDaily, getFreight } from "@/lib/db";
+import { COMPANIES, MARKET_NAME } from "@/lib/universe";
 
 export const dynamic = "force-dynamic";
 
-const COLORS: Record<string, string> = { "MOWI.OL": "#FF8A5B", "SALM.OL": "#5BA8FF", "BAKKA.OL": "#B98CFF", "LSG.OL": "#4FD1C5", "GSF.OL": "#F2C94C" };
+const PALETTE = ["#FF8A5B", "#5BA8FF", "#B98CFF", "#4FD1C5", "#F2C94C", "#7BE3A6", "#FF6B9A", "#9CC8FF", "#FFB08F", "#C3E88D", "#89DDFF", "#F78C6C", "#D4BFFF", "#FFCB6B", "#82AAFF"];
 
 export default async function Sammenlign() {
-  const [daily, salmon, feed] = await Promise.all([getAllDaily(), getSalmon(70), getFeed()]);
+  const syms = [...COMPANIES.map((c) => c.symbol), "BWET", "BDRY", "BZ=F", "TIO=F", "OSEBX.OL"];
+  const [daily, fr] = await Promise.all([getAllDaily(syms), getFreight(["BDI", "SCFI"])]);
   const series: Series[] = [
-    ...COMPANIES.map((c) => ({ id: c.symbol, name: c.name, color: COLORS[c.symbol], pts: daily[c.symbol] ?? [] })),
-    { id: "laks", name: "Laksepris SSB", color: "#F4F5F7", dash: "6 4", pts: salmon.filter((s) => s.fresh_price).map((s) => ({ t: weekDate(s.year, s.week), v: s.fresh_price as number })) },
-    { id: "for", name: "Fôrråvareindeks", color: "#A0A7B2", dash: "2 3", pts: feed.index.map((f) => ({ t: `${f.month}T00:00:00Z`, v: f.nok ?? f.usd })) },
-    { id: "EURNOK=X", name: "EUR/NOK", color: "#7FB8FF", dash: "1 3", pts: daily["EURNOK=X"] ?? [] },
+    ...COMPANIES.map((c, i) => ({ id: c.symbol, name: c.name, color: PALETTE[i % PALETTE.length], pts: daily[c.symbol] ?? [] })),
+    { id: "BWET", name: MARKET_NAME.BWET, color: "#F4F5F7", dash: "6 4", pts: daily.BWET ?? [] },
+    { id: "BDRY", name: MARKET_NAME.BDRY, color: "#A0A7B2", dash: "6 4", pts: daily.BDRY ?? [] },
+    { id: "BDI", name: "Baltic Dry Index", color: "#7FB8FF", dash: "2 3", pts: (fr.BDI ?? []).map((x) => ({ t: `${x.day}T12:00:00Z`, v: x.value })) },
+    { id: "SCFI", name: "SCFI", color: "#FFD27F", dash: "2 3", pts: (fr.SCFI ?? []).map((x) => ({ t: `${x.day}T12:00:00Z`, v: x.value })) },
+    { id: "BZ=F", name: "Brent", color: "#FF9E7A", dash: "1 3", pts: daily["BZ=F"] ?? [] },
+    { id: "TIO=F", name: "Jernmalm", color: "#8FC1FF", dash: "1 3", pts: daily["TIO=F"] ?? [] },
+    { id: "OSEBX.OL", name: "Oslo Børs", color: "#6E7581", dash: "1 3", pts: daily["OSEBX.OL"] ?? [] },
   ];
   return (
     <section className="panel" aria-labelledby="h-sml">
       <div className="ph">
-        <h2 id="h-sml">Kurser mot laksepris, fôr og valuta</h2>
-        <span className="src">Yahoo Finance · SSB · IMF/FRED</span>
+        <h2 id="h-sml">Rederiene mot fraktrater og råvarer</h2>
+        <span className="src">Yahoo Finance · Baltic Exchange · Shanghai Shipping Exchange</span>
       </div>
-      <CompareChart series={series} initialOn={["MOWI.OL", "SALM.OL", "laks", "for"]} />
+      <CompareChart
+        series={series}
+        initialOn={["FRO.OL", "OET.OL", "BWET"]}
+        refs={[{ id: "BWET", label: "tankfrakt" }, { id: "BDRY", label: "tørrbulkfrakt" }, { id: "OSEBX.OL", label: "Oslo Børs" }]}
+        note="Ukentlige serier (SCFI) går i trapper."
+      />
     </section>
   );
 }

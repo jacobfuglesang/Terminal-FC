@@ -5,7 +5,7 @@ import { Fragment, useMemo, useState } from "react";
 import type { NewsItem } from "@/lib/db";
 import { COMPANIES } from "@/lib/menu";
 
-const CATS = ["Alle", "Børsmelding", "Politikk", "Toll og handel", "Marked", "Selskap", "Biologi"];
+const CATS = ["Alle", "Børsmelding", "Geopolitikk", "Tank", "Tørrbulk", "Container", "Gass og bil", "Selskap", "Regulering og miljø", "Marked og frakt"];
 const NAME: Record<string, string> = Object.fromEntries(COMPANIES.map((c) => [c.symbol, c.name]));
 
 const osloDay = (iso: string) => new Date(iso).toLocaleDateString("en-CA", { timeZone: "Europe/Oslo" });

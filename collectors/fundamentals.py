@@ -8,7 +8,9 @@ from datetime import datetime, timezone
 
 import yfinance as yf
 
-SYMBOLS = ["MOWI.OL", "SALM.OL", "BAKKA.OL", "LSG.OL", "GSF.OL"]
+from universe import COMPANIES
+
+SYMBOLS = [c["symbol"] for c in COMPANIES]
 
 
 def _clean(v):
@@ -88,6 +90,17 @@ def run(conn) -> int:
         except Exception:  # noqa: BLE001
             data["eps_trend"] = {}
         data["quarters"] = _quarters(t)
+        try:
+            dv = t.dividends
+            data["dividends"] = [{"date": str(k)[:10], "value": _clean(v)} for k, v in dv.tail(12).items()]
+        except Exception:  # noqa: BLE001
+            data["dividends"] = []
+        try:
+            cal = t.calendar or {}
+            exd = cal.get("Ex-Dividend Date")
+            data["ex_dividend"] = str(exd)[:10] if exd else None
+        except Exception:  # noqa: BLE001
+            data["ex_dividend"] = None
         data["next_report"] = _next_report(t)
         with conn.cursor() as cur:
             cur.execute(

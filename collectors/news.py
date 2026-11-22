@@ -1,10 +1,8 @@
-"""Nyheter for laksesektoren: RSS → filter → kategori og selskap → (valgfritt) KI-sammendrag.
+"""Nyheter for shipping: RSS → filter → kategori og rederi → hel artikkel → KI-sammendrag.
 
-Kilder som er testet fra GitHub: iLaks, regjeringen.no og Google Nyheter-søk
-(som også fanger DN, E24, Salmon Business, Fish Farming Expert m.fl.).
+Kilder testet fra GitHub: Splash247, Hellenic Shipping News, gCaptain, The Maritime Executive,
+FreightWaves (maritim), Offshore Energy og Google Nyheter (TradeWinds, Lloyd's List, DN, E24 m.fl.).
 Analytikeranbefalinger og kursmål stoppes alltid.
-
-KI-sammendrag lages bare hvis hemmeligheten GROQ_API_KEY finnes. Ellers brukes utdraget fra kilden.
 """
 import hashlib
 import html
@@ -23,23 +21,27 @@ G_NO = "https://news.google.com/rss/search?hl=no&gl=NO&ceid=NO:no&q="
 G_EN = "https://news.google.com/rss/search?hl=en-US&gl=US&ceid=US:en&q="
 
 # (navn, url, krever-relevans-filter)
+HSN = "https://www.hellenicshippingnews.com"
 FEEDS = [
-    ("iLaks", "https://ilaks.no/feed/", False),
-    ("Regjeringen", "https://www.regjeringen.no/no/rss/Rss/2581966/", True),
-    ("Google Nyheter", G_NO + "lakseoppdrett+OR+havbruk+OR+lakseaksjer+OR+laksepris+when:3d", False),
-    ("Google Nyheter", G_NO + "Mowi+OR+SalMar+OR+Bakkafrost+OR+Ler%C3%B8y+OR+%22Grieg+Seafood%22+when:3d", False),
-    ("Google Nyheter", G_NO + "site:dn.no+laks+OR+oppdrett+OR+havbruk+when:7d", False),
-    ("Google Nyheter", G_NO + "site:e24.no+laks+OR+oppdrett+OR+havbruk+when:7d", False),
-    ("Google News", G_EN + "%22salmon+farming%22+OR+%22salmon+prices%22+OR+Mowi+OR+Bakkafrost+when:3d", False),
+    ("Splash247", "https://splash247.com/feed/", True),
+    ("Hellenic Shipping News", HSN + "/feed/", True),
+    ("Hellenic Shipping News", HSN + "/category/shipping-news/dry-bulk-market/feed/", False),
+    ("Hellenic Shipping News", HSN + "/?s=tanker+report&feed=rss2", False),
+    ("Hellenic Shipping News", HSN + "/?s=container+market&feed=rss2", True),
+    ("gCaptain", "https://gcaptain.com/feed/", True),
+    ("The Maritime Executive", "https://maritime-executive.com/articles.rss", True),
+    ("FreightWaves", "https://www.freightwaves.com/news/category/news/maritime/feed", True),
+    ("Google News", G_EN + "site:tradewindsnews.com+when:2d", True),
+    ("Google News", G_EN + "site:lloydslist.com+when:2d", True),
+    ("Google News", G_EN + "Frontline+OR+Hafnia+OR+%22Okeanis%22+OR+%22Wallenius+Wilhelmsen%22+OR+%22Hoegh+Autoliners%22+OR+%22BW+LPG%22+OR+%22CMB.TECH%22+when:3d", False),
+    ("Google Nyheter", G_NO + "shipping+OR+rederi+OR+tankskip+OR+t%C3%B8rrbulk+OR+fraktrater+when:3d", True),
+    ("Google Nyheter", G_NO + "site:dn.no+shipping+OR+rederi+when:7d", False),
+    ("Google Nyheter", G_NO + "site:e24.no+shipping+OR+rederi+OR+tankskip+when:7d", False),
 ]
 
-COMPANIES = {
-    "MOWI.OL": [r"\bmowi\b", r"\bmarine harvest\b"],
-    "SALM.OL": [r"\bsalmar\b"],
-    "BAKKA.OL": [r"\bbakkafrost\b"],
-    "LSG.OL": [r"\bler[øo]y\b"],
-    "GSF.OL": [r"\bgrieg seafood\b", r"\bgrieg\b"],
-}
+from universe import COMPANIES as _UNI  # noqa: E402
+
+COMPANIES = {c["symbol"]: [c["news"]] for c in _UNI}
 
 # Stoppes alltid: anbefalinger og kursmål
 BLOCK = re.compile(
@@ -49,22 +51,26 @@ BLOCK = re.compile(
     re.I,
 )
 
-# Relevans (brukes for brede strømmer som regjeringen.no)
+# Relevans: brede maritime strømmer har mye om offshore, marine og havner som ikke påvirker rederiene
 RELEVANT = re.compile(
-    r"laks|havbruk|oppdrett|akvakultur|sj[øo]mat|fiskeri|fiskeoppdrett|lakselus|grunnrente|trafikklys|"
-    r"fiskehelse|mattilsynet|fiskeridirektorat|salmon|aquaculture|seafood",
+    r"tanker|vlcc|suezmax|aframax|\blr[12]\b|\bmr\b|bulk|capesize|panamax|supramax|newcastlemax|container|teu|feu|"
+    r"freight|charter|\brates?\b|lng carrier|\blpg\b|vlgc|car carrier|pctc|ro-?ro|shipping|shipowner|owner|fleet|newbuild|orderbook|"
+    r"scrap|demolition|hormuz|suez|red sea|houthi|bab el|panama canal|cape of good hope|sanction|shadow fleet|dark fleet|"
+    r"imo\b|eu ets|baltic dry|bdi|scfi|drewry|iron ore|coal|grain|crude|opec|"
+    r"rederi|skip|frakt|tankskip|bulkskip|containerskip|bilskip|verft|sanksjon|skyggeflåte",
     re.I,
 )
 
 CATEGORIES = [
-    ("Politikk", r"regjering|departement|storting|minister|statsr[åa]d|h[øo]ring|melding|regulering|grunnrente|skatt|"
-                 r"trafikklys|auksjon|lov\b|forskrift|politikk|parti|budsjett|government|parliament|tax"),
-    ("Toll og handel", r"\btoll\b|tariff|sanksjon|handelsavtale|markedsadgang|\beksport\w*|import\w*|\bkina\b|\busa\b|\beu\b|trump|trade|export"),
-    ("Biologi", r"\blus|lakselus|sykdom|\bila\b|\bpd\b|d[øo]delighet|r[øo]mming|alge|maneter|vaksine|smitte|fiskehelse|villaks|"
-                r"lice|disease|mortality|escape"),
-    ("Selskap", r"kvartal|resultat|rapport|b[øo]rsmelding|utbytte|oppkj[øo]p|kj[øo]per|fusjon|emisjon|konkurs|toppsjef|konsernsjef|"
-                r"ansetter|quarter|earnings|acquisition|ceo"),
-    ("Marked", r"pris|spotpris|ettersp[øo]rsel|tilbud|volum|slakt|marked|price|demand|supply"),
+    ("Geopolitikk", r"hormuz|red sea|houthi|bab el|iran|israel|russia|ukrain|sanction|shadow fleet|dark fleet|war\b|attack|strike on|"
+                    r"navy|missile|drone|mine\b|tariff|trump|china.*(?:port|fee)|ustr|sanksjon|krig|angrep|skyggeflåte|toll"),
+    ("Tank", r"tanker|vlcc|suezmax|aframax|\blr[12]\b|\bmr\b|crude|product tanker|chemical tanker|tankskip|td3c|opec"),
+    ("Tørrbulk", r"bulk|capesize|panamax|supramax|ultramax|kamsarmax|newcastlemax|baltic dry|\bbdi\b|iron ore|coal|grain|soybean|bulkskip"),
+    ("Container", r"container|\bteu\b|\bfeu\b|liner|scfi|drewry|maersk|cma cgm|hapag|\bmsc\b|\bzim\b|blank sailing|containerskip"),
+    ("Gass og bil", r"\blng\b|\blpg\b|vlgc|gas carrier|car carrier|pctc|ro-?ro|vehicle|bilskip"),
+    ("Regulering og miljø", r"\bimo\b|eu ets|emission|decarbon|ammonia|methanol|fueleu|carbon|cii\b|green|utslipp|klima"),
+    ("Selskap", r"quarter|results|earnings|dividend|buyback|acquisition|merger|ceo|kvartal|resultat|utbytte|oppkjøp|fusjon|toppsjef|"
+                r"fleet|newbuild|sells|sale of|delivery|order"),
 ]
 
 
@@ -107,7 +113,7 @@ def categorize(text: str) -> str:
     for name, pat in CATEGORIES:
         if re.search(pat, text, re.I):
             return name
-    return "Marked"
+    return "Marked og frakt"
 
 
 def companies(text: str) -> list[str]:
@@ -285,7 +291,7 @@ def ai_summary(item: dict) -> str | None:
     return None
 
 
-def enrich(conn, max_fetch: int = 20, max_ai: int = 30) -> tuple[int, int, int]:
+def enrich(conn, max_fetch: int = 15, max_ai: int = 12) -> tuple[int, int, int]:
     """Henter hele artikkelen og lager sammendrag for saker som mangler det."""
     import time
 
@@ -338,7 +344,7 @@ def enrich(conn, max_fetch: int = 20, max_ai: int = 30) -> tuple[int, int, int]:
                 summarized += 1
                 if summarized <= 3:
                     print(f"  Eksempel på sammendrag: «{title[:70]}» → {s}")
-            time.sleep(8)  # holder oss innenfor Groqs gratisgrense per minutt
+            time.sleep(6)  # holder oss innenfor Groqs gratisgrense per minutt
     return fetched, blocked, summarized
 
 

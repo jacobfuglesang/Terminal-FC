@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { COMPANIES, COMPANY_ICON, MARKET, TOOLS } from "@/lib/menu";
+import { SEGMENTS } from "@/lib/universe";
 
 type Change = Record<string, number | null>;
 
@@ -26,7 +27,7 @@ export default function Sidebar({ changes }: { changes: Change }) {
     <aside className="side">
       <div className="brand">
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FF8A5B" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <path d="M3 12c3-5 9-6 13-3l4-3v12l-4-3c-4 3-10 2-13-3z" />
+          <path d="M3 17h18l-2 4H5zM6 17V9h12v8M9 9V5h6v4M12 2v3" />
         </svg>
         FUGLESANG
       </div>
@@ -42,18 +43,27 @@ export default function Sidebar({ changes }: { changes: Change }) {
           ))}
         </div>
         <div className="navgroup">
-          <div className="navtitle">Selskaper</div>
-          {COMPANIES.map((c) => {
-            const href = `/selskap/${c.id}`;
-            const ch = changes[c.symbol];
+          <div className="navtitle">Rederier</div>
+          {SEGMENTS.map((seg) => {
+            const list = COMPANIES.filter((c) => c.segment === seg);
+            if (!list.length) return null;
             return (
-              <Link key={c.id} href={href} className={`navlink${path === href ? " on" : ""}`} aria-current={path === href ? "page" : undefined}>
-                <Icon d={COMPANY_ICON} />
-                {c.name}
-                <span className={`badge m ${ch === null || ch === undefined ? "" : ch >= 0 ? "upc" : "downc"}`}>
-                  {ch === null || ch === undefined ? "" : `${ch >= 0 ? "+" : "−"}${Math.abs(ch).toFixed(1).replace(".", ",")}`}
-                </span>
-              </Link>
+              <div key={seg}>
+                <div style={{ fontSize: 10, color: "#6E7581", padding: "6px 10px 2px", letterSpacing: ".04em" }}>{seg}</div>
+                {list.map((c) => {
+                  const href = `/selskap/${c.id}`;
+                  const ch = changes[c.symbol];
+                  return (
+                    <Link key={c.id} href={href} className={`navlink${path === href ? " on" : ""}`} aria-current={path === href ? "page" : undefined} style={{ minHeight: 32, paddingTop: 4, paddingBottom: 4 }}>
+                      <Icon d={COMPANY_ICON} />
+                      <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{c.name}</span>
+                      <span className={`badge m ${ch === null || ch === undefined ? "" : ch >= 0 ? "upc" : "downc"}`}>
+                        {ch === null || ch === undefined ? "" : `${ch >= 0 ? "+" : "−"}${Math.abs(ch).toFixed(1).replace(".", ",")}`}
+                      </span>
+                    </Link>
+                  );
+                })}
+              </div>
             );
           })}
         </div>
