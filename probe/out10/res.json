@@ -1,0 +1,412 @@
+{
+ "list_FRO": [
+  {
+   "id": 687093,
+   "t": "FRO - Q3 2026 Presentation",
+   "att": 1,
+   "cat": [
+    "ADDITIONAL REGULATED INFORMATION REQUIRED TO BE DISCLOSED UNDER THE LAWS OF A MEMBER STATE"
+   ]
+  },
+  {
+   "id": 687050,
+   "t": "Key information relating to the dividend to be paid by Frontline plc for the third quarter, 2026",
+   "att": 0,
+   "cat": [
+    "ADDITIONAL REGULATED INFORMATION REQUIRED TO BE DISCLOSED UNDER THE LAWS OF A MEMBER STATE"
+   ]
+  },
+  {
+   "id": 687036,
+   "t": "FRO - Third Quarter and Nine Months 2026 Results",
+   "att": 1,
+   "cat": [
+    "ADDITIONAL REGULATED INFORMATION REQUIRED TO BE DISCLOSED UNDER THE LAWS OF A MEMBER STATE"
+   ]
+  },
+  {
+   "id": 686471,
+   "t": "FRO - Invitation to Q3 2026 Results Conference Call and Webcast",
+   "att": 0,
+   "cat": [
+    "ADDITIONAL REGULATED INFORMATION REQUIRED TO BE DISCLOSED UNDER THE LAWS OF A MEMBER STATE"
+   ]
+  }
+ ],
+ "list_keys": [
+  "id",
+  "messageId",
+  "newsId",
+  "title",
+  "category",
+  "markets",
+  "issuerId",
+  "correctionForMessageId",
+  "correctedByMessageId",
+  "issuerSign",
+  "issuerName",
+  "instrId",
+  "instrumentName",
+  "instrumentFullName",
+  "publishedTime",
+  "test",
+  "numbAttachments",
+  "clientAnnouncementId",
+  "infoRequired",
+  "oamMandatory"
+ ],
+ "list_OET": [
+  {
+   "id": 686253,
+   "t": "Okeanis Eco Tankers Corp. - Key Information relating to Q3 2026 dividend",
+   "att": 0,
+   "cat": [
+    "ADDITIONAL REGULATED INFORMATION REQUIRED TO BE DISCLOSED UNDER THE LAWS OF A MEMBER STATE"
+   ]
+  },
+  {
+   "id": 686252,
+   "t": "Okeanis Eco Tankers Corp. - Unaudited Condensed Financial Results for the Third Quarter and Nine-Month Period of 2026",
+   "att": 1,
+   "cat": [
+    "HALF YEAR FINANCIAL REPORT"
+   ]
+  },
+  {
+   "id": 685833,
+   "t": "Okeanis Eco Tankers Corp. - Invitation to Q3 2026 Results Webcast",
+   "att": 0,
+   "cat": [
+    "NON-REGULATORY PRESS RELEASES"
+   ]
+  },
+  {
+   "id": 679050,
+   "t": "Okeanis Eco Tankers Corp. – Unaudited Condensed Financial Statements for the Second Quarter and Six-Month Period of 2026",
+   "att": 1,
+   "cat": [
+    "HALF YEAR FINANCIAL REPORT"
+   ]
+  }
+ ],
+ "list_HAFNI": [
+  {
+   "id": 686775,
+   "t": "HAFNIA LIMITED: Key information relating to dividend for the third quarter 2026",
+   "att": 1,
+   "cat": [
+    "ADDITIONAL REGULATED INFORMATION REQUIRED TO BE DISCLOSED UNDER THE LAWS OF A MEMBER STATE"
+   ]
+  },
+  {
+   "id": 686774,
+   "t": "HAFNIA FINANCIAL INFORMATION Q3 2026",
+   "att": 1,
+   "cat": [
+    "NON-REGULATORY PRESS RELEASES"
+   ]
+  },
+  {
+   "id": 686176,
+   "t": "HAFNIA'S Q3 2026 FINANCIAL RESULTS PRESENTATION TO BE HELD ON 18 NOVEMBER 2026",
+   "att": 1,
+   "cat": [
+    "NON-REGULATORY PRESS RELEASES"
+   ]
+  },
+  {
+   "id": 682882,
+   "t": "HAFNIA LIMITED: Results of Extraordinary General Meeting ",
+   "att": 0,
+   "cat": [
+    "ADDITIONAL REGULATED INFORMATION REQUIRED TO BE DISCLOSED UNDER THE LAWS OF A MEMBER STATE"
+   ]
+  }
+ ],
+ "list_WAWI": [
+  {
+   "id": 685571,
+   "t": "Wallenius Wilhelmsen Q3 2026 presentation",
+   "att": 1,
+   "cat": [
+    "NON-REGULATORY PRESS RELEASES"
+   ]
+  },
+  {
+   "id": 685534,
+   "t": "Wallenius Wilhelmsen delivers solid results in Q3",
+   "att": 1,
+   "cat": [
+    "ADDITIONAL REGULATED INFORMATION REQUIRED TO BE DISCLOSED UNDER THE LAWS OF A MEMBER STATE"
+   ]
+  },
+  {
+   "id": 684881,
+   "t": "Wallenius Wilhelmsen: Invitation to Q3 2026 results presentation",
+   "att": 0,
+   "cat": [
+    "NON-REGULATORY PRESS RELEASES"
+   ]
+  },
+  {
+   "id": 678972,
+   "t": "Wallenius Wilhelmsen: Invitation to Q2 2026 results presentation",
+   "att": 0,
+   "cat": [
+    "NON-REGULATORY PRESS RELEASES"
+   ]
+  }
+ ],
+ "list_MPCC": [
+  {
+   "id": 686762,
+   "t": "MPC Container Ships ASA: Invitation to Q3 2026 Earnings Call",
+   "att": 0,
+   "cat": [
+    "NON-REGULATORY PRESS RELEASES"
+   ]
+  },
+  {
+   "id": 681739,
+   "t": "Correction: MPC Container Ships Reports Q2 2026 Results",
+   "att": 2,
+   "cat": [
+    "HALF YEAR FINANCIAL REPORT"
+   ]
+  },
+  {
+   "id": 680778,
+   "t": "MPC Container Ships Reports Q2 2026 Results",
+   "att": 2,
+   "cat": [
+    "HALF YEAR FINANCIAL REPORT"
+   ]
+  }
+ ],
+ "list_BWLPG": [
+  {
+   "id": 686064,
+   "t": "BW LPG Limited   Q3 2026 Financial Report Release and Earnings Presentation on 24 November 2026",
+   "att": 1,
+   "cat": [
+    "NON-REGULATORY PRESS RELEASES"
+   ]
+  },
+  {
+   "id": 684258,
+   "t": "BW LPG Limited   Update on BW LPG s Product Services Q3 2026 Segment Performance",
+   "att": 1,
+   "cat": [
+    "NON-REGULATORY PRESS RELEASES"
+   ]
+  },
+  {
+   "id": 681096,
+   "t": "BW LPG Limited   Financial Results for Q2 2026",
+   "att": 2,
+   "cat": [
+    "HALF YEAR FINANCIAL REPORT"
+   ]
+  }
+ ],
+ "msg_FRO_keys": [
+  "id",
+  "messageId",
+  "newsId",
+  "title",
+  "body",
+  "category",
+  "markets",
+  "issuerId",
+  "correctionForMessageId",
+  "correctedByMessageId",
+  "issuerSign",
+  "issuerName",
+  "instrId",
+  "instrumentName",
+  "instrumentFullName",
+  "publishedTime",
+  "test",
+  "numbAttachments",
+  "attachments",
+  "clientAnnouncementId",
+  "infoRequired",
+  "oamMandatory"
+ ],
+ "msg_FRO_atts": [
+  {
+   "id": 336956,
+   "name": "Presentation Q3 2026.pdf"
+  }
+ ],
+ "msg_FRO_bodylen": 289,
+ "att_FRO_336956_/v1/newsreader/attachment": {
+  "status": 200,
+  "ct": "application/octet-stream",
+  "len": 4832857,
+  "name": "Presentation Q3 2026.pdf"
+ },
+ "pdf_FRO_336956": {
+  "pages": 17,
+  "chars": 20793,
+  "p1": "Third Quarter Presentation Nov 2026",
+  "has_booked": [],
+  "has_breakeven": [
+   1,
+   6
+  ]
+ },
+ "msg_OET_keys": [
+  "id",
+  "messageId",
+  "newsId",
+  "title",
+  "body",
+  "category",
+  "markets",
+  "issuerId",
+  "correctionForMessageId",
+  "correctedByMessageId",
+  "issuerSign",
+  "issuerName",
+  "instrId",
+  "instrumentName",
+  "instrumentFullName",
+  "publishedTime",
+  "test",
+  "numbAttachments",
+  "attachments",
+  "clientAnnouncementId",
+  "infoRequired",
+  "oamMandatory"
+ ],
+ "msg_OET_atts": [],
+ "msg_OET_bodylen": 6043,
+ "msg_HAFNI_keys": [
+  "id",
+  "messageId",
+  "newsId",
+  "title",
+  "body",
+  "category",
+  "markets",
+  "issuerId",
+  "correctionForMessageId",
+  "correctedByMessageId",
+  "issuerSign",
+  "issuerName",
+  "instrId",
+  "instrumentName",
+  "instrumentFullName",
+  "publishedTime",
+  "test",
+  "numbAttachments",
+  "attachments",
+  "clientAnnouncementId",
+  "infoRequired",
+  "oamMandatory"
+ ],
+ "msg_HAFNI_atts": [
+  {
+   "id": 336705,
+   "name": "Hafnia - Announcement - Key information relating to dividend for the third quarter 2026 - vF.pdf"
+  }
+ ],
+ "msg_HAFNI_bodylen": 5589,
+ "att_HAFNI_336705_/v1/newsreader/attachment": {
+  "status": 200,
+  "ct": "application/octet-stream",
+  "len": 72530,
+  "name": "Hafnia - Announcement - Key information relating to dividend for the third quarter 2026 - vF.pdf"
+ },
+ "pdf_HAFNI_336705": {
+  "pages": 2,
+  "chars": 5751,
+  "p1": " \n   \n \nHAFNIA LIMITED: Key information relating to dividend for the third quarter 2026 \nTICKER: \nNYSE: “HAFN” \nOSLO: “HAFNI” \n \nSingapore, 18 November 2026 \nReference is made to the announcement made by Hafnia Limited (“Hafnia” or the “Company”, OSE ticker code: \n“HAFNI”, NYSE ticker code: “HAFN”) on 18 November 2026 announcing the Company’s third quarter 2026 results \nand intention to pay a special interim dividend (the “Special Dividend”). Our preference is to pay the Special \nDividend by distributing all 20,356,061 Class A shares of TORM plc (“TORM” and those shares, the “TORM Shares”) \nhe",
+  "has_booked": [],
+  "has_breakeven": []
+ },
+ "msg_WAWI_keys": [
+  "id",
+  "messageId",
+  "newsId",
+  "title",
+  "body",
+  "category",
+  "markets",
+  "issuerId",
+  "correctionForMessageId",
+  "correctedByMessageId",
+  "issuerSign",
+  "issuerName",
+  "instrId",
+  "instrumentName",
+  "instrumentFullName",
+  "publishedTime",
+  "test",
+  "numbAttachments",
+  "attachments",
+  "clientAnnouncementId",
+  "infoRequired",
+  "oamMandatory"
+ ],
+ "msg_WAWI_atts": [
+  {
+   "id": 335693,
+   "name": "WAWI Q3 26 Presentation Final.pdf"
+  }
+ ],
+ "msg_WAWI_bodylen": 232,
+ "att_WAWI_335693_/v1/newsreader/attachment": {
+  "status": 200,
+  "ct": "application/octet-stream",
+  "len": 3146847,
+  "name": "WAWI Q3 26 Presentation Final.pdf"
+ },
+ "pdf_WAWI_335693": {
+  "pages": 44,
+  "chars": 24416,
+  "p1": "Wallenius Wilhelmsen ASA\nQ3 2026\n",
+  "has_booked": [],
+  "has_breakeven": []
+ },
+ "groq_models": [
+  "meta-llama/llama-prompt-guard-2-22m",
+  "whisper-large-v3-turbo",
+  "openai/gpt-oss-120b",
+  "allam-2-7b",
+  "openai/gpt-oss-20b",
+  "canopylabs/orpheus-v1-english",
+  "whisper-large-v3",
+  "openai/gpt-oss-safeguard-20b",
+  "meta-llama/llama-prompt-guard-2-86m",
+  "canopylabs/orpheus-arabic-saudi",
+  "qwen/qwen3.8-27b"
+ ],
+ "groq_openai/gpt-oss-120b": {
+  "status": 200,
+  "x-ratelimit-limit-requests": "1000",
+  "x-ratelimit-limit-tokens": "8000",
+  "x-ratelimit-remaining-requests": "999",
+  "x-ratelimit-remaining-tokens": "7907",
+  "x-ratelimit-reset-requests": "1m26.4s",
+  "x-ratelimit-reset-tokens": "697ms"
+ },
+ "groq_openai/gpt-oss-20b": {
+  "status": 200,
+  "x-ratelimit-limit-requests": "1000",
+  "x-ratelimit-limit-tokens": "8000",
+  "x-ratelimit-remaining-requests": "999",
+  "x-ratelimit-remaining-tokens": "7907",
+  "x-ratelimit-reset-requests": "1m26.4s",
+  "x-ratelimit-reset-tokens": "697ms"
+ },
+ "groq_big120": {
+  "status": 413,
+  "body": "{\"error\":{\"message\":\"Request too large for model `openai/gpt-oss-120b` in organization `org_01kttjv07zf2yr8wa8vvdnwgsd` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Requested 10379, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at http"
+ },
+ "groq_big20": {
+  "status": 413,
+  "body": "{\"error\":{\"message\":\"Request too large for model `openai/gpt-oss-20b` in organization `org_01kttjv07zf2yr8wa8vvdnwgsd` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Requested 10379, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https"
+ }
+}

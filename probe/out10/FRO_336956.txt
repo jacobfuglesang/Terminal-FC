@@ -1,0 +1,692 @@
+Third Quarter Presentation Nov 2026
+MATTERS DISCUSSED IN THIS DOCUMENT MAY CONSTITUTE FORWARD-LOOKING STATEMENTS. THE PRIVATE SECURITIES LITIGATION REFORM ACT OF 1995 PROVIDES SAFE HARBOR 
+PROTECTIONS FOR FORWARD-LOOKING STATEMENTS IN ORDER TO ENCOURAGE COMPANIES TO PROVIDE PROSPECTIVE INFORMATION ABOUT THEIR BUSINESS. FORWARD-LOOKING 
+STATEMENTS INCLUDE STATEMENTS CONCERNING PLANS, OBJECTIVES, GOALS, STRATEGIES, FUTURE EVENTS OR PERFORMANCE, AND UNDERLYING ASSUMPTIONS AND OTHER 
+STATEMENTS, WHICH ARE OTHER THAN STATEMENTS OF HISTORICAL FACTS.
+FRONTLINE DESIRES TO TAKE ADVANTAGE OF THE SAFE HARBOR PROVISIONS OF THE PRIVATE SECURITIES LITIGATION REFORM ACT OF 1995 AND IS INCLUDING THIS CAUTIONARY 
+STATEMENT IN CONNECTION WITH THIS SAFE HARBOR LEGISLATION. THE WORDS “BELIEVE,” “ANTICIPATE,” “INTENDS,” “ESTIMATE,” “FORECAST,” “PROJECT,” “PLAN,” “POTENTIAL,”  “MAY,”  
+“SHOULD,” “EXPECT” “PENDING” AND SIMILAR EXPRESSIONS IDENTIFY FORWARD-LOOKING STATEMENTS.
+THE FORWARD-LOOKING STATEMENTS IN THIS DOCUMENT ARE BASED UPON VARIOUS ASSUMPTIONS, MANY OF WHICH ARE BASED, IN TURN, UPON FURTHER ASSUMPTIONS, INCLUDING 
+WITHOUT LIMITATION, MANAGEMENT'S EXAMINATION OF HISTORICAL OPERATING TRENDS, DATA CONTAINED IN FRONTLINE’S RECORDS AND OTHER DATA AVAILABLE FROM THIRD PARTIES. 
+ALTHOUGH FRONTLINE BELIEVES THAT THESE ASSUMPTIONS WERE REASONABLE WHEN MADE, BECAUSE THESE ASSUMPTIONS ARE INHERENTLY SUBJECT TO SIGNIFICANT UNCERTAINTIES 
+AND CONTINGENCIES WHICH ARE DIFFICULT OR IMPOSSIBLE TO PREDICT AND ARE BEYOND FRONTLINE’S CONTROL, YOU CANNOT BE ASSURED THAT FRONTLINE WILL ACHIEVE OR 
+ACCOMPLISH THESE EXPECTATIONS, BELIEFS OR PROJECTIONS. THE INFORMATION SET FORTH HEREIN SPEAKS ONLY AS OF THE DATES SPECIFIED AND FRONTLINE UNDERTAKES NO DUTY 
+TO UPDATE ANY FORWARD-LOOKING STATEMENT TO CONFORM THE STATEMENT TO ACTUAL RESULTS OR CHANGES IN EXPECTATIONS OR CIRCUMSTANCES.
+IMPORTANT FACTORS THAT, IN FRONTLINE’S VIEW, COULD CAUSE ACTUAL RESULTS TO DIFFER MATERIALLY FROM THOSE DISCUSSED IN THE FORWARD-LOOKING STATEMENTS INCLUDE, 
+WITHOUT LIMITATION: THE STRENGTH OF WORLD ECONOMIES AND CURRENCIES, GENERAL MARKET CONDITIONS, INCLUDING FLUCTUATIONS IN CHARTERHIRE RATES AND VESSEL VALUES, 
+CHANGES IN DEMAND IN THE TANKER MARKET, INCLUDING BUT NOT LIMITED TO CHANGES IN OPEC'S PETROLEUM PRODUCTION LEVELS AND WORLD WIDE OIL CONSUMPTION AND STORAGE, 
+CHANGES IN FRONTLINE’S OPERATING EXPENSES, INCLUDING BUNKER PRICES, DRYDOCKING AND INSURANCE COSTS, THE MARKET FOR FRONTLINE’S VESSELS, AVAILABILITY OF FINANCING 
+AND REFINANCING, ABILITY TO COMPLY WITH COVENANTS IN SUCH FINANCING ARRANGEMENTS, FAILURE OF COUNTERPARTIES TO FULLY PERFORM THEIR CONTRACTS WITH US, CHANGES IN 
+GOVERNMENTAL RULES AND REGULATIONS OR ACTIONS TAKEN BY REGULATORY AUTHORITIES, POTENTIAL LIABILITY FROM PENDING OR FUTURE LITIGATION, GENERAL DOMESTIC AND 
+INTERNATIONAL POLITICAL CONDITIONS, POTENTIAL DISRUPTION OF SHIPPING ROUTES DUE TO ACCIDENTS OR POLITICAL EVENTS, VESSEL BREAKDOWNS, INSTANCES OF OFF-HIRE AND 
+OTHER IMPORTANT FACTORS.  FOR  A MORE COMPLETE DISCUSSION OF THESE AND OTHER RISKS AND UNCERTAINTIES ASSOCIATED WITH FRONTLINE’S BUSINESS, PLEASE REFER TO 
+FRONTLINE’S FILINGS WITH THE SECURITIES AND EXCHANGE COMMISSION, INCLUDING, BUT NOT LIMITED TO, ITS ANNUAL REPORT ON FORM 20-F.
+THIS PRESENTATION IS NOT AN OFFER TO PURCHASE OR SELL, OR A SOLICITATION OF AN OFFER TO PURCHASE OR SELL, ANY SECURITIES OR A SOLICITATION OF ANY VOTE OR APPROVAL. 
+Forward Looking Statements
+2
+Q3- 26 Highlights
+Q3 2026 Q4 2026
+Spot Time Charter Total TCE Spot % done Time Charter % done
+$148,500 $88,600 $125,900 $562,600 68% $90,800 100%
+$102,500 $84,600 $101,500 $324,300 69% $105,700 100%
+$67,800 $85,700 $68,300 $190,800 68% - -
+Reported earnings basis load to discharge
+VLCC
+LR2 / Aframax
+Suezmax
+3
+• Profit of $641.4 million, or $2.88 per share and adjusted profit of $530.9 million, or $2.38 per share for the 
+third quarter of 2026. 
+• Reported revenues of $921.3 million for the third quarter of 2026.
+• Declared a cash dividend of $2.38 per share for the third quarter of 2026
+• Sold two VLCCs built in 2017 for a total sales price of $270.0 million. The transactions generated net cash 
+proceeds of $179.0 million, which were returned to the shareholders through the payment of a special one-
+time dividend of $0.80 per share in September 2026.
+• Entered into a three-year time charter-out agreement for one Suezmax tanker, built in 2016, at a rate of 
+$80,000 per day, which commenced in October 2026. 
+• Entered into a senior secured revolving reducing credit facility in an amount of up to $731.8 million to 
+refinance the $1,286.0 million secured revolving reducing credit facility to reduce the margin.
+2026 2026 2025
+(in thousands of $ except per share data) Jul - Sep Apr - Jun Jan - Dec
+Total operating revenues (net of voyage expenses)* 694,864 737,404 1,211,360
+Other income           122,324            75,380 6,069
+Ship operating expenses (55,351) (57,449) (238,850)
+Administrative expenses (17,332) (12,496) (51,367)
+Depreciation (75,719) (71,338) (328,460)
+EBITDA            750,686            761,576            930,960
+EBITDA adj*            636,536            681,082            929,815
+Interest expense adj*           (32,338)           (33,311)          (216,329)
+Profit            641,365            659,172            379,081
+Profit adj*            530,929            580,210            393,629
+Basic and diluted earnings per share 2.88 2.96 1.70
+Basic and diluted earnings per share adjusted 2.38 2.61 1.77
+Dividend per share 2.38 2.61 1.76
+ Note: Diluted earnings per share is based on 222,623 and 222,623 weighted average shares (in 
+thousands) outstanding for Q3 2026 and Q2 2026, respectively
+*See Appendix 1 for reconciliation to nearest comparable GAAP figures
+Profit statement – Highlights 
+• The adjustments in the third quarter of 2026 consist of:
+• $111.2 million gain on sale of vessels
+• $5.9 million share of results of associated companies
+• $0.3 million gain on marketable securities
+• $2.1 million of deferred charter revenues
+• $1.9 million of debt extinguishment losses
+• $1.8 million unrealized loss on derivatives
+• $1.2 million synthetic option revaluation loss
+4
+Notes
+2026 2026 2025
+(in millions $) Sep 30 Jun 30 Dec 31
+Assets
+Cash 280 321 251
+Other current assets 595 591 456
+Non-current assets
+Vessels and newbuildings           4,862           4,755           4,912 
+Goodwill              112              112              112 
+Prepaid consideration                -                  -                  -   
+Other non-current assets               38               33               22 
+Total assets 5,887 5,813 5,754
+Liabilities and Equity
+Short term debt and current portion of long term debt 217 266 321
+Obligations under leases                -                  -                  -   
+Other current payables 203 222 174
+Non-current liabilities
+Long term debt 2,427 2,169 2,747
+Obligations under leases                -                  -                  -   
+Other non-current payables 2 1 1
+Non-controlling interest (0) (0) (0)
+Frontline plc stockholders' equity 3,038 3,155 2,511
+Total liabilities and equity 5,887 5,813 5,754
+Balance sheet – Highlights
+• Strong liquidity of $1,351 million in cash and cash equivalents, including 
+undrawn amounts of revolver capacity, marketable securities and minimum 
+cash requirements as per 30.09.26. 
+• No meaningful debt maturities until 2031.
+• Remaining newbuilding commitments as per 30.09.26 was $288.7 million.
+5
+86 
+270 239 221 
+749 
+103 
+267 
+-   -   
+109 115 149 
+1,167 
+332 
+267 
+139 
+2026 2027 2028 2029 2030 2031 2033 2034 2040
+Old Loan Maturties Current Loan Maturities(amounts in $m)
+Fleet-Wide financing optimizations
+1.78 %
+-0.23 %
+-0.27 %
+-0.10 %
+1.18 %
+Margin Q1-26 Amendments Refinancings NB + sales Margin 20.11.26
+2,652
+1,485
+1,195
+473
+1,071
+31.03.26 30.09.26
+Term loans drawn RCF drawn RCF undrawn
+Reduced financing costs
+• Lowered the weighted average interest rate margin by 60 bps, from 178 bps at the end of 
+Q1 2026 to 118 bps at the date of this presentation, through margin reductions on existing 
+facilities and full refinancing of selected facilities.
+• The reduction was driven by amendments (–23 bps), refinancings (–27 bps), and 
+newbuilding financing/asset sales (–10 bps).
+Increased liquidity & flexibility
+• Total RCF capacity increased from $473m at the end of Q1 2026 to $2.27bn at the end of 
+Q3 2026, of which $1.20bn was drawn and $1.07bn undrawn. This structure allows the 
+Company flexibility to manage liquidity actively without holding excess cash on the balance 
+sheet. 
+(amounts in $m)
+6
+36 / 92%
+12 / 63%
+4 / 22%
+3 / 8%
+7 / 37%
+14 / 78%
+1 
+0
+5
+10
+15
+20
+25
+30
+35
+40
+45
+VLCC Suezmax LR2
+Number of vessels
+ECO Scrubber ECO Newbuildings
+Note: Daily cash breakeven in USD based on 12-month rolling period from Q4-26
+Fleet composition and cash breakeven / Opex
+7
+Cash breakeven rates of $23.600 fleet average for the next 12 
+months, including dry dock costs for 10 VLCCs, six Suezmax tankers 
+and seven LR2s.
+Q3-26 fleet average opex excl. drydock $8.100
+$23 600
+~ 6.9 Years
+Average age
+100% 
+ECO vessels
+69%
+Scrubber fitted
+39 (+1)
+19 18
+Note: Curent fleet
+$24,100
+$25,200
+$20,600
+$8,400
+$10,600
+$13,400
+ -
+ 5,000
+ 10,000
+ 15,000
+ 20,000
+ 25,000
+ 30,000
+VLCC Suezmax LR2
+Cash breakeven Opex  Q3 2026 (incl. drydock) Avg. breakeven 12-month rolling
+* Free cash flow for next 12 months from 20.11.2026, based on fleet per 20.11.2026 and avg. spot market rates. Share price per 19.11.2026
+Cash generation
+8
+Expected 27,974 earnings days next 12 months
++30%-30%
+Free Cash Flow 
+Yield (annualized) 
+of ~ 44%*
+Note: 12m Forward from 19.11.2026
+$2.95bn
+$4.38bn
+$5.81bn
+$13.3
+$19.7
+$26.1
+ -
+ 5.00
+ 10.00
+ 15.00
+ 20.00
+ 25.00
+ 30.00
+VLCC 175.0k
+SMAX 105.0k
+Afra/LR2 90.0k
+VLCC 250.0k
+SMAX 150.0k
+Afra/LR2 128.6k
+VLCC 325.0k
+SMAX 195.0k
+Afra/LR2 167.1k
+Free Cash Flow Free Cash Flow per share
+12m Forward Q4-26 Q1-27 Q2-27 Q3-27 Q4-27
+Spot 24 712 5 397 5 459 6 310 6 780 6 808
+TC 3 262 1 540 1 383 697 304 276
+Total 27 974 6 937 6 842 7 007 7 084 7 084
+VLCC Spot 11 730 2 153 2 309 3 059 3 468 3 496
+VLCC TC 2 739 1 380 1 203 581 212 184
+Total 14 469 3 533 3 512 3 640 3 680 3 680
+• Middle East continues to be the focal point. Risk premiums increased 
+during the third quarter in the Black Sea, Red Sea and the Gulf of Oman.
+• Middle East based NOC’s taking control of logistics through Hormuz.
+• Growing shuttle traffic and ship-to-ship transfer activity in the Gulf of Oman 
+is increasing sailing inefficiencies.Yanbu pipeline disturbance adding 
+further logistical challenges.
+• Despite all, Global Crude oil exports move beyond Sep-25 highs.
+• The tanker orderbook growth slowing with 3.5 years lead time (2030).
+• Long term implications as fleet-aging, inventory refill, energy security 
+scrutiny and diversification of feedstock likely to be with us for years.
+Source: Clarksons, KPLER 
+30,000
+32,000
+34,000
+36,000
+38,000
+40,000
+42,000
+44,000
+46,000
+48,000
+50,000Kbpd
+Global Crude/Co exports
+9
+0
+200,000
+400,000
+600,000
+800,000
+1,000,000
+1,200,000
+1,400,000USD/Day
+VLCC Earnings
+TD3C TCE Mideast Gulf -China
+TD15 TCE WAF-China
+0
+100,000
+200,000
+300,000
+400,000
+500,000
+600,000USD/Day
+Suezmax Earnings
+TD20 TCE WAF-Rotterdam
+0
+50,000
+100,000
+150,000
+200,000
+250,000
+300,000
+350,000USD/Day
+Afra/LR2 Earnings
+TC1 TCE Mideast Gulf-Japan Clean
+TD25 TCE USG-UKC Dirty
+Market Highlights
+Flows
+Source: KPLER, Signal Ocean
+ 10
+• Middle East Crude oil exports back to pre conflict levels as Hormuz shuttle traffic expands.
+• Despite hits on Yanbu (Red Sea) infrastructure, flows have resumed adding to the output 
+from the region.
+• Asia (ex China) imports firm, well beyond seasonal patterns; what happens if/when China 
+resumes full import volumes? – still ~2 mbd behind Q4-2025 levels.
+• Products trade has been the laggard despite record global refinery margins, is this about to 
+change?
+• EIA expects World inventory builds to the tune of ~4 mbd in 2027, on top of ~104.5 mbd 
+consumption.
+• Recent deterioration in the security situation for the Strait of Hormuz will have an impact – 
+particularly on US export trade / arbs key to freight.
+0
+5,000
+10,000
+15,000
+20,000
+25,000Kbpd
+Middle East Crude/Co Exports
+Mideast Gulf (inside strait) Other Middle East
+0
+1,000
+2,000
+3,000
+4,000
+5,000
+6,000Kbpd
+Middle East CPP Exports
+Mideast Gulf (Inside Strait) Other Middle East
+8,000
+10,000
+12,000
+14,000
+16,000
+18,000
+20,000
+Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
+Kbpd
+Asia (excl China) Crude/Co imports
+2024 2025 2026
+41.8%
+58.2%
+28%
+14%
+11%
+22%
+26%
+VLCC Market Share Composition
+VLCC Fleet Composition
+Source: Signal Ocean, Clarksons
+ 11
+Independents & Traders                           Sinokor 
+NOCs & Oil Cos                      ≥20yrs, Dark, Sanctioned                      China Inc.
+About 70 VLCCs (~10%) of  the effective VLCC fleet is actively engaged in the Hormuz shuttle trade..
+Pure Spot Players
+Contract Players
+& Handicapped
+Independents,
+Traders & Sinokor
+940
+-241
+-101
+-205
+393 
+0
+100
+200
+300
+400
+500
+600
+700
+800
+900
+1,000
+Total ≥20yrs, Dark, 
+Sanctioned 
+China Inc NOCs & Oil Cos Pure Spot Players
+VLCC Fleet Composition
+Source: Fearnleys, Tankertrackers.com 
+As of 11.11.26
+Nov 2026 Fleet +15 Yrs +20 Yrs Sanctioned Orderbook
+VLCC 917 410 44.7 % 169 18.4 % 170 18.5 % 332 36.2 %
+Suezmax 669 304 45.4 % 145 21.7 % 114 17.0 % 215 32.1 %
+LR2 565 168 29.7 % 51 9.0 % 74 13.1 % 176 31.2 %
+Aframax 677 447 66.0 % 224 33.1 % 244 36.0 % 40 5.9 %
+Total Fleet 2 828 1 329 47.0 % 589 20.8 % 602 21.3 % 763 27.0 %
+38 27 36 36 29 31 19 28 39 54 61 65 51 29 23 20 48 49 40 68 37 35 42 22 1 6 35
+6
+63
+130115
+18
+-28 -26 -34 -28 -3 -1 -3 -9 -13 -6 -16 -18 -7 -1 -2 -10 -31 -4 -2 -7 -5 -1 -2 -172-28 -38 -51 -60
+-100
+-80
+-60
+-40
+-20
+0
+20
+40
+60
+80
+100
+120
+2000
+2001
+2002
+2003
+2004
+2005
+2006
+2007
+2008
+2009
+2010
+2011
+2012
+2013
+2014
+2015
+2016
+2017
+2018
+2019
+2020
+2021
+2022
+2023
+2024
+2025
+2026
+2027
+2028
+2029
+2030
+# of vessels
+Delivered Sum on order Scrapped 20Y+
+VLCC
+18 14 24 21 25 23 25 23 14
+45 37 43 45
+17 8 9 26
+51
+31 26 18 20 33 7 7 24 42
+7
+50 66 72
+20
+-18 -24 -15 -13 -7 -4 -1 -6 -10 -8 -19 -4 -8
+0
+-1 -12 -23 -4 -1 -7 -8 -1 -1 -5 -4 -146-23 -13 -44 -37
+-60
+-40
+-20
+0
+20
+40
+60
+80
+2000
+2001
+2002
+2003
+2004
+2005
+2006
+2007
+2008
+2009
+2010
+2011
+2012
+2013
+2014
+2015
+2016
+2017
+2018
+2019
+2020
+2021
+2022
+2023
+2024
+2025
+2026
+2027
+2028
+2029
+2030
+# of vessels
+Delivered Sum on order Scrapped 20Y+
+Suezmax
+21 11 32
+76
+52 64 50 56 68
+94
+69 54 39
+16 17 29
+53 64 50 52
+19
+51 36 37 28 57 77
+15
+69 64 62
+6
+-15 -19 -13 -19 -23 -13 -10 -14 -17 -24 -24 -23 -20 -4 -5 -25 -42 -5 -4 -26 -19 -2 -3 -9 -6 -279-55 -68 -94 -67
+-100
+-80
+-60
+-40
+-20
+0
+20
+40
+60
+80
+100
+2000
+2001
+2002
+2003
+2004
+2005
+2006
+2007
+2008
+2009
+2010
+2011
+2012
+2013
+2014
+2015
+2016
+2017
+2018
+2019
+2020
+2021
+2022
+2023
+2024
+2025
+2026
+2027
+2028
+2029
+2030
+# of vessels
+Delivered Sum on order Scrapped 20Y+
+Afra/LR2
+12
+Orderbooks
+
+Fleet Development
+Source: Fearnleys 13
+-10%
+-8%
+-6%
+-4%
+-2%
+0%
+2%
+4%
+6%
+8%
+10%
+-100
+-80
+-60
+-40
+-20
+0
+20
+40
+60
+80
+Debit Fleet 2026 2027 2028 2029 2030 2031 2032
+% fleet dwt change
+m dwt
+Net Fleet Development
+VLCC +20 Yrs Suezmax +20 Yrs Afra/LR2 +20 Yrs VLCC Deliveries Suezmax Deliveries Afra/LR2 Deliveries Net Fleet Change
+14
+Summary
+• Historically high freight rates, challenging the oil trading complex
+• Global Crude oil exports beyond Sep-25 highs despite disruptions
+• Asia imports (ex China) recovering beyond historical and seasonal highs
+• Energy security and inventory situation likely to dominate the narrative for years to come
+• Long term implications as fleet aging, inefficient and expanding trade patterns cushion the impact of orderbooks 
+• Frontline centre stage with our modern VLCC heavy, efficient business model – as the long-term period market implies lasting disruptions
+Trading low in the mother of all cycles?
+Source: Clarksons
+27,563
+27,802
+16,397
+29,047
+44,860
+39,924
+36,391
+32,769
+43,115
+12,734
+15,479
+11,894
+12,558
+13,626
+17,930
+31,036
+17,917
+11,655
+11,216
+22,168
+24,249
+7,127
+40,766
+40,775
+35,441
+34,893
+0
+50,000
+100,000
+150,000
+200,000
+250,000
+300,000
+2000 2001 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020 2021 2022 2023 2024 2025 2026
+Average Weighted Earnings All Tankers
+112,570
+Questions & Answers
+www.frontlineplc.cy
+
+17
+This presentation describes: Total operating revenues net of voyage expenses and commission (“Total operating
+revenues (net of voyage expenses)”, Adjusted profit (loss) (“Profit (loss) adj”) and related per share amounts,
+Adjusted Earnings Before Interest, Tax, Depreciation & Amortisation ("Adjusted EBITDA" or “EBITDA adj”) and
+Adjusted Interest Expense (“Interest expense adj”) (3), which are not measures prepared in accordance with IFRS
+(“non-GAAP”).
+We believe the non-GAAP financial measures provide investors with a means of analyzing and understanding the
+Company's ongoing operating performance.
+The non-GAAP financial measures should not be considered in isolation from, as substitutes for, or superior to
+financial measures prepared in accordance with IFRS.
+Due to rounding, numbers presented throughout this document may not add up precisely to the totals provided.
+Appendix 1
+Non-GAAP measures reconciliation
+(in thousands of $ except per share) Q3 2026 Q2 2026 Q1 2026 FY 2025
+Total operating revenues net of voyage expenses and commission
+Revenues 921,260 943,299 714,242 1,965,104
+Voyage expenses and commission (226,396) (205,895) (180,580) (753,744)
+Total operating revenues net of voyage expenses and commission 694,864 737,404 533,662 1,211,360
+Adjusted profit
+Profit 641,365 659,172 559,120 379,081
+Add back:
+Loss on marketable securities — 30 — 1,946
+Share of losses of associated companies — — — 70
+Unrealized loss on derivatives 1,801 1,481 3,064 15,393
+Debt extinguishment losses 1,913 51 — 300
+Synthetic option revaluation loss (1) 1,173 — 5,766 9,099
+Deferred charter revenue (2) 2,098 — — —
+Less:
+Unrealized gain on derivatives — (1,787) — —
+Gain on marketable securities (265) — (733) (346)
+Share of results of associated companies (5,900) (12,389) (11,359) (1,129)
+Gain on sale of vessels (111,240) (54,717) (210,921) (5,977)
+Synthetic option revaluation gain (1) — (5,253) — (519)
+Dividends received (16) (6,378) (15) (4,289)
+Adjusted profit 530,929 580,210 344,922 393,629
+Weighted average number of ordinary shares 222,623 222,623 222,623 222,623
+Adjusted basic and diluted earnings per share $ 2.38 $ 2.61 $ 1.55 $ 1.77
+EBITDA
+Profit 641,365 659,172 559,120 379,081
+Add back:
+Depreciation 75,719 71,338 75,996 328,460
+Finance expense 36,587 35,226 40,224 233,234
+Income tax expense 511 554 570 6,021
+Less:
+Finance income (3,496) (4,714) (2,682) (15,836)
+EBITDA 750,686 761,576 673,228 930,960
+Adjusted EBITDA
+EBITDA 750,686 761,576 673,228 930,960
+Add back:
+Loss on marketable securities — 30 — 1,946
+Share of losses of associated companies — — — 70
+Unrealized loss on freight derivatives — — 1,787 —
+Synthetic option revaluation loss (1) 1,173 — 5,766 9,099
+Deferred charter revenue (2) 2,098 — — —
+Less:
+Unrealized gain on freight derivatives — (1,787) — —
+Gain on marketable securities (265) — (733) (346)
+Share of results of associated companies (5,900) (12,389) (11,359) (1,129)
+Gain on sale of vessels (111,240) (54,717) (210,921) (5,977)
+Synthetic option revaluation gain (1) — (5,253) — (519)
+Dividend received (16) (6,378) (15) (4,289)
+Adjusted EBITDA 636,536 681,082 457,753 929,815
+(1) The three-year vesting period for the synthetic options granted to employees and board members in the fourth
+quarter of 2021 ended during the fourth quarter of 2024. As there are no ongoing service requirements, adjusted
+profit for the fourth quarter of 2024 and subsequent quarters exclude the gains and losses due to the revaluation of
+the synthetic option liability in the periods. Adjusted profit will exclude any gains/losses due to the revaluation of the
+liability for the remaining exercisable options until the expiration of the options in the f
