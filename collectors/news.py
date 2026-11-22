@@ -33,7 +33,7 @@ FEEDS = [
     ("FreightWaves", "https://www.freightwaves.com/news/category/news/maritime/feed", True),
     ("Google News", G_EN + "site:tradewindsnews.com+when:2d", True),
     ("Google News", G_EN + "site:lloydslist.com+when:2d", True),
-    ("Google News", G_EN + "Frontline+OR+Hafnia+OR+%22Okeanis%22+OR+%22Wallenius+Wilhelmsen%22+OR+%22Hoegh+Autoliners%22+OR+%22BW+LPG%22+OR+%22CMB.TECH%22+when:3d", False),
+    ("Google News", G_EN + "Frontline+OR+Hafnia+OR+%22Okeanis%22+OR+%22Wallenius+Wilhelmsen%22+OR+%22Hoegh+Autoliners%22+OR+%22BW+LPG%22+OR+%22CMB.TECH%22+when:3d", "company"),
     ("Google Nyheter", G_NO + "shipping+OR+rederi+OR+tankskip+OR+t%C3%B8rrbulk+OR+fraktrater+when:3d", True),
     ("Google Nyheter", G_NO + "site:dn.no+shipping+OR+rederi+when:7d", False),
     ("Google Nyheter", G_NO + "site:e24.no+shipping+OR+rederi+OR+tankskip+when:7d", False),
@@ -42,6 +42,7 @@ FEEDS = [
 from universe import COMPANIES as _UNI  # noqa: E402
 
 COMPANIES = {c["symbol"]: [c["news"]] for c in _UNI}
+CONTEXT = {c["symbol"]: c["ctx"] for c in _UNI if c.get("ctx")}
 
 # Stoppes alltid: anbefalinger og kursmål
 BLOCK = re.compile(
@@ -53,11 +54,13 @@ BLOCK = re.compile(
 
 # Relevans: brede maritime strømmer har mye om offshore, marine og havner som ikke påvirker rederiene
 RELEVANT = re.compile(
-    r"tanker|vlcc|suezmax|aframax|\blr[12]\b|\bmr\b|bulk|capesize|panamax|supramax|newcastlemax|container|teu|feu|"
-    r"freight|charter|\brates?\b|lng carrier|\blpg\b|vlgc|car carrier|pctc|ro-?ro|shipping|shipowner|owner|fleet|newbuild|orderbook|"
-    r"scrap|demolition|hormuz|suez|red sea|houthi|bab el|panama canal|cape of good hope|sanction|shadow fleet|dark fleet|"
-    r"imo\b|eu ets|baltic dry|bdi|scfi|drewry|iron ore|coal|grain|crude|opec|"
-    r"rederi|skip|frakt|tankskip|bulkskip|containerskip|bilskip|verft|sanksjon|skyggeflåte",
+    r"\b(?:tankers?|vlccs?|suezmax\w*|aframax\w*|lr[12]s?|mr tankers?|dry bulk|bulkers?|bulk carriers?|capesize\w*|panamax\w*|"
+    r"supramax\w*|ultramax\w*|kamsarmax\w*|newcastlemax\w*|containers?|container ?ships?|teu|feu|"
+    r"freight|charter\w*|time ?charter|spot rates?|lng carriers?|lpg|vlgcs?|car carriers?|pctcs?|ro-?ro|shipping|shipowners?|"
+    r"vessels?|ships?|fleet|newbuild\w*|orderbook|scrapping|demolition|hormuz|suez|red sea|houthis?|bab el|panama canal|"
+    r"cape of good hope|shadow fleet|dark fleet|imo|eu ets|baltic dry|bdi|scfi|drewry|iron ore|seaborne|crude|opec|"
+    r"rederi\w*|skipet|skipene|skipsfart|frakt\w*|tankskip\w*|bulkskip\w*|containerskip\w*|bilskip\w*|lasteskip\w*|verft\w*|"
+    r"skyggeflåte\w*|sanksjon\w*)\b",
     re.I,
 )
 
@@ -117,7 +120,21 @@ def categorize(text: str) -> str:
 
 
 def companies(text: str) -> list[str]:
-    return [sym for sym, pats in COMPANIES.items() if any(re.search(p, text, re.I) for p in pats)]
+    out = []
+    for sym, pats in COMPANIES.items():
+        if not any(re.search(p, text, re.I) for p in pats):
+            continue
+        if sym in CONTEXT and not re.search(CONTEXT[sym], text, re.I):
+            continue
+        out.append(sym)
+    return out
+
+
+def keep(text: str, rule) -> bool:
+    """rule: True = må handle om shipping, False = kilden er ren shipping, "company" = må nevne et av rederiene."""
+    if rule == "company":
+        return bool(companies(text))
+    return not rule or bool(RELEVANT.search(text))
 
 
 def collect() -> tuple[list[dict], int]:
@@ -139,7 +156,7 @@ def collect() -> tuple[list[dict], int]:
             text = f"{title} {excerpt}"
             if not title:
                 continue
-            if needs_relevance and not RELEVANT.search(text):
+            if not keep(text, needs_relevance):
                 continue
             if BLOCK.search(text):
                 blocked += 1
@@ -348,6 +365,26 @@ def enrich(conn, max_fetch: int = 15, max_ai: int = 12) -> tuple[int, int, int]:
     return fetched, blocked, summarized
 
 
+def purge(conn) -> int:
+    """Sjekker Google-sakene på nytt med dagens filter, så feiltreff (f.eks. «frontline» om krig) forsvinner."""
+    rules = {}
+    for name, url, rule in FEEDS:
+        if name.startswith("Google"):
+            rules.setdefault(name, set()).add(rule)
+    gone = 0
+    with conn.cursor() as cur:
+        cur.execute("SELECT id, title, coalesce(excerpt,''), feed FROM news WHERE feed IN ('Google News', 'Google Nyheter')")
+        for nid, title, excerpt, feed in cur.fetchall():
+            text = f"{title} {excerpt}"
+            if not any(keep(text, r) for r in rules.get(feed, {True})):
+                cur.execute("DELETE FROM news WHERE id = %s", (nid,))
+                gone += 1
+            else:
+                cur.execute("UPDATE news SET companies = %s WHERE id = %s", (companies(text), nid))
+    conn.commit()
+    return gone
+
+
 def run(conn) -> int:
     items, blocked = collect()
     new = 0
@@ -368,6 +405,7 @@ def run(conn) -> int:
             new += 1
         cur.execute("DELETE FROM news WHERE published < now() - interval '7 days'")
     conn.commit()
+    purged = purge(conn)
     fetched, blocked2, summarized = enrich(conn)
     with conn.cursor() as cur:
         cur.execute(
@@ -377,5 +415,5 @@ def run(conn) -> int:
         )
     conn.commit()
     ki = "KI-sammendrag" if os.environ.get("GROQ_API_KEY") else "KI-sammendrag (venter på Groq-nøkkel)"
-    print(f"  Nyheter: {len(items)} relevante, {new} nye, {fetched} hele artikler hentet, {summarized} {ki}, {blocked + blocked2} anbefalinger stoppet")
+    print(f"  Nyheter: {len(items)} relevante, {new} nye, {fetched} hele artikler hentet, {summarized} {ki}, {blocked + blocked2} anbefalinger stoppet, {purged} irrelevante fjernet")
     return new
