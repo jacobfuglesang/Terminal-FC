@@ -7,13 +7,17 @@ export default function LoginPage() {
   const [msg, setMsg] = useState("");
   const [lockLeft, setLockLeft] = useState(0);
   const [busy, setBusy] = useState(false);
+  const [len, setLen] = useState(6);
   const input = useRef<HTMLInputElement>(null);
 
   // Sjekk om sperren er aktiv når siden åpnes
   useEffect(() => {
     fetch("/api/login", { cache: "no-store" })
       .then((r) => r.json())
-      .then((d) => setLockLeft(Number(d.lockedFor) || 0))
+      .then((d) => {
+        setLockLeft(Number(d.lockedFor) || 0);
+        if (Number(d.length) > 0) setLen(Number(d.length));
+      })
       .catch(() => {});
   }, []);
 
@@ -58,8 +62,10 @@ export default function LoginPage() {
     }
   }
 
-  const mm = Math.floor(lockLeft / 60);
+  const hh = Math.floor(lockLeft / 3600);
+  const mm = Math.floor((lockLeft % 3600) / 60);
   const ss = String(lockLeft % 60).padStart(2, "0");
+  const left = hh > 0 ? `${hh}:${String(mm).padStart(2, "0")}:${ss}` : `${mm}:${ss}`;
 
   return (
     <div className="login">
@@ -85,16 +91,16 @@ export default function LoginPage() {
             type="password"
             inputMode="numeric"
             autoComplete="off"
-            maxLength={4}
+            maxLength={len}
             placeholder="Kode"
             value={pin}
             disabled={lockLeft > 0 || busy}
             autoFocus
             onChange={(e) => {
-              const v = e.target.value.replace(/\D/g, "").slice(0, 4);
+              const v = e.target.value.replace(/\D/g, "").slice(0, len);
               setPin(v);
               setMsg("");
-              if (v.length === 4) submit(v);
+              if (v.length === len) submit(v);
             }}
           />
         </div>
@@ -103,7 +109,7 @@ export default function LoginPage() {
             <>
               For mange feil forsøk.
               <br />
-              Prøv igjen om <b className="m">{mm}:{ss}</b>
+              Prøv igjen om <b className="m">{left}</b>
             </>
           ) : (
             msg

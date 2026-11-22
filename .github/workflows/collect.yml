@@ -2,10 +2,11 @@ name: Hent data
 
 on:
   # Hovedtakten styres fra cron-job.org (workflow_dispatch):
-  #   market  hver time 09–17 man–fre,  morning  06:35 hver dag (norsk tid).
-  # GitHub sin egen klokke er upålitelig og brukes bare som kveldsreserve, så vi sparer Actions-minutter.
+  #   market  hvert 15. minutt 09–17:45 man–fre,  morning  06:35 hver dag (norsk tid).
+  # Repoet er offentlig, så Actions-minutter er gratis. GitHub sin egen klokke er upålitelig,
+  # men tar nyheter og varsler hver time døgnet rundt (også helg) som reserve.
   schedule:
-    - cron: "23 19 * * *"    # Kveld: kurser, børsmeldinger, nyheter og varsler (også i helgene)
+    - cron: "23 * * * *"
   push:
     branches: [main]
     paths: ["collectors/**", ".github/workflows/collect.yml"]   # Kjør alt én gang når innsamlerne endres

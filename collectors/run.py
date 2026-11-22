@@ -2,7 +2,7 @@
 
 Bruk: python run.py <jobb>[,<jobb>...] [--backfill]
 Jobber: prices, announcements, news, shorts, fundamentals, freight, portwatch, ais, alerts, brief
-Grupper: market (kurser, børsmeldinger, nyheter, varsler), daily (short, nøkkeltall, frakt, sund, AIS, varsler),
+Grupper: market (kurser, børsmeldinger, nyheter, AIS, varsler), daily (short, nøkkeltall, frakt, sund, AIS, varsler),
          morning (som daily + analytikerrapport), all (alt)
 """
 import sys
@@ -28,12 +28,12 @@ JOBS = {
     "fundamentals": ("Yahoo Finance (konsensus, utbytte og nøkkeltall)", lambda c, bf: fundamentals.run(c)),
     "freight": ("Fraktrater (Drewry, SCFI, BDI, EIA)", lambda c, bf: freight.run(c, backfill=bf)),
     "portwatch": ("IMF PortWatch (sund)", lambda c, bf: portwatch.run(c, backfill=bf)),
-    "ais": ("aisstream.io (skip i nøkkelområder)", lambda c, bf: ais.run(c)),
+    "ais": ("aisstream.io (skip i nøkkelområder)", lambda c, bf: ais.run(c, seconds=150)),
     "alerts": ("Varsler", lambda c, bf: alerts.run(c)),
     "brief": ("KI-analytiker (morgenrapport)", lambda c, bf: brief.run(c)),
 }
 GROUPS = {
-    "market": ["prices", "announcements", "news", "alerts"],
+    "market": ["prices", "announcements", "news", "ais", "alerts"],
     "daily": ["prices", "shorts", "fundamentals", "freight", "portwatch", "ais", "alerts"],
     "morning": ["prices", "announcements", "news", "shorts", "fundamentals", "freight", "portwatch", "ais", "alerts", "brief"],
     "all": ["prices", "announcements", "news", "shorts", "fundamentals", "freight", "portwatch", "ais", "alerts", "brief"],

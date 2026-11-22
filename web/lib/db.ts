@@ -238,7 +238,7 @@ export const getAis = () =>
 
 export const getAisZones = () =>
   safe(async () => {
-    const rows = await sql()`SELECT ts, zone, total, tankers, cargo FROM ais_zone WHERE ts > now() - interval '90 days' ORDER BY ts`;
+    const rows = await sql()`SELECT ts, zone, total, tankers, cargo FROM ais_zone WHERE ts = (SELECT max(ts) FROM ais_zone) ORDER BY zone`;
     return (rows as Row[]).map((r) => ({ ts: new Date(String(r.ts)).toISOString(), zone: String(r.zone), total: Number(r.total), tankers: Number(r.tankers), cargo: Number(r.cargo) }));
   }, [] as { ts: string; zone: string; total: number; tankers: number; cargo: number }[]);
 

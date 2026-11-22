@@ -1,40 +1,27 @@
 # FUGLESANG
 
-Privat terminal for de fem største lakseaksjene på Oslo Børs: Mowi, SalMar, Bakkafrost, Lerøy og Grieg Seafood.
+Privat, selvoppdaterende terminal for shippingaksjer på Oslo Børs: tank, tørrbulk, container, bilskip, gass og maritime tjenester.
 
-Analyseverktøy, ikke investeringsråd.
+Analyseverktøy, ikke investeringsråd. Koden er åpen for innsyn, men alle rettigheter er forbeholdt (ingen lisens er gitt).
 
 ## Slik henger det sammen
 
 ```
-GitHub Actions (collectors/)  →  Neon Postgres  →  Vercel (web/)  →  fuglesang.vercel.app
+cron-job.org → GitHub Actions (collectors/) → Neon Postgres → Vercel (web/, bak innlogging)
 ```
 
-- `collectors/`: Python-skript som henter data. De kjøres av `.github/workflows/collect.yml`.
-- `web/`: Next.js-nettsiden med innlogging, som Vercel publiserer.
+- `collectors/`: Python-skript som henter kurser, børsmeldinger, nyheter, short, nøkkeltall, fraktrater,
+  trafikk i sund (IMF PortWatch), skipsposisjoner (AIS), varsler og en daglig KI-rapport.
+- `web/`: Next.js-nettsiden. Alle sider krever innlogging.
 
-## Fase 1 (nå)
+## Sikkerhet
 
-- Innlogging med kode, sjekket på serveren. Tre feil forsøk gir fem minutters sperre.
-- Kurser for de fem aksjene og EUR/NOK fra Yahoo Finance, hvert 15. minutt i børstiden.
-- Laksepris og eksportmengde fra SSB (tabell 03024), hver onsdag.
-- Systemstatus som viser når hver kilde sist ble hentet.
+- Ingen nøkler, koder eller databaseadresser ligger i koden. Alt ligger i GitHub Secrets og Vercel.
+- Innlogging: tre feil forsøk gir sperre på 5 minutter, deretter 10, 20, 40 … opp til 24 timer.
+  Forsøkene telles atomisk i databasen, så samtidige forespørsler kan ikke omgå sperren.
+- `.env`-filer er utelatt fra Git.
 
-## Hemmeligheter
+## Kilder
 
-| Navn | Hvor | Innhold |
-| --- | --- | --- |
-| `DATABASE_URL` | Vercel og GitHub Secrets | Tilkoblingsadressen til Neon |
-| `LOGIN_PIN` | Vercel | Koden for å logge inn |
-| `SESSION_SECRET` | Vercel | En lang, tilfeldig tekst (minst 24 tegn) |
-
-Ingen hemmeligheter skal ligge i koden.
-
-## Kjøre hentingen manuelt
-
-GitHub → Actions → **Hent data** → **Run workflow**. Første gang: velg `all` og huk av for **backfill**.
-
-## Kilder og lisenser
-
-- SSB: CC BY 4.0, kilde: Statistisk sentralbyrå.
-- Yahoo Finance: kun personlig bruk.
+Yahoo Finance, Oslo Børs Newsweb, Finanstilsynet, Drewry WCI, Shanghai Shipping Exchange (SCFI),
+Baltic Dry Index via nyhetssaker, EIA, IMF PortWatch, aisstream.io, RSS fra shippingmedier og Groq for sammendrag.
