@@ -36,7 +36,7 @@ SKIP = re.compile(r"invitation|invitasjon|webcast|conference call|to be held|wil
 REPORTISH = re.compile(r"result|quarter|kvartal|half[- ]year|halvår|annual report|årsrapport|interim|"
                        r"presentation|\bq[1-4]\b|financial information|financial statements|nine[- ]month|six[- ]month", re.I)
 MAX_PDF_BYTES = 25_000_000
-VERSION = 4  # økes når leseren forbedres, så gamle uttrekk leses på nytt
+VERSION = 5  # økes når leseren forbedres, så gamle uttrekk leses på nytt
 
 # Groq: én forespørsel må holde seg under 8 000 tokens (inn + ut). Ca. 3,6 tegn per token i rapporttekst.
 CHUNK_CHARS = 11_000
@@ -347,11 +347,12 @@ NØKKELLINJER:
 
 def fix(name: str, period: str, data: dict, keys: str) -> dict:
     """Én ekstra runde hvis booking, dagrater eller dødpunkt ikke finnes i kilden."""
-    bad = []
+    bad, bad_fields = [], set()
     for field, num in (("bookings", "rate"), ("tce", "rate"), ("breakeven", "rate")):
         for row in data.get(field) or []:
             if row.get(f"{num}_ok") is False or row.get("share_pct_ok") is False:
                 bad.append(f"{field}: {json.dumps({k: v for k, v in row.items() if not k.endswith('_ok')}, ensure_ascii=False)}")
+                bad_fields.add(field)
     if not bad or not keys:
         return data
     time.sleep(20)
@@ -363,7 +364,7 @@ def fix(name: str, period: str, data: dict, keys: str) -> dict:
     except Exception as e:  # noqa: BLE001
         print(f"    ! Rettelsesrunden feilet: {e}")
         return data
-    for field in ("bookings", "tce", "breakeven"):
+    for field in bad_fields:  # bare listene som hadde feil byttes ut
         if isinstance(new.get(field), list) and new[field]:
             data[field] = [{k: v for k, v in r.items() if not k.endswith("_ok")} for r in new[field] if isinstance(r, dict)]
     data["fixed"] = True
@@ -527,7 +528,7 @@ def discover(conn, days: int = 200) -> int:
     return added
 
 
-def run(conn, max_reports: int = 2, budget_s: int = 420) -> int:
+def run(conn, max_reports: int = 3, budget_s: int = 480) -> int:
     _key()
     added = discover(conn)
     t0 = time.time()
