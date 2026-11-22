@@ -224,10 +224,20 @@ class TooLarge(Exception):
     pass
 
 
+_exhausted: set[str] = set()  # modeller som har brukt opp kvoten i denne kjøringen
+
+
 def groq(prompt: str, models: list[str], max_out: int, json_mode: bool = False) -> tuple[str, str]:
+    """Prøver modellene i rekkefølge. Er en modell tom for kvote (lang ventetid), går vi videre til neste.
+    RateLimited kastes først når alle er brukt opp, så jobben kan fortsette ved neste kjøring."""
     key = _key()
     have = news.groq_models(key)
-    for model in [m for m in models if m in have] or have:
+    order = [m for m in models if m in have] or have
+    limited = []
+    for model in order:
+        if model in _exhausted:
+            limited.append(model)
+            continue
         payload = {"model": model, "messages": [{"role": "user", "content": prompt}], "temperature": 0.1,
                    "max_completion_tokens": max_out}
         if model.startswith("openai/gpt-oss"):
@@ -239,7 +249,10 @@ def groq(prompt: str, models: list[str], max_out: int, json_mode: bool = False) 
             if r.status_code == 429:
                 wait = float(r.headers.get("retry-after") or 30)
                 if wait > 90:
-                    raise RateLimited(f"Groq-kvoten er brukt opp for nå ({model}, vent {wait:.0f} s)")
+                    _exhausted.add(model)
+                    limited.append(model)
+                    print(f"    · {model} er tom for kvote (vent {wait:.0f} s), prøver neste modell")
+                    break
                 time.sleep(wait + 2)
                 continue
             if r.status_code == 413:
@@ -255,6 +268,8 @@ def groq(prompt: str, models: list[str], max_out: int, json_mode: bool = False) 
             if text:
                 return text, model
             break
+    if limited and len(limited) == len(order):
+        raise RateLimited("Alle Groq-modellene er tomme for kvote for nå")
     raise RuntimeError("Groq ga ikke noe svar")
 
 

@@ -37,8 +37,9 @@ JOBS = {
 GROUPS = {
     "market": ["prices", "announcements", "news", "ais", "reports", "alerts"],
     "daily": ["prices", "shorts", "fundamentals", "freight", "portwatch", "ais", "alerts"],
-    "morning": ["prices", "announcements", "news", "shorts", "fundamentals", "freight", "portwatch", "ais", "reports", "alerts", "brief"],
-    "all": ["prices", "announcements", "news", "shorts", "fundamentals", "freight", "portwatch", "ais", "reports", "alerts", "brief"],
+    # Morgenrapporten skrives før rapportleseren, så den alltid får den beste KI-modellen
+    "morning": ["prices", "announcements", "news", "shorts", "fundamentals", "freight", "portwatch", "ais", "alerts", "brief", "reports"],
+    "all": ["prices", "announcements", "news", "shorts", "fundamentals", "freight", "portwatch", "ais", "alerts", "brief", "reports"],
 }
 SOFT = (ais.MissingKey, brief.MissingKey, reports.MissingKey)
 

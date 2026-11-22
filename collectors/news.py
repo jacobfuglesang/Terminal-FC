@@ -284,7 +284,10 @@ def ai_summary(item: dict) -> str | None:
         "Svar bare med sammendraget, uten innledning.\n\n"
         f"Tittel: {item['title']}\nKilde: {item.get('source') or ''}\nTekst: {text[:2500] or '(bare tittel)'}"
     )
-    for model in groq_models(key):
+    # Korte sammendrag klarer den lille modellen fint; da spares kvoten til den store for morgenrapporten og rapportleseren
+    have = groq_models(key)
+    order = [m for m in ("openai/gpt-oss-20b", "qwen/qwen3.8-27b") if m in have] + [m for m in have if m not in ("openai/gpt-oss-20b", "qwen/qwen3.8-27b")]
+    for model in order:
         payload = {"model": model, "messages": [{"role": "user", "content": prompt}], "temperature": 0.2, "max_completion_tokens": 900}
         if model.startswith("openai/gpt-oss"):
             payload["reasoning_effort"] = "low"
