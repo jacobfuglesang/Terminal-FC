@@ -16,7 +16,7 @@ import requests
 
 MAX_AGE_DAYS = 7  # nyheter eldre enn en uke slettes automatisk
 
-UA = {"User-Agent": "Mozilla/5.0 (FUGLESANG; privat nyhetsleser)"}
+UA = {"User-Agent": "Mozilla/5.0 (Terminal FC; privat nyhetsleser)"}
 G_NO = "https://news.google.com/rss/search?hl=no&gl=NO&ceid=NO:no&q="
 G_EN = "https://news.google.com/rss/search?hl=en-US&gl=US&ceid=US:en&q="
 

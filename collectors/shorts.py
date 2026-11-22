@@ -16,7 +16,7 @@ def match(issuer: str) -> str | None:
 
 
 def run(conn) -> int:
-    data = requests.get(URL, headers={"User-Agent": "FUGLESANG/1.0"}, timeout=60).json()
+    data = requests.get(URL, headers={"User-Agent": "TerminalFC/1.0"}, timeout=60).json()
     batch = []
     found = set()
     with conn.cursor() as cur:

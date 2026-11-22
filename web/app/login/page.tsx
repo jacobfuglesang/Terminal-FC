@@ -80,7 +80,7 @@ export default function LoginPage() {
         <div className="avatar">
           <img src="/aksjer.png" alt="Aksjekurser" />
         </div>
-        <div className="who">FUGLESANG</div>
+        <div className="who">TERMINAL FC</div>
         <div className="pinbox">
           <label htmlFor="pin" className="sr">
             Kode

@@ -5,7 +5,7 @@ Tallene bygger på AIS og publiseres med noen dagers forsinkelse.
 import requests
 
 URL = "https://services9.arcgis.com/weJ1QsnbMYJlCHdG/arcgis/rest/services/Daily_Chokepoints_Data/FeatureServer/0/query"
-H = {"User-Agent": "FUGLESANG/1.0 (privat terminal)"}
+H = {"User-Agent": "TerminalFC/1.0 (privat terminal)"}
 
 # De som betyr mest for rederiene vi følger
 KEEP = {

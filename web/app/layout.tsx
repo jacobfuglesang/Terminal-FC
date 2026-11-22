@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "FUGLESANG",
+  title: "Terminal FC",
   robots: { index: false, follow: false },
 };
 

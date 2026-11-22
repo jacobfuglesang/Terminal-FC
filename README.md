@@ -1,4 +1,4 @@
-# FUGLESANG
+# Terminal FC
 
 Privat, selvoppdaterende terminal for shippingaksjer på Oslo Børs: tank, tørrbulk, container, bilskip, gass og maritime tjenester.
 

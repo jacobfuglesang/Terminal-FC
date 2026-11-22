@@ -11,7 +11,7 @@ from datetime import date, datetime, timedelta, timezone
 import requests
 
 BASE = "https://api3.oslo.oslobors.no/v1/newsreader"
-H = {"User-Agent": "Mozilla/5.0 (FUGLESANG; privat terminal)", "Accept": "application/json"}
+H = {"User-Agent": "Mozilla/5.0 (Terminal FC; privat terminal)", "Accept": "application/json"}
 from universe import COMPANIES
 
 ISSUERS = {c["newsweb"]: c["symbol"] for c in COMPANIES}

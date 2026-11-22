@@ -81,7 +81,7 @@ jobs:
         run: |
           mkdir -p /tmp/log && cp run.log /tmp/log/run.log 2>/dev/null || echo "ingen logg" > /tmp/log/run.log
           echo "${{ github.sha }} $(date -u)" > /tmp/log/meta.txt
-          git config user.name "fuglesang-bot"
+          git config user.name "terminal-fc-bot"
           git config user.email "bot@users.noreply.github.com"
           git checkout --orphan run-log
           git rm -rq --cached . || true

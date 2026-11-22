@@ -29,7 +29,7 @@ export default function Sidebar({ changes }: { changes: Change }) {
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FF8A5B" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
           <path d="M3 17h18l-2 4H5zM6 17V9h12v8M9 9V5h6v4M12 2v3" />
         </svg>
-        FUGLESANG
+        TERMINAL FC
       </div>
       <nav aria-label="Hovedmeny" style={{ display: "flex", flexDirection: "column", gap: 14 }}>
         <div className="navgroup">

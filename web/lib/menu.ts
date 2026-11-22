@@ -32,5 +32,5 @@ export function findPage(pathname: string): { label: string; sub: string } {
   if (pathname.startsWith("/melding/")) return { label: "Børsmelding", sub: "Fra Oslo Børs Newsweb" };
   const co = COMPANIES.find((c) => pathname === `/selskap/${c.id}`);
   if (co) return { label: co.name, sub: `${co.segment} · kurs, frakt, utbytte, forventninger og nyheter` };
-  return { label: "FUGLESANG", sub: "" };
+  return { label: "TERMINAL FC", sub: "" };
 }
