@@ -28,10 +28,26 @@ export default function AisMap({ ships }: { ships: AisPos[] }) {
       const L = (await import("leaflet")).default;
       if (cancelled || !el.current || map.current) return;
       const m = L.map(el.current, { worldCopyJump: true, zoomControl: true, attributionControl: true }).setView([20, 30], 2);
-      L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
-        maxZoom: 12,
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
+      // Gratis kartfliser uten nøkkel. CARTO krever nå nøkkel, så vi bruker Esri sitt mørkegrå kart,
+      // og faller tilbake til OpenStreetMap (gjort mørkt med CSS) hvis Esri ikke svarer.
+      const ESRI = "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas";
+      const base = L.tileLayer(`${ESRI}/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}`, {
+        maxZoom: 16,
+        attribution: 'Kart &copy; <a href="https://www.esri.com/">Esri</a>, HERE, Garmin, &copy; OpenStreetMap',
       }).addTo(m);
+      const labels = L.tileLayer(`${ESRI}/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}`, { maxZoom: 16 }).addTo(m);
+      let errors = 0;
+      base.on("tileerror", () => {
+        errors += 1;
+        if (errors !== 4) return;
+        m.removeLayer(base);
+        m.removeLayer(labels);
+        L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          maxZoom: 16,
+          className: "osm-dark",
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        }).addTo(m);
+      });
       for (const s of ships) {
         L.circleMarker([s.lat, s.lon], { radius: s.kind === "tank" ? 4 : 3, color: COLOR[s.kind] ?? "#6E7581", weight: 1, fillOpacity: 0.85 })
           .bindTooltip(`${s.name || "Ukjent navn"} · ${s.kind === "tank" ? "tankskip" : s.kind === "last" ? "lasteskip" : "annet"} · ${s.sog ?? "–"} knop`)
@@ -59,11 +75,13 @@ export default function AisMap({ ships }: { ships: AisPos[] }) {
             style={{ background: z === zone ? "#2A2E36" : undefined, borderColor: z === zone ? "#4A505A" : undefined, fontSize: 12 }}>{z}</button>
         ))}
       </div>
+      <style>{`.osm-dark{filter:invert(1) hue-rotate(180deg) brightness(.85) contrast(.9)}`}</style>
       <div ref={el} style={{ height: 460, borderRadius: 8, background: "#0F1114" }} role="img" aria-label="Kart over skip i nøkkelområder" />
       <div className="src" style={{ display: "flex", gap: 14, marginTop: 8 }}>
         <span><span style={{ color: COLOR.tank }}>●</span> Tankskip</span>
         <span><span style={{ color: COLOR.last }}>●</span> Lasteskip (bulk, container, bil)</span>
         <span><span style={{ color: COLOR.annet }}>●</span> Annet eller ukjent type</span>
+        <span style={{ marginLeft: "auto" }}>{ships.length} skip sett siste 2 døgn</span>
       </div>
     </div>
   );
