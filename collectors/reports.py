@@ -36,7 +36,7 @@ SKIP = re.compile(r"invitation|invitasjon|webcast|conference call|to be held|wil
 REPORTISH = re.compile(r"result|quarter|kvartal|half[- ]year|halvår|annual report|årsrapport|interim|"
                        r"presentation|\bq[1-4]\b|financial information|financial statements|nine[- ]month|six[- ]month", re.I)
 MAX_PDF_BYTES = 25_000_000
-VERSION = 5  # økes når leseren forbedres, så gamle uttrekk leses på nytt
+VERSION = 6  # økes når leseren forbedres, så gamle uttrekk leses på nytt
 
 # Groq: én forespørsel må holde seg under 8 000 tokens (inn + ut). Ca. 3,6 tegn per token i rapporttekst.
 CHUNK_CHARS = 11_000
@@ -282,7 +282,9 @@ REGLER:
 - Kort og enkelt språk.
 - "bookings" er det viktigste: andel av dagene i NESTE periode som er booket/covered/fixed/done, og snittraten for de dagene.
   Ikke bland med oppnådd rate for kvartalet som rapporteres (det hører i "tce"). I tabeller står raten rett før prosenten:
-  «Q4 2026 Spot % done … $562,600 68%» betyr 68 % booket til 562 600 USD/dag. Ta med hver skipstype
+  «Q4 2026 Spot % done … $562,600 68%» betyr 68 % booket til 562 600 USD/dag.
+  "segment" er bare skipstypen (VLCC, Suezmax, LR2, MR …). Skriv i "note" om det gjelder spotdager, timecharter eller alle dager.
+  Er bare et snitt for hele flåten oppgitt, bruk segment "flåtesnitt". Ikke lag rader uten tall. Ta med hver skipstype
   og både spot- og totaldager hvis begge er oppgitt. I tabeller heter kolonnene ofte «% covered» og «TCE currently contracted».
 - Settes "is_report" til false hvis teksten ikke er en finansiell rapport (f.eks. bare ny dato, invitasjon eller kalender).
 
@@ -295,7 +297,7 @@ Svar KUN med gyldig JSON i dette formatet:
  "summary": ["4–6 korte punkter"],
  "numbers": [{{"label": "f.eks. Resultat per aksje", "value": 2.38, "unit": "USD", "period": "Q3 2026"}}],
  "tce": [{{"segment": "VLCC", "rate": 61500, "unit": "USD/dag", "period": "Q3 2026"}}],
- "bookings": [{{"segment": "VLCC", "period": "Q4 2026", "share_pct": 65, "rate": 98000, "unit": "USD/dag"}}],
+ "bookings": [{{"segment": "VLCC", "period": "Q4 2026", "share_pct": 65, "rate": 98000, "unit": "USD/dag", "note": "spotdager"}}],
  "breakeven": [{{"segment": "flåtesnitt", "rate": 23600, "unit": "USD/dag", "note": "cash breakeven neste 12 mnd"}}],
  "dividend": {{"per_share": 2.38, "unit": "USD", "note": "kort om utbetaling eller politikk"}},
  "balance": [{{"label": "Netto rentebærende gjeld", "value": 1200, "unit": "MUSD"}}],
@@ -458,7 +460,18 @@ def found_pair(share, rate, pos: list[tuple[int, set[float]]], text: str) -> boo
     return False
 
 
+def tidy(data: dict) -> dict:
+    """Fjerner tomme rader (uten tall), som modellen av og til lager for skipstyper uten opplysninger."""
+    for field, keys in (("bookings", ("rate", "share_pct")), ("tce", ("rate",)), ("breakeven", ("rate",)),
+                        ("numbers", ("value",)), ("balance", ("value",))):
+        rows = data.get(field)
+        if isinstance(rows, list):
+            data[field] = [r for r in rows if isinstance(r, dict) and any(r.get(k) is not None for k in keys)]
+    return data
+
+
 def verify(data: dict, source: str) -> dict:
+    data = tidy(data)
     pool = numbers_in(source)
     pos = numbers_pos(source)
     checked = missing = 0
