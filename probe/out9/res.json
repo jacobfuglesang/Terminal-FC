@@ -1,0 +1,152 @@
+{
+ "scfi": {
+  "https://en.sse.net.cn/currentIndex?indexName=scfi": {
+   "status": 200,
+   "body": "{\"data\":{\"currentDate\":\"2026-11-20\",\"lastDate\":\"2026-11-13\",\"lineDataList\":[{\"properties\":{\"weighting_EN\":\"\",\"unit_ZH\":\"\",\"lineName_ZH\":\"上海出口集装箱运价指数\",\"lineName_EN\":\"Comprehensive Index\",\"weighting_ZH\":\"\",\"unit_EN\":\"\"},\"currentContent\":3503.7828,\"lastContent\":3572.3268,\"absolute\":-68.5440,\"percentage\":-1.9187,\"dataItemTypeName\":\"SCFI_T\"},{\"properties\":{\"weighting_EN\":\"5.0%\",\"unit_ZH\":\"USD/TEU\",\"lineName_ZH\":\"欧洲 20ft（基本港）Europe 20ft (Base port)\",\"lineName_EN\":\"Europe 20ft (Base port)\",\"weighting_ZH\":\"5.0%\",\"unit_EN\":\"USD/TEU\"},\"currentContent\":null,\"lastContent\":null,\"absolute\":null,\"percentage\":null,\"dataItemTypeName\":\"SCFI_L1\"},{\"properties\":{\"weighting_EN\":\"15.0%\",\"unit_ZH\":\"USD/FEU\",\"lineName_ZH\":\"欧洲 40ft（基本港）Europe 40ft (Base port)\",\"lineName_EN\":\"Europe 40ft (Base port)\",\"weighting_ZH\":\"15.0%\",\"unit_EN\":\"USD/FEU\"},\"currentContent\":null,\"lastContent\":null,\"absolute\":null,\"percentage\":null,\"dataItemTypeName\":\"SCFI_L27\"},{\"properties\":{\"weighting_EN\":\"2.5%\",\"unit_ZH\":\"USD/TEU\",\"lineName_ZH\":\"地中海 20ft（基本港）Mediterranean 20ft (Base port)\",\"lineName_EN\":\"Mediterranean 20ft (Base port)\",\"weighting_ZH\":\"2.5%\",\"unit_EN\":\"USD/TEU\"},\"currentContent\":null,\"lastContent\":null,\"absolute\":null,\"percentage\":null,\"dataItemTypeName\":\"SCFI_L2\"},{\"properties\":{\"weighting_EN\":\"7.5%\",\"unit_ZH\":\"USD/FEU\",\"lineName_ZH\":\"地中海 40ft（基本港）Mediterranean 40ft (Base port)\",\"lineName_EN\":\"Mediterranean 40ft (Base port)\",\"weighting_ZH\":\"7.5%\",\"unit_EN\":\"USD/FEU\"},\"currentContent\":null,\"lastContent\":null,\"abs"
+  },
+  "https://en.sse.net.cn/currentIndex?indexName=ccfi": {
+   "status": 200,
+   "body": "{\"data\":{\"currentDate\":\"2026-11-20\",\"lastDate\":\"2026-11-13\",\"lineDataList\":[{\"properties\":{\"lineName_ZH\":\"中国出口集装箱运价综合指数\",\"lineName_EN\":\"COMPOSITE INDEX\"},\"currentContent\":1923.2100,\"lastContent\":1919.2700,\"absolute\":3.9400,\"percentage\":0.2053,\"dataItemTypeName\":\"CCFI_T\"},{\"properties\":{\"lineName_ZH\":\"日本航线(JAPAN SERVICE)\",\"lineName_EN\":\"JAPAN\"},\"currentContent\":1079.8800,\"lastContent\":1051.1800,\"absolute\":28.7000,\"percentage\":2.7303,\"dataItemTypeName\":\"CCFI_S01\"},{\"properties\":{\"lineName_ZH\":\"欧洲航线(EUROPE SERVICE)\",\"lineName_EN\":\"EUROPE\"},\"currentContent\":1856.5600,\"lastContent\":1846.3000,\"absolute\":10.2600,\"percentage\":0.5557,\"dataItemTypeName\":\"CCFI_S02\"},{\"properties\":{\"lineName_ZH\":\"美西航线(W/C AMERICA SERVICE)\",\"lineName_EN\":\"W/C AMERICA\"},\"currentContent\":1777.9500,\"lastContent\":1821.5800,\"absolute\":-43.6300,\"percentage\":-2.3952,\"dataItemTypeName\":\"CCFI_S03\"},{\"properties\":{\"lineName_ZH\":\"美东航线(E/C AMERICA SERVICE)\",\"lineName_EN\":\"E/C AMERICA\"},\"currentContent\":1906.2500,\"lastContent\":2011.4500,\"absolute\":-105.2000,\"percentage\":-5.2301,\"dataItemTypeName\":\"CCFI_S04\"},{\"properties\":{\"lineName_ZH\":\"韩国航线(KOREA SERVICE)\",\"lineName_EN\":\"KOREA\"},\"currentContent\":760.2400,\"lastContent\":766.7200,\"absolute\":-6.4800,\"percentage\":-0.8452,\"dataItemTypeName\":\"CCFI_S06\"},{\"properties\":{\"lineName_ZH\":\"东南亚航线(SOUTHEAST ASIA SERVICE)\",\"lineName_EN\":\"SOUTHEAST\"},\"currentContent\":1502.8700,\"lastContent\":1508.4500,\"absolute\":-5.5800,\"percentage\":-0.3699,\"dataItemTypeName\":\"CCFI_S07\"},{\"properties\""
+  }
+ },
+ "issuers": {
+  "n": 601,
+  "matches": {
+   "Odfjell Technology Ltd": "OTL",
+   "Odfjell Drilling Ltd": "ODL",
+   "Stolt-Nielsen Limited": "SNI",
+   "2020 Bulkers Ltd.": "2020",
+   "Jinhui Shipping and Transport. Ltd": "JIN"
+  }
+ },
+ "hellenic": {
+  "tanker_cat": {
+   "n": 0,
+   "hits": [],
+   "all_titles": []
+  },
+  "dry_cat": {
+   "n": 20,
+   "hits": [
+    {
+     "title": "Dry Bulk Shipping: Capesizes Retain Positive Momentum",
+     "date": "Sun, 15 Nov 2026 22:00:58 +0000",
+     "link": "https://www.hellenicshippingnews.com/dry-bulk-shipping-capesizes-retain-positive-momentum-2/",
+     "len": 380,
+     "text": "Capesize The Capesize market maintained a positive trajectory throughout the week, with the Pacific emerging as the clear driver of overall gains. Despite some midweek volatility, improving miner demand and increasingly competitive fixing levels saw C5 recover strongly, climbing from $13.80 on Monday to $15.20 by Thursday, before easing back to $14.50–$14.60 towards the end ..."
+    }
+   ],
+   "all_titles": [
+    "Baltic Dry Index Eases For 2nd Day",
+    "Dry Bulk Shipping: Asian Vessel Availability Tightens Despite Softer Freight",
+    "Baltic Dry Index Edges Down",
+    "Guinea climbs to third-largest iron ore exporter as shipments surpass 5m tonnes",
+    "Baltic Dry Index Recovers",
+    "Baltic Dry Index climbs to 2914 up 21 points",
+    "Black Sea Grain Trade Shifts to the Baltic",
+    "Baltic Dry Index falls to 2893 down 28 points",
+    "Baltic Dry Index at Near1-Week Low",
+    "Iron ore may rebound slightly as steel export orders improve",
+    "Baltic Dry Index falls to 2921 down 59 points",
+    "Dry Bulk Shipping: Capesizes Retain Positive Momentum"
+   ]
+  },
+  "search_tanker": {
+   "n": 20,
+   "hits": [
+    {
+     "title": "Gibson tanker report – Cracks are showing",
+     "date": "Fri, 20 Nov 2026 22:00:46 +0000",
+     "link": "https://www.hellenicshippingnews.com/gibson-tanker-report-cracks-are-showing/",
+     "len": 159,
+     "text": "Refining margins have fallen sharply this month, led by gasoline. Asian gasoline cracks stand at just over $1/bbl, &#160; Source: GIBSON SHIPBROKERS LTD &#160;"
+    },
+    {
+     "title": "Breakwave Tanker Report 11.17.2026",
+     "date": "Tue, 17 Nov 2026 18:00:12 +0000",
+     "link": "https://www.hellenicshippingnews.com/breakwave-tanker-report-11-17-2026/",
+     "len": 165,
+     "text": "Sentiment-Driven Correction Meets Improving Vessel Supply – Crude tanker freight has corrected sharply from October’s unprecedented &#160; Source: Breakwave Advisors"
+    },
+    {
+     "title": "Gibson tanker report – Crude Correction",
+     "date": "Fri, 13 Nov 2026 22:00:46 +0000",
+     "link": "https://www.hellenicshippingnews.com/gibson-tanker-report-crude-correction/",
+     "len": 149,
+     "text": "Crude tanker freight rates have taken a beating this month albeit from unprecedented highs, with key benchmarks &#160; Source: GIBSON SHIPBROKERS LTD"
+    },
+    {
+     "title": "Gibson tanker report – Mid Term Fallout",
+     "date": "Fri, 06 Nov 2026 22:00:46 +0000",
+     "link": "https://www.hellenicshippingnews.com/gibson-tanker-report-mid-term-fallout/",
+     "len": 187,
+     "text": "Following weeks of uncertainty, the Democrats have won both the House and the Senate in Tuesday&#8217;s midterms. In the Senate, six Republican seats &#160; Source: GIBSON SHIPBROKERS LTD"
+    },
+    {
+     "title": "Breakwave Tanker Report 11.3.2026",
+     "date": "Tue, 03 Nov 2026 18:00:18 +0000",
+     "link": "https://www.hellenicshippingnews.com/breakwave-tanker-report-11-3-2026/",
+     "len": 165,
+     "text": "VLCC Remain Strong on Low Vessel Availability, Geopolitics – The recovery in Middle Eastern crude exports has yet to restore normal &#160; Source: Breakwave Advisors"
+    }
+   ],
+   "all_titles": [
+    "Gibson tanker report – Cracks are showing",
+    "Breakwave Tanker Report 11.17.2026",
+    "Oil prices fall as Mideast supply recovery outweighs Iran risks",
+    "Gibson tanker report – Crude Correction",
+    "US Treasury may allow purchase of sanctioned tankers on case basis",
+    "Gibson tanker report – Mid Term Fallout",
+    "Breakwave Tanker Report 11.3.2026",
+    "Qatar, Saudi Arabia condemn attack on Pakistan-bound LNG tanker in Gulf waters",
+    "Tanker Orders Leading Newbuilding Activity With Prices Expected to Remain High Throughout 2027",
+    "Gibson tanker report – Freight Squeezes Naphtha Arb",
+    "Gibson tanker report – Diesel, Drones and Donald",
+    "Ship Recycling Market Gaining Strength In India"
+   ]
+  },
+  "search_cape": {
+   "n": 20,
+   "hits": [
+    {
+     "title": "Dry Bulk Market: Kamsarmax Rebounds, Soybeans Set Records",
+     "date": "Thu, 19 Nov 2026 22:00:59 +0000",
+     "link": "https://www.hellenicshippingnews.com/dry-bulk-market-kamsarmax-rebounds-soybeans-set-records/",
+     "len": 363,
+     "text": "While the larger Capesize ship class continues to act as a benchmark for the broader dry bulk market, smaller sizes have shown significant diversion over the past few days. In its latest weekly report, shipbroker Xclusiv commented that “the dry bulk market continues to demonstrate contrasting dynamics across the Kamsarmax and Ultramax segments, although the ..."
+    },
+    {
+     "title": "Baltic Dry Index at Over 1-Month Low, Posts Weekly Loss",
+     "date": "Fri, 09 Oct 2026 21:00:55 +0000",
+     "link": "https://www.hellenicshippingnews.com/baltic-dry-index-at-over-1-month-low-posts-weekly-loss/",
+     "len": 350,
+     "text": "The Baltic Exchange’s dry bulk freight index, which tracks rates for ships carrying dry bulk commodities, declined for a fifth straight session on Friday, dropping about 2.2% to its lowest since August 25 at 3,002 points. The capesize index, which typically transports 150,000-ton cargoes, including iron ore and coal, slipped by 4% to its lowest ..."
+    },
+    {
+     "title": "CLARKSONS HELLAS – SnP WEEKLY",
+     "date": "Fri, 02 Oct 2026 17:00:27 +0000",
+     "link": "https://www.hellenicshippingnews.com/clarksons-hellas-snp-weekly-12/",
+     "len": 324,
+     "text": "Tanker rates remain at or near record highs as hopes of a reopening faded. President Trump rejected Iran&#8217;s proposal to reopen the Strait, at least five tankers were struck in Hormuz this week, and the US is reported to be sending a third aircraft carrier to the region. VLCC earnings are averaging over USD 700,000 ..."
+    }
+   ],
+   "all_titles": [
+    "Baltic Dry Index Eases For 2nd Day",
+    "Dry Bulk Market: Kamsarmax Rebounds, Soybeans Set Records",
+    "Dry Bulk Shipping: Asian Vessel Availability Tightens Despite Softer Freight",
+    "Brazil Premium Rebuilds: C3–C5 Spread Back Above $21/mt",
+    "Baltic Dry Index Up for 3rd Day",
+    "What is changing behind dry bulk and tanker freight markets?",
+    "Baltic Dry Index Snaps 4-Day Winning Run",
+    "GMS Week 42 – Freight Finally Flinches",
+    "Black Sea Steel Flows Weaken as Shipping Risks Rise",
+    "Baltic Dry Index at Over 1-Month Low, Posts Weekly Loss",
+    "Coal in Focus — China’s 2027–28 US Coal Commitment",
+    "CLARKSONS HELLAS – SnP WEEKLY"
+   ]
+  }
+ },
+ "ais": {
+  "skip": "ingen nøkkel"
+ }
+}
