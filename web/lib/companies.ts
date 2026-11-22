@@ -22,10 +22,11 @@ export const COMPANY_INFO: Record<string, CompanyInfo> = {
   "MOWI.OL": {
     symbol: "MOWI.OL",
     about: "Verdens største lakseoppdretter og ifølge selskapet nå verdens største sjømatselskap. Hele verdikjeden: fôr, oppdrett, slakting, videreforedling og salg.",
-    regions: ["Norge", "Skottland", "Chile", "Canada", "Irland", "Færøyene", "Island"],
+    regions: ["Norge", "Skottland", "Chile", "Canada (vest)", "Irland", "Færøyene", "Island (Arctic Fish)"],
     currency: "EUR",
     facts: [
       "Kjøpte Nova Sea (Nord-Norge), konsolidert fra 4. kvartal 2025.",
+      "Har avtalt å selge virksomheten i Øst-Canada til Cooke.",
       "Mål om 650 000 tonn organisk slaktevolum innen 2029.",
       "Netto rentebærende gjeld ca. 2 886 mill. euro ved utgangen av 3. kvartal 2026.",
     ],
@@ -51,6 +52,7 @@ export const COMPANY_INFO: Record<string, CompanyInfo> = {
       { title: "SeafoodSource: Mowi raises 2026 harvest guidance after record Q3", url: "https://www.seafoodsource.com/news/-world-s-largest-seafood-company-mowi-raises-2026-harvest-guidance-after-record-q3" },
       { title: "Salmon Business: Mowi Scotland Q3 2026", url: "https://www.salmonbusiness.com/mowi-scotland-early-harvesting-weighs-on-q3-earnings-as-nine-month-profit-rises/" },
       { title: "Mowi: Q3 2026 trading update (børsmelding)", url: "https://www.inderes.dk/en/releases/mowi-asa-osemowi-q3-2026-trading-update" },
+      { title: "Baird Maritime: Mowi Q3 2026 (salg av Øst-Canada til Cooke)", url: "https://www.bairdmaritime.com/fishing/aquaculture/mowi-reports-record-salmon-harvest" },
     ],
   },
   "SALM.OL": {

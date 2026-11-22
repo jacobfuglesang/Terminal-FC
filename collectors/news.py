@@ -328,6 +328,8 @@ def enrich(conn, max_fetch: int = 20, max_ai: int = 30) -> tuple[int, int, int]:
                     cur.execute("UPDATE news SET summary = %s WHERE id = %s", (s, nid))
                 conn.commit()
                 summarized += 1
+                if summarized <= 3:
+                    print(f"  Eksempel på sammendrag: «{title[:70]}» → {s}")
             time.sleep(8)  # holder oss innenfor Groqs gratisgrense per minutt
     return fetched, blocked, summarized
 
