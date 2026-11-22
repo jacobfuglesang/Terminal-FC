@@ -1,0 +1,1738 @@
+{
+ "newsweb": {
+  "GET": {
+   "status": 200,
+   "type": "application/json",
+   "body": "{\"header\":{\"OB_REQUEST_ID\":\"7357bb93-03e2-46f9-a4ee-df339a11a01a\",\"result.val\":0,\"http.code\":200,\"result.text\":\"OK\"},\"data\":{\"messages\":[{\"id\":685530,\"messageId\":685530,\"newsId\":638150,\"title\":\"Mowi ASA (OSE: MOWI): Quarterly dividend\",\"category\":[{\"id\":1010,\"category_no\":\"ANNEN INFORMASJONSPLIKTIG REGULATORISK INFORMASJON\",\"category_en\":\"ADDITIONAL REGULATED INFORMATION REQUIRED TO BE DISCLOSED UNDER THE LAWS OF A MEMBER STATE\"}],\"markets\":[\"XOSL\"],\"issuerId\":5063,\"correctionForMessageId\":0,\"correctedByMessageId\":0,\"issuerSign\":\"MOWI\",\"issuerName\":\"Mowi ASA\",\"instrId\":0,\"instrumentName\":\"\",\"instrumentFullName\":\"\",\"publishedTime\":\"2026-11-04T05:31:00.949Z\",\"test\":false,\"numbAttachments\":0,\"clientAnnouncementId\":\"6612dd29-18da-4db8-8348-6dec706c6650\",\"infoRequired\":0,\"oamMandatory\":0},{\"id\":685529,\"messageId\":685529,\"newsId\":638149,\"title\":\"Record-high profits, revenues and volumes for Mowi\",\"category\":[{\"id\":1002,\"category_no\":\"HALVÅRSRAPPORT\",\"category_en\":\"HALF YEAR FINANCIAL REPORT\"}],\"markets\":[\"XOSL\"],\"issuerId\":5063,\"correctionForMessageId\":0,\"correctedByMessageId\":0,\"issuerSign\":\"MOWI\",\"issuerName\":\"Mowi ASA\",\"instrId\":0,\"instrumentName\":\"\",\"instrumentFullName\":\"\",\"publishedTime\":\"2026-11-04T05:30:27.364Z\",\"test\":false,\"numbAttachments\":2,\"clientAnnouncementId\":\"b3323f21-23b9-4e9d-9359-dac689b612f2\",\"infoRequired\":0,\"oamMandatory\":0},{\"id\":685528,\"messageId\":685528,\"newsId\":638148,\"title\":\"Rekordhøye resultater, omsetning og volumer for Mowi\",\"category\":[{\"id\":1002,\"ca"
+  },
+  "POST": {
+   "status": 200,
+   "type": "application/json",
+   "body": "{\"header\":{\"OB_REQUEST_ID\":\"c92cd4ad-549e-428b-b702-a1eb81cf9f44\",\"result.val\":0,\"http.code\":200,\"result.text\":\"OK\"},\"data\":{\"messages\":[{\"id\":685530,\"messageId\":685530,\"newsId\":638150,\"title\":\"Mowi ASA (OSE: MOWI): Quarterly dividend\",\"category\":[{\"id\":1010,\"category_no\":\"ANNEN INFORMASJONSPLIKTIG REGULATORISK INFORMASJON\",\"category_en\":\"ADDITIONAL REGULATED INFORMATION REQUIRED TO BE DISCLOSED UNDER THE LAWS OF A MEMBER STATE\"}],\"markets\":[\"XOSL\"],\"issuerId\":5063,\"correctionForMessageId\":0,\"correctedByMessageId\":0,\"issuerSign\":\"MOWI\",\"issuerName\":\"Mowi ASA\",\"instrId\":0,\"instrumentName\":\"\",\"instrumentFullName\":\"\",\"publishedTime\":\"2026-11-04T05:31:00.949Z\",\"test\":false,\"numbAttachments\":0,\"clientAnnouncementId\":\"6612dd29-18da-4db8-8348-6dec706c6650\",\"infoRequired\":0,\"oamMandatory\":0},{\"id\":685529,\"messageId\":685529,\"newsId\":638149,\"title\":\"Record-high profits, revenues and volumes for Mowi\",\"category\":[{\"id\":1002,\"category_no\":\"HALVÅRSRAPPORT\",\"category_en\":\"HALF YEAR FINANCIAL REPORT\"}],\"markets\":[\"XOSL\"],\"issuerId\":5063,\"correctionForMessageId\":0,\"correctedByMessageId\":0,\"issuerSign\":\"MOWI\",\"issuerName\":\"Mowi ASA\",\"instrId\":0,\"instrumentName\":\"\",\"instrumentFullName\":\"\",\"publishedTime\":\"2026-11-04T05:30:27.364Z\",\"test\":false,\"numbAttachments\":2,\"clientAnnouncementId\":\"b3323f21-23b9-4e9d-9359-dac689b612f2\",\"infoRequired\":0,\"oamMandatory\":0},{\"id\":685528,\"messageId\":685528,\"newsId\":638148,\"title\":\"Rekordhøye resultater, omsetning og volumer for Mowi\",\"category\":[{\"id\":1002,\"ca"
+  },
+  "all_count": 601,
+  "sample_msg": [
+   {
+    "id": 687115,
+    "messageId": 687115,
+    "newsId": 639738,
+    "title": "SNOR: SpareBank 1 Nordmøre - Meldepliktige handler for primærinnsidere",
+    "category": [
+     {
+      "id": 1102,
+      "category_no": "MELDEPLIKTIG HANDEL FOR PRIMÆRINNSIDERE",
+      "category_en": "MANAGERS’ TRANSACTION"
+     }
+    ],
+    "markets": [
+     "XOSL",
+     "XOAM"
+    ],
+    "issuerId": 1823,
+    "correctionForMessageId": 0,
+    "correctedByMessageId": 0,
+    "issuerSign": "SNOR",
+    "issuerName": "SpareBank 1 Nordmøre",
+    "instrId": 0,
+    "instrumentName": "",
+    "instrumentFullName": "",
+    "publishedTime": "2026-11-20T21:50:00.000Z",
+    "test": false,
+    "numbAttachments": 1,
+    "clientAnnouncementId": "71131bd6-1f2f-43d3-8083-05ff5e61098c",
+    "infoRequired": 0,
+    "oamMandatory": 0
+   },
+   {
+    "id": 687114,
+    "messageId": 687114,
+    "newsId": 639737,
+    "title": "SNOR: SpareBank 1 Nordmøre - Viderefordeling av egenkapitalbevis i spareprogram for ansatte",
+    "category": [
+     {
+      "id": 1007,
+      "category_no": "UTSTEDERS MELDEPLIKT VED HANDEL I EGNE AKSJER",
+      "category_en": "ACQUISITION OR DISPOSAL OF AN ISSUER'S OWN SHARES"
+     }
+    ],
+    "markets": [
+     "XOSL",
+     "XOAM"
+    ],
+    "issuerId": 1823,
+    "correctionForMessageId": 0,
+    "correctedByMessageId": 0,
+    "issuerSign": "SNOR",
+    "issuerName": "SpareBank 1 Nordmøre",
+    "instrId": 0,
+    "instrumentName": "",
+    "instrumentFullName": "",
+    "publishedTime": "2026-11-20T21:50:00.000Z",
+    "test": false,
+    "numbAttachments": 0,
+    "clientAnnouncementId": "2ac1b144-02de-453a-ab3f-61812022e82c",
+    "infoRequired": 0,
+    "oamMandatory": 0
+   }
+  ],
+  "message": {
+   "status": 200,
+   "body": "{\"header\":{\"OB_REQUEST_ID\":\"0cf91a72-e11a-4ce2-ab92-7cfd44ba570d\",\"result.val\":0,\"http.code\":200,\"result.text\":\"OK\"},\"data\":{\"message\":{\"id\":687115,\"messageId\":687115,\"newsId\":639738,\"title\":\"SNOR: SpareBank 1 Nordmøre - Meldepliktige handler for primærinnsidere\",\"body\":\"Følgende primærinnsidere har i dag fått tildelt egenkapitalbevis i SpareBank 1 Nordmøre gjennom bankens spareprogram for ansatte:\\n\\nAllan Troelsen, administrerende direktør\\nSteinar Sogn, direktør økonomi og finans (CFO)\\nRune Solli, direktør bedriftsmarked\\nArne Elven, direktør personmarked\\nKnut Haugen, direktør forretningsstøtte\\nKathrine Gjestad, direktør organisasjon og utvikling\\nIngvild Eide Sanden, leder etterlevelse\\nLars Naalsund, økonomisjef\\n\\nEgenkapitalbevisene er ervervet gjennom bankens spareprogram for ansatte.\\n\\nVedlagte KRT-1500-skjemaer inneholder nærmere opplysninger om de enkelte transaksjonene.\\n\\nKristiansund, 20. november 2026\\n\\nKontaktperson: Lars Naalsund, økonomisjef Tlf. +47 901 11 866\\n\\nDenne informasjonen offentliggjøres i henhold til markedsmisbruksforordningen (MAR) artikkel 19.\",\"category\":[{\"id\":1102,\"category_no\":\"MELDEPLIKTIG HANDEL FOR PRIMÆRINNSIDERE\",\"category_en\":\"MANAGERS’ TRANSACTION\"}],\"markets\":[\"XOSL\",\"XOAM\"],\"issuerId\":1823,\"correctionForMessageId\":0,\"correctedByMessageId\":0,\"issuerSign\":\"SNOR\",\"issuerName\":\"SpareBank 1 Nordmøre\",\"instrId\":1303395,\"instrumentName\":\"SNOR\",\"instrumentFullName\":\"SPBK 1 NORDMØRE\",\"publishedTime\":\"2026-11-20T21:50:00.000Z\",\"test\":false,\"numbAttachments\":1,\"attachments\":[{\"id\":336975,\"name\":\"KRT-1500 Skjema for melding om transaksjoner utført av personer med ledelsesansvar (\\\"primærinnsidere\\\") og deres nærstående (Alle).pdf\"}],\"clientAnnouncementId\":\"71131bd6-1f2f-43d3-8083-05ff5e61098c\",\"infoRequired\":1,\"oamMandatory\":1}}}"
+  },
+  "_secs": 2.4
+ },
+ "yahoo": {
+  "MOWI.OL": {
+   "calendar": {
+    "Ex-Dividend Date": "2026-11-13",
+    "Earnings Date": [
+     "2026-11-04"
+    ],
+    "Earnings High": 0.37,
+    "Earnings Low": 0.22,
+    "Earnings Average": 0.30138,
+    "Revenue High": 1820000000,
+    "Revenue Low": 1616369750,
+    "Revenue Average": 1680896620
+   },
+   "earnings_estimate": {
+    "avg": {
+     "0q": 0.30138,
+     "+1q": 0.35333,
+     "0y": 1.19453,
+     "+1y": 1.46151
+    },
+    "low": {
+     "0q": 0.22,
+     "+1q": 0.31,
+     "0y": 1.09,
+     "+1y": 1.31273
+    },
+    "high": {
+     "0q": 0.37,
+     "+1q": 0.4,
+     "0y": 1.3,
+     "+1y": 1.62
+    },
+    "yearAgoEps": {
+     "0q": 0.26,
+     "+1q": 0.27,
+     "0y": 0.92,
+     "+1y": 1.19453
+    },
+    "numberOfAnalysts": {
+     "0q": 4,
+     "+1q": 3,
+     "0y": 11,
+     "+1y": 11
+    },
+    "growth": {
+     "0q": 0.1592,
+     "+1q": 0.3086,
+     "0y": 0.2984,
+     "+1y": 0.2235
+    },
+    "currency": {
+     "0q": "EUR",
+     "+1q": "EUR",
+     "0y": "EUR",
+     "+1y": "EUR"
+    },
+    "methodology": {
+     "0q": "normalized",
+     "+1q": "normalized",
+     "0y": "normalized",
+     "+1y": "normalized"
+    }
+   },
+   "revenue_estimate": {
+    "avg": {
+     "0q": 1680896620,
+     "+1q": 1555000000,
+     "0y": 6582154050,
+     "+1y": 7114184470
+    },
+    "low": {
+     "0q": 1616369750,
+     "+1q": 1490000000,
+     "0y": 6488666070,
+     "+1y": 6701863110
+    },
+    "high": {
+     "0q": 1820000000,
+     "+1q": 1592000000,
+     "0y": 6740000000,
+     "+1y": 7664000000
+    },
+    "numberOfAnalysts": {
+     "0q": 6,
+     "+1q": 3,
+     "0y": 8,
+     "+1y": 10
+    },
+    "yearAgoRevenue": {
+     "0q": 1584300000,
+     "+1q": 1543000000,
+     "0y": 5720200000,
+     "+1y": 6582154050
+    },
+    "growth": {
+     "0q": 0.061,
+     "+1q": 0.0078,
+     "0y": 0.1507,
+     "+1y": 0.0808
+    },
+    "currency": {
+     "0q": "EUR",
+     "+1q": "EUR",
+     "0y": "EUR",
+     "+1y": "EUR"
+    }
+   },
+   "eps_trend": {
+    "current": {
+     "0q": 0.30138,
+     "+1q": 0.35333,
+     "0y": 1.19453,
+     "+1y": 1.46151
+    },
+    "7daysAgo": {
+     "0q": 0.32851,
+     "+1q": 0.33333,
+     "0y": 1.19445,
+     "+1y": 1.43753
+    },
+    "30daysAgo": {
+     "0q": 0.3125,
+     "+1q": 0.33667,
+     "0y": 1.15617,
+     "+1y": 1.40604
+    },
+    "60daysAgo": {
+     "0q": 0.34245,
+     "+1q": 0.315,
+     "0y": 1.15336,
+     "+1y": 1.37503
+    },
+    "90daysAgo": {
+     "0q": 0.39688,
+     "+1q": 0.0,
+     "0y": 1.18249,
+     "+1y": 1.57306
+    },
+    "currency": {
+     "0q": "EUR",
+     "+1q": "EUR",
+     "0y": "EUR",
+     "+1y": "EUR"
+    },
+    "methodology": {
+     "0q": "normalized",
+     "+1q": "normalized",
+     "0y": "normalized",
+     "+1y": "normalized"
+    }
+   },
+   "growth_estimates": {
+    "stockTrend": {
+     "0q": 0.1592,
+     "+1q": 0.3086,
+     "0y": 0.2984,
+     "+1y": 0.2235,
+     "LTG": NaN
+    },
+    "indexTrend": {
+     "0q": 0.3018,
+     "+1q": 0.2758,
+     "0y": 0.33650002,
+     "+1y": 0.16950001,
+     "LTG": 0.122
+    }
+   },
+   "q_rows": [
+    "Tax Effect Of Unusual Items",
+    "Tax Rate For Calcs",
+    "Normalized EBITDA",
+    "Total Unusual Items",
+    "Total Unusual Items Excluding Goodwill",
+    "Net Income From Continuing Operation Net Minority Interest",
+    "Reconciled Depreciation",
+    "Reconciled Cost Of Revenue",
+    "EBITDA",
+    "EBIT",
+    "Net Interest Income",
+    "Interest Expense",
+    "Interest Income",
+    "Normalized Income",
+    "Net Income From Continuing And Discontinued Operation",
+    "Total Expenses",
+    "Diluted Average Shares",
+    "Basic Average Shares",
+    "Diluted EPS",
+    "Basic EPS",
+    "Diluted NI Availto Com Stockholders",
+    "Net Income Common Stockholders",
+    "Otherunder Preferred Stock Dividend",
+    "Net Income",
+    "Minority Interests",
+    "Net Income Including Noncontrolling Interests",
+    "Net Income Continuous Operations",
+    "Tax Provision",
+    "Pretax Income",
+    "Other Non Operating Income Expenses",
+    "Special Income Charges",
+    "Write Off",
+    "Restructuring And Mergern Acquisition",
+    "Net Non Operating Interest Income Expense",
+    "Total Other Finance Cost",
+    "Interest Expense Non Operating",
+    "Interest Income Non Operating",
+    "Operating Income",
+    "Operating Expense",
+    "Other Operating Expenses"
+   ],
+   "q_cols": [
+    "2026-09-30 00:00:00",
+    "2026-06-30 00:00:00",
+    "2026-03-31 00:00:00",
+    "2025-12-31 00:00:00",
+    "2025-09-30 00:00:00",
+    "2025-06-30 00:00:00",
+    "2025-03-31 00:00:00"
+   ],
+   "q_rev": {
+    "2026-09-30 00:00:00": 1731200000.0,
+    "2026-06-30 00:00:00": 1598100000.0,
+    "2026-03-31 00:00:00": 1543000000.0,
+    "2025-12-31 00:00:00": 1584300000.0,
+    "2025-09-30 00:00:00": 1390400000.0,
+    "2025-06-30 00:00:00": NaN,
+    "2025-03-31 00:00:00": NaN
+   },
+   "q_ebit": {
+    "2026-09-30 00:00:00": 326900000.0,
+    "2026-06-30 00:00:00": -82300000.0,
+    "2026-03-31 00:00:00": 215000000.0,
+    "2025-12-31 00:00:00": 670300000.0,
+    "2025-09-30 00:00:00": 167600000.0,
+    "2025-06-30 00:00:00": NaN,
+    "2025-03-31 00:00:00": NaN
+   },
+   "earn_dates": [
+    {
+     "Earnings Date": "2027-02-10 10:00:00-05:00",
+     "EPS Estimate": "0.3",
+     "Reported EPS": NaN,
+     "Surprise(%)": NaN
+    },
+    {
+     "Earnings Date": "2026-11-03 19:00:00-05:00",
+     "EPS Estimate": "0.34",
+     "Reported EPS": "0.33",
+     "Surprise(%)": "-1.84"
+    },
+    {
+     "Earnings Date": "2026-08-17 20:00:00-04:00",
+     "EPS Estimate": "0.25",
+     "Reported EPS": "0.28",
+     "Surprise(%)": "9.93"
+    },
+    {
+     "Earnings Date": "2026-05-12 20:00:00-04:00",
+     "EPS Estimate": "0.25",
+     "Reported EPS": "0.27",
+     "Surprise(%)": "8.41"
+    },
+    {
+     "Earnings Date": "2026-02-11 07:00:00-05:00",
+     "EPS Estimate": "0.29",
+     "Reported EPS": "0.26",
+     "Surprise(%)": "-9.45"
+    },
+    {
+     "Earnings Date": "2025-11-05 05:00:00-05:00",
+     "EPS Estimate": "0.11",
+     "Reported EPS": "0.13",
+     "Surprise(%)": "17.4"
+    },
+    {
+     "Earnings Date": "2025-08-20 04:00:00-04:00",
+     "EPS Estimate": "0.24",
+     "Reported EPS": "0.25",
+     "Surprise(%)": "5.04"
+    },
+    {
+     "Earnings Date": "2025-05-13 22:00:00-04:00",
+     "EPS Estimate": "0.29",
+     "Reported EPS": "0.29",
+     "Surprise(%)": "-0.55"
+    },
+    {
+     "Earnings Date": "2025-02-12 00:00:00-05:00",
+     "EPS Estimate": "0.27",
+     "Reported EPS": "0.31",
+     "Surprise(%)": "14.9"
+    },
+    {
+     "Earnings Date": "2024-11-06 05:00:00-05:00",
+     "EPS Estimate": "0.2",
+     "Reported EPS": "0.21",
+     "Surprise(%)": "2.95"
+    },
+    {
+     "Earnings Date": "2024-08-21 04:00:00-04:00",
+     "EPS Estimate": "0.3",
+     "Reported EPS": "0.3",
+     "Surprise(%)": "-0.02"
+    },
+    {
+     "Earnings Date": "2024-05-08 02:00:00-04:00",
+     "EPS Estimate": "0.25",
+     "Reported EPS": "0.21",
+     "Surprise(%)": "-15.65"
+    },
+    {
+     "Earnings Date": "2024-02-14 05:00:00-05:00",
+     "EPS Estimate": "0.23",
+     "Reported EPS": "0.26",
+     "Surprise(%)": "12.38"
+    },
+    {
+     "Earnings Date": "2023-11-08 05:00:00-05:00",
+     "EPS Estimate": "0.25",
+     "Reported EPS": "0.24",
+     "Surprise(%)": "-4.8"
+    },
+    {
+     "Earnings Date": "2023-08-22 18:00:00-04:00",
+     "EPS Estimate": "0.38",
+     "Reported EPS": "0.35",
+     "Surprise(%)": "-7.74"
+    },
+    {
+     "Earnings Date": "2023-05-09 18:00:00-04:00",
+     "EPS Estimate": "0.34",
+     "Reported EPS": "0.33",
+     "Surprise(%)": "-2.67"
+    },
+    {
+     "Earnings Date": "2023-02-14 18:00:00-05:00",
+     "EPS Estimate": "0.34",
+     "Reported EPS": "0.33",
+     "Surprise(%)": "-2.52"
+    },
+    {
+     "Earnings Date": "2022-11-09 00:00:00-05:00",
+     "EPS Estimate": "0.35",
+     "Reported EPS": "0.34",
+     "Surprise(%)": "-2.31"
+    },
+    {
+     "Earnings Date": "2022-08-24 04:00:00-04:00",
+     "EPS Estimate": "0.48",
+     "Reported EPS": "0.46",
+     "Surprise(%)": "-4.55"
+    },
+    {
+     "Earnings Date": "2022-05-10 18:00:00-04:00",
+     "EPS Estimate": "0.31",
+     "Reported EPS": "0.29",
+     "Surprise(%)": "-5.64"
+    },
+    {
+     "Earnings Date": "2022-02-16 00:00:00-05:00",
+     "EPS Estimate": "0.2",
+     "Reported EPS": "0.2",
+     "Surprise(%)": "-1.55"
+    },
+    {
+     "Earnings Date": "2021-11-10 03:00:00-05:00",
+     "EPS Estimate": "0.19",
+     "Reported EPS": "0.18",
+     "Surprise(%)": "-4.68"
+    },
+    {
+     "Earnings Date": "2021-08-25 00:00:00-04:00",
+     "EPS Estimate": "0.22",
+     "Reported EPS": "0.19",
+     "Surprise(%)": "-12.94"
+    },
+    {
+     "Earnings Date": "2021-05-19 03:00:00-04:00",
+     "EPS Estimate": "0.17",
+     "Reported EPS": "0.15",
+     "Surprise(%)": "-9.64"
+    },
+    {
+     "Earnings Date": "2021-02-17 17:00:00-05:00",
+     "EPS Estimate": "0.06",
+     "Reported EPS": "0.06",
+     "Surprise(%)": "7.74"
+    }
+   ],
+   "info": {
+    "marketCap": 118956761088,
+    "fullTimeEmployees": 11500,
+    "currency": "NOK",
+    "financialCurrency": "EUR",
+    "trailingPE": 14.745098,
+    "forwardPE": 14.669521,
+    "dividendYield": 3.72,
+    "longBusinessSummary": "Mowi ASA, a seafood company, produces and sells Atlantic salmon products worldwide. It operates through Feed, Farming, Markets, Consumer Products, and other segments. The company is involved in salmon feed production, salmon farming and primary processing, and seafood secondary processing activities. It offers whole fish, plain and marinated fillets and steaks, hot- and cold-smoked salmon, and burgers and patties, as well as breaded, gravad, and sushi products. The company was formerly known as Marine Harvest ASA and changed its name to Mowi ASA in December 2018. Mowi ASA was founded in 1964 and is based in Bergen, Norway.",
+    "enterpriseValue": 122703462400,
+    "sharesOutstanding": 527290596
+   }
+  },
+  "GSF.OL": {
+   "calendar": {
+    "Ex-Dividend Date": "2026-04-20",
+    "Earnings Date": [
+     "2026-08-27"
+    ],
+    "Earnings High": null,
+    "Earnings Low": null,
+    "Earnings Average": null,
+    "Revenue High": 754000000,
+    "Revenue Low": 660000000,
+    "Revenue Average": 707000000
+   },
+   "earnings_estimate": {
+    "avg": {
+     "0q": 0.16,
+     "+1q": NaN,
+     "0y": 1.15,
+     "+1y": 1.785
+    },
+    "low": {
+     "0q": 0.16,
+     "+1q": NaN,
+     "0y": 1.15,
+     "+1y": 1.37
+    },
+    "high": {
+     "0q": 0.16,
+     "+1q": NaN,
+     "0y": 1.15,
+     "+1y": 2.2
+    },
+    "yearAgoEps": {
+     "0q": 17.2,
+     "+1q": NaN,
+     "0y": 1.2155,
+     "+1y": 1.15
+    },
+    "numberOfAnalysts": {
+     "0q": 1.0,
+     "+1q": NaN,
+     "0y": 1.0,
+     "+1y": 2.0
+    },
+    "growth": {
+     "0q": -0.9907,
+     "+1q": NaN,
+     "0y": -0.0539,
+     "+1y": 0.5522
+    },
+    "currency": {
+     "0q": "NOK",
+     "+1q": "NOK",
+     "0y": "NOK",
+     "+1y": "NOK"
+    },
+    "methodology": {
+     "0q": "normalized",
+     "+1q": "normalized",
+     "0y": "normalized",
+     "+1y": "normalized"
+    }
+   },
+   "revenue_estimate": {
+    "avg": {
+     "0q": 707000000,
+     "+1q": 990666670,
+     "0y": 3643500000,
+     "+1y": 4030998370
+    },
+    "low": {
+     "0q": 660000000,
+     "+1q": 823000000,
+     "0y": 3621000000,
+     "+1y": 3406128660
+    },
+    "high": {
+     "0q": 754000000,
+     "+1q": 1095000000,
+     "0y": 3666000000,
+     "+1y": 4472859920
+    },
+    "numberOfAnalysts": {
+     "0q": 2,
+     "+1q": 3,
+     "0y": 2,
+     "+1y": 7
+    },
+    "yearAgoRevenue": {
+     "0q": 971084000,
+     "+1q": 1014000000,
+     "0y": 3667428000,
+     "+1y": 3643500000
+    },
+    "growth": {
+     "0q": -0.2719,
+     "+1q": -0.023,
+     "0y": -0.0064999997,
+     "+1y": 0.106400006
+    },
+    "currency": {
+     "0q": "NOK",
+     "+1q": "NOK",
+     "0y": "NOK",
+     "+1y": "NOK"
+    }
+   },
+   "eps_trend": {
+    "current": {
+     "0q": 0.16,
+     "+1q": NaN,
+     "0y": 1.15,
+     "+1y": 1.785
+    },
+    "7daysAgo": {
+     "0q": 0.262,
+     "+1q": NaN,
+     "0y": 0.77667,
+     "+1y": 2.23
+    },
+    "30daysAgo": {
+     "0q": 0.488,
+     "+1q": NaN,
+     "0y": 0.896,
+     "+1y": 2.456
+    },
+    "60daysAgo": {
+     "0q": 0.49209,
+     "+1q": NaN,
+     "0y": 1.03333,
+     "+1y": 2.79
+    },
+    "90daysAgo": {
+     "0q": 0.655,
+     "+1q": NaN,
+     "0y": 1.46022,
+     "+1y": 2.88369
+    },
+    "currency": {
+     "0q": "NOK",
+     "+1q": "NOK",
+     "0y": "NOK",
+     "+1y": "NOK"
+    },
+    "methodology": {
+     "0q": "normalized",
+     "+1q": "normalized",
+     "0y": "normalized",
+     "+1y": "normalized"
+    }
+   },
+   "growth_estimates": {
+    "stockTrend": {
+     "0q": NaN,
+     "+1q": NaN,
+     "0y": -0.0539,
+     "+1y": 0.5522,
+     "LTG": NaN
+    },
+    "indexTrend": {
+     "0q": 0.3018,
+     "+1q": 0.2758,
+     "0y": 0.33650002,
+     "+1y": 0.16950001,
+     "LTG": 0.122
+    }
+   },
+   "q_rows": [
+    "Tax Effect Of Unusual Items",
+    "Tax Rate For Calcs",
+    "Normalized EBITDA",
+    "Total Unusual Items",
+    "Total Unusual Items Excluding Goodwill",
+    "Net Income From Continuing Operation Net Minority Interest",
+    "Reconciled Depreciation",
+    "Reconciled Cost Of Revenue",
+    "EBITDA",
+    "EBIT",
+    "Net Interest Income",
+    "Interest Expense",
+    "Normalized Income",
+    "Net Income From Continuing And Discontinued Operation",
+    "Total Expenses",
+    "Diluted Average Shares",
+    "Basic Average Shares",
+    "Diluted EPS",
+    "Basic EPS",
+    "Diluted NI Availto Com Stockholders",
+    "Net Income Common Stockholders",
+    "Otherunder Preferred Stock Dividend",
+    "Net Income",
+    "Net Income Including Noncontrolling Interests",
+    "Net Income Discontinuous Operations",
+    "Net Income Continuous Operations",
+    "Tax Provision",
+    "Pretax Income",
+    "Other Non Operating Income Expenses",
+    "Special Income Charges",
+    "Impairment Of Capital Assets",
+    "Net Non Operating Interest Income Expense",
+    "Total Other Finance Cost",
+    "Interest Expense Non Operating",
+    "Operating Income",
+    "Operating Expense",
+    "Other Operating Expenses",
+    "Depreciation And Amortization In Income Statement",
+    "Amortization",
+    "Depreciation Income Statement"
+   ],
+   "q_cols": [
+    "2025-12-31 00:00:00",
+    "2025-09-30 00:00:00",
+    "2025-06-30 00:00:00",
+    "2025-03-31 00:00:00"
+   ],
+   "q_rev": {
+    "2025-12-31 00:00:00": 971084000.0,
+    "2025-09-30 00:00:00": 754380000.0,
+    "2025-06-30 00:00:00": 1006787000.0,
+    "2025-03-31 00:00:00": 2183827000.0
+   },
+   "q_ebit": {
+    "2025-12-31 00:00:00": 137756000.0,
+    "2025-09-30 00:00:00": 56516000.0,
+    "2025-06-30 00:00:00": 31319000.0,
+    "2025-03-31 00:00:00": -466461000.0
+   },
+   "earn_dates": [
+    {
+     "Earnings Date": "2027-02-25 10:00:00-05:00",
+     "EPS Estimate": NaN,
+     "Reported EPS": NaN,
+     "Surprise(%)": NaN
+    },
+    {
+     "Earnings Date": "2026-05-21 10:00:00-04:00",
+     "EPS Estimate": "0.41",
+     "Reported EPS": NaN,
+     "Surprise(%)": NaN
+    },
+    {
+     "Earnings Date": "2026-03-27 05:00:00-04:00",
+     "EPS Estimate": "24.04",
+     "Reported EPS": "14.58",
+     "Surprise(%)": "-39.34"
+    },
+    {
+     "Earnings Date": "2025-11-13 04:00:00-05:00",
+     "EPS Estimate": "-1.01",
+     "Reported EPS": "-4.37",
+     "Surprise(%)": "-334.35"
+    },
+    {
+     "Earnings Date": "2025-08-26 03:00:00-04:00",
+     "EPS Estimate": "-0.76",
+     "Reported EPS": "-0.12",
+     "Surprise(%)": "83.66"
+    },
+    {
+     "Earnings Date": "2025-05-27 03:00:00-04:00",
+     "EPS Estimate": "0.67",
+     "Reported EPS": "0.42",
+     "Surprise(%)": "-38.18"
+    },
+    {
+     "Earnings Date": "2025-02-20 04:00:00-05:00",
+     "EPS Estimate": "-0.95",
+     "Reported EPS": "-0.92",
+     "Surprise(%)": "3.33"
+    },
+    {
+     "Earnings Date": "2024-11-27 04:00:00-05:00",
+     "EPS Estimate": "-2.09",
+     "Reported EPS": "-3.63",
+     "Surprise(%)": "-73.46"
+    },
+    {
+     "Earnings Date": "2024-08-21 03:00:00-04:00",
+     "EPS Estimate": "0.48",
+     "Reported EPS": "-1.62",
+     "Surprise(%)": "-440.52"
+    },
+    {
+     "Earnings Date": "2024-05-16 03:00:00-04:00",
+     "EPS Estimate": "1.01",
+     "Reported EPS": "2.5",
+     "Surprise(%)": "146.31"
+    },
+    {
+     "Earnings Date": "2024-02-22 03:00:00-05:00",
+     "EPS Estimate": "-1.7",
+     "Reported EPS": "-1.81",
+     "Surprise(%)": "-6.66"
+    },
+    {
+     "Earnings Date": "2023-11-14 03:00:00-05:00",
+     "EPS Estimate": "-0.29",
+     "Reported EPS": "-0.08",
+     "Surprise(%)": "71.3"
+    },
+    {
+     "Earnings Date": "2023-08-24 21:00:00-04:00",
+     "EPS Estimate": "2.36",
+     "Reported EPS": "0.72",
+     "Surprise(%)": "-69.58"
+    },
+    {
+     "Earnings Date": "2023-05-12 04:00:00-04:00",
+     "EPS Estimate": "1.5",
+     "Reported EPS": "2.88",
+     "Surprise(%)": "91.32"
+    },
+    {
+     "Earnings Date": "2023-02-16 03:00:00-05:00",
+     "EPS Estimate": "0.89",
+     "Reported EPS": "-0.08",
+     "Surprise(%)": "-108.93"
+    },
+    {
+     "Earnings Date": "2022-11-10 18:00:00-05:00",
+     "EPS Estimate": "0.94",
+     "Reported EPS": "0.98",
+     "Surprise(%)": "3.99"
+    },
+    {
+     "Earnings Date": "2022-08-22 18:00:00-04:00",
+     "EPS Estimate": "5.09",
+     "Reported EPS": "7.66",
+     "Surprise(%)": "50.44"
+    },
+    {
+     "Earnings Date": "2022-05-12 18:00:00-04:00",
+     "EPS Estimate": "2.85",
+     "Reported EPS": "3.32",
+     "Surprise(%)": "16.46"
+    },
+    {
+     "Earnings Date": "2022-02-15 03:00:00-05:00",
+     "EPS Estimate": "2.01",
+     "Reported EPS": "1.64",
+     "Surprise(%)": "-18.34"
+    },
+    {
+     "Earnings Date": "2021-11-03 04:00:00-04:00",
+     "EPS Estimate": "0.2",
+     "Reported EPS": "0.33",
+     "Surprise(%)": "61.56"
+    },
+    {
+     "Earnings Date": "2021-08-17 20:00:00-04:00",
+     "EPS Estimate": "0.36",
+     "Reported EPS": "0.14",
+     "Surprise(%)": "-60.54"
+    },
+    {
+     "Earnings Date": "2021-05-12 04:00:00-04:00",
+     "EPS Estimate": "-0.39",
+     "Reported EPS": "-0.01",
+     "Surprise(%)": "98.66"
+    },
+    {
+     "Earnings Date": "2021-02-10 18:00:00-05:00",
+     "EPS Estimate": "-0.44",
+     "Reported EPS": "-1.5",
+     "Surprise(%)": "-238.05"
+    },
+    {
+     "Earnings Date": "2020-11-17 00:00:00-05:00",
+     "EPS Estimate": "-1.54",
+     "Reported EPS": "-1.4",
+     "Surprise(%)": "8.72"
+    },
+    {
+     "Earnings Date": "2020-08-17 18:00:00-04:00",
+     "EPS Estimate": "0.16",
+     "Reported EPS": "-0.85",
+     "Surprise(%)": "-627.36"
+    }
+   ],
+   "info": {
+    "marketCap": 2453619712,
+    "fullTimeEmployees": 727,
+    "currency": "NOK",
+    "financialCurrency": "NOK",
+    "trailingPE": null,
+    "forwardPE": 12.246499,
+    "dividendYield": 163.02,
+    "longBusinessSummary": "Grieg Seafood ASA, a seafood company, engages in the farming, production, and sale of Atlantic salmon in Continental Europe, the United Kingdom, the United States, Canada, Asia, and internationally. The company also provides aquaculture services; and byproducts, including smolt, fry, roe, and ensilage. It serves wholesalers, producers, and retailers. The company was incorporated in 1988 and is headquartered in Bergen, Norway. Grieg Seafood ASA operates as a subsidiary of Grieg Aqua AS.",
+    "enterpriseValue": 3996839680,
+    "sharesOutstanding": 112242439
+   }
+  },
+  "BAKKA.OL": {
+   "calendar": {
+    "Ex-Dividend Date": "2026-05-04",
+    "Earnings Date": [
+     "2026-11-02"
+    ],
+    "Earnings High": 5.2,
+    "Earnings Low": 3.03,
+    "Earnings Average": 4.11719,
+    "Revenue High": 2539000000,
+    "Revenue Low": 1931000000,
+    "Revenue Average": 2313895110
+   },
+   "earnings_estimate": {
+    "avg": {
+     "0q": 4.11719,
+     "+1q": 5.29,
+     "0y": 12.61748,
+     "+1y": 21.87088
+    },
+    "low": {
+     "0q": 3.03,
+     "+1q": 4.6,
+     "0y": 11.2,
+     "+1y": 17.3
+    },
+    "high": {
+     "0q": 5.2,
+     "+1q": 5.98,
+     "0y": 13.6,
+     "+1y": 25.07918
+    },
+    "yearAgoEps": {
+     "0q": 2.6,
+     "+1q": 5.16,
+     "0y": 6.9,
+     "+1y": 12.61748
+    },
+    "numberOfAnalysts": {
+     "0q": 4,
+     "+1q": 2,
+     "0y": 8,
+     "+1y": 8
+    },
+    "growth": {
+     "0q": 0.58349997,
+     "+1q": 0.0252,
+     "0y": 0.8286,
+     "+1y": 0.7334
+    },
+    "currency": {
+     "0q": "DKK",
+     "+1q": "DKK",
+     "0y": "DKK",
+     "+1y": "DKK"
+    },
+    "methodology": {
+     "0q": "normalized",
+     "+1q": "normalized",
+     "0y": "normalized",
+     "+1y": "normalized"
+    }
+   },
+   "revenue_estimate": {
+    "avg": {
+     "0q": 2313895110,
+     "+1q": 2372000000,
+     "0y": 7788605320,
+     "+1y": 9782764920
+    },
+    "low": {
+     "0q": 1931000000,
+     "+1q": 2372000000,
+     "0y": 7497000000,
+     "+1y": 8769112100
+    },
+    "high": {
+     "0q": 2539000000,
+     "+1q": 2372000000,
+     "0y": 8160000000,
+     "+1y": 11899000000
+    },
+    "numberOfAnalysts": {
+     "0q": 5,
+     "+1q": 1,
+     "0y": 8,
+     "+1y": 8
+    },
+    "yearAgoRevenue": {
+     "0q": 1847000000,
+     "+1q": 2114000000,
+     "0y": 7007000000,
+     "+1y": 7788605320
+    },
+    "growth": {
+     "0q": 0.25280002,
+     "+1q": 0.122,
+     "0y": 0.111499995,
+     "+1y": 0.256
+    },
+    "currency": {
+     "0q": "DKK",
+     "+1q": "DKK",
+     "0y": "DKK",
+     "+1y": "DKK"
+    }
+   },
+   "eps_trend": {
+    "current": {
+     "0q": 4.11719,
+     "+1q": 5.29,
+     "0y": 12.61748,
+     "+1y": 21.87088
+    },
+    "7daysAgo": {
+     "0q": 3.75625,
+     "+1q": 5.4,
+     "0y": 12.53998,
+     "+1y": 22.08088
+    },
+    "30daysAgo": {
+     "0q": 6.42863,
+     "+1q": 6.56667,
+     "0y": 15.88772,
+     "+1y": 22.96406
+    },
+    "60daysAgo": {
+     "0q": 6.48239,
+     "+1q": 6.41667,
+     "0y": 16.09037,
+     "+1y": 22.92122
+    },
+    "90daysAgo": {
+     "0q": 5.62661,
+     "+1q": 5.9,
+     "0y": 17.51548,
+     "+1y": 23.80913
+    },
+    "currency": {
+     "0q": "DKK",
+     "+1q": "DKK",
+     "0y": "DKK",
+     "+1y": "DKK"
+    },
+    "methodology": {
+     "0q": "normalized",
+     "+1q": "normalized",
+     "0y": "normalized",
+     "+1y": "normalized"
+    }
+   },
+   "growth_estimates": {
+    "stockTrend": {
+     "0q": 0.58349997,
+     "+1q": 0.0252,
+     "0y": 0.8286,
+     "+1y": 0.7334,
+     "LTG": NaN
+    },
+    "indexTrend": {
+     "0q": 0.3018,
+     "+1q": 0.2758,
+     "0y": 0.33650002,
+     "+1y": 0.16950001,
+     "LTG": 0.122
+    }
+   },
+   "q_rows": [
+    "Tax Effect Of Unusual Items",
+    "Tax Rate For Calcs",
+    "Normalized EBITDA",
+    "Net Income From Continuing Operation Net Minority Interest",
+    "Reconciled Depreciation",
+    "Reconciled Cost Of Revenue",
+    "EBITDA",
+    "EBIT",
+    "Net Interest Income",
+    "Interest Expense",
+    "Interest Income",
+    "Normalized Income",
+    "Net Income From Continuing And Discontinued Operation",
+    "Total Expenses",
+    "Diluted Average Shares",
+    "Basic Average Shares",
+    "Diluted EPS",
+    "Basic EPS",
+    "Diluted NI Availto Com Stockholders",
+    "Net Income Common Stockholders",
+    "Otherunder Preferred Stock Dividend",
+    "Net Income",
+    "Minority Interests",
+    "Net Income Including Noncontrolling Interests",
+    "Net Income Continuous Operations",
+    "Tax Provision",
+    "Pretax Income",
+    "Other Non Operating Income Expenses",
+    "Net Non Operating Interest Income Expense",
+    "Total Other Finance Cost",
+    "Interest Expense Non Operating",
+    "Interest Income Non Operating",
+    "Operating Income",
+    "Operating Expense",
+    "Other Operating Expenses",
+    "Depreciation And Amortization In Income Statement",
+    "Depreciation Income Statement",
+    "Gross Profit",
+    "Cost Of Revenue",
+    "Total Revenue"
+   ],
+   "q_cols": [
+    "2026-09-30 00:00:00",
+    "2026-06-30 00:00:00",
+    "2026-03-31 00:00:00",
+    "2025-12-31 00:00:00",
+    "2025-09-30 00:00:00",
+    "2025-06-30 00:00:00"
+   ],
+   "q_rev": {
+    "2026-09-30 00:00:00": 1680739000.0,
+    "2026-06-30 00:00:00": 1825581000.0,
+    "2026-03-31 00:00:00": 2113860000.0,
+    "2025-12-31 00:00:00": 1846895000.0,
+    "2025-09-30 00:00:00": NaN,
+    "2025-06-30 00:00:00": 1574628000.0
+   },
+   "q_ebit": {
+    "2026-09-30 00:00:00": 301658000.0,
+    "2026-06-30 00:00:00": -195988000.0,
+    "2026-03-31 00:00:00": 457392000.0,
+    "2025-12-31 00:00:00": 838924000.0,
+    "2025-09-30 00:00:00": NaN,
+    "2025-06-30 00:00:00": -153682000.0
+   },
+   "earn_dates": [
+    {
+     "Earnings Date": "2027-02-15 10:00:00-05:00",
+     "EPS Estimate": "4.12",
+     "Reported EPS": NaN,
+     "Surprise(%)": NaN
+    },
+    {
+     "Earnings Date": "2026-11-02 00:00:00-05:00",
+     "EPS Estimate": "2.04",
+     "Reported EPS": "0.5",
+     "Surprise(%)": "-75.53"
+    },
+    {
+     "Earnings Date": "2026-08-30 22:00:00-04:00",
+     "EPS Estimate": "3.67",
+     "Reported EPS": "2.31",
+     "Surprise(%)": "-37.09"
+    },
+    {
+     "Earnings Date": "2026-05-19 03:00:00-04:00",
+     "EPS Estimate": "4.92",
+     "Reported EPS": "5.16",
+     "Surprise(%)": "4.85"
+    },
+    {
+     "Earnings Date": "2026-03-25 18:00:00-04:00",
+     "EPS Estimate": "3.07",
+     "Reported EPS": "2.6",
+     "Surprise(%)": "-15.31"
+    },
+    {
+     "Earnings Date": "2025-11-16 20:00:00-05:00",
+     "EPS Estimate": "0.19",
+     "Reported EPS": NaN,
+     "Surprise(%)": "-100.0"
+    },
+    {
+     "Earnings Date": "2025-08-25 20:00:00-04:00",
+     "EPS Estimate": "0.05",
+     "Reported EPS": "-0.1",
+     "Surprise(%)": "-288.89"
+    },
+    {
+     "Earnings Date": "2025-05-18 20:00:00-04:00",
+     "EPS Estimate": "4.79",
+     "Reported EPS": "4.39",
+     "Surprise(%)": "-8.37"
+    },
+    {
+     "Earnings Date": "2025-02-16 19:00:00-05:00",
+     "EPS Estimate": "4.49",
+     "Reported EPS": "4.37",
+     "Surprise(%)": "-2.73"
+    },
+    {
+     "Earnings Date": "2024-11-05 00:00:00-05:00",
+     "EPS Estimate": "2.42",
+     "Reported EPS": "1.47",
+     "Surprise(%)": "-39.16"
+    },
+    {
+     "Earnings Date": "2024-08-23 20:00:00-04:00",
+     "EPS Estimate": "6.36",
+     "Reported EPS": "3.37",
+     "Surprise(%)": "-47.03"
+    },
+    {
+     "Earnings Date": "2024-05-05 20:00:00-04:00",
+     "EPS Estimate": "7.07",
+     "Reported EPS": "7.66",
+     "Surprise(%)": "8.33"
+    },
+    {
+     "Earnings Date": "2024-02-20 00:00:00-05:00",
+     "EPS Estimate": "4.91",
+     "Reported EPS": "3.56",
+     "Surprise(%)": "-27.56"
+    },
+    {
+     "Earnings Date": "2023-11-06 19:00:00-05:00",
+     "EPS Estimate": "2.94",
+     "Reported EPS": "2.93",
+     "Surprise(%)": "-0.48"
+    },
+    {
+     "Earnings Date": "2023-08-22 00:00:00-04:00",
+     "EPS Estimate": "4.18",
+     "Reported EPS": "3.79",
+     "Surprise(%)": "-9.34"
+    },
+    {
+     "Earnings Date": "2023-05-09 14:00:00-04:00",
+     "EPS Estimate": "6.61",
+     "Reported EPS": "7.19",
+     "Surprise(%)": "8.73"
+    },
+    {
+     "Earnings Date": "2023-02-21 11:00:00-05:00",
+     "EPS Estimate": "4.39",
+     "Reported EPS": "3.43",
+     "Surprise(%)": "-21.8"
+    },
+    {
+     "Earnings Date": "2022-11-08 03:00:00-05:00",
+     "EPS Estimate": "4.31",
+     "Reported EPS": "4.0",
+     "Surprise(%)": "-7.21"
+    },
+    {
+     "Earnings Date": "2022-08-23 04:00:00-04:00",
+     "EPS Estimate": "7.81",
+     "Reported EPS": "6.77",
+     "Surprise(%)": "-13.35"
+    },
+    {
+     "Earnings Date": "2022-05-10 04:00:00-04:00",
+     "EPS Estimate": "5.57",
+     "Reported EPS": "4.82",
+     "Surprise(%)": "-13.52"
+    },
+    {
+     "Earnings Date": "2022-02-22 00:00:00-05:00",
+     "EPS Estimate": "2.11",
+     "Reported EPS": "1.89",
+     "Surprise(%)": "-10.33"
+    },
+    {
+     "Earnings Date": "2021-11-09 03:00:00-05:00",
+     "EPS Estimate": "3.62",
+     "Reported EPS": "0.64",
+     "Surprise(%)": "-82.31"
+    },
+    {
+     "Earnings Date": "2021-08-24 04:00:00-04:00",
+     "EPS Estimate": "5.21",
+     "Reported EPS": "4.8",
+     "Surprise(%)": "-7.85"
+    },
+    {
+     "Earnings Date": "2021-05-11 04:00:00-04:00",
+     "EPS Estimate": "2.27",
+     "Reported EPS": "2.95",
+     "Surprise(%)": "29.77"
+    },
+    {
+     "Earnings Date": "2021-02-22 18:00:00-05:00",
+     "EPS Estimate": "1.54",
+     "Reported EPS": "-0.33",
+     "Surprise(%)": "-121.47"
+    }
+   ],
+   "info": {
+    "marketCap": 25276262400,
+    "fullTimeEmployees": 1686,
+    "currency": "NOK",
+    "financialCurrency": "DKK",
+    "trailingPE": 18.100084,
+    "forwardPE": 13.863932,
+    "dividendYield": 1.18,
+    "longBusinessSummary": "P/F Bakkafrost, together with its subsidiaries, engages in the production and sale of salmon products in North America, Western Europe, Eastern Europe, Asia, and internationally. The company operates through seven segments: Fishmeal, Fish Oil and Fish Feed; Freshwater Faroe Islands; Freshwater Scotland; Farming Faroe Islands; Farming Scotland; Services; and Sales & Other. Its products include fresh and frozen whole salmon, fresh and frozen salmon fillets, fresh skin-packed salmon portions, frozen salmon portions and tails, frozen smoked salmon and salmon fillets, frozen salmon bits and pieces, frozen salmon off-cuts and belly flaps, frozen salmon heads, salmon backbones, and salmon skin. The company is also involved in the production and sale of fishmeal, fish oil, and fish feed; production of eggs from breeding self-owned salmon strains; production of smolts; and on-growing of salmon. In addition, it manages a fleet of farming service vessels; provides fish transportation, treatments, net cleaning, harvesting, freight and logistical, and heavy marine support services; converts organic waste into biogas, heating, electricity, and fertilizers; produces styrofoam boxes; and optimizes the value creation and retention from the harvested fish. P/F Bakkafrost was founded in 1968 and is headquartered in Glyvrar, Denmark.",
+    "enterpriseValue": 30216835072,
+    "sharesOutstanding": 59222736
+   }
+  },
+  "_secs": 2.9
+ },
+ "articles": {
+  "ilaks": [
+   {
+    "title": "Sykdom på villaks sprer seg til elver i Rogaland og Hardanger",
+    "link": "https://ilaks.no/sykdom-pa-villaks-sprer-seg-til-elver-i-rogaland-og-hardanger/?mtm_campaign=feed_click&mtm_kwd=sykdom-pa-villaks-sprer-seg-til-elver-i-rogaland-og-hardanger&mtm_source=RSS2&mtm_medium=feed",
+    "feed_content_len": 0,
+    "fetch_status": 200,
+    "final": "https://ilaks.no/sykdom-pa-villaks-sprer-seg-til-elver-i-rogaland-og-hardanger/?mtm_campaign=feed_click&mtm_kwd=sykdom-pa-villaks-sprer-seg-til-elver-i-rogaland-og-hardanger&mtm_source=RSS2&mtm_medium=feed",
+    "text_len": 2814,
+    "text_start": "Veterinærinstituttet har den siste uken varslet Mattilsynet om funn forenelige med ulcerativ dermal nekrose (UDN) i flere elver.\nI tillegg til elvene hvor det tidligere er funnet fisk med UDN, er det varslet om UDN i følgende elver:\nStordalselva (Åfjord), Namsen og Nidelva i Trøndelag, og i tillegg elvene Kinso, Ådland (Frugardselva) og Granvin i Hardanger. I tillegg har Mattilsynet blitt informer",
+    "text_end": "orsøke å identifisere et mulig bakenforliggende smittestoff. Dette er viktig for å forsøke å identifisere eller utelukke årsaksforhold. Det forventes at dette blir et omfattende og tidkrevende arbeid.",
+    "meta": {
+     "title": "Sykdom på villaks sprer seg til elver i Rogaland og Hardanger",
+     "date": "2026-11-21",
+     "sitename": "ilaks.no",
+     "image": null
+    }
+   },
+   {
+    "title": "Håpet lever for Isfjord: – Jobber med å få i gang produksjonen i løpet av en ukes tid",
+    "link": "https://ilaks.no/forventer-redning-for-isfjord-jobber-med-a-fa-i-gang-produksjonen-i-lopet-av-en-ukes-tid/?mtm_campaign=feed_click&mtm_kwd=forventer-redning-for-isfjord-jobber-med-a-fa-i-gang-produksjonen-i-lopet-av-en-ukes-tid&mtm_source=RSS2&mtm_medium=feed",
+    "feed_content_len": 0,
+    "fetch_status": 200,
+    "final": "https://ilaks.no/forventer-redning-for-isfjord-jobber-med-a-fa-i-gang-produksjonen-i-lopet-av-en-ukes-tid/?mtm_campaign=feed_click&mtm_kwd=forventer-redning-for-isfjord-jobber-med-a-fa-i-gang-produksjonen-i-lopet-av-en-ukes-tid&mtm_source=RSS2&mtm_medium=feed",
+    "text_len": 2433,
+    "text_start": "I kulissene av konkursen jobbes det på spreng for at Orkanger-selskapet skal kunne gjenoppstå. En av grunnleggerne, Lars Krogh, håper det er mulig å berge over halvparten av stillingene.\nForedlingsselskapet Isfjord Norway meldte oppbud i forrige uke, etter en tøff tid med redusert tilgang på råstoff, økende konkurranse og vedvarende underskudd. Dermed står 280 arbeidsplasser på vippen.\nKonkursen b",
+    "text_end": "6 % | \n| Driftsmargin | -2,5 % | 2,4 % |  | \n| Alle tall i millioner kroner |  |  |  | \niLaks har også forsøkt å komme i kontakt med bostyrer Terje Aas og daglig leder Liv Randi Sira for en kommentar.",
+    "meta": {
+     "title": "Håpet lever for Isfjord: – Jobber med å få i gang produksjonen i løpet av en ukes tid",
+     "date": "2026-11-20",
+     "sitename": "ilaks.no",
+     "image": null
+    }
+   },
+   {
+    "title": "Knappere tilgjengelighet av industristørrelsene sender lakseprisen oppover",
+    "link": "https://ilaks.no/knappere-tilgjengelighet-av-industristorrelsene-sender-lakseprisen-oppover/?mtm_campaign=feed_click&mtm_kwd=knappere-tilgjengelighet-av-industristorrelsene-sender-lakseprisen-oppover&mtm_source=RSS2&mtm_medium=feed",
+    "feed_content_len": 0,
+    "fetch_status": 200,
+    "final": "https://ilaks.no/knappere-tilgjengelighet-av-industristorrelsene-sender-lakseprisen-oppover/?mtm_campaign=feed_click&mtm_kwd=knappere-tilgjengelighet-av-industristorrelsene-sender-lakseprisen-oppover&mtm_source=RSS2&mtm_medium=feed",
+    "text_len": 3033,
+    "text_start": "Markedet strammes til.\n– 3-4 og 4-5 kommer opp i 5-6-pris. Det skulle vi hatt denne uken, men det ble ikke sånn. 6+ er vanskelig. Flymarkedet har vært vanskelige å selge denne uken, sier en trader til iLaks.\nFakta\n– Fisken er større i år enn i fjor. Det vi har er fem kilo og oppover. Jo større det blir, desto vanskeligere blir det. Denne uken her var det bråstopp. Nå selger vi 6+ med bra store tap",
+    "text_end": "t opp Kina, Taiwan og de andre storfiskmarkedene.\n– Skal prisene videre oppover?\n– I utgangspunktet tror jeg det. Jeg tror prisene er høyere enn idag om to uker. Det er jeg ganske sikker på, sier han.",
+    "meta": {
+     "title": "Knappere tilgjengelighet av industristørrelsene sender lakseprisen oppover",
+     "date": "2026-11-20",
+     "sitename": "ilaks.no",
+     "image": null
+    }
+   }
+  ],
+  "dn": [
+   {
+    "title": "Man kan jaggu stille klokken etter disse emisjonene (+) - Dagens Næringsliv",
+    "link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQVkRzdG9Dc3RHOTRUS3dhU3o5UFN0QXZMckpRemlLamlsbldwMmYycmY3VlVnLTN4d29sckp1dDBodzN1WTdoVnd4YmxkLVNhZkVhLXhJTndBTHAxSkoybUw2R0RGdXhTY29QWnpKVGVYZHRrQkNTQVM1a1FST1E2bDFGdmNLcnJRcGZDcjVTQlNoM1ZhOTQ0TXdzQQ?oc=5",
+    "feed_content_len": 0,
+    "decoded": {
+     "success": true,
+     "decoded_url": "https://www.dn.no/borskommentar/man-kan-jaggu-stille-klokken-etter-disse-emisjonene/2-1-2076522"
+    },
+    "fetch_status": 200,
+    "final": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQVkRzdG9Dc3RHOTRUS3dhU3o5UFN0QXZMckpRemlLamlsbldwMmYycmY3VlVnLTN4d29sckp1dDBodzN1WTdoVnd4YmxkLVNhZkVhLXhJTndBTHAxSkoybUw2R0RGdXhTY29QWnpKVGVYZHRrQkNTQVM1a1FST1E2bDFGdmNLcnJRcGZDcjVTQlNoM1ZhOTQ0TXdzQQ?oc=5&hl=en-US&gl=US&ceid=US:en",
+    "text_len": 0,
+    "text_start": "",
+    "text_end": "",
+    "meta": {
+     "title": "Google News",
+     "date": "2026-11-18",
+     "sitename": "Google News",
+     "image": "https://lh3.googleusercontent.com/J6_coFbogxhRI9iM864NL_liGXvsQp2AupsKei7z0cNNfDvGUmWUy20nuUhkREQyrpY4bEeIBuc=s0-w300-rw"
+    }
+   },
+   {
+    "title": "Laksegründer Gustav Witzøe: – Hvorfor skal det være mer lukrativt for Trump å eie Salmar? (+) - Dagens Næringsliv",
+    "link": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxQNFdOaFAwTW10bnUxRENrQ1E3TmNWcTBfY01GMVNqV0NkMkIwT2l6SzQ5N01jaW5iVVk5dXNOblBlWlZyVzdRZjY2WHBhSVNUQ08tNG1SLTBNZk9TbHV3a0ZCVDMzZWhSc2FhODk2UmNyemZRMXdEa0JCaEx3QjNibG9Hd3NaTlhrRENMZlNOR2xHT21uMzRkSlVwMW4tRUhHdWVDa01jNzIySmlnREs1TVRNZm44azJ5NHQtNDNWTXpoYkJvVUZqS0lPSGg4TWN3dDBxdzk0ZkZmbzFUZ1lkQlZBN0sydw?oc=5",
+    "feed_content_len": 0,
+    "decoded": {
+     "success": true,
+     "decoded_url": "https://www.dn.no/havbruk/laks/oppdrett/gustav-witzoe/laksegrunder-gustav-witzoe-hvorfor-skal-det-vare-mer-lukrativt-for-trump-a-eie-salmar/2-1-2076530"
+    },
+    "fetch_status": 200,
+    "final": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxQNFdOaFAwTW10bnUxRENrQ1E3TmNWcTBfY01GMVNqV0NkMkIwT2l6SzQ5N01jaW5iVVk5dXNOblBlWlZyVzdRZjY2WHBhSVNUQ08tNG1SLTBNZk9TbHV3a0ZCVDMzZWhSc2FhODk2UmNyemZRMXdEa0JCaEx3QjNibG9Hd3NaTlhrRENMZlNOR2xHT21uMzRkSlVwMW4tRUhHdWVDa01jNzIySmlnREs1TVRNZm44azJ5NHQtNDNWTXpoYkJvVUZqS0lPSGg4TWN3dDBxdzk0ZkZmbzFUZ1lkQlZBN0sydw?oc=5&hl=en-US&gl=US&ceid=US:en",
+    "text_len": 0,
+    "text_start": "",
+    "text_end": "",
+    "meta": {
+     "title": "Google News",
+     "date": "2026-11-18",
+     "sitename": "Google News",
+     "image": "https://lh3.googleusercontent.com/J6_coFbogxhRI9iM864NL_liGXvsQp2AupsKei7z0cNNfDvGUmWUy20nuUhkREQyrpY4bEeIBuc=s0-w300-rw"
+    }
+   },
+   {
+    "title": "Fire år med lakseskatten: – Blir færre familieeide gründerbedrifter (+) - Dagens Næringsliv",
+    "link": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxQbF8zWVZSR0ppeW5ob1BPNk1qUlBKMkdPTGZzVHB0SHhOWm5QckxPb1c5UVJyT1pKdVVXblBwTTJOZmN2bmRDT3l0Y19TYjBXMDhnNjB4OFo0NGhnUndreUFwRWpMcFBBZWVGVDJPUndLVlR0YTdWRzFJRXNCdE1UcmVYS212UVgwdW4yTFJES0RfNElPb0Q0Y0NFUS1VNnlvZldJRDlVYktHX1RPZDlKZXc1U2stZm1RVUg1aV80S0tQcXJwU3g4YQ?oc=5",
+    "feed_content_len": 0,
+    "decoded": {
+     "success": true,
+     "decoded_url": "https://www.dn.no/havbruk/mowi/leroy/salmar/fire-ar-med-lakseskatten-blir-farre-familieeide-grunderbedrifter/2-1-2075808?abtest=a"
+    },
+    "fetch_status": 200,
+    "final": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxQbF8zWVZSR0ppeW5ob1BPNk1qUlBKMkdPTGZzVHB0SHhOWm5QckxPb1c5UVJyT1pKdVVXblBwTTJOZmN2bmRDT3l0Y19TYjBXMDhnNjB4OFo0NGhnUndreUFwRWpMcFBBZWVGVDJPUndLVlR0YTdWRzFJRXNCdE1UcmVYS212UVgwdW4yTFJES0RfNElPb0Q0Y0NFUS1VNnlvZldJRDlVYktHX1RPZDlKZXc1U2stZm1RVUg1aV80S0tQcXJwU3g4YQ?oc=5&hl=en-US&gl=US&ceid=US:en",
+    "text_len": 0,
+    "text_start": "",
+    "text_end": "",
+    "meta": {
+     "title": "Google News",
+     "date": "2026-11-18",
+     "sitename": "Google News",
+     "image": "https://lh3.googleusercontent.com/J6_coFbogxhRI9iM864NL_liGXvsQp2AupsKei7z0cNNfDvGUmWUy20nuUhkREQyrpY4bEeIBuc=s0-w300-rw"
+    }
+   }
+  ],
+  "e24": [
+   {
+    "title": "Laksefabrikk konkurs – rundt 300 ansatte rammes - E24",
+    "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPSWJGU2tWQ2xRdWRXX1lHQm1SQUN0NTJpektIc0dOZER0cklYd3JtREJqR2ZaenJVM05HNk5XUVRSeHBxQmZydndvZ24zeDhOTFBSVWNYUWljSU8teE5yMmxsb3NJTVliVmd0MmdzaTd2SEs0eUs4NkczMTJ0N2FkOXlPWkhocGxG?oc=5",
+    "feed_content_len": 0,
+    "decoded": {
+     "success": true,
+     "decoded_url": "https://e24.no/naeringsliv/i/bk5k7k/laksefabrikk-konkurs-rundt-300-ansatte-rammes"
+    },
+    "fetch_status": 200,
+    "final": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPSWJGU2tWQ2xRdWRXX1lHQm1SQUN0NTJpektIc0dOZER0cklYd3JtREJqR2ZaenJVM05HNk5XUVRSeHBxQmZydndvZ24zeDhOTFBSVWNYUWljSU8teE5yMmxsb3NJTVliVmd0MmdzaTd2SEs0eUs4NkczMTJ0N2FkOXlPWkhocGxG?oc=5&hl=en-US&gl=US&ceid=US:en",
+    "text_len": 0,
+    "text_start": "",
+    "text_end": "",
+    "meta": {
+     "title": "Google News",
+     "date": "2026-11-18",
+     "sitename": "Google News",
+     "image": "https://lh3.googleusercontent.com/J6_coFbogxhRI9iM864NL_liGXvsQp2AupsKei7z0cNNfDvGUmWUy20nuUhkREQyrpY4bEeIBuc=s0-w300-rw"
+    }
+   },
+   {
+    "title": "Lakseselskap konkurs - E24",
+    "link": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9FNkZ6TldheHNqdUw4djFQa2IzazVaSW5oZVlYVzRCV2VyWHFqR0RyWlVvYVN1TC1tVHRocTl6cm5xcXdvQjdXdGZqWDhKdVhCanQyOEZaN254QWdvUmhiY3hDQUlVblE?oc=5",
+    "feed_content_len": 0,
+    "decoded": {
+     "success": true,
+     "decoded_url": "https://e24.no/naeringsliv/i/EbWjvl/lakseselskap-konkurs"
+    },
+    "fetch_status": 200,
+    "final": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9FNkZ6TldheHNqdUw4djFQa2IzazVaSW5oZVlYVzRCV2VyWHFqR0RyWlVvYVN1TC1tVHRocTl6cm5xcXdvQjdXdGZqWDhKdVhCanQyOEZaN254QWdvUmhiY3hDQUlVblE?oc=5&hl=en-US&gl=US&ceid=US:en",
+    "text_len": 0,
+    "text_start": "",
+    "text_end": "",
+    "meta": {
+     "title": "Google News",
+     "date": "2026-11-18",
+     "sitename": "Google News",
+     "image": "https://lh3.googleusercontent.com/J6_coFbogxhRI9iM864NL_liGXvsQp2AupsKei7z0cNNfDvGUmWUy20nuUhkREQyrpY4bEeIBuc=s0-w300-rw"
+    }
+   },
+   {
+    "title": "Stoler ikke på Støres vekstløfter: –⁠ Gjenstår å se - E24",
+    "link": "https://news.google.com/rss/articles/CBMilgFBVV95cUxON0tJeGl5eXhJUURPQlRzQ0h2M1V4TUlSWUh0cXhRRUc3UWhFWHBSZDRVcjlxMGJRd2NHS2tYdnpPM3lTaVQwalhLeTJxYzRMQ24ydV84ZzMycUpnQzF5SjBrTFVXOGZWamltMkNOU0c2Q2FrbmFOcTNoOThpQ1lnV1RNY2gwY2pBdkNCSC04dmZhY19YWFE?oc=5",
+    "feed_content_len": 0,
+    "decoded": {
+     "success": true,
+     "decoded_url": "https://e24.no/hav-og-sjoemat/i/M5RqJM/stoler-ikke-paa-stoeres-vekstloefter-gjenstaar-aa-se"
+    },
+    "fetch_status": 200,
+    "final": "https://news.google.com/rss/articles/CBMilgFBVV95cUxON0tJeGl5eXhJUURPQlRzQ0h2M1V4TUlSWUh0cXhRRUc3UWhFWHBSZDRVcjlxMGJRd2NHS2tYdnpPM3lTaVQwalhLeTJxYzRMQ24ydV84ZzMycUpnQzF5SjBrTFVXOGZWamltMkNOU0c2Q2FrbmFOcTNoOThpQ1lnV1RNY2gwY2pBdkNCSC04dmZhY19YWFE?oc=5&hl=en-US&gl=US&ceid=US:en",
+    "text_len": 0,
+    "text_start": "",
+    "text_end": "",
+    "meta": {
+     "title": "Google News",
+     "date": "2026-11-18",
+     "sitename": "Google News",
+     "image": "https://lh3.googleusercontent.com/J6_coFbogxhRI9iM864NL_liGXvsQp2AupsKei7z0cNNfDvGUmWUy20nuUhkREQyrpY4bEeIBuc=s0-w300-rw"
+    }
+   }
+  ],
+  "laks": [
+   {
+    "title": "Vil åpne nye havområder for oppdrett - Regjeringen.no",
+    "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPYm0zeS1SdlE4U2NVWEgwbTFISzdDVkZWR1B6aHZzdS1sc2NaZE5YTTI2Yk9qN3pObTVrNzh1RzFhMGg4Q2YxT0x2NWtfWVZSbXlrcW0tWDFpRlAyaUpTc3lKbVZLU0J3dmsycmNlb0JxWmhuVW5sZDc5V1hqS1hOOGl4YktMX1NlZnRpSldB?oc=5",
+    "feed_content_len": 0,
+    "decoded": {
+     "success": true,
+     "decoded_url": "https://www.regjeringen.no/no/aktuelt/vil-apne-nye-havomrader-for-oppdrett/id3193178/"
+    },
+    "fetch_status": 200,
+    "final": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPYm0zeS1SdlE4U2NVWEgwbTFISzdDVkZWR1B6aHZzdS1sc2NaZE5YTTI2Yk9qN3pObTVrNzh1RzFhMGg4Q2YxT0x2NWtfWVZSbXlrcW0tWDFpRlAyaUpTc3lKbVZLU0J3dmsycmNlb0JxWmhuVW5sZDc5V1hqS1hOOGl4YktMX1NlZnRpSldB?oc=5&hl=en-US&gl=US&ceid=US:en",
+    "text_len": 0,
+    "text_start": "",
+    "text_end": "",
+    "meta": {
+     "title": "Google News",
+     "date": "2026-11-18",
+     "sitename": "Google News",
+     "image": "https://lh3.googleusercontent.com/J6_coFbogxhRI9iM864NL_liGXvsQp2AupsKei7z0cNNfDvGUmWUy20nuUhkREQyrpY4bEeIBuc=s0-w300-rw"
+    }
+   },
+   {
+    "title": "Lerøy kjøper 98,4 prosent av Sjøtroll Havbruk - iLaks",
+    "link": "https://news.google.com/rss/articles/CBMib0FVX3lxTE1yR3hkNGFEV1R3aE92UGVlN0Jtb0cxbEQwbExhYjV0eVd6R056bng3UW1na05MWXlpQ1BZM1dQOExqZXRTYjRpMHIzNl9MS0lsM0NHQ2ZHSlFOTmd6NlpoelJ2UE9Jd1R5Y0p4LUVpMA?oc=5",
+    "feed_content_len": 0,
+    "decoded": {
+     "success": true,
+     "decoded_url": "https://ilaks.no/leroy-kjoper-984-prosent-av-sjotroll-havbruk/"
+    },
+    "fetch_status": 200,
+    "final": "https://news.google.com/rss/articles/CBMib0FVX3lxTE1yR3hkNGFEV1R3aE92UGVlN0Jtb0cxbEQwbExhYjV0eVd6R056bng3UW1na05MWXlpQ1BZM1dQOExqZXRTYjRpMHIzNl9MS0lsM0NHQ2ZHSlFOTmd6NlpoelJ2UE9Jd1R5Y0p4LUVpMA?oc=5&hl=en-US&gl=US&ceid=US:en",
+    "text_len": 0,
+    "text_start": "",
+    "text_end": "",
+    "meta": {
+     "title": "Google News",
+     "date": "2026-11-18",
+     "sitename": "Google News",
+     "image": "https://lh3.googleusercontent.com/J6_coFbogxhRI9iM864NL_liGXvsQp2AupsKei7z0cNNfDvGUmWUy20nuUhkREQyrpY4bEeIBuc=s0-w300-rw"
+    }
+   },
+   {
+    "title": "Vil opne nye havområde for oppdrett: – Sentral milepæl - NRK",
+    "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOcXMtUllkaVJlUmc2OElHYmdOSS1xMGtNblI2S3lxNHdnQlNhcTZBV3lFelNVOVd5aFFQbVppd0xDU0NDYkVfNGtaZUpHeVM1SzgyNE52akoxUEZoREdWWFNCbGVoeFJnSlBSMUh4MzdhY3V3Z3ktQjFKWFM5Wk1kRXlIOHdkcXRvNTFaRmtmcw?oc=5",
+    "feed_content_len": 0,
+    "decoded": {
+     "success": true,
+     "decoded_url": "https://www.nrk.no/trondelag/regjeringa-vil-opne-nye-havomrade-for-oppdrett-1.18083212"
+    },
+    "fetch_status": 200,
+    "final": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOcXMtUllkaVJlUmc2OElHYmdOSS1xMGtNblI2S3lxNHdnQlNhcTZBV3lFelNVOVd5aFFQbVppd0xDU0NDYkVfNGtaZUpHeVM1SzgyNE52akoxUEZoREdWWFNCbGVoeFJnSlBSMUh4MzdhY3V3Z3ktQjFKWFM5Wk1kRXlIOHdkcXRvNTFaRmtmcw?oc=5&hl=en-US&gl=US&ceid=US:en",
+    "text_len": 0,
+    "text_start": "",
+    "text_end": "",
+    "meta": {
+     "title": "Google News",
+     "date": "2026-11-18",
+     "sitename": "Google News",
+     "image": "https://lh3.googleusercontent.com/J6_coFbogxhRI9iM864NL_liGXvsQp2AupsKei7z0cNNfDvGUmWUy20nuUhkREQyrpY4bEeIBuc=s0-w300-rw"
+    }
+   }
+  ],
+  "regj": [
+   {
+    "title": "Statsministeren deltek på G20-toppmøtet i Miami",
+    "link": "https://www.regjeringen.no/no/aktuelt/statsministeren-deltek-pa-g20-toppmotet-i-miami/id3192058/?utm_source=regjeringen.no&utm_medium=rss",
+    "feed_content_len": 0,
+    "fetch_status": 403,
+    "final": "https://www.regjeringen.no/no/aktuelt/statsministeren-deltek-pa-g20-toppmotet-i-miami/id3192058/?utm_source=regjeringen.no&utm_medium=rss",
+    "text_len": 41,
+    "text_start": "Enable JavaScript and cookies to continue",
+    "text_end": "Enable JavaScript and cookies to continue",
+    "meta": {
+     "title": "Just a moment...",
+     "date": null,
+     "sitename": null,
+     "image": null
+    }
+   },
+   {
+    "title": "Utanriksministeren deltek på møte i Nato og OSSE",
+    "link": "https://www.regjeringen.no/no/aktuelt/utanriksministeren-deltek-pa-mote-i-nato-og-osse/id3193192/?utm_source=regjeringen.no&utm_medium=rss",
+    "feed_content_len": 0,
+    "fetch_status": 403,
+    "final": "https://www.regjeringen.no/no/aktuelt/utanriksministeren-deltek-pa-mote-i-nato-og-osse/id3193192/?utm_source=regjeringen.no&utm_medium=rss",
+    "text_len": 41,
+    "text_start": "Enable JavaScript and cookies to continue",
+    "text_end": "Enable JavaScript and cookies to continue",
+    "meta": {
+     "title": "Just a moment...",
+     "date": null,
+     "sitename": null,
+     "image": null
+    }
+   },
+   {
+    "title": "Helse- og omsorgsministeren møter Storbritannias minister for sosial omsorg og psykisk helse",
+    "link": "https://www.regjeringen.no/no/aktuelt/helse-og-omsorgsministeren-moter-storbritannias-minister-for-sosial-omsorg-og-psykisk-helse/id3194191/?utm_source=regjeringen.no&utm_medium=rss",
+    "feed_content_len": 0,
+    "fetch_status": 403,
+    "final": "https://www.regjeringen.no/no/aktuelt/helse-og-omsorgsministeren-moter-storbritannias-minister-for-sosial-omsorg-og-psykisk-helse/id3194191/?utm_source=regjeringen.no&utm_medium=rss",
+    "text_len": 41,
+    "text_start": "Enable JavaScript and cookies to continue",
+    "text_end": "Enable JavaScript and cookies to continue",
+    "meta": {
+     "title": "Just a moment...",
+     "date": null,
+     "sitename": null,
+     "image": null
+    }
+   }
+  ],
+  "_secs": 19.2
+ },
+ "sites": {
+  "bw_sample": [
+   {
+    "aquaCultureRegister": {
+     "placement": "SJØ",
+     "capacity": 1950.0,
+     "unit": "TN",
+     "productionTypes": [
+      "Matfisk"
+     ],
+     "purposes": [
+      "Kommersiell"
+     ],
+     "isCommercialSalmonoidLocality": true,
+     "isSlaughterHoldingCage": false,
+     "organizations": [
+      "FJELBERG FJORDBRUK  AS",
+      "NORDSJØ FJORDBRUK AS",
+      "RØVÆR FJORDBRUK AS"
+     ],
+     "species": [
+      "Laks",
+      "Regnbueørret",
+      "Ørret"
+     ],
+     "hasSalmonoidLicense": true
+    },
+    "locality": {
+     "no": 35297,
+     "name": "Ådnøy Sø",
+     "isOnLand": false
+    },
+    "municipality": {
+     "no": "1108",
+     "name": "Sandnes"
+    },
+    "productionArea": {
+     "id": 2,
+     "name": "Ryfylke",
+     "color": "yellow"
+    },
+    "diseases": [],
+    "liceTreatments": [
+     "IKKE_MEDIKAMENTELL"
+    ],
+    "liceReport": {
+     "hasReported": true,
+     "isFallow": false,
+     "adultFemaleLice": {
+      "average": 0.28,
+      "averageOfPreviousWeek": 0.47,
+      "trend": "Decreasing"
+     },
+     "mobileLice": {
+      "average": 0.35,
+      "averageOfPreviousWeek": 0.58,
+      "trend": "Decreasing"
+     },
+     "stationaryLice": {
+      "average": 0.0,
+      "averageOfPreviousWeek": 0.0,
+      "trend": "Stable"
+     },
+     "totalLice": {
+      "average": 0.63,
+      "averageOfPreviousWeek": 1.05,
+      "trend": "Decreasing"
+     },
+     "seaTemperature": 10.3
+    },
+    "isFiltered": true
+   },
+   {
+    "aquaCultureRegister": {
+     "placement": "SJØ",
+     "capacity": 1560.0,
+     "unit": "TN",
+     "productionTypes": [
+      "Matfisk"
+     ],
+     "purposes": [
+      "Kommersiell",
+      "Visning"
+     ],
+     "isCommercialSalmonoidLocality": true,
+     "isSlaughterHoldingCage": false,
+     "organizations": [
+      "GILDESKÅL FORSKNINGSSTASJON AS",
+      "ISQUEEN AS"
+     ],
+     "species": [
+      "Laks",
+      "Regnbueørret",
+      "Ørret"
+     ],
+     "hasSalmonoidLicense": true
+    },
+    "locality": {
+     "no": 30977,
+     "name": "Æsøya",
+     "isOnLand": false
+    },
+    "municipality": {
+     "no": "1860",
+     "name": "Vestvågøy"
+    },
+    "productionArea": {
+     "id": 9,
+     "name": "Vestfjorden og Vesterålen",
+     "color": "yellow"
+    },
+    "diseases": [],
+    "liceTreatments": [],
+    "liceReport": {
+     "hasReported": true,
+     "isFallow": false,
+     "adultFemaleLice": {
+      "average": 0.27,
+      "averageOfPreviousWeek": 0.27,
+      "trend": "Stable"
+     },
+     "mobileLice": {
+      "average": 0.42,
+      "averageOfPreviousWeek": 0.28,
+      "trend": "Increasing"
+     },
+     "stationaryLice": {
+      "average": 0.22,
+      "averageOfPreviousWeek": 0.19,
+      "trend": "Increasing"
+     },
+     "totalLice": {
+      "average": 0.90999997,
+      "averageOfPreviousWeek": 0.74,
+      "trend": "Increasing"
+     },
+     "seaTemperature": 9.3
+    },
+    "isFiltered": true
+   }
+  ],
+  "https://www.barentswatch.no/bwapi/v1/geodata/fishhealth/localities": {
+   "status": 200,
+   "body": "[{\"aquaCultureRegistryVersion\":1399,\"localityNo\":31937,\"name\":\"Abelsnes\",\"municipalityNo\":\"4207\",\"municipality\":\"FLEKKEFJORD\"},{\"aquaCultureRegistryVersion\":1399,\"localityNo\":45119,\"name\":\"Abelsnes II\",\"municipalityNo\":\"4207\",\"municipality\":\"FLEKKEFJORD\"},{\"aquaCultureRegistryVersion\":1399,\"localityNo\":10665,\"name\":\"Adamselv\",\"municipalityNo\":\"5624\",\"municipality\":\"LEBESBY\"},{\"aquaCultureRegistryVersion\":1378,\"localityNo\":29196,\"name\":\"Adjetjohka\",\"municipalityNo\":\"5612\",\"municipality\":\"GUOVDAGEAIDNU - KAUTOKEINO\"},{\"aquaCultureRegistryVersion\":1399,\"localityNo\":15196,\"name\":\"Aga Ø\",\"municipalityNo\":\"4613\",\"municipality\":\"BØMLO\"},{\"aquaCultureRegistryVersion\":1399,\"localityNo\":11507,\"name\":\"Agapollen\",\"municipalityNo\":\"4613\",\"municipality\":\"BØMLO\"},{\"aquaCultureRegistryVersion\":1399,\"localityNo\":45040,\"name\":\"Agnalsvika\",\"municipalityNo\":\"4646\",\"municipality\":\"FJALER\"},{\"aquaCultureRegistryVersion\":1399,\"localityNo\":12067,\"name\":\"Aldalen\",\"municipalityNo\":\"4624\",\"municipality\":\"BJØRNAFJORDEN\"},{\"aquaCultureRegistryVersion\":1399,\"localityNo\":12982,\"name\":\"Aldeøyna\",\"municipalityNo\":\"4645\",\"municipality\":\"ASKVOLL\"},{\"aquaCultureRegistryVersion\":1399,\"localityNo\":45106,\"name\":\"Alida\",\"municipalityNo\":\"1577\",\"municipality\":\"VOLDA\"},{\"aquaCultureRegistryVersion\":1399,\"localityNo\":11756,\"name\":\"Allersholmen\",\"municipalityNo\":\"4632\",\"municipality\":\"AUSTRHEIM\"},{\"aquaCultureRegistryVersion\":1399,\"localityNo\":45078,\"name\":\"Almbakkevika\",\"municipalityNo\":\"4602\",\"municipality\":\"KINN\"},{"
+  },
+  "https://www.barentswatch.no/bwapi/v1/geodata/fishhealth/locality/13209": {
+   "status": 404,
+   "body": "{\"type\":\"https://httpstatuses.io/404\",\"title\":\"NotFound\",\"status\":404,\"traceId\":\"00-f0567c03e7db4f1eb9c62bd545f5ae43-3108909f07150791-00\"}"
+  },
+  "https://api.fiskeridir.no/pub-aqua/api/v1/sites?range=0-2": {
+   "status": 200,
+   "type": "application/json;charset=utf-8",
+   "body": "[{\"siteId\":5,\"versionId\":15356,\"siteNr\":10029,\"name\":\"TUHOLMANE Ø\",\"placementType\":\"Offshore\",\"placementTypeValue\":\"SJØ\",\"waterType\":\"Salt\",\"waterTypeValue\":\"SALT\",\"firstClearanceTime\":\"1998-06-18T22:00:00Z\",\"firstClearanceType\":\"PERMANENT\",\"firstClearanceTypeValue\":\"PERMANENT\",\"latitude\":59.371233,\"longitude\":5.216333,\"capacity\":2340.0,\"tempCapacity\":2340.0,\"capacityUnitType\":\"TN\",\"placement\":{\"municipalityCode\":\"1149\",\"municipalityName\":\"KARMØY\",\"countyCode\":\"11\",\"countyName\":\"ROGALAND\",\"prodAreaCode\":\"3\",\"prodAreaName\":\"Karmøy til Sotra\",\"prodAreaStatus\":\"RØD\"},\"speciesType\":null,\"speciesTypeValue\":null,\"speciesLimitations\":[{\"code\":\"071101\",\"latinName\":\"Salmo salar\",\"nbNoName\":\"Laks\",\"nnNoName\":\"Laks\",\"enGbName\":\"Atlantic salmon\",\"faoAlpha3Code\":\"SAL\"}],\"connections\":[{\"key\":\"H-KM-0018|10029\",\"licenseId\":394,\"licenseNr\":\"H-KM-0018\",\"siteId\":5,\"siteNr\":\"10029\",\"siteName\":\"TUHOLMANE Ø\",\"validFrom\":\"2025-08-27T22:01:00Z\",\"validUntil\":\"9999-12-30T00:00:00Z\",\"temporaryUntil\":null,\"registeredTime\":\"2025-08-28T11:10:17Z\",\"active\":true,\"status\":\"ACTIVE\",\"statusValue\":\"AKTIV\"},{\"key\":\"R-R-0007|10029\",\"licenseId\":1592,\"licenseNr\":\"R-R-0007\",\"siteId\":5,\"siteNr\":\"10029\",\"siteName\":\"TUHOLMANE Ø\",\"validFrom\":\"2022-08-25T22:00:00Z\",\"validUntil\":\"9999-12-30T00:00:00Z\",\"temporaryUntil\":null,\"registeredTime\":\"2022-08-26T08:25:01Z\",\"active\":true,\"status\":\"ACTIVE\",\"statusValue\":\"AKTIV\"},{\"key\":\"H-KM-0009|10029\",\"licenseId\":389,\"licenseNr\":\"H-KM-0009\",\"siteId\":5,\"siteNr\":\"10029\",\"siteName\":\"T"
+  },
+  "https://api.fiskeridir.no/pub-aqua/api/v1/sites/13209": {
+   "status": 200,
+   "type": "application/json;charset=utf-8",
+   "body": "{\"siteId\":3185,\"versionId\":20975,\"siteNr\":13209,\"name\":\"BOGNØY\",\"placementType\":\"Offshore\",\"placementTypeValue\":\"SJØ\",\"waterType\":\"Salt\",\"waterTypeValue\":\"SALT\",\"firstClearanceTime\":\"1995-10-26T23:00:00Z\",\"firstClearanceType\":\"PERMANENT\",\"firstClearanceTypeValue\":\"PERMANENT\",\"latitude\":60.604417,\"longitude\":5.075833,\"capacity\":1560.0,\"tempCapacity\":1560.0,\"capacityUnitType\":\"TN\",\"placement\":{\"municipalityCode\":\"4631\",\"municipalityName\":\"ALVER\",\"countyCode\":\"46\",\"countyName\":\"VESTLAND\",\"prodAreaCode\":\"4\",\"prodAreaName\":\"Nordhordland til Stadt\",\"prodAreaStatus\":\"GUL\"},\"speciesType\":null,\"speciesTypeValue\":null,\"speciesLimitations\":[],\"connections\":[{\"key\":\"H-R-0006|13209\",\"licenseId\":470,\"licenseNr\":\"H-R-0006\",\"siteId\":3185,\"siteNr\":\"13209\",\"siteName\":\"BOGNØY\",\"validFrom\":\"2020-01-09T08:49:45Z\",\"validUntil\":\"9999-12-30T00:00:00Z\",\"temporaryUntil\":null,\"registeredTime\":\"2020-01-09T08:49:45Z\",\"active\":true,\"status\":\"ACTIVE\",\"statusValue\":\"AKTIV\"},{\"key\":\"H-R-0009|13209\",\"licenseId\":472,\"licenseNr\":\"H-R-0009\",\"siteId\":3185,\"siteNr\":\"13209\",\"siteName\":\"BOGNØY\",\"validFrom\":\"2020-01-09T08:49:47Z\",\"validUntil\":\"9999-12-30T00:00:00Z\",\"temporaryUntil\":null,\"registeredTime\":\"2020-01-09T08:49:47Z\",\"active\":true,\"status\":\"ACTIVE\",\"statusValue\":\"AKTIV\"}],\"obsoleteConnections\":[{\"key\":\"H-FE-0013|13209\",\"licenseId\":315,\"licenseNr\":\"H-FE-0013\",\"siteId\":3185,\"siteNr\":\"13209\",\"siteName\":\"BOGNØY\",\"validFrom\":\"2020-01-09T08:48:13Z\",\"validUntil\":\"9999-12-30T00:00:00Z\",\"temporaryUntil\":null,\"registe"
+  },
+  "https://api.fiskeridir.no/pub-aqua/api/v1/licenses?range=0-2": {
+   "status": 200,
+   "type": "application/json;charset=utf-8",
+   "body": "[{\"licenseId\":1,\"versionId\":30167,\"licenseNr\":\"A-A-0001\",\"originalLicenseNr\":\"A-A-0001\",\"legacyLicenseNr\":\"A A 0001\",\"portfolioType\":{\"value\":\"NONE\",\"apiSearchValue\":\"master\",\"name\":\"Uavhengig\"},\"portfolioMasterLicenseId\":null,\"legalEntityNrId\":\"EBC2A31525E7CBC9D0635DC6B44A4205\",\"openLegalEntityNr\":\"969159570\",\"legalEntityName\":\"NORGES MILJØ- OG BIOVITENSKAPELIGE UNIVERSITET (NMBU)\",\"capacity\":{\"accumulated\":1.0,\"current\":1.0,\"unit\":\"TN\",\"type\":\"MTK\"},\"type\":{\"intention\":\"COMMERCIAL\",\"intentionValue\":\"KOMMERSIELL\",\"produces\":\"Consumption\",\"producesValue\":\"Konsum\",\"productionStage\":\"Tablefish\",\"productionStageValue\":\"Matfisk\",\"tag\":\"KOMM-MATF\",\"allocationInformation\":\"STANDARD\",\"stocking\":\"RELEASE\",\"stockingValue\":\"UTSETT\",\"temporal\":\"LONG_TERM\",\"temporalValue\":\"LANG_PERIODE\",\"feeding\":\"FEED\",\"feedingValue\":\"FORING\",\"templateId\":8},\"species\":{\"compositionId\":2,\"fishCodes\":[{\"code\":\"071101\",\"latinName\":\"Salmo salar\",\"nbNoName\":\"Laks\",\"nnNoName\":\"Laks\",\"enGbName\":\"Atlantic salmon\",\"faoAlpha3Code\":\"SAL\"},{\"code\":\"071301\",\"latinName\":\"Salmo trutta\",\"nbNoName\":\"Ørret\",\"nnNoName\":\"Aure\",\"enGbName\":\"Sea trout\",\"faoAlpha3Code\":\"TRS\"},{\"code\":\"071401\",\"latinName\":\"Oncorhynchus mykiss/ Salmo gairdneri\",\"nbNoName\":\"Regnbueørret\",\"nnNoName\":\"Regnbogeaure\",\"enGbName\":\"Rainbow trout\",\"faoAlpha3Code\":\"TRR\"}]},\"productionRegime\":\"STANDARD\",\"productionModel\":\"STANDARD\",\"connections\":[{\"key\":\"A-A-0001|10362\",\"licenseId\":1,\"licenseNr\":\"A-A-0001\",\"siteId\":338,\"siteNr\":\"10362\",\"siteName\":\"NMBU FIS"
+  },
+  "https://api.fiskeridir.no/pub-aqua/api/v1/entities?range=0-2": {
+   "status": 200,
+   "type": "application/json;charset=utf-8",
+   "body": "[{\"id\":\"05BE8EA7DE49F0B7CF95EBC724DD2E32\",\"versionId\":122892,\"openNr\":\"\",\"typeName\":\"Privatperson\",\"typeValue\":\"Person\",\"name\":\"SOLLI, RONALD\",\"businessTypes\":[{\"value\":\"Aquaculture\",\"name\":\"Akvakultur\"}],\"officialSourceType\":\"FREG\",\"addresses\":[{\"id\":124516,\"type\":\"ResidentialLocation\",\"value\":\"VESTRE PRESTBØVEGEN 6\",\"zipCode\":\"5419\",\"zipName\":\"FITJAR\",\"countyCode\":\"46\",\"countyName\":\"VESTLAND\",\"countryCode\":\"NOR\",\"countryName\":\"NORGE\",\"officialSourceType\":\"FREG\"}],\"industryCodes\":[],\"brregStatuses\":[],\"versionValidFrom\":\"2022-03-23T04:03:43Z\",\"versionValidUntil\":\"9999-12-30T00:00:00Z\",\"versionRegisteredTime\":\"2022-03-23T04:03:43Z\",\"versionRegisteredBy\":\"FREG\",\"status\":\"ACTIVE\"},{\"id\":\"817F3FA9CF658ACFC26C1D7E281FE53A\",\"versionId\":278557,\"openNr\":\"928608409\",\"typeName\":\"Aksjeselskap\",\"typeValue\":\"LimitedLiabilityCompany\",\"name\":\"OCEANFOOD AS\",\"businessTypes\":[{\"value\":\"Aquaculture\",\"name\":\"Akvakultur\"}],\"officialSourceType\":\"BRREG\",\"addresses\":[{\"id\":201086,\"type\":\"Location\",\"value\":\"STORHAUGEN 1\",\"zipCode\":\"9011\",\"zipName\":\"TROMSØ\",\"countyCode\":\"55\",\"countyName\":\"TROMS\",\"countryCode\":\"NOR\",\"countryName\":\"NORGE\",\"officialSourceType\":\"BRREG\"}],\"industryCodes\":[],\"brregStatuses\":[],\"versionValidFrom\":\"2022-01-05T00:00:00Z\",\"versionValidUntil\":\"9999-12-30T00:00:00Z\",\"versionRegisteredTime\":\"2026-06-04T12:20:10Z\",\"versionRegisteredBy\":\"BRREG\",\"status\":\"ACTIVE\"},{\"id\":\"7A3A134F8143EBDE2A37E5A337294556\",\"versionId\":278559,\"openNr\":\"987260874\",\"typeName\":\"Aksjeselskap\",\"typeValue\":\""
+  },
+  "_secs": 7.2
+ }
+}
