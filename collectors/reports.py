@@ -20,8 +20,8 @@ from datetime import timedelta
 
 import requests
 
+import ai
 import db
-import news
 from universe import COMPANIES
 
 BASE = "https://api3.oslo.oslobors.no/v1/newsreader"
@@ -43,10 +43,6 @@ VERSION = 7  # økes når leseren forbedres, så gamle uttrekk leses på nytt
 CHUNK_CHARS = 11_000
 DIRECT_CHARS = 12_000
 SOURCE_BUDGET = 40_000
-
-
-class MissingKey(Exception):
-    pass
 
 
 # ---------------------------------------------------------------- periode
@@ -209,69 +205,10 @@ def pick_text(parts: list[dict], budget: int = SOURCE_BUDGET) -> str:
     return "\n\n".join(f"[{parts[i]['src']}]\n{parts[i]['text'][:6000]}" for i in sorted(chosen))
 
 
-# ---------------------------------------------------------------- Groq
-def _key() -> str:
-    key = (os.environ.get("GROQ_API_KEY") or "").strip()
-    if not key:
-        raise MissingKey("Venter på Groq-nøkkel (GROQ_API_KEY)")
-    return key
-
-
-class RateLimited(Exception):
-    pass
-
-
-class TooLarge(Exception):
-    pass
-
-
-_exhausted: set[str] = set()  # modeller som har brukt opp kvoten i denne kjøringen
-
-
-def groq(prompt: str, models: list[str], max_out: int, json_mode: bool = False) -> tuple[str, str]:
-    """Prøver modellene i rekkefølge. Er en modell tom for kvote (lang ventetid), går vi videre til neste.
-    RateLimited kastes først når alle er brukt opp, så jobben kan fortsette ved neste kjøring."""
-    key = _key()
-    have = news.groq_models(key)
-    order = [m for m in models if m in have] or have
-    limited = []
-    for model in order:
-        if model in _exhausted:
-            limited.append(model)
-            continue
-        payload = {"model": model, "messages": [{"role": "user", "content": prompt}], "temperature": 0.1,
-                   "max_completion_tokens": max_out}
-        if model.startswith("openai/gpt-oss"):
-            payload["reasoning_effort"] = "low"
-        if json_mode:
-            payload["response_format"] = {"type": "json_object"}
-        for attempt in range(3):
-            r = requests.post(f"{news.GROQ}/chat/completions", headers={"Authorization": f"Bearer {key}"}, json=payload, timeout=120)
-            if r.status_code == 429:
-                wait = float(r.headers.get("retry-after") or 30)
-                if wait > 90:
-                    _exhausted.add(model)
-                    limited.append(model)
-                    print(f"    · {model} er tom for kvote (vent {wait:.0f} s), prøver neste modell")
-                    break
-                time.sleep(wait + 2)
-                continue
-            if r.status_code == 413:
-                raise TooLarge(r.text[:160])
-            if r.status_code == 400 and "response_format" in payload and attempt == 0:
-                payload.pop("response_format")
-                continue
-            if r.status_code != 200:
-                print(f"    ! Groq {model}: HTTP {r.status_code} {r.text[:160]}")
-                break
-            text = r.json()["choices"][0]["message"].get("content") or ""
-            text = re.sub(r"<think>.*?</think>", "", text, flags=re.S).strip()
-            if text:
-                return text, model
-            break
-    if limited and len(limited) == len(order):
-        raise RateLimited("Alle Groq-modellene er tomme for kvote for nå")
-    raise RuntimeError("Groq ga ikke noe svar")
+# ---------------------------------------------------------------- KI (via felles KI-lag)
+MissingKey = ai.MissingKey
+RateLimited = ai.RateLimited
+BIG_BUDGET = 150_000  # tegn kildetekst når en leverandør med stor kontekst (Mistral/Gemini) er tilgjengelig
 
 
 NOTES_PROMPT = (
@@ -332,18 +269,14 @@ def notes_for(name: str, period: str, source: str, size: int = CHUNK_CHARS) -> s
     for i, ch in enumerate(chunks):
         if i:
             time.sleep(62)  # gratisnivået tillater omtrent én slik bit i minuttet per modell
-        try:
-            text, _ = groq(NOTES_PROMPT.format(i=i + 1, n=len(chunks), name=name, period=period, text=ch),
-                           ["openai/gpt-oss-20b", "qwen/qwen3.8-27b", "openai/gpt-oss-120b"], 700)
-        except TooLarge:
-            text = notes_for(name, period, ch, size // 2)
+        text, _ = ai.chat(NOTES_PROMPT.format(i=i + 1, n=len(chunks), name=name, period=period, text=ch), "small", 700)
         notes.append(f"[Notater del {i + 1}]\n{text}")
     return "\n\n".join(notes)
 
 
-def final(name: str, sym_segment: str, period: str, material: str) -> tuple[dict, str]:
-    raw, model = groq(FINAL_PROMPT.format(name=name, segment=sym_segment, period=period, text=material),
-                      ["openai/gpt-oss-120b", "qwen/qwen3.8-27b", "openai/gpt-oss-20b"], 2200, json_mode=True)
+def final(name: str, sym_segment: str, period: str, material: str, purpose: str = "quality") -> tuple[dict, str]:
+    raw, model = ai.chat(FINAL_PROMPT.format(name=name, segment=sym_segment, period=period, text=material),
+                         purpose, 2200, json_mode=True, temperature=0.1)
     m = re.search(r"\{.*\}", raw, re.S)
     if not m:
         raise RuntimeError("Svaret var ikke JSON")
@@ -375,8 +308,8 @@ def fix(name: str, period: str, data: dict, keys: str) -> dict:
         return data
     time.sleep(20)
     try:
-        raw, _ = groq(FIX_PROMPT.format(name=name, period=period, bad="\n".join(bad), keys=keys),
-                      ["openai/gpt-oss-120b", "qwen/qwen3.8-27b", "openai/gpt-oss-20b"], 1500, json_mode=True)
+        raw, _ = ai.chat(FIX_PROMPT.format(name=name, period=period, bad="\n".join(bad), keys=keys),
+                         "quality", 1500, json_mode=True, temperature=0.1)
         m = re.search(r"\{.*\}", raw, re.S)
         new = json.loads(m.group(0)) if m else {}
     except Exception as e:  # noqa: BLE001
@@ -389,13 +322,19 @@ def fix(name: str, period: str, data: dict, keys: str) -> dict:
     return data
 
 
-def ask(name: str, segment: str, period: str, source: str, keys: str) -> tuple[dict, str]:
+def ask(name: str, segment: str, period: str, source: str, keys: str, full: str = "") -> tuple[dict, str]:
     head = f"NØKKELLINJER:\n{keys}\n\n" if keys else ""
+    # Med Mistral eller Gemini leses hele den utvalgte rapportteksten i én forespørsel
+    if full and ai.has("big"):
+        try:
+            return final(name, segment, period, head + "TEKST:\n" + full, purpose="big")
+        except (RuntimeError, ai.RateLimited) as e:
+            print(f"    · Hel lesing gikk ikke ({e}), leser i biter i stedet")
     if len(source) + len(head) <= DIRECT_CHARS:
         try:
             return final(name, segment, period, head + "TEKST:\n" + source)
-        except TooLarge:
-            pass  # tallrik tekst gir flere tokens enn antatt: les i biter i stedet
+        except RuntimeError:
+            pass  # for stor for leverandørene som er ledige: les i biter
     return final(name, segment, period, head + notes_for(name, period, source))
 
 
@@ -601,7 +540,9 @@ def discover(conn, days: int = 200) -> int:
 
 
 def run(conn, max_reports: int = 3, budget_s: int = 480) -> int:
-    _key()
+    ai.require()
+    if ai.has("big"):
+        max_reports, budget_s = max(max_reports, 6), max(budget_s, 600)  # hele rapporter går raskere med stor kontekst
     added = discover(conn)
     t0 = time.time()
     done = 0
@@ -611,7 +552,7 @@ def run(conn, max_reports: int = 3, budget_s: int = 480) -> int:
         todo = cur.fetchall()
         cur.execute("SELECT count(*) FROM reports WHERE status = 'pending' AND tries < 3")
         queue = cur.fetchone()[0]
-    print(f"  Rapporter: {added} nye i køen, {queue} venter, leser {len(todo)} nå")
+    print(f"  Rapporter: {added} nye i køen, {queue} venter, leser {len(todo)} nå (KI: {', '.join(ai.available())})")
     conn.commit()
 
     def write(sql: str, params: tuple) -> None:
@@ -631,7 +572,8 @@ def run(conn, max_reports: int = 3, budget_s: int = 480) -> int:
             keys = key_lines(parts)
             if len(source) < 400:
                 raise RuntimeError("Fant nesten ingen tekst i meldingen eller vedleggene")
-            data, model = ask(name, SEGMENT.get(sym, ""), period, source, keys)
+            full = pick_text(parts, budget=BIG_BUDGET) if ai.has("big") else ""
+            data, model = ask(name, SEGMENT.get(sym, ""), period, source, keys, full)
             data = verify(data, keys + "\n" + source)
             if data["check"]["unverified"]:
                 data = verify(fix(name, period, data, keys), keys + "\n" + source)
@@ -667,5 +609,6 @@ def run(conn, max_reports: int = 3, budget_s: int = 480) -> int:
             write("UPDATE reports SET error = %s, status = CASE WHEN tries >= 3 THEN 'error' ELSE 'pending' END WHERE key = %s",
                   (str(e)[:300], key))
         if todo and time.time() - t0 < budget_s:
-            time.sleep(30)
+            time.sleep(5 if ai.has("big") else 30)
+    print(f"  KI-bruk: {ai.summary()}")
     return done

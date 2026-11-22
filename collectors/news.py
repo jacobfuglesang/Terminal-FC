@@ -272,8 +272,9 @@ def _clean_ai(text: str) -> str:
 
 
 def ai_summary(item: dict) -> str | None:
-    key = (os.environ.get("GROQ_API_KEY") or "").strip()
-    if not key:
+    import ai
+
+    if not ai.available():
         return None
     text = (item.get("body") or item.get("excerpt") or "").strip()
     prompt = (
@@ -284,36 +285,23 @@ def ai_summary(item: dict) -> str | None:
         "Svar bare med sammendraget, uten innledning.\n\n"
         f"Tittel: {item['title']}\nKilde: {item.get('source') or ''}\nTekst: {text[:2500] or '(bare tittel)'}"
     )
-    # Korte sammendrag klarer den lille modellen fint; da spares kvoten til den store for morgenrapporten og rapportleseren
-    have = groq_models(key)
-    order = [m for m in ("openai/gpt-oss-20b", "qwen/qwen3.8-27b") if m in have] + [m for m in have if m not in ("openai/gpt-oss-20b", "qwen/qwen3.8-27b")]
-    for model in order:
-        payload = {"model": model, "messages": [{"role": "user", "content": prompt}], "temperature": 0.2, "max_completion_tokens": 900}
-        if model.startswith("openai/gpt-oss"):
-            payload["reasoning_effort"] = "low"
-        for attempt in range(2):
-            try:
-                r = requests.post(f"{GROQ}/chat/completions", headers={"Authorization": f"Bearer {key}"}, json=payload, timeout=60)
-            except requests.RequestException as e:
-                print(f"  ! Groq {model}: {e}")
-                break
-            if r.status_code == 400 and attempt == 0 and "reasoning_effort" in payload:
-                payload.pop("reasoning_effort")
-                continue
-            if r.status_code != 200:
-                print(f"  ! Groq {model}: HTTP {r.status_code} {r.text[:160]}")
-                break
-            out = _clean_ai(r.json()["choices"][0]["message"].get("content") or "")
-            if out:
-                out = BLOCK.sub("", out).strip()
-                return out[:400] or None
-            break
-    return None
+    try:
+        out, _ = ai.chat(prompt, "small", 900)
+    except Exception as e:  # noqa: BLE001
+        print(f"  ! KI-sammendrag: {e}")
+        return None
+    out = BLOCK.sub("", _clean_ai(out)).strip()
+    return out[:400] or None
 
 
 def enrich(conn, max_fetch: int = 15, max_ai: int = 12) -> tuple[int, int, int]:
     """Henter hele artikkelen og lager sammendrag for saker som mangler det."""
     import time
+
+    import ai
+
+    if ai.key("mistral") or ai.key("gemini"):
+        max_fetch, max_ai = 30, 30  # mer kapasitet: flere hele artikler og sammendrag per kjøring
 
     fetched = blocked = summarized = 0
     with conn.cursor() as cur:
@@ -346,7 +334,7 @@ def enrich(conn, max_fetch: int = 15, max_ai: int = 12) -> tuple[int, int, int]:
                 )
                 fetched += 1 if a["body"] else 0
         conn.commit()
-    if (os.environ.get("GROQ_API_KEY") or "").strip():
+    if ai.available():
         with conn.cursor() as cur:
             cur.execute(
                 """SELECT id, title, source, body, excerpt FROM news WHERE summary IS NULL
@@ -364,7 +352,8 @@ def enrich(conn, max_fetch: int = 15, max_ai: int = 12) -> tuple[int, int, int]:
                 summarized += 1
                 if summarized <= 3:
                     print(f"  Eksempel på sammendrag: «{title[:70]}» → {s}")
-            time.sleep(6)  # holder oss innenfor Groqs gratisgrense per minutt
+            # Holder oss innenfor Groqs gratisgrense per minutt (KI-laget venter selv for Mistral og Gemini)
+            time.sleep(1 if (ai.key("mistral") or ai.key("gemini")) else 6)
     return fetched, blocked, summarized
 
 
@@ -417,6 +406,8 @@ def run(conn) -> int:
             (blocked, blocked2),
         )
     conn.commit()
-    ki = "KI-sammendrag" if os.environ.get("GROQ_API_KEY") else "KI-sammendrag (venter på Groq-nøkkel)"
+    import ai
+
+    ki = f"KI-sammendrag ({', '.join(ai.available())})" if ai.available() else "KI-sammendrag (venter på KI-nøkkel)"
     print(f"  Nyheter: {len(items)} relevante, {new} nye, {fetched} hele artikler hentet, {summarized} {ki}, {blocked + blocked2} anbefalinger stoppet, {purged} irrelevante fjernet")
     return new

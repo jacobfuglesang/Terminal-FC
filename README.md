@@ -24,4 +24,5 @@ cron-job.org → GitHub Actions (collectors/) → Neon Postgres → Vercel (web/
 ## Kilder
 
 Yahoo Finance, Oslo Børs Newsweb, Finanstilsynet, Drewry WCI, Shanghai Shipping Exchange (SCFI),
-Baltic Dry Index via nyhetssaker, EIA, IMF PortWatch, aisstream.io, RSS fra shippingmedier og Groq for sammendrag.
+Baltic Dry Index via nyhetssaker, EIA, IMF PortWatch, aisstream.io og RSS fra shippingmedier.
+KI: Groq, og eventuelt Mistral og Gemini (collectors/ai.py velger leverandør etter jobb og ledig kvote).

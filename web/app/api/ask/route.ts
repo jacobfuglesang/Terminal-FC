@@ -75,5 +75,19 @@ export async function POST(req: Request) {
     const text = String(js.choices?.[0]?.message?.content ?? "").replace(/<think>[\s\S]*?<\/think>/g, "").trim();
     if (text) return NextResponse.json({ answer: text, model, basis: snap?.day ?? null });
   }
-  return NextResponse.json({ error: "Fikk ikke svar fra Groq. Prøv igjen om litt." }, { status: 502 });
+  // Reserve: Mistral (hvis MISTRAL_API_KEY er lagt inn i Vercel), når Groq er tom for kvote eller ikke svarer
+  const mkey = (process.env.MISTRAL_API_KEY ?? "").trim();
+  if (mkey) {
+    for (const model of ["mistral-large-latest", "mistral-medium-latest", "mistral-small-latest"]) {
+      const r = await fetch("https://api.mistral.ai/v1/chat/completions", {
+        method: "POST", headers: { Authorization: `Bearer ${mkey}`, "Content-Type": "application/json" },
+        body: JSON.stringify({ model, temperature: 0.3, max_tokens: 1800, messages: [{ role: "system", content: system }, { role: "user", content: `${context}\n\nSPØRSMÅL: ${question}` }] }),
+      });
+      if (!r.ok) continue;
+      const js = await r.json();
+      const text = String(js.choices?.[0]?.message?.content ?? "").trim();
+      if (text) return NextResponse.json({ answer: text, model: `mistral/${model}`, basis: snap?.day ?? null });
+    }
+  }
+  return NextResponse.json({ error: "Fikk ikke svar fra KI-leverandørene. Prøv igjen om litt." }, { status: 502 });
 }

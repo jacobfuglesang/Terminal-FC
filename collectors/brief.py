@@ -9,12 +9,11 @@ from datetime import date, timedelta
 
 import requests
 
-import news
+import ai
 from universe import COMPANIES, MARKET
 
 
-class MissingKey(Exception):
-    pass
+MissingKey = ai.MissingKey
 
 
 def pct(a, b):
@@ -129,29 +128,7 @@ PROMPT = (
 
 
 def write(snap: str) -> tuple[str, str]:
-    key = (os.environ.get("GROQ_API_KEY") or "").strip()
-    if not key:
-        raise MissingKey("Venter på Groq-nøkkel (GROQ_API_KEY)")
-    for model in news.groq_models(key):
-        payload = {"model": model, "messages": [{"role": "user", "content": PROMPT + snap[:14000]}],
-                   "temperature": 0.3, "max_completion_tokens": 2500}
-        if model.startswith("openai/gpt-oss"):
-            payload["reasoning_effort"] = "low"
-        r = requests.post(f"{news.GROQ}/chat/completions", headers={"Authorization": f"Bearer {key}"}, json=payload, timeout=120)
-        if r.status_code == 429 and float(r.headers.get("retry-after") or 999) <= 90:
-            # Rapportleseren kan ha brukt minuttkvoten rett før; vent og prøv samme modell igjen
-            import time
-
-            time.sleep(float(r.headers["retry-after"]) + 2)
-            r = requests.post(f"{news.GROQ}/chat/completions", headers={"Authorization": f"Bearer {key}"}, json=payload, timeout=120)
-        if r.status_code != 200:
-            print(f"  ! Groq {model}: HTTP {r.status_code} {r.text[:160]}")
-            continue
-        text = r.json()["choices"][0]["message"].get("content") or ""
-        text = re.sub(r"<think>.*?</think>", "", text, flags=re.S).strip()
-        if text:
-            return text, model
-    raise RuntimeError("Groq ga ikke noe svar")
+    return ai.chat(PROMPT + snap[:14000], "quality", 2500, temperature=0.3)
 
 
 def run(conn) -> int:
