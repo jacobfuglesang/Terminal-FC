@@ -1,0 +1,1297 @@
+{
+ "yahoo": {
+  "FRO.OL": {
+   "rows": 251,
+   "last": 442.6000061035156,
+   "last_date": "2026-11-20",
+   "shortName": "FRONTLINE PLC",
+   "longName": "Frontline plc",
+   "currency": "NOK",
+   "exchange": "OSL",
+   "marketCap": 98532892672,
+   "dividendYield": 22.47,
+   "industry": "Oil & Gas Midstream"
+  },
+  "HAFNI.OL": {
+   "rows": 251,
+   "last": 86.69999694824219,
+   "last_date": "2026-11-20",
+   "shortName": "HAFNIA LIMITED",
+   "longName": "Hafnia Limited",
+   "currency": "NOK",
+   "exchange": "OSL",
+   "marketCap": 46413209600,
+   "dividendYield": 12.34,
+   "industry": "Marine Shipping"
+  },
+  "OET.OL": {
+   "rows": 251,
+   "last": 762.0,
+   "last_date": "2026-11-20",
+   "shortName": "OKEANIS ECO TANKERS",
+   "longName": "Okeanis Eco Tankers Corp.",
+   "currency": "NOK",
+   "exchange": "OSL",
+   "marketCap": 29752027136,
+   "dividendYield": 35.92,
+   "industry": "Marine Shipping"
+  },
+  "ODF.OL": {
+   "rows": 251,
+   "last": 117.0,
+   "last_date": "2026-11-20",
+   "shortName": "ODFJELL SER. A",
+   "longName": "Odfjell SE",
+   "currency": "NOK",
+   "exchange": "OSL",
+   "marketCap": 9265424384,
+   "dividendYield": 8.32,
+   "industry": "Marine Shipping"
+  },
+  "SNI.OL": {
+   "rows": 251,
+   "last": 324.0,
+   "last_date": "2026-11-20",
+   "shortName": "STOLT-NIELSEN",
+   "longName": "Stolt-Nielsen Limited",
+   "currency": "NOK",
+   "exchange": "OSL",
+   "marketCap": 21513922560,
+   "dividendYield": 6.03,
+   "industry": "Marine Shipping"
+  },
+  "BELCO.OL": {
+   "rows": 0,
+   "last": null,
+   "last_date": null,
+   "shortName": null,
+   "longName": null,
+   "currency": null,
+   "exchange": null,
+   "marketCap": null,
+   "dividendYield": null,
+   "industry": null
+  },
+  "2020.OL": {
+   "rows": 251,
+   "last": 16.59000015258789,
+   "last_date": "2026-11-20",
+   "shortName": "2020 BULKERS",
+   "longName": "2020 Bulkers Ltd.",
+   "currency": "NOK",
+   "exchange": "OSL",
+   "marketCap": 20366860288,
+   "dividendYield": 70.21,
+   "industry": "Marine Shipping"
+  },
+  "HSHP.OL": {
+   "rows": 251,
+   "last": 143.60000610351562,
+   "last_date": "2026-11-20",
+   "shortName": "HIMALAYA SHIPPING LTD",
+   "longName": "Himalaya Shipping Ltd.",
+   "currency": "NOK",
+   "exchange": "OSL",
+   "marketCap": 6773612032,
+   "dividendYield": 13.0,
+   "industry": "Marine Shipping"
+  },
+  "MPCC.OL": {
+   "rows": 251,
+   "last": 24.56999969482422,
+   "last_date": "2026-11-20",
+   "shortName": "MPC CONTAINER SHIPS",
+   "longName": "MPC Container Ships ASA",
+   "currency": "NOK",
+   "exchange": "OSL",
+   "marketCap": 11991886848,
+   "dividendYield": 6.13,
+   "industry": "Marine Shipping"
+  },
+  "WAWI.OL": {
+   "rows": 251,
+   "last": 163.89999389648438,
+   "last_date": "2026-11-20",
+   "shortName": "WALLENIUS WILHELMSEN",
+   "longName": "Wallenius Wilhelmsen ASA",
+   "currency": "NOK",
+   "exchange": "OSL",
+   "marketCap": 72118640640,
+   "dividendYield": 5.32,
+   "industry": "Marine Shipping"
+  },
+  "HAUTO.OL": {
+   "rows": 251,
+   "last": 169.5,
+   "last_date": "2026-11-20",
+   "shortName": "HOEGH AUTOLINERS ASA",
+   "longName": "Höegh Autoliners ASA",
+   "currency": "NOK",
+   "exchange": "OSL",
+   "marketCap": 33776142336,
+   "dividendYield": 7.0,
+   "industry": "Marine Shipping"
+  },
+  "BWLPG.OL": {
+   "rows": 251,
+   "last": 212.39999389648438,
+   "last_date": "2026-11-20",
+   "shortName": "BW LPG",
+   "longName": "BW LPG Limited",
+   "currency": "NOK",
+   "exchange": "OSL",
+   "marketCap": 32245422080,
+   "dividendYield": 11.73,
+   "industry": "Oil & Gas Midstream"
+  },
+  "FLNG.OL": {
+   "rows": 0,
+   "last": null,
+   "last_date": null,
+   "shortName": null,
+   "longName": null,
+   "currency": null,
+   "exchange": null,
+   "marketCap": null,
+   "dividendYield": null,
+   "industry": null
+  },
+  "COOL.OL": {
+   "rows": 0,
+   "last": null,
+   "last_date": null,
+   "shortName": null,
+   "longName": null,
+   "currency": null,
+   "exchange": null,
+   "marketCap": null,
+   "dividendYield": null,
+   "industry": null
+  },
+  "KCC.OL": {
+   "rows": 251,
+   "last": 105.4000015258789,
+   "last_date": "2026-11-20",
+   "shortName": "KLAVENESS COMBINATION CARRIERS",
+   "longName": "Klaveness Combination Carriers ASA",
+   "currency": "NOK",
+   "exchange": "OSL",
+   "marketCap": 6252104192,
+   "dividendYield": 8.85,
+   "industry": "Marine Shipping"
+  },
+  "GOGL.OL": {
+   "rows": 0,
+   "last": null,
+   "last_date": null,
+   "shortName": null,
+   "longName": null,
+   "currency": null,
+   "exchange": null,
+   "marketCap": null,
+   "dividendYield": null,
+   "industry": null
+  },
+  "CMBTO.OL": {
+   "rows": 251,
+   "last": 158.39999389648438,
+   "last_date": "2026-11-20",
+   "shortName": "CMB.TECH NV",
+   "longName": "Cmb.Tech NV",
+   "currency": "NOK",
+   "exchange": "OSL",
+   "marketCap": 45962887168,
+   "dividendYield": 8.85,
+   "industry": "Oil & Gas Midstream"
+  },
+  "AGAS.OL": {
+   "rows": 0,
+   "last": null,
+   "last_date": null,
+   "shortName": null,
+   "longName": null,
+   "currency": null,
+   "exchange": null,
+   "marketCap": null,
+   "dividendYield": null,
+   "industry": null
+  },
+  "WWI.OL": {
+   "rows": 251,
+   "last": 917.0,
+   "last_date": "2026-11-20",
+   "shortName": "WILH. WILHELMSEN HOLDING SER. A",
+   "longName": "Wilh. Wilhelmsen Holding ASA",
+   "currency": "NOK",
+   "exchange": "OSL",
+   "marketCap": 38052655104,
+   "dividendYield": 2.18,
+   "industry": "Marine Shipping"
+  },
+  "WWIB.OL": {
+   "rows": 251,
+   "last": 885.0,
+   "last_date": "2026-11-20",
+   "shortName": "WILH. WILHELMSEN HOLDING SER. B",
+   "longName": "Wilh. Wilhelmsen Holding ASA",
+   "currency": "NOK",
+   "exchange": "OSL",
+   "marketCap": 36724752384,
+   "dividendYield": 2.26,
+   "industry": "Marine Shipping"
+  },
+  "EWIND.OL": {
+   "rows": 0,
+   "last": null,
+   "last_date": null,
+   "shortName": null,
+   "longName": null,
+   "currency": null,
+   "exchange": null,
+   "marketCap": null,
+   "dividendYield": null,
+   "industry": null
+  },
+  "HUNT.OL": {
+   "rows": 251,
+   "last": 16.260000228881836,
+   "last_date": "2026-11-20",
+   "shortName": "HUNTER GROUP",
+   "longName": "Hunter Group ASA",
+   "currency": "NOK",
+   "exchange": "OSL",
+   "marketCap": 2191942400,
+   "dividendYield": 7.87,
+   "industry": "Oil & Gas Midstream"
+  },
+  "BWO.OL": {
+   "rows": 251,
+   "last": 40.0,
+   "last_date": "2026-11-20",
+   "shortName": "BW OFFSHORE LIMITED",
+   "longName": "BW Offshore Limited",
+   "currency": "NOK",
+   "exchange": "OSL",
+   "marketCap": 7248629248,
+   "dividendYield": 8.93,
+   "industry": "Oil & Gas Equipment & Services"
+  },
+  "SOFF.OL": {
+   "rows": 251,
+   "last": 65.0,
+   "last_date": "2026-11-20",
+   "shortName": "SOLSTAD OFFSHORE",
+   "longName": "Solstad Offshore ASA",
+   "currency": "NOK",
+   "exchange": "OSL",
+   "marketCap": 5352533504,
+   "dividendYield": 8.7,
+   "industry": "Oil & Gas Equipment & Services"
+  },
+  "DOFG.OL": {
+   "rows": 251,
+   "last": 124.0,
+   "last_date": "2026-11-20",
+   "shortName": "DOF GROUP ASA",
+   "longName": "DOF Group ASA",
+   "currency": "NOK",
+   "exchange": "OSL",
+   "marketCap": 30538553344,
+   "dividendYield": 11.45,
+   "industry": "Engineering & Construction"
+  },
+  "STSU.OL": {
+   "rows": 0,
+   "last": null,
+   "last_date": null,
+   "shortName": null,
+   "longName": null,
+   "currency": null,
+   "exchange": null,
+   "marketCap": null,
+   "dividendYield": null,
+   "industry": null
+  },
+  "AMSC.OL": {
+   "rows": 0,
+   "last": null,
+   "last_date": null,
+   "shortName": null,
+   "longName": null,
+   "currency": null,
+   "exchange": null,
+   "marketCap": null,
+   "dividendYield": null,
+   "industry": null
+  },
+  "OKEA.OL": {
+   "rows": 251,
+   "last": 46.04999923706055,
+   "last_date": "2026-11-20",
+   "shortName": "OKEA",
+   "longName": "OKEA ASA",
+   "currency": "NOK",
+   "exchange": "OSL",
+   "marketCap": 4785071616,
+   "dividendYield": 4.34,
+   "industry": "Oil & Gas E&P"
+  },
+  "EQNR.OL": {
+   "rows": 251,
+   "last": 383.29998779296875,
+   "last_date": "2026-11-20",
+   "shortName": "EQUINOR",
+   "longName": "Equinor ASA",
+   "currency": "NOK",
+   "exchange": "OSL",
+   "marketCap": 906648027136,
+   "dividendYield": 3.98,
+   "industry": "Oil & Gas Integrated"
+  },
+  "JIN.OL": {
+   "rows": 251,
+   "last": 6.599999904632568,
+   "last_date": "2026-11-20",
+   "shortName": "JINHUI SHIPPING AND TRANSPORTAT",
+   "longName": "Jinhui Shipping and Transportation Limited",
+   "currency": "NOK",
+   "exchange": "OSL",
+   "marketCap": 721108992,
+   "dividendYield": 2.65,
+   "industry": "Marine Shipping"
+  },
+  "GOGL": {
+   "rows": 104,
+   "last": 13.449999809265137,
+   "last_date": "2026-11-20",
+   "shortName": "Corgi GOOGL 2x Daily ETF",
+   "longName": "Corgi GOOGL 2x Daily ETF",
+   "currency": "USD",
+   "exchange": "BTS",
+   "marketCap": null,
+   "dividendYield": null,
+   "industry": null
+  },
+  "FRO": {
+   "rows": 251,
+   "last": 45.209999084472656,
+   "last_date": "2026-11-20",
+   "shortName": "Frontline Plc",
+   "longName": "Frontline plc",
+   "currency": "USD",
+   "exchange": "NYQ",
+   "marketCap": 10064781312,
+   "dividendYield": 11.9,
+   "industry": "Oil & Gas Midstream"
+  },
+  "CMBT": {
+   "rows": 251,
+   "last": 16.110000610351562,
+   "last_date": "2026-11-20",
+   "shortName": "CMB.TECH NV",
+   "longName": "Cmb.Tech NV",
+   "currency": "USD",
+   "exchange": "NYQ",
+   "marketCap": 4674635264,
+   "dividendYield": 7.95,
+   "industry": "Oil & Gas Midstream"
+  },
+  "HAFN": {
+   "rows": 251,
+   "last": 8.819999694824219,
+   "last_date": "2026-11-20",
+   "shortName": "Hafnia Limited",
+   "longName": "Hafnia Limited",
+   "currency": "USD",
+   "exchange": "NYQ",
+   "marketCap": 4721620992,
+   "dividendYield": 12.6,
+   "industry": "Marine Shipping"
+  },
+  "BDRY": {
+   "rows": 251,
+   "last": 12.119999885559082,
+   "last_date": "2026-11-20",
+   "shortName": "Breakwave Dry Bulk Shipping ETF",
+   "longName": "Breakwave Dry Bulk Shipping ETF",
+   "currency": "USD",
+   "exchange": "PCX",
+   "marketCap": null,
+   "dividendYield": 0.0,
+   "industry": null
+  },
+  "BWET": {
+   "rows": 251,
+   "last": 745.77001953125,
+   "last_date": "2026-11-20",
+   "shortName": "Breakwave Tanker Shipping ETF",
+   "longName": "Breakwave Tanker Shipping ETF",
+   "currency": "USD",
+   "exchange": "PCX",
+   "marketCap": null,
+   "dividendYield": 0.0,
+   "industry": null
+  },
+  "BZ=F": {
+   "rows": 250,
+   "last": 89.94999694824219,
+   "last_date": "2026-11-20",
+   "shortName": "Brent Crude Oil Last Day Financ",
+   "longName": "Brent Crude Oil Last Day Financial Futures",
+   "currency": "USD",
+   "exchange": "NYM",
+   "marketCap": null,
+   "dividendYield": null,
+   "industry": null
+  },
+  "CL=F": {
+   "rows": 250,
+   "last": 83.41000366210938,
+   "last_date": "2026-11-20",
+   "shortName": "Crude Oil Jan 27",
+   "longName": null,
+   "currency": "USD",
+   "exchange": "NYM",
+   "marketCap": null,
+   "dividendYield": null,
+   "industry": null
+  },
+  "NG=F": {
+   "rows": 250,
+   "last": 3.747999906539917,
+   "last_date": "2026-11-20",
+   "shortName": "Natural Gas Jan 27",
+   "longName": null,
+   "currency": "USD",
+   "exchange": "NYM",
+   "marketCap": null,
+   "dividendYield": null,
+   "industry": null
+  },
+  "TTF=F": {
+   "rows": 250,
+   "last": 88.45099639892578,
+   "last_date": "2026-11-20",
+   "shortName": "Dutch TTF Natural Gas Calendar ",
+   "longName": null,
+   "currency": "EUR",
+   "exchange": "NYM",
+   "marketCap": null,
+   "dividendYield": null,
+   "industry": null
+  },
+  "HG=F": {
+   "rows": 250,
+   "last": 5.485000133514404,
+   "last_date": "2026-11-20",
+   "shortName": "Copper Dec 26",
+   "longName": null,
+   "currency": "USD",
+   "exchange": "CMX",
+   "marketCap": null,
+   "dividendYield": null,
+   "industry": null
+  },
+  "TIO=F": {
+   "rows": 250,
+   "last": 90.66999816894531,
+   "last_date": "2026-11-20",
+   "shortName": "Iron Ore 62% Fe, CFR China (TSI",
+   "longName": null,
+   "currency": "USD",
+   "exchange": "CMX",
+   "marketCap": null,
+   "dividendYield": null,
+   "industry": null
+  },
+  "ZS=F": {
+   "rows": 250,
+   "last": 1220.75,
+   "last_date": "2026-11-20",
+   "shortName": "Soybean Futures,Jan-2027",
+   "longName": null,
+   "currency": "USX",
+   "exchange": "CBT",
+   "marketCap": null,
+   "dividendYield": null,
+   "industry": null
+  },
+  "ZW=F": {
+   "rows": 250,
+   "last": 592.0,
+   "last_date": "2026-11-20",
+   "shortName": "Chicago SRW Wheat Futures,Mar-2",
+   "longName": null,
+   "currency": "USX",
+   "exchange": "CBT",
+   "marketCap": null,
+   "dividendYield": null,
+   "industry": null
+  },
+  "NOK=X": {
+   "rows": 261,
+   "last": 9.74940013885498,
+   "last_date": "2026-11-22",
+   "shortName": "USD/NOK",
+   "longName": "USD/NOK",
+   "currency": "NOK",
+   "exchange": "CCY",
+   "marketCap": null,
+   "dividendYield": null,
+   "industry": null
+  },
+  "EURNOK=X": {
+   "rows": 261,
+   "last": 10.702500343322754,
+   "last_date": "2026-11-22",
+   "shortName": "EUR/NOK",
+   "longName": "EUR/NOK",
+   "currency": "NOK",
+   "exchange": "CCY",
+   "marketCap": null,
+   "dividendYield": null,
+   "industry": null
+  },
+  "^OSEAX": {
+   "rows": 0,
+   "last": null,
+   "last_date": null,
+   "shortName": null,
+   "longName": null,
+   "currency": null,
+   "exchange": null,
+   "marketCap": null,
+   "dividendYield": null,
+   "industry": null
+  },
+  "OSEBX.OL": {
+   "rows": 251,
+   "last": 2037.6800537109375,
+   "last_date": "2026-11-20",
+   "shortName": "OSEBX.OL",
+   "longName": "Oslo Børs Benchmark Index_GI",
+   "currency": "NOK",
+   "exchange": "OSL",
+   "marketCap": null,
+   "dividendYield": null,
+   "industry": null
+  },
+  "^GSPC": {
+   "rows": 251,
+   "last": 6910.39013671875,
+   "last_date": "2026-11-20",
+   "shortName": "S&P 500",
+   "longName": "S&P 500",
+   "currency": "USD",
+   "exchange": "SNP",
+   "marketCap": null,
+   "dividendYield": null,
+   "industry": null
+  },
+  "ZIM": {
+   "rows": 251,
+   "last": 29.31999969482422,
+   "last_date": "2026-11-20",
+   "shortName": "ZIM Integrated Shipping Service",
+   "longName": "ZIM Integrated Shipping Services Ltd.",
+   "currency": "USD",
+   "exchange": "NYQ",
+   "marketCap": 3537430784,
+   "dividendYield": 0.0,
+   "industry": "Marine Shipping"
+  },
+  "SBLK": {
+   "rows": 251,
+   "last": 25.739999771118164,
+   "last_date": "2026-11-20",
+   "shortName": "Star Bulk Carriers Corp.",
+   "longName": "Star Bulk Carriers Corp.",
+   "currency": "USD",
+   "exchange": "NMS",
+   "marketCap": 2987677440,
+   "dividendYield": 7.3,
+   "industry": "Marine Shipping"
+  },
+  "DHT": {
+   "rows": 251,
+   "last": 21.579999923706055,
+   "last_date": "2026-11-20",
+   "shortName": "DHT Holdings, Inc.",
+   "longName": "DHT Holdings, Inc.",
+   "currency": "USD",
+   "exchange": "NYQ",
+   "marketCap": 3479463424,
+   "dividendYield": 26.88,
+   "industry": "Oil & Gas Midstream"
+  },
+  "_div_FRO": {
+   "2025-06-11": 1.7548921,
+   "2025-09-11": 3.5097842,
+   "2025-12-11": 1.852386,
+   "2026-03-11": 10.041882,
+   "2026-06-11": 15.111569,
+   "2026-09-17": 33.245457
+  },
+  "_div_HAFNI": {
+   "2025-05-22": 0.98956406,
+   "2025-09-03": 1.1796774,
+   "2025-12-08": 1.4331619,
+   "2026-03-05": 1.7178444,
+   "2026-06-03": 2.8049023,
+   "2026-09-07": 4.877625
+  },
+  "_secs": 26.4
+ },
+ "newsweb": {
+  "FRO": {
+   "n": 13,
+   "issuer": "Frontline plc",
+   "titles": [
+    "FRO - Q3 2026 Presentation",
+    "Key information relating to the dividend to be paid by Frontline plc for the third quarter, 2026",
+    "FRO - Third Quarter and Nine Months 2026 Results"
+   ]
+  },
+  "HAFNI": {
+   "n": 19,
+   "issuer": "Hafnia Limited",
+   "titles": [
+    "HAFNIA LIMITED: Key information relating to dividend for the third quarter 2026",
+    "HAFNIA FINANCIAL INFORMATION Q3 2026",
+    "HAFNIA'S Q3 2026 FINANCIAL RESULTS PRESENTATION TO BE HELD ON 18 NOVEMBER 2026"
+   ]
+  },
+  "OET": {
+   "n": 4,
+   "issuer": "Okeanis Eco Tankers Corp.",
+   "titles": [
+    "Okeanis Eco Tankers Corp. - Ex Dividend Date",
+    "Okeanis Eco Tankers Corp. - Key Information relating to Q3 2026 dividend",
+    "Okeanis Eco Tankers Corp. - Unaudited Condensed Financial Results for the Third Quarter and Nine-Month Period of 2026"
+   ]
+  },
+  "ODF": {
+   "n": 7,
+   "issuer": "Odfjell SE",
+   "titles": [
+    "Odfjell SE 3Q26: Solid performance",
+    "Odfjell SE 3Q26: Et solid kvartal",
+    "Odfjell SE: Presentation of third quarter 2026 results"
+   ]
+  },
+  "SNI": {
+   "n": 6,
+   "issuer": "Stolt-Nielsen Limited",
+   "titles": [
+    "Stolt-Nielsen Limited Board Declares Interim Dividend of $1.00 per Common Share",
+    "Financial calendar",
+    "Ny rente"
+   ]
+  },
+  "BELCO": {
+   "n": 0,
+   "issuer": null,
+   "titles": []
+  },
+  "2020": {
+   "n": 0,
+   "issuer": null,
+   "titles": []
+  },
+  "HSHP": {
+   "n": 69,
+   "issuer": "Himalaya Shipping Ltd",
+   "titles": [
+    "Shareholder Disclosure Notification",
+    "The Goldman Sachs Group, Inc. Disclosure in HIMALAYA SHIPPING LTD",
+    "Himalaya Shipping Ltd.(HSHP) Ex cash Dividends US$0.20 today on Euronext"
+   ]
+  },
+  "MPCC": {
+   "n": 6,
+   "issuer": "MPC Container Ships ASA",
+   "titles": [
+    "MPC Container Ships ASA: Invitation to Q3 2026 Earnings Call",
+    "MPC Container Ships ASA: Minutes from the Extraordinary General Meeting",
+    "MPC Container Ships ASA: Notice of Extraordinary General Meeting"
+   ]
+  },
+  "WAWI": {
+   "n": 16,
+   "issuer": "Wallenius Wilhelmsen ASA",
+   "titles": [
+    "Wallenius Wilhelmsen ASA - Contemplated buy-back of bonds ",
+    "Wallenius Wilhelmsen Q3 2026 presentation",
+    "Wallenius Wilhelmsen delivers solid results in Q3"
+   ]
+  },
+  "HAUTO": {
+   "n": 6,
+   "issuer": "Höegh Autoliners ASA",
+   "titles": [
+    "Key information relating to the cash dividend to be paid by Höegh Autoliners ASA ",
+    "Höegh Autoliners ASA: Third quarter results and distribution of dividends",
+    "Höegh Autoliners ASA: Invitation to presentation of third quarter 2026 results"
+   ]
+  },
+  "BWLPG": {
+   "n": 7,
+   "issuer": "BW LPG Limited",
+   "titles": [
+    "BW LPG Limited announces sale of BW Mistral",
+    "BW LPG Limited   Q3 2026 Financial Report Release and Earnings Presentation on 24 November 2026",
+    "BW LPG Limited announces sale of BW Loyalty"
+   ]
+  },
+  "FLNG": {
+   "n": 0,
+   "issuer": null,
+   "titles": []
+  },
+  "COOL": {
+   "n": 601,
+   "issuer": "SpareBank 1 Nordmøre",
+   "titles": [
+    "SNOR: SpareBank 1 Nordmøre - Meldepliktige handler for primærinnsidere",
+    "SNOR: SpareBank 1 Nordmøre - Viderefordeling av egenkapitalbevis i spareprogram for ansatte",
+    "Correction: Bohus ASA - Mandatory notification of trade"
+   ]
+  },
+  "KCC": {
+   "n": 12,
+   "issuer": "Klaveness Combination Carriers ASA",
+   "titles": [
+    "KCC: CLEANBU vessel fixed on three-year time charter",
+    "KCC: Ex dividend USD 0.36 today",
+    "KCC: Third Quarter 2026   Solid Q3, record Q4 outlook"
+   ]
+  },
+  "GOGL": {
+   "n": 0,
+   "issuer": null,
+   "titles": []
+  },
+  "CMBTO": {
+   "n": 10,
+   "issuer": "CMB.TECH NV",
+   "titles": [
+    "PRESS RELEASE: CHANGED PUBLICATION DATE Q3 2026 RESULTS ",
+    "PRESS RELEASE: CMB.TECH ANNOUNCES Q3 2026 RESULTS ON 26/11/2026 ",
+    "CMB.TECH - Ex-Distribution Date"
+   ]
+  },
+  "AGAS": {
+   "n": 0,
+   "issuer": null,
+   "titles": []
+  },
+  "WWI": {
+   "n": 10,
+   "issuer": "Wilh. Wilhelmsen Holding ASA",
+   "titles": [
+    "Wilh. Wilhelmsen Holding ASA: Ex dividend NOK 8.50 today",
+    "Wilh. Wilhelmsen Holding ASA: Share buy back result",
+    "Wilh. Wilhelmsen Holding ASA: Share buy back price guidance"
+   ]
+  },
+  "EWIND": {
+   "n": 0,
+   "issuer": null,
+   "titles": []
+  },
+  "_secs": 8.0
+ },
+ "shorts": {
+  "total": 105,
+  "hits": [
+   {
+    "isin": "BMG9156K1018",
+    "issuerName": "2020 BULKERS",
+    "name": null,
+    "n_events": 112
+   },
+   {
+    "isin": "BMG067231032",
+    "issuerName": "AVANCE GAS HOLDING",
+    "name": null,
+    "n_events": 22
+   },
+   {
+    "isin": "BMG173841013",
+    "issuerName": "BW LPG",
+    "name": null,
+    "n_events": 3
+   },
+   {
+    "isin": "SGXZ69436764",
+    "issuerName": "BW LPG",
+    "name": null,
+    "n_events": 77
+   },
+   {
+    "isin": "BMG2415A1137",
+    "issuerName": "COOL COMPANY LTD.",
+    "name": null,
+    "n_events": 25
+   },
+   {
+    "isin": "BMG359472021",
+    "issuerName": "FLEX LNG",
+    "name": null,
+    "n_events": 31
+   },
+   {
+    "isin": "SGXZ53070850",
+    "issuerName": "HAFNIA LIMITED",
+    "name": null,
+    "n_events": 40
+   },
+   {
+    "isin": "BMG4660A1036",
+    "issuerName": "HIMALAYA SHIPPING LTD",
+    "name": null,
+    "n_events": 75
+   },
+   {
+    "isin": "NO0011082075",
+    "issuerName": "HOEGH AUTOLINERS ASA",
+    "name": null,
+    "n_events": 142
+   },
+   {
+    "isin": "NO0010791353",
+    "issuerName": "MPC CONTAINER SHIPS",
+    "name": null,
+    "n_events": 182
+   },
+   {
+    "isin": "MHY641771016",
+    "issuerName": "OKEANIS ECO TANKERS",
+    "name": null,
+    "n_events": 51
+   },
+   {
+    "isin": "BMG850801025",
+    "issuerName": "STOLT-NIELSEN",
+    "name": null,
+    "n_events": 6
+   },
+   {
+    "isin": "NO0010571680",
+    "issuerName": "WALLENIUS WILHELMSEN",
+    "name": null,
+    "n_events": 2
+   }
+  ],
+  "sample_keys": [
+   "isin",
+   "issuerName",
+   "events"
+  ],
+  "_secs": 2.9
+ },
+ "portwatch": {
+  "status": 200,
+  "n": 60,
+  "fields": [
+   "date",
+   "year",
+   "month",
+   "day",
+   "portid",
+   "portname",
+   "n_container",
+   "n_dry_bulk",
+   "n_general_cargo",
+   "n_roro",
+   "n_tanker",
+   "n_cargo",
+   "n_total",
+   "capacity_container",
+   "capacity_dry_bulk",
+   "capacity_general_cargo",
+   "capacity_roro",
+   "capacity_tanker",
+   "capacity_cargo",
+   "capacity",
+   "ObjectId"
+  ],
+  "sample": [
+   {
+    "date": "2026-11-15",
+    "year": 2026,
+    "month": 11,
+    "day": 15,
+    "portid": "chokepoint1",
+    "portname": "Suez Canal",
+    "n_container": 12,
+    "n_dry_bulk": 11,
+    "n_general_cargo": 6,
+    "n_roro": 1,
+    "n_tanker": 14,
+    "n_cargo": 30,
+    "n_total": 44,
+    "capacity_container": 953591,
+    "capacity_dry_bulk": 299383,
+    "capacity_general_cargo": 12041,
+    "capacity_roro": 0,
+    "capacity_tanker": 618609,
+    "capacity_cargo": 1265015,
+    "capacity": 1883625,
+    "ObjectId": 2078
+   },
+   {
+    "date": "2026-11-15",
+    "year": 2026,
+    "month": 11,
+    "day": 15,
+    "portid": "chokepoint2",
+    "portname": "Panama Canal",
+    "n_container": 9,
+    "n_dry_bulk": 0,
+    "n_general_cargo": 4,
+    "n_roro": 1,
+    "n_tanker": 16,
+    "n_cargo": 14,
+    "n_total": 30,
+    "capacity_container": 400781,
+    "capacity_dry_bulk": 0,
+    "capacity_general_cargo": 27310,
+    "capacity_roro": 4036,
+    "capacity_tanker": 393362,
+    "capacity_cargo": 432128,
+    "capacity": 825491,
+    "ObjectId": 4156
+   },
+   {
+    "date": "2026-11-15",
+    "year": 2026,
+    "month": 11,
+    "day": 15,
+    "portid": "chokepoint3",
+    "portname": "Bosporus Strait",
+    "n_container": 5,
+    "n_dry_bulk": 8,
+    "n_general_cargo": 30,
+    "n_roro": 2,
+    "n_tanker": 12,
+    "n_cargo": 45,
+    "n_total": 57,
+    "capacity_container": 30372,
+    "capacity_dry_bulk": 126744,
+    "capacity_general_cargo": 67250,
+    "capacity_roro": 2381,
+    "capacity_tanker": 39639,
+    "capacity_cargo": 226749,
+    "capacity": 266388,
+    "ObjectId": 9653
+   }
+  ],
+  "names": [
+   [
+    "chokepoint1",
+    "Suez Canal"
+   ],
+   [
+    "chokepoint10",
+    "Oresund Strait"
+   ],
+   [
+    "chokepoint11",
+    "Taiwan Strait"
+   ],
+   [
+    "chokepoint12",
+    "Korea Strait"
+   ],
+   [
+    "chokepoint13",
+    "Tsugaru Strait"
+   ],
+   [
+    "chokepoint14",
+    "Luzon Strait"
+   ],
+   [
+    "chokepoint15",
+    "Lombok Strait"
+   ],
+   [
+    "chokepoint16",
+    "Ombai Strait"
+   ],
+   [
+    "chokepoint17",
+    "Bohai Strait"
+   ],
+   [
+    "chokepoint18",
+    "Torres Strait"
+   ],
+   [
+    "chokepoint19",
+    "Sunda Strait"
+   ],
+   [
+    "chokepoint2",
+    "Panama Canal"
+   ],
+   [
+    "chokepoint20",
+    "Makassar Strait"
+   ],
+   [
+    "chokepoint21",
+    "Magellan Strait"
+   ],
+   [
+    "chokepoint22",
+    "Yucatan Channel"
+   ],
+   [
+    "chokepoint23",
+    "Windward Passage"
+   ],
+   [
+    "chokepoint24",
+    "Mona Passage"
+   ],
+   [
+    "chokepoint25",
+    "Balabac Strait"
+   ],
+   [
+    "chokepoint26",
+    "Bering Strait"
+   ],
+   [
+    "chokepoint27",
+    "Mindoro Strait"
+   ],
+   [
+    "chokepoint28",
+    "Kerch Strait"
+   ],
+   [
+    "chokepoint3",
+    "Bosporus Strait"
+   ],
+   [
+    "chokepoint4",
+    "Bab el-Mandeb Strait"
+   ],
+   [
+    "chokepoint5",
+    "Malacca Strait"
+   ],
+   [
+    "chokepoint6",
+    "Strait of Hormuz"
+   ],
+   [
+    "chokepoint7",
+    "Cape of Good Hope"
+   ],
+   [
+    "chokepoint8",
+    "Gibraltar Strait"
+   ],
+   [
+    "chokepoint9",
+    "Dover Strait"
+   ]
+  ],
+  "_secs": 3.7
+ },
+ "baltic": {
+  "tanker46": {
+   "status": 200,
+   "len": 1953,
+   "snippet": " Challenge Validation function cp_clge_done(){location.reload(true);} sessionStorage.setItem('data-duration', 10); "
+  },
+  "tanker47": {
+   "status": 200,
+   "len": 1953,
+   "snippet": " Challenge Validation function cp_clge_done(){location.reload(true);} sessionStorage.setItem('data-duration', 10); "
+  },
+  "dry46": {
+   "status": 200,
+   "len": 1953,
+   "snippet": " Challenge Validation function cp_clge_done(){location.reload(true);} sessionStorage.setItem('data-duration', 10); "
+  },
+  "dry47": {
+   "status": 200,
+   "len": 1953,
+   "snippet": " Challenge Validation function cp_clge_done(){location.reload(true);} sessionStorage.setItem('data-duration', 10); "
+  },
+  "index": {
+   "status": 200,
+   "links": []
+  },
+  "_secs": 0.4
+ },
+ "drewry": {
+  "https://www.drewry.co.uk/supply-chain-advisors/supply-chain-expertise/world-container-index-assessed-by-drewry": {
+   "status": 200,
+   "final": "https://www.drewry.co.uk/supply-chain-advisors/supply-chain-expertise/world-container-index-assessed-by-drewry",
+   "matches": [
+    "World Container Index (WCI), the benchmark widely referenced by procurement teams, decreased 3% to $4,176 per 40ft container this week due to declining rates on the Transpacific trade route."
+   ],
+   "date": [
+    "assessment for Thursday, 19 Nov 2026"
+   ]
+  },
+  "https://www.drewry.co.uk/wci": {
+   "status": 200,
+   "final": "https://www.drewry.co.uk/supply-chain-advisors/supply-chain-expertise/world-container-index-assessed-by-drewry",
+   "matches": [
+    "World Container Index (WCI), the benchmark widely referenced by procurement teams, decreased 3% to $4,176 per 40ft container this week due to declining rates on the Transpacific trade route."
+   ],
+   "date": [
+    "assessment for Thursday, 19 Nov 2026"
+   ]
+  },
+  "_secs": 1.5
+ },
+ "scfi": {
+  "https://en.sse.net.cn/indices/scfinew.jsp": {
+   "status": 200,
+   "len": 23792,
+   "snippet": " Shanghai Shipping Exchange Institute(Prep.) $(document).ready(function () { isLogin2(); $.ajax({ url: \"/currentIndex\", type: \"GET\", dataType: \"json\", data: {indexName:\"scfi\"}, success: function (result) { var status = result[\"status\"]; var msg = result[\"msg\"]; if(status ==0){ alert(msg); }else { var data = result[\"data\"]; var currentDate =data[\"currentDate\"]; var lastDate = data[\"lastDate\"]; var lineDataList = data[\"lineDataList\"]; $(\"#currdate\").text(currentDate); $(\"#lastdate\").text(lastDate); for(var j=0;j \\n\" + \" \"+ lineName_EN +\" \\n\" + \" \"+unit_EN+\" \\n\" + \" \"+weighting_EN+\" \\n\" + \" \"+set"
+  },
+  "https://www.sse.net.cn/index/singleIndex?indexType=scfi": {
+   "status": 200,
+   "len": 33619,
+   "snippet": " SCFI运价指数 | Shanghai Shipping Exchange Institute(Prep.) #ownlink a { color: #c6cad2; } #ownlink a:hover { color: #fff; } #up { background-color: #ffffff; height: 90px; border-bottom: solid 1px #DCDCDC; } #up div { height: 100%; } #up div { background-image: none; } #up div a.logo { background-image: url(\"/images/head-logo.png\"); width: 600px; margin-top: 20px; height: 64px; } #english { margin: 60px 10px 0px 10px; height: 20px; float: left; font-size: 14px; color: #0066CC; } #english:hover { color: rgb(253, 151, 1); } #up div a.dh { font-family: \"SimHei\"; font-size: 20px; border-left: none; li"
+  },
+  "_secs": 3.2
+ },
+ "feeds": {
+  "splash247": {
+   "status": 200,
+   "n": 10,
+   "titles": [
+    "Subsea 7 seeks buyer for pipelay vessel ahead of Saipem merger",
+    "Seaway 7 lines up vessel trio for Scottish offshore wind project",
+    "Scotland greenlights 1 GW floating offshore wind project"
+   ],
+   "article_status": 200,
+   "article_len": 1276,
+   "article_start": "Norwegian offshore engineering contractor Subsea 7 has begun identifying a buyer for its pipelay and heavy-lift vessel Seven Borealis, which it must divest as part of its planned merger with Saipem.\nT"
+  },
+  "hellenic": {
+   "status": 200,
+   "n": 20,
+   "titles": [
+    "ASIA LNG MOC PERFORMANCE: Deliveries conclude for record volume of 148.5 TBtu during August MOC",
+    "Vassilis Kikilias at the EPP: “We Cannot Afford to Lose Any More Time – Joint European Action Is Needed on Competitiveness and Shipping”",
+    "Tanker Market: Arabian Gulf Crude Oil Exports Down 27.6% This Year"
+   ],
+   "article_status": 200,
+   "article_len": 1772,
+   "article_start": "ASIA LNG MOC PERFORMANCE: Deliveries conclude for record volume of 148.5 TBtu during August MOC\nParticipants in the Asia LNG Platts Market on Close assessment process concluded physical deliveries for"
+  },
+  "gcaptain": {
+   "status": 200,
+   "n": 12,
+   "titles": [
+    "Two Tanker Incidents Reported Near Oman; Vessel Hit Mine East Of Hormuz",
+    "Russian Military-Linked Cargo Ship Burns After Suspected Drone Strike in Gulf of Finland",
+    "Southern California Port Employers, Watchmen Union Reach Tentative Deal"
+   ],
+   "article_status": 200,
+   "article_len": 2850,
+   "article_start": "Don’t Miss Your Daily Briefing for the Maritime Industry\nJoin the leading maritime news network\n— trusted by our 106,044 members\nA still image obtained from a social media video released on November 1"
+  },
+  "maritime_exec": {
+   "status": 200,
+   "n": 74,
+   "titles": [
+    "Balaena and Kongsberg Maritime Sign Agreement on Arctic Hunter USV",
+    "Russian Military RoRo Abandoned After Drone Attack in the Baltic",
+    "SFL Expands Orca AI Deployment Following Successful Initial Rollout"
+   ],
+   "article_status": 200,
+   "article_len": 3718,
+   "article_start": "Balaena and Kongsberg Maritime Sign Agreement on Arctic Hunter USV\n[By Balaena]\nBritish-owned shipbuilding and maritime engineering group Balaena has signed a Memorandum of Understanding (MoU) with No"
+  },
+  "seatrade": {
+   "status": 200,
+   "n": 50,
+   "titles": [
+    "LA-LB labour group signs truce with employers",
+    "Container shipping rate tactics draw competition criticism",
+    "FMC warns container lines of 1 March export policy deadline"
+   ],
+   "article_status": 403,
+   "article_len": 41,
+   "article_start": "Enable JavaScript and cookies to continue"
+  },
+  "freightwaves_mar": {
+   "status": 200,
+   "n": 50,
+   "titles": [
+    "Tentative union deal averts strike at Port of LA-Long Beach",
+    "Zim Q3 profit surges to $830 million as freight rates jump 55%",
+    "Ship pilot indicted after fatal Houston collision linked to cellphone distraction"
+   ],
+   "article_status": 200,
+   "article_len": 2778,
+   "article_start": "The Pacific Maritime Association and International Longshore and Warehouse Union Local 26 have reached a tentative contract agreement covering about 250 watchmen at the ports of Los Angeles and Long B"
+  },
+  "offshore_energy": {
+   "status": 200,
+   "n": 50,
+   "titles": [
+    "Azule Energy wraps up divestment of two Angolan offshore blocks",
+    "FPSO revamp to begin next year as Navitas addresses contractor challenges",
+    "1 MW floating wave energy converter gets green light for test site deployment"
+   ],
+   "article_status": 200,
+   "article_len": 3048,
+   "article_start": "As part of its optimization strategy, Azule Energy, a joint venture between two energy majors, Italy’s Eni and the UK’s BP, has finished the divestment of its participating interests in two blocks in "
+  },
+  "g_tradewinds": {
+   "status": 200,
+   "n": 51,
+   "titles": [
+    "Middle East war claims near $3bn as insurers take loss of hire hit - TradeWinds News",
+    "Frontline boss surveys the damage to VLCCs in Hormuz shuttle with incidents ‘under-reported’ - TradeWinds News",
+    "Iran strikes two tankers in an hour while transiting Strait of Hormuz - TradeWinds News"
+   ]
+  },
+  "g_lloyds": {
+   "status": 200,
+   "n": 27,
+   "titles": [
+    "Tanker rates rising again as Hormuz flow falters, says Frontline - Lloyd's List",
+    "Insurance Marine - Lloyd's List",
+    "Casualties - Lloyd's List - Lloyd's List"
+   ]
+  },
+  "g_no_shipping": {
+   "status": 200,
+   "n": 21,
+   "titles": [
+    "Russisk diesel skulle til USA: Så skjedde det noe - ABC Nyheter",
+    "Bekrefter: Ukraina stod bak angrep på tankskip - Nettavisen",
+    "Sju skyggeflåteskip utenfor sørlandskysten - agderposten.no"
+   ]
+  },
+  "_secs": 5.9
+ },
+ "eia": {
+  "https://ir.eia.gov/wpsr/table1.csv": {
+   "status": 200,
+   "type": "text/plain",
+   "head": "\"STUB_1\",\"11/13/26\",\"11/6/26\",\"Difference\",\"Percent Change\",\"11/14/25\",\"Difference\",\"Percent Change\"\r\n\"Crude Oil\",\"694.158\",\"693.952\",\"0.206\",\"0.000\",\"835.081\",\"-140.923\",\"-16.900\"\r\n\"Commercial (Excluding SPR)\",\"417.797\",\"414.417\",\"3.380\",\"0.800\",\"424.155\",\"-6.358\",\"-1.500\"\r\n\"Strategic Petroleum Reserve (SPR)\",\"276.361\",\"279.535\",\"-3.174\",\"-1.100\",\"410.926\",\"-134.565\",\"-32.700\"\r\n\"Total Motor Gasoline\",\"215.949\",\"210.757\",\"5.193\",\"2.500\",\"207.391\",\"8.558\",\"4.100\"\r\n\"Reformulated\",\"0.022\",\"0.024\",\""
+  },
+  "https://www.eia.gov/petroleum/supply/weekly/csv/table1.csv": {
+   "status": 404,
+   "type": "text/html; charset=UTF-8",
+   "head": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\r\n<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">\r\n<head>\r\n\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\r\n<meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\" />\r\n<meta http-equiv=\"Content-Language\" content=\"en-us\" />\r\n<meta name=\"robots\" content=\"all\" />\r\n<meta name=\"agency\" content=\"EIA - Energy Information Administration\" />\r\n<m"
+  },
+  "https://fred.stlouisfed.org/graph/fredgraph.csv?id=WCESTUS1&cosd=2025-01-01": "ReadTimeout(ReadTimeoutError(\"HTTPSConnectionPool(host='fred.stlouisfed.org', port=443): Read timed out. (read timeout=20)\"))",
+  "_secs": 20.7
+ }
+}
