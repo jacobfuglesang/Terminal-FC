@@ -8,10 +8,10 @@ permissions:
 jobs:
   probe:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
-      - run: pip install requests openpyxl feedparser yfinance trafilatura googlenewsdecoder lxml_html_clean
+      - run: pip install requests openpyxl feedparser yfinance trafilatura googlenewsdecoder lxml_html_clean websockets
       - run: python probe/probe.py
         env:
           BW_CLIENT_ID: ${{ secrets.BW_CLIENT_ID }}
