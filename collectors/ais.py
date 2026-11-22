@@ -77,7 +77,11 @@ def run(conn, seconds: int = 70) -> int:
     key = os.environ.get("AISSTREAM_API_KEY", "").strip()
     if not key:
         raise MissingKey("Venter på aisstream-nøkkel (AISSTREAM_API_KEY)")
-    pos, static = asyncio.run(listen(key, seconds))
+    try:
+        pos, static = asyncio.run(listen(key, seconds))
+    except (TimeoutError, OSError, asyncio.TimeoutError) as e:
+        # aisstream er av og til nede; da hopper vi over denne gangen i stedet for å melde feil
+        raise MissingKey(f"aisstream svarte ikke ({type(e).__name__}), prøver igjen neste kjøring") from e
     now = datetime.now(timezone.utc)
     counts: dict[str, dict[str, int]] = {z: {"total": 0, "tank": 0, "last": 0} for z in ZONES}
     with conn.cursor() as cur:
