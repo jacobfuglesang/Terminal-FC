@@ -166,6 +166,11 @@ CREATE TABLE IF NOT EXISTS alerts (key TEXT PRIMARY KEY, kind TEXT, symbol TEXT,
 CREATE INDEX IF NOT EXISTS alerts_created_idx ON alerts (created_at DESC);
 CREATE TABLE IF NOT EXISTS briefs (day DATE PRIMARY KEY, text TEXT NOT NULL DEFAULT '', model TEXT, snapshot TEXT, created_at TIMESTAMPTZ NOT NULL DEFAULT now());
 ALTER TABLE quotes ADD COLUMN IF NOT EXISTS currency TEXT;
+-- KI-rapportleser: én rad per selskap og kvartal
+CREATE TABLE IF NOT EXISTS reports (key TEXT PRIMARY KEY, symbol TEXT NOT NULL, period TEXT NOT NULL, published TIMESTAMPTZ, title TEXT,
+  message_ids BIGINT[] NOT NULL DEFAULT '{}', status TEXT NOT NULL DEFAULT 'pending', tries INT NOT NULL DEFAULT 0, data JSONB, model TEXT,
+  source_chars INT, error TEXT, created_at TIMESTAMPTZ NOT NULL DEFAULT now(), updated_at TIMESTAMPTZ NOT NULL DEFAULT now());
+CREATE INDEX IF NOT EXISTS reports_sym_idx ON reports (symbol, published DESC);
 -- Kilder fra laksterminalen som ikke lenger hentes
 DELETE FROM source_status WHERE source IN ('SSB laksepris', 'Fiskeridirektoratet (biomasse)', 'BarentsWatch (lus og sykdom)', 'Euronext (terminkurve)', 'IMF/FRED (fôrråvarer)', 'Yahoo Finance (kurser)', 'Yahoo Finance (konsensus og nøkkeltall)');
 -- Engangsopprydding etter overgangen fra laks til shipping (trygt å kjøre flere ganger)

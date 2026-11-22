@@ -88,6 +88,19 @@ def snapshot(conn) -> str:
             out.append("\n## Rapporter neste tre uker (Yahoo)")
             out += [f"- {names.get(s, s)}: {d}" for s, d in sorted(soon, key=lambda x: x[1])]
 
+        cur.execute("""SELECT symbol, period, data FROM reports WHERE status = 'ok' AND published > now() - interval '10 days'
+                       ORDER BY published DESC LIMIT 8""")
+        reps = cur.fetchall()
+        if reps:
+            names = {c["symbol"]: c["name"] for c in COMPANIES}
+            out.append("\n## Kvartalsrapporter lest av KI siste 10 dager")
+            for sym, period, d in reps:
+                line = f"- {names.get(sym, sym)} {period}: {d.get('headline', '')}"
+                bk = "; ".join(f"{b.get('segment')} {b.get('share_pct')} % booket til {b.get('rate')} {b.get('unit', '')} for {b.get('period')}"
+                               for b in (d.get("bookings") or [])[:3] if b.get("rate"))
+                be = "; ".join(f"dødpunkt {b.get('segment')} {b.get('rate')} {b.get('unit', '')}" for b in (d.get("breakeven") or [])[:2] if b.get("rate"))
+                out.append(line + (f" Booking: {bk}." if bk else "") + (f" {be}." if be else ""))
+
         cur.execute("SELECT title FROM alerts WHERE created_at > now() - interval '2 days' ORDER BY created_at DESC LIMIT 12")
         al = [r[0] for r in cur.fetchall()]
         if al:
@@ -109,7 +122,8 @@ PROMPT = (
     "som holder shippingaksjer på Oslo Børs i uker til måneder. Bruk BARE tallene og nyhetene i dataene under, og ikke finn på noe. "
     "Gi ingen kjøps- eller salgsråd, ingen kursmål og ikke gjengi analytikeres anbefalinger. "
     "Bruk disse overskriftene (markdown ##): «Kort fortalt» (tre punkter), «Tank», «Tørrbulk», «Container, bil og gass», "
-    "«Geopolitikk og trafikk», «Følg med på» (kommende rapporter og datapunkter). Maks 380 ord. "
+    "«Geopolitikk og trafikk», «Følg med på» (kommende rapporter og datapunkter). Har KI lest nye kvartalsrapporter, "
+    "nevn det viktigste fra dem (booking for neste kvartal og dødpunkt) under riktig segment. Maks 400 ord. "
     "Oppgi tall med enhet og retning. Si det kort hvis data mangler for et område. Skriv enkelt og konkret.\n\nDATA:\n"
 )
 
@@ -124,6 +138,12 @@ def write(snap: str) -> tuple[str, str]:
         if model.startswith("openai/gpt-oss"):
             payload["reasoning_effort"] = "low"
         r = requests.post(f"{news.GROQ}/chat/completions", headers={"Authorization": f"Bearer {key}"}, json=payload, timeout=120)
+        if r.status_code == 429 and float(r.headers.get("retry-after") or 999) <= 90:
+            # Rapportleseren kan ha brukt minuttkvoten rett før; vent og prøv samme modell igjen
+            import time
+
+            time.sleep(float(r.headers["retry-after"]) + 2)
+            r = requests.post(f"{news.GROQ}/chat/completions", headers={"Authorization": f"Bearer {key}"}, json=payload, timeout=120)
         if r.status_code != 200:
             print(f"  ! Groq {model}: HTTP {r.status_code} {r.text[:160]}")
             continue

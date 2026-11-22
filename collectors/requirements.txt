@@ -9,3 +9,4 @@ trafilatura
 lxml_html_clean
 googlenewsdecoder
 websockets>=12
+pypdf>=4

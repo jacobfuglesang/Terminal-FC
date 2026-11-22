@@ -1,7 +1,7 @@
 """Starter innsamlerne.
 
 Bruk: python run.py <jobb>[,<jobb>...] [--backfill]
-Jobber: prices, announcements, news, shorts, fundamentals, freight, portwatch, ais, alerts, brief
+Jobber: prices, announcements, news, shorts, fundamentals, freight, portwatch, ais, reports, alerts, brief
 Grupper: market (kurser, børsmeldinger, nyheter, AIS, varsler), daily (short, nøkkeltall, frakt, sund, AIS, varsler),
          morning (som daily + analytikerrapport), all (alt)
 """
@@ -18,6 +18,7 @@ import fundamentals
 import news
 import portwatch
 import prices
+import reports
 import shorts
 
 JOBS = {
@@ -30,15 +31,16 @@ JOBS = {
     "portwatch": ("IMF PortWatch (sund)", lambda c, bf: portwatch.run(c, backfill=bf)),
     "ais": ("aisstream.io (skip i nøkkelområder)", lambda c, bf: ais.run(c, seconds=150)),
     "alerts": ("Varsler", lambda c, bf: alerts.run(c)),
+    "reports": ("KI-rapportleser (kvartalsrapporter)", lambda c, bf: reports.run(c)),
     "brief": ("KI-analytiker (morgenrapport)", lambda c, bf: brief.run(c)),
 }
 GROUPS = {
-    "market": ["prices", "announcements", "news", "ais", "alerts"],
+    "market": ["prices", "announcements", "news", "ais", "reports", "alerts"],
     "daily": ["prices", "shorts", "fundamentals", "freight", "portwatch", "ais", "alerts"],
-    "morning": ["prices", "announcements", "news", "shorts", "fundamentals", "freight", "portwatch", "ais", "alerts", "brief"],
-    "all": ["prices", "announcements", "news", "shorts", "fundamentals", "freight", "portwatch", "ais", "alerts", "brief"],
+    "morning": ["prices", "announcements", "news", "shorts", "fundamentals", "freight", "portwatch", "ais", "reports", "alerts", "brief"],
+    "all": ["prices", "announcements", "news", "shorts", "fundamentals", "freight", "portwatch", "ais", "reports", "alerts", "brief"],
 }
-SOFT = (ais.MissingKey, brief.MissingKey)
+SOFT = (ais.MissingKey, brief.MissingKey, reports.MissingKey)
 
 
 def main() -> int:
