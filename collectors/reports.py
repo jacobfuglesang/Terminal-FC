@@ -36,7 +36,7 @@ SKIP = re.compile(r"invitation|invitasjon|webcast|conference call|to be held|wil
 REPORTISH = re.compile(r"result|quarter|kvartal|half[- ]year|halvår|annual report|årsrapport|interim|"
                        r"presentation|\bq[1-4]\b|financial information|financial statements|nine[- ]month|six[- ]month", re.I)
 MAX_PDF_BYTES = 25_000_000
-VERSION = 2  # økes når leseren forbedres, så gamle uttrekk leses på nytt
+VERSION = 3  # økes når leseren forbedres, så gamle uttrekk leses på nytt
 
 # Groq: én forespørsel må holde seg under 8 000 tokens (inn + ut). Ca. 3,6 tegn per token i rapporttekst.
 CHUNK_CHARS = 11_000
@@ -273,6 +273,8 @@ Lag et nøkternt sammendrag for en privatinvestor som holder aksjer i uker til m
 
 REGLER:
 - Bruk BARE tall som står i teksten. Skriv dem nøyaktig som de står (samme tall og enhet). Ikke regn ut nye tall.
+- Ratene i 2026 kan være ekstreme (flere hundre tusen USD per dag). Kopier tallet selv om det virker uvanlig høyt eller lavt.
+  Aldri juster, avrund eller «korriger» et tall etter hva du tror er normalt.
 - Mangler et tall, bruk null. Ikke gjett.
 - Ingen kjøps- eller salgsråd, ingen kursmål, ikke gjengi analytikeres anbefalinger.
 - ALLE tekstfelt (headline, summary, outlook, watch, fleet, label, note) skal være på norsk bokmål, selv om rapporten er på engelsk.
@@ -328,6 +330,42 @@ def final(name: str, sym_segment: str, period: str, material: str) -> tuple[dict
     return json.loads(m.group(0)), model
 
 
+FIX_PROMPT = """Noen tall i et uttrekk fra kvartalsrapporten til {name} ({period}) står ikke i rapporten, eller hører ikke sammen.
+Finn de riktige tallene i NØKKELLINJENE under. Kopier dem nøyaktig, også hvis de virker ekstreme. Finnes de ikke, bruk null.
+Svar KUN med JSON med de samme listene rettet: {{"bookings": [...], "tce": [...], "breakeven": [...]}}
+
+FEIL ELLER USIKRE TALL:
+{bad}
+
+NØKKELLINJER:
+{keys}"""
+
+
+def fix(name: str, period: str, data: dict, keys: str) -> dict:
+    """Én ekstra runde hvis booking, dagrater eller dødpunkt ikke finnes i kilden."""
+    bad = []
+    for field, num in (("bookings", "rate"), ("tce", "rate"), ("breakeven", "rate")):
+        for row in data.get(field) or []:
+            if row.get(f"{num}_ok") is False or row.get("share_pct_ok") is False:
+                bad.append(f"{field}: {json.dumps({k: v for k, v in row.items() if not k.endswith('_ok')}, ensure_ascii=False)}")
+    if not bad or not keys:
+        return data
+    time.sleep(20)
+    try:
+        raw, _ = groq(FIX_PROMPT.format(name=name, period=period, bad="\n".join(bad), keys=keys),
+                      ["openai/gpt-oss-120b", "qwen/qwen3.8-27b", "openai/gpt-oss-20b"], 1500, json_mode=True)
+        m = re.search(r"\{.*\}", raw, re.S)
+        new = json.loads(m.group(0)) if m else {}
+    except Exception as e:  # noqa: BLE001
+        print(f"    ! Rettelsesrunden feilet: {e}")
+        return data
+    for field in ("bookings", "tce", "breakeven"):
+        if isinstance(new.get(field), list) and new[field]:
+            data[field] = [{k: v for k, v in r.items() if not k.endswith("_ok")} for r in new[field] if isinstance(r, dict)]
+    data["fixed"] = True
+    return data
+
+
 def ask(name: str, segment: str, period: str, source: str, keys: str) -> tuple[dict, str]:
     head = f"NØKKELLINJER:\n{keys}\n\n" if keys else ""
     if len(source) + len(head) <= DIRECT_CHARS:
@@ -342,24 +380,39 @@ def ask(name: str, segment: str, period: str, source: str, keys: str) -> tuple[d
 NUM = re.compile(r"\d{1,3}(?:[ ,.  ]\d{3})+(?:[.,]\d+)?|\d+(?:[.,]\d+)?")
 
 
+def _interpret(raw: str) -> set[float]:
+    s = raw.replace("\u00a0", " ").replace("\u202f", " ")
+    cands = set()
+    if re.fullmatch(r"\d{1,3}(?:[ ,.]\d{3})+", s):
+        cands.add(float(re.sub(r"[ ,.]", "", s)))
+    if re.fullmatch(r"\d{1,3}(?:,\d{3})+\.\d+", s):
+        cands.add(float(s.replace(",", "")))
+    if re.fullmatch(r"\d{1,3}(?:[ .]\d{3})+,\d+", s):
+        cands.add(float(s.replace(" ", "").replace(".", "").replace(",", ".")))
+    if re.fullmatch(r"\d+[.,]\d+", s):
+        cands.add(float(s.replace(",", ".")))
+    if re.fullmatch(r"\d+", s):
+        cands.add(float(s))
+    return cands
+
+
+def numbers_pos(text: str) -> list[tuple[int, set[float]]]:
+    return [(m.start(), _interpret(m.group(0))) for m in NUM.finditer(text)]
+
+
 def numbers_in(text: str) -> set[float]:
     """Alle tall i teksten, med flere tolkninger av skilletegn (23.600 kan bety 23600 eller 23,6)."""
     out = set()
-    for raw in NUM.findall(text):
-        s = raw.replace(" ", " ").replace(" ", " ")
-        cands = set()
-        if re.fullmatch(r"\d{1,3}(?:[ ,.]\d{3})+", s):
-            cands.add(float(re.sub(r"[ ,.]", "", s)))
-        if re.fullmatch(r"\d{1,3}(?:,\d{3})+\.\d+", s):
-            cands.add(float(s.replace(",", "")))
-        if re.fullmatch(r"\d{1,3}(?:[ .]\d{3})+,\d+", s):
-            cands.add(float(s.replace(" ", "").replace(".", "").replace(",", ".")))
-        if re.fullmatch(r"\d+[.,]\d+", s):
-            cands.add(float(s.replace(",", ".")))
-        if re.fullmatch(r"\d+", s):
-            cands.add(float(s))
-        out |= cands
+    for _, c in numbers_pos(text):
+        out |= c
     return out
+
+
+def _match(v: float, p: float) -> bool:
+    if abs(p - v) <= max(0.0015 * v, 0.006):
+        return True
+    # «$61.5k» mot 61 500, eller «1,2 mrd» mot 1 200 mill.: bare for tall med desimaler eller over 10
+    return (p >= 10 or p != int(p)) and any(abs(p * k - v) <= 0.0015 * v for k in (1000, 0.001))
 
 
 def found(value, pool: set[float]) -> bool:
@@ -369,17 +422,23 @@ def found(value, pool: set[float]) -> bool:
         return True
     if v == 0:
         return True
-    for p in pool:
-        if abs(p - v) <= max(0.0015 * v, 0.006):
-            return True
-        # «$61.5k» mot 61 500, eller «1,2 mrd» mot 1 200 mill.: bare for tall med desimaler eller over 10
-        if (p >= 10 or p != int(p)) and any(abs(p * k - v) <= 0.0015 * v for k in (1000, 0.001)):
-            return True
-    return False
+    return any(_match(v, p) for p in pool)
+
+
+def found_near(a, b, pos: list[tuple[int, set[float]]], window: int = 350) -> bool:
+    """Står tallene a og b nær hverandre i teksten? Brukes for «X % booket til Y per dag»."""
+    try:
+        va, vb = abs(float(a)), abs(float(b))
+    except (TypeError, ValueError):
+        return False
+    pa = [i for i, c in pos if any(_match(va, x) for x in c)]
+    pb = [i for i, c in pos if any(_match(vb, x) for x in c)]
+    return any(abs(i - j) <= window for i in pa for j in pb)
 
 
 def verify(data: dict, source: str) -> dict:
     pool = numbers_in(source)
+    pos = numbers_pos(source)
     checked = missing = 0
 
     def mark(obj: dict, field: str):
@@ -398,6 +457,11 @@ def verify(data: dict, source: str) -> dict:
     for row in data.get("bookings") or []:
         mark(row, "rate")
         mark(row, "share_pct")
+        # Raten må stå nær andelen, ellers er det trolig to tall som ikke hører sammen
+        if row.get("rate") is not None and row.get("share_pct") is not None and row.get("rate_ok"):
+            if not found_near(row["share_pct"], row["rate"], pos):
+                row["rate_ok"] = False
+                missing += 1
     for row in data.get("breakeven") or []:
         mark(row, "rate")
     for row in data.get("balance") or []:
@@ -469,6 +533,8 @@ def run(conn, max_reports: int = 2, budget_s: int = 420) -> int:
                 raise RuntimeError("Fant nesten ingen tekst i meldingen eller vedleggene")
             data, model = ask(name, SEGMENT.get(sym, ""), period, source, keys)
             data = verify(data, keys + "\n" + source)
+            if data["check"]["unverified"]:
+                data = verify(fix(name, period, data, keys), keys + "\n" + source)
             data["files"] = files
             data["v"] = VERSION
             status = "ok" if data.get("is_report", True) is not False else "skip"
