@@ -625,7 +625,7 @@ def local_next() -> bool:
     if not ai.knowledge_day() or not ai.key("groq"):
         return True
     models = ai._pick("groq", "knowledge")
-    return not models or all(("groq", m) in ai._exhausted for m in models)
+    return not models or all(ai.is_exhausted("groq", m) for m in models)
 
 
 def chunks_of(text: str, max_chunks: int = MAX_CHUNKS) -> list[str]:
@@ -1146,7 +1146,7 @@ def run(conn, minutes: float = 30) -> int:
     synth_at = budget - min(1500, budget * 0.15)
     synthesized = not ai.knowledge_day()
     while time.time() - t0 < budget - 120:
-        best_empty = ("groq", "openai/gpt-oss-120b") in ai._exhausted
+        best_empty = ai.is_exhausted("groq", "openai/gpt-oss-120b")
         if not synthesized and done >= 5 and (best_empty or time.time() - t0 > synth_at):
             synthesized = True
             print(f"  Skriver sammenfatninger ({len(SYNTHESES)} temaer) og ukens samfunnsrapport …")

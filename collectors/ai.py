@@ -133,7 +133,19 @@ def _local_chat(prompt: str, max_out: int, json_mode: bool, temperature: float) 
     return (r.json().get("message") or {}).get("content") or ""
 
 _models: dict[str, list[str]] = {}
-_exhausted: set[tuple[str, str]] = set()
+# Modeller som er tomme for kvote, med tidspunkt for når vi prøver igjen. Lange kjøringer (lørdagslesingen på inntil
+# 10 timer) prøver Groq på nytt etter en stund, i tilfelle kvoten fylles på underveis.
+_exhausted: dict[tuple[str, str], float] = {}
+
+
+def is_exhausted(provider: str, model: str) -> bool:
+    until = _exhausted.get((provider, model))
+    if until is None:
+        return False
+    if time.time() >= until:
+        del _exhausted[(provider, model)]
+        return False
+    return True
 _last_call: dict[str, float] = {}
 used: dict[str, int] = {}  # antall vellykkede kall per leverandør i denne kjøringen (vises i loggen)
 
@@ -221,7 +233,7 @@ def chat(prompt: str, purpose: str = "quality", max_out: int = 1500, json_mode: 
         if len(prompt) > cfg["max_chars"]:
             continue
         for model in _pick(provider, purpose):
-            if (provider, model) in _exhausted:
+            if is_exhausted(provider, model):
                 tried += 1
                 limited += 1
                 continue
@@ -246,7 +258,8 @@ def chat(prompt: str, purpose: str = "quality", max_out: int = 1500, json_mode: 
                 if r.status_code == 429:
                     ra = float(r.headers.get("retry-after") or (5 if provider == "mistral" else 30))
                     if ra > 90 or attempt == 2:
-                        _exhausted.add((provider, model))
+                        # Prøv igjen tidligst om 30 minutter (eller når leverandøren sier), maks 3 timer
+                        _exhausted[(provider, model)] = time.time() + min(max(ra, 1800), 3 * 3600)
                         limited += 1
                         print(f"    · {provider} {model} er tom for kvote, prøver neste")
                         break

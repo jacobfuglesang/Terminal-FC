@@ -3,7 +3,8 @@ name: Kunnskapsbank
 # Den lokale KI-modellen og Groq leser om shipping, shippingtrading, aksjehandel, verdensøkonomien og geopolitikken,
 # og lagrer korte notater.
 #
-# Hver lørdag kl. 06:05 norsk tid: leser så lenge det er noe å finne, men maks 10 timer.
+# Hver lørdag rett etter at Groqs dagskvote er nullstilt (midnatt UTC, dvs. kl. 01:07 norsk vintertid / 02:07 sommertid):
+# leser så lenge det er noe å finne, men maks 10 timer, så den er ferdig tidlig på dagen.
 # GitHub tillater maks 6 timer per jobb, så lesingen er delt i to deler etter hverandre:
 #   del 1: inntil 340 minutter. Del 2 starter bare hvis det fortsatt er mer å lese, og bruker resten (til sammen maks 10 timer).
 # Groq er satt av til dette hele lørdagen. Sammenfatninger og ukens samfunnsrapport skrives mens Groq har kvote.
@@ -16,7 +17,7 @@ on:
         type: string
         default: "300"
   schedule:
-    - cron: "5 5 * * 6"      # hver lørdag 06:05 norsk vintertid (07:05 sommertid)
+    - cron: "7 0 * * 6"      # hver lørdag 00:07 UTC, like etter at Groqs dagskvote er nullstilt
     - cron: "5 5 24 11 *"    # 24.11.2026 kl. 06:05 norsk tid: stor lesing med Groq (hele dagens kvote)
   push:
     branches: [main]
