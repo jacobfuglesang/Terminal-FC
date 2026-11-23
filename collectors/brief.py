@@ -100,6 +100,46 @@ def snapshot(conn) -> str:
                 be = "; ".join(f"dødpunkt {b.get('segment')} {b.get('rate')} {b.get('unit', '')}" for b in (d.get("breakeven") or [])[:2] if b.get("rate"))
                 out.append(line + (f" Booking: {bk}." if bk else "") + (f" {be}." if be else ""))
 
+        # Meglerrapporter siste 7 dager (KI-sammendrag)
+        try:
+            cur.execute("""SELECT data FROM broker_reports WHERE status = 'ok' AND published > now() - interval '7 days'
+                           ORDER BY published DESC LIMIT 6""")
+            brs = [r[0] for r in cur.fetchall()]
+            if brs:
+                out.append("\n## Meglerrapporter siste uke (KI-sammendrag)")
+                for d in brs:
+                    segs = "; ".join(f"{s.get('segment')} {s.get('direction')}" for s in (d.get("segments") or [])[:5])
+                    out.append(f"- {d.get('broker')}: {d.get('headline', '')} ({segs})")
+        except Exception:  # noqa: BLE001
+            conn.rollback()
+
+        # Bunkers og vær
+        try:
+            cur.execute("""SELECT port, grade, price FROM bunkers WHERE day = (SELECT max(day) FROM bunkers)
+                           AND port IN ('Singapore','Rotterdam','Fujairah') ORDER BY port, grade""")
+            b = cur.fetchall()
+            if b:
+                out.append("\n## Bunkers (USD/tonn)")
+                by = {}
+                for port, grade, price in b:
+                    by.setdefault(port, {})[grade] = price
+                for port, g in by.items():
+                    spread = (g.get("VLSFO") or 0) - (g.get("HSFO") or 0) if g.get("VLSFO") and g.get("HSFO") else None
+                    out.append(f"- {port}: VLSFO {g.get('VLSFO')}, HSFO {g.get('HSFO')}, MGO {g.get('MGO')}"
+                               + (f", scrubberspread {spread:.0f}" if spread else ""))
+            cur.execute("""SELECT name, alert, near, near_km FROM weather_events WHERE near IS NOT NULL AND to_date > now() - interval '2 days'""")
+            w = cur.fetchall()
+            cur.execute("SELECT day, gatun_ft, draft_neo_ft FROM panama ORDER BY day DESC LIMIT 1")
+            p = cur.fetchone()
+            if w or p:
+                out.append("\n## Vær")
+                for name, alert, near, dist in w:
+                    out.append(f"- Storm {name} ({alert}) ca. {dist:.0f} km fra {near}")
+                if p:
+                    out.append(f"- Panamakanalen {p[0]}: Gatun {p[1]} fot, maks dypgang Neopanamax {p[2]} fot")
+        except Exception:  # noqa: BLE001
+            conn.rollback()
+
         cur.execute("SELECT title FROM alerts WHERE created_at > now() - interval '2 days' ORDER BY created_at DESC LIMIT 12")
         al = [r[0] for r in cur.fetchall()]
         if al:

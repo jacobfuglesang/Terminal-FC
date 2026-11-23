@@ -38,6 +38,12 @@ MARKET = {
     "NOK=X": ("USD/NOK", "NOK"),
     "EURNOK=X": ("EUR/NOK", "NOK"),
     "OSEBX.OL": ("Oslo Børs hovedindeks", "NOK"),
+    # Arbitrasje og raffineringsmarginer
+    "CL=F": ("Råolje WTI", "USD"),
+    "RB=F": ("Bensin RBOB (USD/gallon)", "USD"),
+    "HO=F": ("Diesel/fyringsolje (USD/gallon)", "USD"),
+    "JKM=F": ("LNG Asia JKM (USD/MMBtu)", "USD"),
+    "EURUSD=X": ("EUR/USD", "USD"),
 }
 
 SYMBOLS = {c["symbol"]: c["name"] for c in COMPANIES}

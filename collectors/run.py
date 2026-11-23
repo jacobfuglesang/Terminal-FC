@@ -17,7 +17,11 @@ import freight
 import fundamentals
 import news
 import portwatch
+import bunkers
+import brokers
+import ports
 import prices
+import weather
 import reports
 import shorts
 
@@ -32,16 +36,22 @@ JOBS = {
     "ais": ("aisstream.io (skip i nøkkelområder)", lambda c, bf: ais.run(c, seconds=150)),
     "alerts": ("Varsler", lambda c, bf: alerts.run(c)),
     "reports": ("KI-rapportleser (kvartalsrapporter)", lambda c, bf: reports.run(c)),
+    "brokers": ("KI-meglerrapporter (ukentlige)", lambda c, bf: brokers.run(c, bf)),
+    "bunkers": ("Bunkerpriser (BunkerEx via Hellenic Shipping News)", lambda c, bf: bunkers.run(c, bf)),
+    "weather": ("Vær (GDACS stormer, Panamakanalen)", lambda c, bf: weather.run(c, bf)),
+    "ports": ("IMF PortWatch (havner)", lambda c, bf: ports.run(c, bf)),
     "brief": ("KI-analytiker (morgenrapport)", lambda c, bf: brief.run(c)),
 }
 GROUPS = {
-    "market": ["prices", "announcements", "news", "ais", "reports", "alerts"],
-    "daily": ["prices", "shorts", "fundamentals", "freight", "portwatch", "ais", "alerts"],
+    "market": ["prices", "announcements", "news", "ais", "weather", "alerts", "reports", "brokers"],
+    "daily": ["prices", "shorts", "fundamentals", "freight", "portwatch", "ports", "bunkers", "weather", "ais", "alerts"],
     # Morgenrapporten skrives før rapportleseren, så den alltid får den beste KI-modellen
-    "morning": ["prices", "announcements", "news", "shorts", "fundamentals", "freight", "portwatch", "ais", "alerts", "brief", "reports"],
-    "all": ["prices", "announcements", "news", "shorts", "fundamentals", "freight", "portwatch", "ais", "alerts", "brief", "reports"],
+    "morning": ["prices", "announcements", "news", "shorts", "fundamentals", "freight", "portwatch", "ports", "bunkers", "weather", "ais",
+                "alerts", "brief", "reports", "brokers"],
+    "all": ["prices", "announcements", "news", "shorts", "fundamentals", "freight", "portwatch", "ports", "bunkers", "weather", "ais",
+            "alerts", "brief", "reports", "brokers"],
 }
-SOFT = (ais.MissingKey, brief.MissingKey, reports.MissingKey)
+SOFT = (ais.MissingKey, brief.MissingKey, reports.MissingKey, brokers.MissingKey)
 
 
 def main() -> int:

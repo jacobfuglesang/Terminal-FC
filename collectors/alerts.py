@@ -68,6 +68,28 @@ def run(conn) -> int:
                     if add(cur, f"ffa:{sym}:{r[0][0]}", "Frakt", t, "Fraktfutures følger forventet spotrate de neste månedene.", None, "/frakt", 2):
                         new.append((t, "", 2))
 
+        # 3b) Tropiske stormer med oransje/rødt varsel nær viktige havner og sund
+        try:
+            cur.execute("""SELECT id, name, alert, near, near_km FROM weather_events WHERE near IS NOT NULL
+                           AND alert IN ('orange','red') AND to_date > now() - interval '1 day'""")
+            for wid, name, alert, near, dist in cur.fetchall():
+                t = f"Storm {name} ({'rødt' if alert == 'red' else 'oransje'} varsel) ca. {dist:.0f} km fra {near}"
+                if add(cur, f"storm:{wid}:{alert}", "Vær", t, "Kan gi forsinkelser og stengte havner i området.", None, "/vaer", 2):
+                    new.append((t, "", 2))
+        except Exception:  # noqa: BLE001
+            pass
+
+        # 3c) Panamakanalen: endret maks dypgang
+        try:
+            cur.execute("SELECT day, draft_neo_ft FROM panama ORDER BY day DESC LIMIT 2")
+            r = cur.fetchall()
+            if len(r) == 2 and r[0][1] and r[1][1] and r[0][1] != r[1][1]:
+                t = f"Panamakanalen: maks dypgang Neopanamax {'opp' if r[0][1] > r[1][1] else 'ned'} til {r[0][1]:.1f} fot".replace(".", ",")
+                if add(cur, f"panama:{r[0][0]}", "Vær", t, "Lavere dypgang betyr mindre last per skip og færre passeringer.", None, "/vaer", 2):
+                    new.append((t, "", 2))
+        except Exception:  # noqa: BLE001
+            pass
+
         # 4) Ukesrater for container (WCI/SCFI) minst 8 %
         for series, label in (("WCI", "Drewry WCI"), ("SCFI", "SCFI")):
             cur.execute("SELECT day, value FROM freight WHERE series = %s ORDER BY day DESC LIMIT 2", (series,))

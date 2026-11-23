@@ -180,3 +180,34 @@ DELETE FROM fundamentals WHERE symbol IN ('MOWI.OL', 'SALM.OL', 'BAKKA.OL', 'LSG
 DELETE FROM announcements WHERE symbol IN ('MOWI.OL', 'SALM.OL', 'BAKKA.OL', 'LSG.OL', 'GSF.OL');
 DELETE FROM shorts WHERE symbol IN ('MOWI.OL', 'SALM.OL', 'BAKKA.OL', 'LSG.OL', 'GSF.OL');
 DELETE FROM news WHERE created_at < '2026-11-22T10:24:00Z';
+
+-- Global AIS: mer skipsdata, kurs, størrelse og lastet/ballast, stillestående skip per område
+ALTER TABLE ais_ships ADD COLUMN IF NOT EXISTS length REAL;
+ALTER TABLE ais_ships ADD COLUMN IF NOT EXISTS imo BIGINT;
+ALTER TABLE ais_positions ADD COLUMN IF NOT EXISTS cog REAL;
+ALTER TABLE ais_positions ADD COLUMN IF NOT EXISTS size TEXT;
+ALTER TABLE ais_positions ADD COLUMN IF NOT EXISTS laden BOOLEAN;
+ALTER TABLE ais_positions ADD COLUMN IF NOT EXISTS dest TEXT;
+ALTER TABLE ais_zone ADD COLUMN IF NOT EXISTS still INT;
+ALTER TABLE ais_zone ADD COLUMN IF NOT EXISTS still_tank INT;
+ALTER TABLE ais_zone ADD COLUMN IF NOT EXISTS still_last INT;
+CREATE INDEX IF NOT EXISTS ais_positions_seen_idx ON ais_positions (seen DESC);
+
+-- Bunkerpriser per havn (USD/tonn)
+CREATE TABLE IF NOT EXISTS bunkers (day DATE NOT NULL, port TEXT NOT NULL, grade TEXT NOT NULL, price REAL, change REAL, source TEXT,
+  PRIMARY KEY (day, port, grade));
+
+-- Havneaktivitet fra IMF PortWatch (anløp per skipstype og anslått import/eksport i tonn)
+CREATE TABLE IF NOT EXISTS port_activity (day DATE NOT NULL, portid TEXT NOT NULL, portname TEXT, country TEXT,
+  calls INT, calls_tanker INT, calls_dry_bulk INT, calls_container INT, import REAL, export REAL,
+  import_tanker REAL, export_tanker REAL, import_dry_bulk REAL, export_dry_bulk REAL, PRIMARY KEY (day, portid));
+
+-- Vær: tropiske stormer (GDACS) og Panamakanalen
+CREATE TABLE IF NOT EXISTS weather_events (id TEXT PRIMARY KEY, name TEXT, alert TEXT, country TEXT, lat REAL, lon REAL,
+  from_date TIMESTAMPTZ, to_date TIMESTAMPTZ, near TEXT, near_km REAL, url TEXT, updated_at TIMESTAMPTZ NOT NULL DEFAULT now());
+CREATE TABLE IF NOT EXISTS panama (day DATE PRIMARY KEY, gatun_ft REAL, draft_neo_ft REAL, draft_panamax_ft REAL, surcharge_pct REAL);
+
+-- Meglerrapporter lest av KI
+CREATE TABLE IF NOT EXISTS broker_reports (url TEXT PRIMARY KEY, title TEXT, broker TEXT, published TIMESTAMPTZ, status TEXT NOT NULL DEFAULT 'pending',
+  tries INT NOT NULL DEFAULT 0, data JSONB, model TEXT, error TEXT, created_at TIMESTAMPTZ NOT NULL DEFAULT now());
+CREATE INDEX IF NOT EXISTS broker_reports_pub_idx ON broker_reports (published DESC);
