@@ -2,8 +2,8 @@
 export const COOKIE = "fs_session";
 // Hvor lenge en innlogging varer, uansett aktivitet. Kan endres med LOGIN_SESSION_MINUTES i Vercel (5–720).
 export function sessionMinutes(): number {
-  const m = Number(process.env.LOGIN_SESSION_MINUTES ?? "30");
-  return Number.isFinite(m) ? Math.min(720, Math.max(5, Math.round(m))) : 30;
+  const m = Number(process.env.LOGIN_SESSION_MINUTES ?? "90");
+  return Number.isFinite(m) ? Math.min(720, Math.max(5, Math.round(m))) : 90;
 }
 // Låses etter så mange minutter uten aktivitet (mus, tastatur, berøring), og når fanen har vært skjult like lenge.
 export function idleMinutes(): number {
