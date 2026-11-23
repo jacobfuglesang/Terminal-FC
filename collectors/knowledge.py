@@ -44,7 +44,7 @@ TOPICS = ["shippingbegrep", "skipstyper", "fraktmarked", "shippingtrading", "rå
 # (tittel, prioritet). Lavere tall leses først.
 WIKI_TITLES = [
     # Fraktmarkedet og kontrakter
-    ("Baltic Dry Index", 2), ("Baltic Exchange", 3), ("Worldscale", 2), ("Charterparty", 2), ("Time charter", 2), ("Voyage charter", 2),
+    ("Baltic Dry Index", 2), ("Baltic Exchange", 3), ("Worldscale", 2), ("Charterparty", 2), ("Voyage charter", 2),
     ("Bareboat charter", 3), ("Demurrage", 3), ("Laytime", 4), ("Forward freight agreement", 2), ("Ship broker", 3), ("Freight rate", 2),
     ("Bunker fuel", 2), ("Heavy fuel oil", 3), ("Marine gas oil", 4), ("Scrubber", 3), ("Slow steaming", 3), ("Ship finance", 3),
     ("Ship breaking", 3), ("Shipbuilding", 3), ("Orderbook (shipping)", 4), ("Deadweight tonnage", 3), ("Gross tonnage", 4),
@@ -417,6 +417,9 @@ def seed(conn) -> int:
                            FROM knowledge k WHERE k.url = s.url AND k.model LIKE 'lokal/%%' AND s.status = 'done'
                            AND s.url NOT LIKE 'intern:mønster:%%'""")
             print(f"  {cur.rowcount} notater fra den lokale modellen skrives på nytt med Groq når det er kvote igjen")
+        # Fjern notat fra feil artikkel (veddeløpshesten «Time Charter», lest 23.11.2026)
+        cur.execute("DELETE FROM knowledge WHERE url = 'wiki:en:Time charter'")
+        cur.execute("UPDATE kb_sources SET status = 'skip', error = 'feil artikkel' WHERE url = 'wiki:en:Time charter'")
         # Merk eldre notater med troverdighet
         cur.execute("SELECT id, url FROM knowledge WHERE credibility IS NULL")
         for nid, u in cur.fetchall():
@@ -616,7 +619,9 @@ MATERIALE:
 {text}"""
 
 
-LOCAL_NUMHINT = ("\nVIKTIG: Skriv sammenhenger og forklaringer med ord. Ta bare med et tall hvis det er helt sentralt, og kopier det "
+LOCAL_NUMHINT = ("\nSkriv korrekt norsk bokmål. Bruk vanlige norske ord eller de engelske fagordene som de er (for eksempel "
+                 "charterparty, Strait of Hormuz, iron ore), og lag aldri nye ord eller halve oversettelser."
+                 "\nVIKTIG: Skriv sammenhenger og forklaringer med ord. Ta bare med et tall hvis det er helt sentralt, og kopier det "
                  "da tegn for tegn fra teksten. Heller ingen tall enn et usikkert tall.")
 
 
@@ -1114,6 +1119,8 @@ def process(url: str, kind: str, title: str) -> dict | None:
         text, link = wiki_text(t, lang)
         if len(text) < 500:
             return None
+        if lang == "en" and not RELEVANT.search(text[:3000]):
+            return None  # feil artikkel med samme navn (f.eks. «Time Charter» er en veddeløpshest)
         n = write_note(t, text, kind, url, f"Wikipedia: {t}")
         n["facts"]["link"] = link
         return n
