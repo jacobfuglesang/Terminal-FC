@@ -4,11 +4,15 @@ Leverandører (alle har OpenAI-kompatibelt API; hver brukes bare hvis nøkkelen 
 - Groq     GROQ_API_KEY     raskest. Gratisnivået tar maks 8 000 tokens per forespørsel og har dagsgrense per modell.
 - Mistral  MISTRAL_API_KEY  gratisnivå med høyt tak (500 000 tokens/min, 1 forespørsel/s). Tåler hele rapporter.
 - Gemini   GEMINI_API_KEY   gratisnivå med få forespørsler per dag, men stor kontekst.
+- Lokal    (ingen nøkkel)   åpen modell (Qwen3 4B, Apache 2.0) som kjører på GitHub-maskinen via Ollama.
+                            Treg og svakere, men uten kvote. Brukes som reserve når de andre er tomme,
+                            og til kunnskapsbanken. Brukes aldri til tall i kvartals- og meglerrapporter.
 
 Jobbtyper:
 - "quality": morgenrapport og endelig rapportsammendrag (beste modell først)
 - "big":     hele kvartalsrapporter i én forespørsel (trenger stor kontekst)
 - "small":   korte nyhetssammendrag og notater (små og raske modeller)
+- "local":   bare den lokale modellen (kunnskapsbanken, så skykvotene spares)
 
 Hver leverandør er et eget selskap med egne vilkår. Vi bruker én konto per leverandør og holder oss innenfor grensene.
 """
@@ -55,12 +59,52 @@ PROVIDERS = {
     },
 }
 
+# Den lokale modellen (Ollama). Startes i bakgrunnen av arbeidsflyten; er den ikke klar, hoppes den over.
+LOCAL_URL = os.environ.get("OLLAMA_URL", "http://127.0.0.1:11434").rstrip("/")
+LOCAL_MODEL = os.environ.get("LOCAL_MODEL", "qwen3:4b-instruct")
+LOCAL_MAX_CHARS = 30_000
+_local = {"ok": False, "checked": 0.0}
+
 # Rekkefølgen leverandørene prøves i per jobbtype
 ROUTE = {
-    "quality": ["groq", "mistral", "gemini"],
+    "quality": ["groq", "mistral", "gemini", "lokal"],
     "big": ["mistral", "gemini"],
-    "small": ["groq", "mistral", "gemini"],
+    "small": ["groq", "mistral", "gemini", "lokal"],
+    "local": ["lokal"],
 }
+
+
+def local_ready(wait_s: float = 0) -> bool:
+    """Er Ollama-tjeneren oppe med modellen lastet ned? Sjekkes høyst hvert 20. sekund."""
+    deadline = time.time() + wait_s
+    while True:
+        if _local["ok"]:
+            return True
+        if time.time() - _local["checked"] >= 20 or wait_s:
+            _local["checked"] = time.time()
+            try:
+                r = requests.get(f"{LOCAL_URL}/api/tags", timeout=2)
+                names = [m.get("name", "") for m in r.json().get("models", [])] if r.ok else []
+                _local["ok"] = any(n == LOCAL_MODEL or n.startswith(LOCAL_MODEL + ":") for n in names)
+            except Exception:  # noqa: BLE001
+                _local["ok"] = False
+        if _local["ok"] or time.time() >= deadline:
+            return _local["ok"]
+        time.sleep(10)
+
+
+def _local_chat(prompt: str, max_out: int, json_mode: bool, temperature: float) -> str:
+    payload = {"model": LOCAL_MODEL, "stream": False, "think": False, "keep_alive": "30m",
+               "messages": [{"role": "user", "content": prompt}],
+               "options": {"temperature": temperature, "num_predict": max_out, "num_ctx": 12288}}
+    if json_mode:
+        payload["format"] = "json"
+    r = requests.post(f"{LOCAL_URL}/api/chat", json=payload, timeout=1200)
+    if r.status_code == 400 and "think" in r.text:  # eldre Ollama uten think-valget
+        payload.pop("think")
+        r = requests.post(f"{LOCAL_URL}/api/chat", json=payload, timeout=1200)
+    r.raise_for_status()
+    return (r.json().get("message") or {}).get("content") or ""
 
 _models: dict[str, list[str]] = {}
 _exhausted: set[tuple[str, str]] = set()
@@ -69,11 +113,13 @@ used: dict[str, int] = {}  # antall vellykkede kall per leverandør i denne kjø
 
 
 def key(provider: str) -> str:
+    if provider == "lokal":
+        return "lokal" if local_ready() else ""
     return (os.environ.get(PROVIDERS[provider]["env"]) or "").strip()
 
 
 def available() -> list[str]:
-    return [p for p in PROVIDERS if key(p)]
+    return [p for p in [*PROVIDERS, "lokal"] if key(p)]
 
 
 def has(purpose: str) -> bool:
@@ -82,7 +128,7 @@ def has(purpose: str) -> bool:
 
 def require() -> None:
     if not available():
-        raise MissingKey("Venter på en KI-nøkkel (GROQ_API_KEY, MISTRAL_API_KEY eller GEMINI_API_KEY)")
+        raise MissingKey("Venter på en KI-nøkkel (GROQ_API_KEY, MISTRAL_API_KEY eller GEMINI_API_KEY) eller den lokale modellen")
 
 
 def _list_models(provider: str) -> list[str]:
@@ -99,6 +145,8 @@ def _list_models(provider: str) -> list[str]:
 
 
 def _pick(provider: str, purpose: str) -> list[str]:
+    if provider == "lokal":
+        return [LOCAL_MODEL] if local_ready() else []
     cfg = PROVIDERS[provider]
     wish = cfg["prefer"].get(purpose, [])
     have = _list_models(provider)
@@ -114,11 +162,27 @@ def _pick(provider: str, purpose: str) -> list[str]:
 
 
 def chat(prompt: str, purpose: str = "quality", max_out: int = 1500, json_mode: bool = False,
-         temperature: float = 0.2) -> tuple[str, str]:
-    """Returnerer (svar, "leverandør/modell"). Kaster RateLimited når alle aktuelle modeller er tomme for kvote."""
+         temperature: float = 0.2, local_ok: bool = True) -> tuple[str, str]:
+    """Returnerer (svar, "leverandør/modell"). Kaster RateLimited når alle aktuelle modeller er tomme for kvote.
+
+    local_ok=False: den lokale modellen brukes ikke (for jobber der tallene må være helt riktige).
+    """
     require()
     tried = limited = 0
     for provider in ROUTE[purpose]:
+        if provider == "lokal":
+            if not local_ok or len(prompt) > LOCAL_MAX_CHARS or not local_ready():
+                continue
+            tried += 1
+            try:
+                text = re.sub(r"<think>.*?</think>", "", _local_chat(prompt, max_out, json_mode, temperature), flags=re.S).strip()
+            except Exception as e:  # noqa: BLE001
+                print(f"    ! lokal {LOCAL_MODEL}: {e}")
+                continue
+            if text:
+                used["lokal"] = used.get("lokal", 0) + 1
+                return text, f"lokal/{LOCAL_MODEL}"
+            continue
         if not key(provider):
             continue
         cfg = PROVIDERS[provider]

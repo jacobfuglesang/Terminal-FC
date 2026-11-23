@@ -286,7 +286,8 @@ def ai_summary(item: dict) -> str | None:
         f"Tittel: {item['title']}\nKilde: {item.get('source') or ''}\nTekst: {text[:2500] or '(bare tittel)'}"
     )
     try:
-        out, _ = ai.chat(prompt, "small", 900)
+        # Den lokale modellen er treg: maks 8 sammendrag fra den per kjøring, så markedskjøringene ikke drar ut
+        out, _ = ai.chat(prompt, "small", 900, local_ok=ai.used.get("lokal", 0) < 8)
     except Exception as e:  # noqa: BLE001
         print(f"  ! KI-sammendrag: {e}")
         return None

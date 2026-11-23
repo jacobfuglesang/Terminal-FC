@@ -9,7 +9,7 @@ const EXAMPLES = [
   "Forklar forskjellen på BWET og Baltic Dry Index.",
 ];
 
-type QA = { q: string; a: string; model?: string };
+type QA = { q: string; a: string; model?: string; notes?: string[] };
 
 export default function AskBox() {
   const [q, setQ] = useState("");
@@ -27,7 +27,7 @@ export default function AskBox() {
       if (r.status === 401) { window.location.href = "/login"; return; }
       const js = await r.json();
       if (!r.ok) throw new Error(js.error || `Feil ${r.status}`);
-      setLog((l) => [{ q: question, a: js.answer, model: js.model }, ...l]);
+      setLog((l) => [{ q: question, a: js.answer, model: js.model, notes: js.notes }, ...l]);
       setQ("");
     } catch (e) {
       setErr((e as Error).message);
@@ -53,6 +53,7 @@ export default function AskBox() {
             <div className="src" style={{ marginBottom: 4 }}>Du spurte: {x.q}</div>
             <div style={{ whiteSpace: "pre-wrap", lineHeight: 1.6, color: "#D5D9DF" }}>{x.a}</div>
             {x.model && <div className="src" style={{ marginTop: 4 }}>Svar fra {x.model}. Kan inneholde feil; sjekk tallene i terminalen.</div>}
+            {x.notes && x.notes.length > 0 && <div className="src" style={{ marginTop: 2 }}>Brukte fra kunnskapsbanken: {x.notes.join(" · ")}</div>}
           </div>
         ))}
       </div>

@@ -9,7 +9,7 @@ on:
     - cron: "23 * * * *"
   push:
     branches: [main]
-    paths: ["collectors/**", ".github/workflows/collect.yml"]   # Kjør alt én gang når innsamlerne endres
+    paths: ["collectors/**", ".github/workflows/collect.yml", ".github/scripts/**"]   # Kjør alt én gang når innsamlerne endres
   workflow_dispatch:
     inputs:
       job:
@@ -42,6 +42,16 @@ jobs:
           cache-dependency-path: collectors/requirements.txt
 
       - run: pip install -r collectors/requirements.txt
+
+      # Lokal KI-modell som reserve når Groq er tom for kvote. Startes i bakgrunnen, så innhentingen ikke venter.
+      - name: Hent lokal KI-modell fra cachen
+        uses: actions/cache@v4
+        with:
+          path: ~/.ollama/models
+          key: ollama-qwen3-4b-instruct-v1
+
+      - name: Start lokal KI (bakgrunn)
+        run: nohup bash .github/scripts/ollama.sh > /tmp/ollama-start.log 2>&1 &
 
       - name: Velg jobb
         id: pick
@@ -76,6 +86,13 @@ jobs:
         run: |
           set -o pipefail
           python -u run.py ${{ steps.pick.outputs.job }} ${{ steps.pick.outputs.flags }} 2>&1 | tee ../run.log
+          echo "== Lokal KI ==" | tee -a ../run.log
+          cat /tmp/ollama-start.log 2>/dev/null | tee -a ../run.log || true
+
+      # Cachen lagres bare hvis modellen ble ferdig nedlastet (ellers lagres en halv mappe)
+      - name: Vent på lokal modell før cachen lagres
+        if: always()
+        run: for _ in $(seq 1 24); do grep -q "Lokal modell klar\|kunne ikke\|Fikk ikke" /tmp/ollama-start.log 2>/dev/null && break; sleep 5; done
 
       # Ved kodeendringer: lagre loggen i grenen run-log, så den kan leses uten å logge inn på GitHub
       - name: Lagre logg

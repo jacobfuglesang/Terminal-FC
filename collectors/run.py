@@ -1,10 +1,11 @@
 """Starter innsamlerne.
 
 Bruk: python run.py <jobb>[,<jobb>...] [--backfill]
-Jobber: prices, announcements, news, shorts, fundamentals, freight, portwatch, ais, reports, alerts, brief
+Jobber: prices, announcements, news, shorts, fundamentals, freight, portwatch, ais, reports, alerts, brief, knowledge
 Grupper: market (kurser, børsmeldinger, nyheter, AIS, varsler), daily (short, nøkkeltall, frakt, sund, AIS, varsler),
          morning (som daily + analytikerrapport), all (alt)
 """
+import os
 import sys
 import traceback
 
@@ -24,6 +25,7 @@ import prices
 import weather
 import reports
 import shorts
+import knowledge
 
 JOBS = {
     "prices": ("Yahoo Finance (kurser og fraktfutures)", lambda c, bf: prices.run(c, backfill=bf)),
@@ -42,6 +44,8 @@ JOBS = {
     "weather": ("Vær (GDACS stormer, Panamakanalen)", lambda c, bf: weather.run(c, bf)),
     "ports": ("IMF PortWatch (havner)", lambda c, bf: ports.run(c, bf)),
     "brief": ("KI-analytiker (morgenrapport)", lambda c, bf: brief.run(c)),
+    # Egen arbeidsflyt (kunnskap.yml): lokal KI leser i KNOWLEDGE_MINUTES minutter
+    "knowledge": ("Kunnskapsbank (lokal KI)", lambda c, bf: knowledge.run(c, minutes=float(os.environ.get("KNOWLEDGE_MINUTES", "30")))),
 }
 GROUPS = {
     "market": ["prices", "announcements", "news", "ais", "weather", "alerts", "reports", "brokers"],
@@ -54,7 +58,7 @@ GROUPS = {
 }
 QUICK = False  # markedskjøringer hvert 15. minutt: korte KI-jobber, så kjøringen blir ferdig før neste starter
 
-SOFT = (ais.MissingKey, brief.MissingKey, reports.MissingKey, brokers.MissingKey)
+SOFT = (ais.MissingKey, brief.MissingKey, reports.MissingKey, brokers.MissingKey, knowledge.ai.MissingKey)
 
 
 def main() -> int:

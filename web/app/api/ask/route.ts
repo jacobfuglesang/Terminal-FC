@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
+import { bookingLines } from "@/lib/bookingdata";
 import { sql } from "@/lib/db";
+import { searchKnowledge } from "@/lib/knowledge";
 import { authed, deny } from "@/lib/notes";
 
 export const runtime = "nodejs";
@@ -48,18 +50,26 @@ export async function POST(req: Request) {
     const dv = d.dividend?.per_share ? `utbytte ${d.dividend.per_share} ${d.dividend.unit ?? ""}` : "";
     return `- ${r.symbol} ${r.period}: ${d.headline ?? ""}${bk ? ` Booket: ${bk}.` : ""}${be ? ` Dødpunkt: ${be}.` : ""}${dv ? ` ${dv}.` : ""}${d.outlook ? ` Utsikter: ${d.outlook}` : ""}`;
   }).join("\n").slice(0, 3500);
+  // Bookingtabellen (samme regning som på bookingsiden) og kunnskapsbanken (notater som passer til spørsmålet)
+  const [books, notes] = await Promise.all([bookingLines().catch(() => [] as string[]), searchKnowledge(question, 6)]);
+  const noteText = notes.map((n) => `### ${n.title} (${n.source || n.kind})\n${n.body.slice(0, 900)}`).join("\n\n").slice(0, 4500);
+  // Morgenrapportens datagrunnlag har egne avsnitt for bookinger og kunnskap; de hentes ferskt over, så de kuttes her
+  const snapText = snap ? snap.snapshot.replace(/\n## (Bookinger|Bakgrunn fra kunnskapsbanken)[\s\S]*?(?=\n## |$)/g, "") : "";
   const context = [
-    snap ? `Datagrunnlag fra ${snap.day}:\n${snap.snapshot}` : "Ingen morgenrapport ennå.",
+    noteText ? `Fra kunnskapsbanken (bakgrunn lest tidligere, ikke dagens tall):\n${noteText}` : "",
+    books.length ? `\nBookinger og anslått inntjening (grovt anslag fra kvartalsrapportene, resten av dagene antatt til samme rate):\n${books.join("\n")}` : "",
+    snap ? `\nDatagrunnlag fra ${snap.day}:\n${snapText}` : "Ingen morgenrapport ennå.",
     "\nSiste kurser:\n" + quotes.map((q) => `- ${q.name} (${q.symbol}): ${q.price} (${q.change_pct === null ? "–" : q.change_pct.toFixed(2)} % i dag)`).join("\n"),
     repText ? `\nSiste kvartalsrapporter (lest av KI):\n${repText}` : "",
     "\nNyheter siste 3 dager:\n" + news.map((n) => `- ${n.title} (${n.source}): ${(n.s ?? "").trim()}`).join("\n"),
-  ].join("\n").slice(0, 15000);
+  ].join("\n").slice(0, 17000);
 
   const system =
     "Du er analytiker i en privat shippingterminal. Svar på norsk bokmål, kort og konkret, ut fra dataene du får. " +
     "Hvis dataene ikke dekker spørsmålet, si det tydelig i stedet for å gjette. Ikke finn på tall. " +
     "Gi aldri kjøps- eller salgsråd, kursmål eller personlige investeringsråd, og ikke gjengi analytikeres anbefalinger. " +
-    "Du kan forklare sammenhenger, hva tallene betyr og hva som kan påvirke dem.";
+    "Du kan forklare sammenhenger, hva tallene betyr og hva som kan påvirke dem. " +
+    "Bruk kunnskapsbanken til å forklare begreper og mønstre, og si fra når noe bygger på den. Bookinganslagene er grove; si det når du bruker dem.";
 
   for (const model of await models(key)) {
     const payload: Record<string, unknown> = {
@@ -73,7 +83,7 @@ export async function POST(req: Request) {
     if (!r.ok) continue;
     const js = await r.json();
     const text = String(js.choices?.[0]?.message?.content ?? "").replace(/<think>[\s\S]*?<\/think>/g, "").trim();
-    if (text) return NextResponse.json({ answer: text, model, basis: snap?.day ?? null });
+    if (text) return NextResponse.json({ answer: text, model, basis: snap?.day ?? null, notes: notes.map((n) => n.title) });
   }
   // Reserve: Mistral (hvis MISTRAL_API_KEY er lagt inn i Vercel), når Groq er tom for kvote eller ikke svarer
   const mkey = (process.env.MISTRAL_API_KEY ?? "").trim();
@@ -86,7 +96,7 @@ export async function POST(req: Request) {
       if (!r.ok) continue;
       const js = await r.json();
       const text = String(js.choices?.[0]?.message?.content ?? "").trim();
-      if (text) return NextResponse.json({ answer: text, model: `mistral/${model}`, basis: snap?.day ?? null });
+      if (text) return NextResponse.json({ answer: text, model: `mistral/${model}`, basis: snap?.day ?? null, notes: notes.map((n) => n.title) });
     }
   }
   return NextResponse.json({ error: "Fikk ikke svar fra KI-leverandørene. Prøv igjen om litt." }, { status: 502 });

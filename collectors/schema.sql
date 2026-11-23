@@ -211,3 +211,18 @@ CREATE TABLE IF NOT EXISTS panama (day DATE PRIMARY KEY, gatun_ft REAL, draft_ne
 CREATE TABLE IF NOT EXISTS broker_reports (url TEXT PRIMARY KEY, title TEXT, broker TEXT, published TIMESTAMPTZ, status TEXT NOT NULL DEFAULT 'pending',
   tries INT NOT NULL DEFAULT 0, data JSONB, model TEXT, error TEXT, created_at TIMESTAMPTZ NOT NULL DEFAULT now());
 CREATE INDEX IF NOT EXISTS broker_reports_pub_idx ON broker_reports (published DESC);
+
+-- Dine egne justeringer i bookingtabellen (lages også av nettsiden)
+CREATE TABLE IF NOT EXISTS booking_inputs (symbol TEXT NOT NULL, segment TEXT NOT NULL, vessels REAL, rest_rate REAL, breakeven REAL, util REAL,
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now(), PRIMARY KEY (symbol, segment));
+
+-- Kunnskapsbanken: kilder i kø og notatene den lokale KI-modellen har skrevet (søkbare med fulltekstsøk)
+CREATE TABLE IF NOT EXISTS kb_sources (url TEXT PRIMARY KEY, kind TEXT, title TEXT, topic TEXT, priority INT NOT NULL DEFAULT 5,
+  status TEXT NOT NULL DEFAULT 'pending', tries INT NOT NULL DEFAULT 0, chars INT, error TEXT,
+  added TIMESTAMPTZ NOT NULL DEFAULT now(), done_at TIMESTAMPTZ);
+CREATE TABLE IF NOT EXISTS knowledge (id SERIAL PRIMARY KEY, url TEXT NOT NULL, kind TEXT NOT NULL, topic TEXT, title TEXT NOT NULL,
+  body TEXT NOT NULL, facts JSONB, symbols TEXT[] NOT NULL DEFAULT '{}', source_title TEXT, model TEXT, checked INT, unverified INT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  tsv tsvector GENERATED ALWAYS AS (to_tsvector('norwegian'::regconfig, coalesce(title, '') || ' ' || coalesce(topic, '') || ' ' || body)) STORED);
+CREATE INDEX IF NOT EXISTS knowledge_tsv_idx ON knowledge USING gin (tsv);
+CREATE INDEX IF NOT EXISTS knowledge_url_idx ON knowledge (url);

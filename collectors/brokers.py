@@ -140,7 +140,7 @@ def run(conn, backfill: bool = False, max_reports: int = 3, quick: bool = False)
                 raise RuntimeError("Fant nesten ingen tekst (kan være bare en PDF-lenke eller et bilde)")
             text = text[:60000] if big else text[:12000]
             raw, model = ai.chat(PROMPT.format(title=title, text=text), "big" if big and len(text) > 12000 else "quality",
-                                 1800, json_mode=True, temperature=0.1)
+                                 1800, json_mode=True, temperature=0.1, local_ok=False)
             m = re.search(r"\{.*\}", raw, re.S)
             data = json.loads(m.group(0)) if m else None
             if not data:

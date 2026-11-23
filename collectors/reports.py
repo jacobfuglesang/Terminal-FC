@@ -274,14 +274,14 @@ def notes_for(name: str, period: str, source: str, size: int = CHUNK_CHARS) -> s
     for i, ch in enumerate(chunks):
         if i:
             time.sleep(62)  # gratisnivået tillater omtrent én slik bit i minuttet per modell
-        text, _ = ai.chat(NOTES_PROMPT.format(i=i + 1, n=len(chunks), name=name, period=period, text=ch), "small", 700)
+        text, _ = ai.chat(NOTES_PROMPT.format(i=i + 1, n=len(chunks), name=name, period=period, text=ch), "small", 700, local_ok=False)
         notes.append(f"[Notater del {i + 1}]\n{text}")
     return "\n\n".join(notes)
 
 
 def final(name: str, sym_segment: str, period: str, material: str, purpose: str = "quality") -> tuple[dict, str]:
     raw, model = ai.chat(FINAL_PROMPT.format(name=name, segment=sym_segment, period=period, text=material),
-                         purpose, 2200, json_mode=True, temperature=0.1)
+                         purpose, 2200, json_mode=True, temperature=0.1, local_ok=False)
     m = re.search(r"\{.*\}", raw, re.S)
     if not m:
         raise RuntimeError("Svaret var ikke JSON")
@@ -314,7 +314,7 @@ def fix(name: str, period: str, data: dict, keys: str) -> dict:
     time.sleep(20)
     try:
         raw, _ = ai.chat(FIX_PROMPT.format(name=name, period=period, bad="\n".join(bad), keys=keys),
-                         "quality", 1500, json_mode=True, temperature=0.1)
+                         "quality", 1500, json_mode=True, temperature=0.1, local_ok=False)
         m = re.search(r"\{.*\}", raw, re.S)
         new = json.loads(m.group(0)) if m else {}
     except Exception as e:  # noqa: BLE001

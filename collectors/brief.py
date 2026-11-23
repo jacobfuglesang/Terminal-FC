@@ -10,6 +10,8 @@ from datetime import date, timedelta
 import requests
 
 import ai
+import earnings
+import knowledge
 from universe import COMPANIES, MARKET
 
 
@@ -140,6 +142,16 @@ def snapshot(conn) -> str:
         except Exception:  # noqa: BLE001
             conn.rollback()
 
+        # Bookingtabellen: hvor mye av kvartalet som er booket og anslått overskudd (samme regning som på nettsiden)
+        try:
+            bl = earnings.lines(conn)
+            if bl:
+                out.append("\n## Bookinger og anslått inntjening (fra kvartalsrapportene, grovt anslag, resten antatt til samme rate)")
+                out += bl
+        except Exception as e:  # noqa: BLE001
+            conn.rollback()
+            print(f"  ! Bookingtabellen: {e}")
+
         cur.execute("SELECT title FROM alerts WHERE created_at > now() - interval '2 days' ORDER BY created_at DESC LIMIT 12")
         al = [r[0] for r in cur.fetchall()]
         if al:
@@ -148,8 +160,15 @@ def snapshot(conn) -> str:
 
         cur.execute("""SELECT title, source, coalesce(summary, left(coalesce(nullif(excerpt,''), body, ''), 240)) FROM news
                        WHERE published > now() - interval '36 hours' AND body_status IS DISTINCT FROM 'blocked'
-                       ORDER BY published DESC LIMIT 25""")
+                       ORDER BY published DESC LIMIT 20""")
         nw = cur.fetchall()
+        # Kunnskapsbanken: bakgrunn som passer til dagens nyheter, pluss sektormønstrene
+        bg = knowledge.search(conn, " ".join(t for t, _, _ in nw) + " tankrater tørrbulk fraktrater", limit=4)
+        pat = knowledge.get(conn, "intern:mønster:marked")
+        if bg or pat:
+            out.append("\n## Bakgrunn fra kunnskapsbanken (lest tidligere, ikke dagens tall)")
+            for title, body, _ in pat + [b for b in bg if b not in pat]:
+                out.append(f"- {title}: {re.sub(r'\s+', ' ', body)[:450]}")
         if nw:
             out.append("\n## Nyheter siste 36 timer")
             out += [f"- {t} ({s}): {(x or '').strip()[:240]}" for t, s, x in nw]
@@ -162,13 +181,15 @@ PROMPT = (
     "Gi ingen kjøps- eller salgsråd, ingen kursmål og ikke gjengi analytikeres anbefalinger. "
     "Bruk disse overskriftene (markdown ##): «Kort fortalt» (tre punkter), «Tank», «Tørrbulk», «Container, bil og gass», "
     "«Geopolitikk og trafikk», «Følg med på» (kommende rapporter og datapunkter). Har KI lest nye kvartalsrapporter, "
-    "nevn det viktigste fra dem (booking for neste kvartal og dødpunkt) under riktig segment. Maks 400 ord. "
+    "nevn det viktigste fra dem (booking for neste kvartal og dødpunkt) under riktig segment. Bruk bookingtabellen til å si "
+    "kort hva bookingene betyr for inntjeningen dette kvartalet, og si at det er grove anslag. Bruk kunnskapsbanken bare som "
+    "bakgrunn for å forklare sammenhenger; dagens tall skal komme fra dataene. Maks 450 ord. "
     "Oppgi tall med enhet og retning. Si det kort hvis data mangler for et område. Skriv enkelt og konkret.\n\nDATA:\n"
 )
 
 
 def write(snap: str) -> tuple[str, str]:
-    return ai.chat(PROMPT + snap[:14000], "quality", 2500, temperature=0.3)
+    return ai.chat(PROMPT + snap[:16500], "quality", 2500, temperature=0.3)
 
 
 def run(conn) -> int:
