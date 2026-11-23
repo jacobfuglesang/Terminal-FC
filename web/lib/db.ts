@@ -268,6 +268,8 @@ export type ReportData = {
   period?: string; headline?: string; tone?: string; summary?: string[]; numbers?: RepNum[]; tce?: RepRate[]; bookings?: RepRate[];
   breakeven?: RepRate[]; dividend?: { per_share?: number | null; unit?: string; note?: string; per_share_ok?: boolean } | null;
   balance?: RepNum[]; fleet?: string | null; outlook?: string | null; watch?: string[];
+  vessels?: { segment?: string; count?: number | null; days?: number | null; note?: string; count_ok?: boolean; days_ok?: boolean }[];
+  v?: number; bookings_by_rule?: boolean;
   check?: { checked: number; unverified: number }; files?: { name: string; url: string }[];
 };
 export type Report = {
@@ -282,7 +284,8 @@ export const getReports = (opts: { symbol?: string; limit?: number; all?: boolea
       ? await sql()`SELECT * FROM reports WHERE symbol = ${opts.symbol} ORDER BY published DESC LIMIT ${limit}`
       : await sql()`SELECT * FROM reports ORDER BY published DESC LIMIT ${limit}`;
     return (rows as Row[])
-      .filter((r) => opts.all || r.status === "ok")
+      // En rapport som leses på nytt (pending med gammelt uttrekk) vises fortsatt
+      .filter((r) => opts.all || r.status === "ok" || (r.status === "pending" && !!(r.data as { v?: number } | null)?.v))
       .map((r) => ({
         key: String(r.key), symbol: String(r.symbol), period: String(r.period), published: new Date(String(r.published)).toISOString(),
         title: String(r.title ?? ""), messageIds: ((r.message_ids as number[] | null) ?? []).map(Number), status: String(r.status),

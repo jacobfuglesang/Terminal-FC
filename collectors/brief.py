@@ -87,7 +87,7 @@ def snapshot(conn) -> str:
             out.append("\n## Rapporter neste tre uker (Yahoo)")
             out += [f"- {names.get(s, s)}: {d}" for s, d in sorted(soon, key=lambda x: x[1])]
 
-        cur.execute("""SELECT symbol, period, data FROM reports WHERE status = 'ok' AND published > now() - interval '10 days'
+        cur.execute("""SELECT symbol, period, data FROM reports WHERE (status = 'ok' OR (status = 'pending' AND data ? 'v')) AND published > now() - interval '10 days'
                        ORDER BY published DESC LIMIT 8""")
         reps = cur.fetchall()
         if reps:

@@ -37,7 +37,7 @@ export async function POST(req: Request) {
   type Rep = { symbol: string; period: string; data: { headline?: string; outlook?: string; bookings?: { segment?: string; period?: string; share_pct?: number; rate?: number; unit?: string }[]; breakeven?: { segment?: string; rate?: number; unit?: string }[]; dividend?: { per_share?: number; unit?: string } } };
   let reps: Rep[] = [];
   try {
-    reps = (await db`SELECT DISTINCT ON (symbol) symbol, period, data FROM reports WHERE status = 'ok' ORDER BY symbol, published DESC`) as Rep[];
+    reps = (await db`SELECT DISTINCT ON (symbol) symbol, period, data FROM reports WHERE (status = 'ok' OR (status = 'pending' AND data ? 'v')) ORDER BY symbol, published DESC`) as Rep[];
   } catch {
     reps = []; // tabellen finnes ikke før rapportleseren har kjørt første gang
   }

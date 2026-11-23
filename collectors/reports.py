@@ -37,7 +37,7 @@ SKIP = re.compile(r"invitation|invitasjon|webcast|conference call|to be held|wil
 REPORTISH = re.compile(r"result|quarter|kvartal|half[- ]year|halvår|annual report|årsrapport|interim|"
                        r"presentation|\bq[1-4]\b|financial information|financial statements|nine[- ]month|six[- ]month", re.I)
 MAX_PDF_BYTES = 25_000_000
-VERSION = 7  # økes når leseren forbedres, så gamle uttrekk leses på nytt
+VERSION = 8  # økes når leseren forbedres, så gamle uttrekk leses på nytt
 
 # Groq: én forespørsel må holde seg under 8 000 tokens (inn + ut). Ca. 3,6 tegn per token i rapporttekst.
 CHUNK_CHARS = 11_000
@@ -216,6 +216,7 @@ NOTES_PROMPT = (
     "Skriv korte stikkord på engelsk med ALLE konkrete tall som står i teksten om: resultat (inntekter, EBITDA, "
     "nettoresultat, resultat per aksje), oppnådde dagrater/TCE per skipstype, andel dager booket for neste kvartal og til "
     "hvilken rate, dødpunkt/cash breakeven og opex per dag, utbytte per aksje, gjeld, kontanter, flåte (kjøp, salg, nybygg), "
+    "antall skip per skipstype og tilgjengelige/operative dager per skipstype, "
     "og hva ledelsen sier om markedet framover. Skriv tallene nøyaktig som i teksten, med enhet og periode. "
     "Ikke gjett og ikke regn ut noe selv. Maks 220 ord.\n\nTEKST:\n{text}"
 )
@@ -239,6 +240,9 @@ REGLER:
   "segment" er bare skipstypen (VLCC, Suezmax, LR2, MR …). Skriv i "note" om det gjelder spotdager, timecharter eller alle dager.
   Er bare et snitt for hele flåten oppgitt, bruk segment "flåtesnitt". Ikke lag rader uten tall. Ta med hver skipstype
   og både spot- og totaldager hvis begge er oppgitt. I tabeller heter kolonnene ofte «% covered» og «TCE currently contracted».
+- "vessels": antall skip selskapet driver per skipstype (eid og innleid, på vannet nå, ikke nybygg som ikke er levert),
+  og antall tilgjengelige/operative dager for NESTE periode hvis det står. Bare tall som står i teksten. Står bare
+  hele flåten, bruk segment "flåtesnitt". Står ingenting, bruk tom liste.
 - Settes "is_report" til false hvis teksten ikke er en finansiell rapport (f.eks. bare ny dato, invitasjon eller kalender).
 
 Svar KUN med gyldig JSON i dette formatet:
@@ -252,6 +256,7 @@ Svar KUN med gyldig JSON i dette formatet:
  "tce": [{{"segment": "VLCC", "rate": 61500, "unit": "USD/dag", "period": "Q3 2026"}}],
  "bookings": [{{"segment": "VLCC", "period": "Q4 2026", "share_pct": 65, "rate": 98000, "unit": "USD/dag", "note": "spotdager"}}],
  "breakeven": [{{"segment": "flåtesnitt", "rate": 23600, "unit": "USD/dag", "note": "cash breakeven neste 12 mnd"}}],
+ "vessels": [{{"segment": "VLCC", "count": 41, "days": null, "note": "eid og innleid"}}],
  "dividend": {{"per_share": 2.38, "unit": "USD", "note": "kort om utbetaling eller politikk"}},
  "balance": [{{"label": "Netto rentebærende gjeld", "value": 1200, "unit": "MUSD"}}],
  "fleet": "én setning om flåteendringer, eller null",
@@ -423,7 +428,7 @@ def tidy(data: dict) -> dict:
         except (TypeError, ValueError):
             return False
     for field, keys in (("bookings", ("rate",)), ("tce", ("rate",)), ("breakeven", ("rate",)),
-                        ("numbers", ("value",)), ("balance", ("value",))):
+                        ("numbers", ("value",)), ("balance", ("value",)), ("vessels", ("count", "days"))):
         rows = data.get(field)
         if isinstance(rows, list):
             data[field] = [r for r in rows if isinstance(r, dict) and any(has(r, k) for k in keys)]
@@ -499,6 +504,9 @@ def verify(data: dict, source: str) -> dict:
         mark(row, "rate")
     for row in data.get("balance") or []:
         mark(row, "value")
+    for row in data.get("vessels") or []:
+        mark(row, "count")
+        mark(row, "days")
     if isinstance(data.get("dividend"), dict):
         mark(data["dividend"], "per_share")
     data["check"] = {"checked": checked, "unverified": missing}
@@ -533,8 +541,12 @@ def discover(conn, days: int = 200) -> int:
             added += 1 if cur.fetchone()[0] else 0
         keys = [f"{sym}|{period}" for sym, period in groups]
         cur.execute("""DELETE FROM reports WHERE published > now() - make_interval(days => %s) AND NOT (key = ANY(%s))""", (days, keys))
-        cur.execute("""UPDATE reports SET status = 'pending', tries = 0 WHERE status IN ('ok', 'skip')
-                       AND coalesce((data->>'v')::int, 1) < %s""", (VERSION,))
+        # Bare den nyeste rapporten per selskap leses på nytt når leseren forbedres (sparer KI-kvote).
+        # Den gamle versjonen vises til den nye er ferdig.
+        cur.execute("""UPDATE reports SET status = 'pending', tries = 0 WHERE status = 'ok'
+                       AND coalesce((data->>'v')::int, 1) < %s
+                       AND key IN (SELECT DISTINCT ON (symbol) key FROM reports WHERE status IN ('ok', 'pending') ORDER BY symbol, published DESC)""",
+                    (VERSION,))
     conn.commit()
     return added
 
@@ -596,6 +608,9 @@ def run(conn, max_reports: int = 3, budget_s: int = 480) -> int:
                       f"{'' if b.get('rate_ok', True) else '  (?)'}")
             for b in (data.get("breakeven") or [])[:3]:
                 print(f"      dødpunkt {b.get('segment')}: {b.get('rate')} {b.get('unit', '')}{'' if b.get('rate_ok', True) else '  (?)'}")
+            for v in (data.get("vessels") or [])[:5]:
+                days = f", {v['days']} dager" if v.get("days") else ""
+                print(f"      skip {v.get('segment')}: {v.get('count')}{'' if v.get('count_ok', True) else ' (?)'}{days}")
             dv = data.get("dividend") or {}
             if dv.get("per_share") is not None:
                 print(f"      utbytte {dv.get('per_share')} {dv.get('unit', '')}{'' if dv.get('per_share_ok', True) else '  (?)'}")
@@ -606,8 +621,11 @@ def run(conn, max_reports: int = 3, budget_s: int = 480) -> int:
             break
         except Exception as e:  # noqa: BLE001
             print(f"  ! {name} {period}: {e}")
-            write("UPDATE reports SET error = %s, status = CASE WHEN tries >= 3 THEN 'error' ELSE 'pending' END WHERE key = %s",
-                  (str(e)[:300], key))
+            # Har rapporten et eldre, godkjent uttrekk, beholdes det (og merkes med ny versjon så den ikke leses i ring)
+            write("""UPDATE reports SET error = %s,
+                     status = CASE WHEN tries < 3 THEN 'pending' WHEN data ? 'v' THEN 'ok' ELSE 'error' END,
+                     data = CASE WHEN tries >= 3 AND data ? 'v' THEN jsonb_set(data, '{v}', to_jsonb(%s::int)) ELSE data END
+                     WHERE key = %s""", (str(e)[:300], VERSION, key))
         if todo and time.time() - t0 < budget_s:
             time.sleep(5 if ai.has("big") else 30)
     print(f"  KI-bruk: {ai.summary()}")
