@@ -1,4 +1,6 @@
+import StoragePanel from "@/components/StoragePanel";
 import { getStatus } from "@/lib/db";
+import { storageInfo } from "@/lib/storage";
 import { osloTime } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
@@ -17,9 +19,10 @@ const PLAN = [
 ];
 
 export default async function StatusPage() {
-  const status = await getStatus();
+  const [status, storage] = await Promise.all([getStatus(), storageInfo()]);
   return (
     <>
+      <StoragePanel info={storage} />
       <section className="panel" aria-labelledby="h-siste">
         <div className="ph">
           <h2 id="h-siste">Siste hentinger</h2>

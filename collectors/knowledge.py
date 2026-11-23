@@ -246,22 +246,43 @@ def room(conn) -> bool:
     return db_bytes(conn) < CAP * LIMIT_MB * 1024 * 1024 - 5 * 1024 * 1024
 
 
-def prune(conn) -> int:
-    """Er databasen over taket: slett de eldste vanlige notatene (ikke profiler, mønstre og sammenfatninger) til den er under 88 %."""
-    limit = CAP * LIMIT_MB * 1024 * 1024
-    if db_bytes(conn) < limit:
+def _vacuum_full() -> None:
+    """Krymper tabellen etter sletting, så plassen faktisk blir ledig (Postgres gir den ellers ikke tilbake)."""
+    import psycopg
+
+    with psycopg.connect(db._url(), autocommit=True) as c:
+        c.execute("VACUUM FULL knowledge")
+        c.execute("VACUUM kb_sources")
+
+
+def prune(conn, target: float = 0.88, cap: float = CAP) -> int:
+    """Er databasen over taket: slett de ELDSTE notatene fra lesingen først (eldste lørdagsresearch går først),
+    til databasen er under target. Rører aldri dine egne notater, handler eller bookingjusteringer."""
+    limit = LIMIT_MB * 1024 * 1024
+    if db_bytes(conn) < cap * limit:
         return 0
     deleted = 0
-    with conn.cursor() as cur:
-        for _ in range(40):
-            cur.execute("""DELETE FROM knowledge WHERE id IN (SELECT id FROM knowledge WHERE kind NOT IN ('selskap', 'mønster', 'syntese')
-                           ORDER BY created_at LIMIT 25)""")
-            n = cur.rowcount
-            conn.commit()
-            deleted += n
-            if not n or db_bytes(conn) < 0.88 * LIMIT_MB * 1024 * 1024:
+    for _ in range(6):
+        size = db_bytes(conn)
+        if size < target * limit:
+            break
+        with conn.cursor() as cur:
+            cur.execute("SELECT count(*), coalesce(pg_total_relation_size('knowledge'), 0) FROM knowledge")
+            count, kb = cur.fetchone()
+            if not count:
                 break
-    print(f"  Databasen var over {CAP:.0%} av grensen: slettet {deleted} eldre notater")
+            avg = max(1, kb / count)
+            n = min(count, int((size - target * limit) / avg) + 20)
+            cur.execute("""DELETE FROM knowledge WHERE id IN (SELECT id FROM knowledge ORDER BY created_at, id LIMIT %s)
+                           RETURNING url""", (n,))
+            urls = [r[0] for r in cur.fetchall()]
+            # Kildene kan leses på nytt senere hvis det blir plass
+            cur.execute("UPDATE kb_sources SET status = 'pending', tries = 0, priority = greatest(priority, 6) WHERE url = ANY(%s)", (urls,))
+        conn.commit()
+        deleted += len(urls)
+        _vacuum_full()
+    print(f"  Databasen var for full: slettet de {deleted} eldste notatene fra lesingen "
+          f"(nå {db_bytes(conn) / 1e6:.0f} MB)")
     return deleted
 
 
@@ -362,6 +383,36 @@ def expand_categories(conn) -> int:
                                ON CONFLICT (url) DO NOTHING""", (f"wiki:en:{t}", t))
                 added += cur.rowcount
             time.sleep(1)
+    conn.commit()
+    return added
+
+
+RELEVANT = re.compile(r"(?i)ship|tanker|freight|cargo|port|canal|strait|oil|petrol|gas|lng|coal|iron|steel|grain|commod|trade|tariff|"
+                      r"sanction|war|conflict|econom|inflation|interest|bank|market|stock|share|equity|price|invest|trad|hedge|"
+                      r"futures|option|risk|volatil|crisis|recession|opec|china|russia|iran|india|europe|bias|forecast|analys")
+
+
+def expand_links(conn, pages: int = 25) -> int:
+    """Finner nye artikler via lenkene i artikler som allerede er lest (bare relevante titler)."""
+    added = 0
+    with conn.cursor() as cur:
+        cur.execute("""SELECT url FROM kb_sources WHERE status = 'done' AND url LIKE 'wiki:en:%%' AND coalesce(error, '') <> 'lenker'
+                       ORDER BY priority, done_at DESC LIMIT %s""", (pages,))
+        srcs = [r[0] for r in cur.fetchall()]
+        for url in srcs:
+            title = url.split(":", 2)[2]
+            try:
+                r = requests.get(WIKI.format(lang="en"), headers=UA, timeout=30, params={
+                    "action": "query", "prop": "links", "titles": title, "plnamespace": 0, "pllimit": 200, "redirects": 1, "format": "json"})
+                links = [l["title"] for p in r.json().get("query", {}).get("pages", {}).values() for l in p.get("links", [])]
+            except Exception:  # noqa: BLE001
+                links = []
+            for t in [x for x in links if RELEVANT.search(x) and not x.startswith(("List of", "Lists of"))][:12]:
+                cur.execute("""INSERT INTO kb_sources (url, kind, title, priority) VALUES (%s, 'begrep', %s, 8) ON CONFLICT (url) DO NOTHING""",
+                            (f"wiki:en:{t}", t))
+                added += cur.rowcount
+            cur.execute("UPDATE kb_sources SET error = 'lenker' WHERE url = %s", (url,))
+            time.sleep(0.5)
     conn.commit()
     return added
 
@@ -1006,6 +1057,7 @@ def run(conn, minutes: float = 30) -> int:
     print(f"  Kunnskapsbank: {pending} kilder i kø. Database {size / 1e6:.0f} MB av {LIMIT_MB:.0f} MB "
           f"(tak {CAP:.0%} = {CAP * LIMIT_MB:.0f} MB). Leser i {minutes:.0f} minutter med {ai.LOCAL_MODEL}.")
     done = failed = skipped = expanded = 0
+    stopped_full = False
     # Sammenfatninger og ukens samfunnsrapport skrives bare med Groq (lørdager): når den beste modellen er tom for kvote,
     # eller mot slutten av tiden. Den lokale modellen skriver dem ikke, fordi de er viktige og tallrike.
     synth_at = budget - min(1500, budget * 0.15)
@@ -1025,17 +1077,24 @@ def run(conn, minutes: float = 30) -> int:
             continue
         with db.connect() as c:
             if not room(c):
-                print(f"  Stopper: databasen er nær {CAP:.0%} av grensen ({db_bytes(c) / 1e6:.0f} MB).")
-                break
+                # Full: de eldste notatene fra lesingen slettes for å gi plass til nye. Hjelper ikke det, stopper vi.
+                if not prune(c, cap=0) or not room(c):
+                    print(f"  Stopper: databasen er nær {CAP:.0%} av grensen ({db_bytes(c) / 1e6:.0f} MB), og det er ikke mer å rydde.")
+                    stopped_full = True
+                    break
             with c.cursor() as cur:
                 # Den lokale modellen leser bare nye kilder (og egne data). Notater som finnes, skrives bare om med Groq.
                 cur.execute("""SELECT url, kind, title FROM kb_sources s WHERE status = 'pending' AND tries < 2
                                AND (%s = false OR url LIKE 'intern:%%' OR NOT EXISTS (SELECT 1 FROM knowledge k WHERE k.url = s.url))
                                ORDER BY priority, added LIMIT 1""", (local_next(),))
                 row = cur.fetchone()
-            if not row and expanded < 1:
+            if not row and expanded < (8 if ai.knowledge_day() else 1):
                 expanded += 1
-                print(f"  Hovedlisten er lest. La til {expand_categories(c)} artikler fra Wikipedia-kategorier.")
+                if expanded == 1:
+                    print(f"  Hovedlisten er lest. La til {expand_categories(c)} artikler fra Wikipedia-kategorier.")
+                else:
+                    # Lørdag: let videre via lenkene i artiklene som er lest, så lenge tiden rekker
+                    print(f"  Leter videre: la til {expand_links(c)} artikler som de leste artiklene lenker til.")
                 continue
         if not row:
             print("  Ingen flere kilder i køen.")
@@ -1066,6 +1125,24 @@ def run(conn, minutes: float = 30) -> int:
             mark(url, "error" if "404" in str(e) else "pending", str(e))
         if url.startswith(("wiki:", "http")):
             time.sleep(1)
+    if not synthesized and done >= 3:
+        print("  Skriver sammenfatninger og ukens samfunnsrapport før slutt …")
+        try:
+            done += synthesize()
+            import society
+
+            done += society.run()
+        except Exception as e:  # noqa: BLE001
+            print(f"  ! Sammenfatninger/samfunnsrapport: {str(e)[:200]}")
+    with db.connect() as c, c.cursor() as cur:
+        cur.execute("SELECT count(*) FROM kb_sources WHERE status = 'pending' AND tries < 2")
+        left = cur.fetchone()[0]
+    more = left > 0 and not stopped_full and time.time() - t0 >= budget - 180
+    state = os.environ.get("KNOWLEDGE_STATE_FILE")
+    if state:
+        with open(state, "w") as fh:
+            fh.write(f"more={'true' if more else 'false'}\n")
+    print(f"  {left} kilder står igjen i køen{' – lesingen fortsetter i neste del' if more else ''}.")
     with db.connect() as c:
         print(f"  Ferdig: {done} notater lagret, {skipped} hoppet over, {failed} feil på {(time.time() - t0) / 60:.0f} min. "
               f"Kunnskapsbanken bruker {kb_bytes(c) / 1e6:.1f} MB, databasen {db_bytes(c) / 1e6:.0f} MB.")

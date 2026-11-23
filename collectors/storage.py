@@ -2,7 +2,8 @@
 
 Over 1 GB stopper alle skrivinger i hele terminalen, så vi holder alltid en buffer:
 - Kunnskapsbanken skriver bare til databasen er 90 % full (se knowledge.CAP).
-- Kommer databasen likevel over 92 %, rydder denne jobben: eldre rådata først, deretter de eldste vanlige notatene.
+- Kommer databasen likevel over 92 %, rydder denne jobben: først de ELDSTE notatene fra lørdagslesingen,
+  deretter eldre rådata. Dine egne notater, handler og bookingjusteringer slettes aldri.
 """
 from __future__ import annotations
 
@@ -28,7 +29,13 @@ def run(conn) -> int:
           + ", ".join(f"{n} {b / 1e6:.1f} MB" for n, b in top))
     if s < ALARM * LIMIT:
         return 0
-    print(f"  ! Over {ALARM:.0%}: rydder eldre rådata")
+    import knowledge
+
+    print(f"  ! Over {ALARM:.0%}: sletter de eldste notatene fra lesingen først")
+    done = knowledge.prune(conn, target=0.88, cap=0)
+    if size(conn) < ALARM * LIMIT:
+        return done
+    print("  Fortsatt for full: rydder eldre rådata")
     steps = [
         "DELETE FROM ais_zone WHERE ts < now() - interval '60 days'",
         "UPDATE announcements SET body = NULL WHERE body IS NOT NULL AND published < now() - interval '120 days'",
@@ -36,7 +43,6 @@ def run(conn) -> int:
         "DELETE FROM chokepoints WHERE day < now() - interval '500 days'",
         "UPDATE reports SET data = data - 'files' WHERE published < now() - interval '400 days'",
     ]
-    done = 0
     with conn.cursor() as cur:
         for sql in steps:
             try:
@@ -46,8 +52,5 @@ def run(conn) -> int:
             except Exception as e:  # noqa: BLE001
                 conn.rollback()
                 print(f"  ! {sql[:50]}: {e}")
-    import knowledge
-
-    done += knowledge.prune(conn)
     print(f"  Ryddet {done} rader. Database nå {size(conn) / 1e6:.0f} MB (plassen frigjøres helt når Postgres har ryddet opp).")
     return done

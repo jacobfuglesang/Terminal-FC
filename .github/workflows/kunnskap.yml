@@ -1,23 +1,26 @@
 name: Kunnskapsbank
 
-# Den lokale KI-modellen leser om shipping, fraktmarkeder, råvarer og aksjemarkedet og lagrer korte notater.
-# Hver lørdag kl. 06:05 norsk tid leser den i 5,5 timer med Groq (hele lørdagens kvote er satt av) og den lokale modellen,
-# frisker opp det som handler om situasjonen nå, og skriver sammenfatninger og ukens samfunnsrapport.
+# Den lokale KI-modellen og Groq leser om shipping, shippingtrading, aksjehandel, verdensøkonomien og geopolitikken,
+# og lagrer korte notater.
+#
+# Hver lørdag kl. 06:05 norsk tid: leser så lenge det er noe å finne, men maks 10 timer.
+# GitHub tillater maks 6 timer per jobb, så lesingen er delt i to deler etter hverandre:
+#   del 1: inntil 340 minutter. Del 2 starter bare hvis det fortsatt er mer å lese, og bruker resten (til sammen maks 10 timer).
+# Groq er satt av til dette hele lørdagen. Sammenfatninger og ukens samfunnsrapport skrives mens Groq har kvote.
 # Kan også startes for hånd (Actions > Kunnskapsbank > Run workflow) eller ved å endre .github/kunnskap-start.txt.
-# Stopper av seg selv hvis databasen nærmer seg 80 % av gratisgrensen.
 on:
   workflow_dispatch:
     inputs:
       minutes:
-        description: "Hvor mange minutter den skal lese (maks 330)"
+        description: "Maks minutter til sammen (inntil 600 = 10 timer)"
         type: string
         default: "300"
   schedule:
     - cron: "5 5 * * 6"      # hver lørdag 06:05 norsk vintertid (07:05 sommertid)
-    - cron: "5 5 24 11 *"    # 24.11.2026 kl. 06:05 norsk tid: stor lesing med Groq (hele dagens kvote) og lokal modell
+    - cron: "5 5 24 11 *"    # 24.11.2026 kl. 06:05 norsk tid: stor lesing med Groq (hele dagens kvote)
   push:
     branches: [main]
-    paths: [".github/kunnskap-start.txt"]   # endre denne filen for å starte en lang lesing
+    paths: [".github/kunnskap-start.txt"]   # endre denne filen for å starte en lesing
 
 permissions:
   contents: read
@@ -27,29 +30,13 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  read:
+  plan:
     runs-on: ubuntu-latest
-    timeout-minutes: 350
+    outputs:
+      first: ${{ steps.t.outputs.first }}
+      second: ${{ steps.t.outputs.second }}
     steps:
       - uses: actions/checkout@v4
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-          cache: pip
-          cache-dependency-path: collectors/requirements.txt
-
-      - run: pip install -r collectors/requirements.txt
-
-      - name: Hent lokal KI-modell fra cachen
-        uses: actions/cache@v4
-        with:
-          path: ~/.ollama/models
-          key: ollama-qwen3-4b-instruct-v1
-
-      - name: Start lokal KI
-        run: bash .github/scripts/ollama.sh
-
       - name: Velg lesetid
         id: t
         env:
@@ -57,20 +44,77 @@ jobs:
         run: |
           M="$IN"
           if [ "${{ github.event_name }}" = "schedule" ]; then
-            M=330
+            M=600
             if [ "${{ github.event.schedule }}" = "5 5 24 11 *" ]; then
               if [ "$(date -u +%F)" = "2026-11-24" ]; then M=330; else M=0; fi
             fi
           fi
           if [ "${{ github.event_name }}" = "push" ]; then M=$(grep -Eo '^[0-9]{1,3}' .github/kunnskap-start.txt | head -1); fi
           if ! echo "$M" | grep -Eq '^[0-9]{1,3}$'; then M=60; fi
-          if [ "$M" -gt 330 ]; then M=330; fi
-          echo "minutes=$M" >> "$GITHUB_OUTPUT"
+          if [ "$M" -gt 600 ]; then M=600; fi
+          FIRST=$(( M > 340 ? 340 : M ))
+          SECOND=$(( M - FIRST - 25 ))   # 25 minutter går med til oppstart og avslutning, så alt holder seg under 10 timer
+          if [ "$SECOND" -lt 20 ]; then SECOND=0; fi
+          echo "first=$FIRST" >> "$GITHUB_OUTPUT"
+          echo "second=$SECOND" >> "$GITHUB_OUTPUT"
+          echo "Del 1: $FIRST min, del 2: $SECOND min (bare hvis det er mer å lese)"
 
-      - name: Les i ${{ steps.t.outputs.minutes }} minutter
-        if: steps.t.outputs.minutes != '0'
+  read1:
+    needs: plan
+    if: needs.plan.outputs.first != '0'
+    runs-on: ubuntu-latest
+    timeout-minutes: 358
+    outputs:
+      more: ${{ steps.les.outputs.more }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: collectors/requirements.txt
+      - run: pip install -r collectors/requirements.txt
+      - name: Hent lokal KI-modell fra cachen
+        uses: actions/cache@v4
+        with:
+          path: ~/.ollama/models
+          key: ollama-qwen3-4b-instruct-v1
+      - name: Start lokal KI
+        run: bash .github/scripts/ollama.sh
+      - name: Les (del 1, ${{ needs.plan.outputs.first }} min)
+        id: les
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          KNOWLEDGE_MINUTES: ${{ steps.t.outputs.minutes }}
+          KNOWLEDGE_MINUTES: ${{ needs.plan.outputs.first }}
+          KNOWLEDGE_STATE_FILE: /tmp/kb_state
+        working-directory: collectors
+        run: |
+          python -u run.py knowledge
+          cat /tmp/kb_state >> "$GITHUB_OUTPUT" 2>/dev/null || echo "more=false" >> "$GITHUB_OUTPUT"
+
+  read2:
+    needs: [plan, read1]
+    if: always() && needs.read1.outputs.more == 'true' && needs.plan.outputs.second != '0'
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: collectors/requirements.txt
+      - run: pip install -r collectors/requirements.txt
+      - name: Hent lokal KI-modell fra cachen
+        uses: actions/cache@v4
+        with:
+          path: ~/.ollama/models
+          key: ollama-qwen3-4b-instruct-v1
+      - name: Start lokal KI
+        run: bash .github/scripts/ollama.sh
+      - name: Les videre (del 2, ${{ needs.plan.outputs.second }} min)
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          KNOWLEDGE_MINUTES: ${{ needs.plan.outputs.second }}
         working-directory: collectors
         run: python -u run.py knowledge
