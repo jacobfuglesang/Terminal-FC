@@ -3,15 +3,20 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Folder, Note } from "@/lib/notes";
 import { COMPANIES } from "@/lib/menu";
+import { type Draft, clearDraft, listDrafts, putDraft, rebaseDraft } from "@/lib/drafts";
 
 type View = "all" | "none" | number;
 
 const input = { background: "var(--inset)", color: "var(--text)", border: "1px solid var(--line)", borderRadius: 6, padding: "7px 10px" } as const;
 
-async function api<T>(url: string, method = "GET", body?: unknown): Promise<T> {
+class LoggedOut extends Error {}
+
+// soft = ikke send brukeren til innlogging ved 401 (brukes ved lagring, så teksten ikke forsvinner)
+async function api<T>(url: string, method = "GET", body?: unknown, soft = false): Promise<T> {
   const r = await fetch(url, { method, headers: { "Content-Type": "application/json" }, body: body ? JSON.stringify(body) : undefined });
   if (r.status === 401) {
-    window.location.href = "/login";
+    if (soft) throw new LoggedOut("Ikke innlogget");
+    window.location.href = `/login?neste=${encodeURIComponent(window.location.pathname)}`;
     throw new Error("Ikke innlogget");
   }
   if (!r.ok) throw new Error((await r.json().catch(() => ({}))).error || `Feil ${r.status}`);
@@ -30,7 +35,9 @@ export default function NotesApp({ initial }: { initial: { folders: Folder[]; no
   const [q, setQ] = useState("");
   const [newFolder, setNewFolder] = useState<string | null>(null);
   const [renaming, setRenaming] = useState<string | null>(null);
-  const [saveState, setSaveState] = useState<"" | "lagrer" | "lagret" | "feil">("");
+  const [saveState, setSaveState] = useState<"" | "lagrer" | "lagret" | "feil" | "utlogget">("");
+  const [conflicts, setConflicts] = useState<Draft[]>([]);
+  const [restored, setRestored] = useState(0);
   const [confirmDel, setConfirmDel] = useState(false);
   const [err, setErr] = useState("");
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -53,15 +60,97 @@ export default function NotesApp({ initial }: { initial: { folders: Folder[]; no
     if (!p.id) return;
     pending.current = {};
     setSaveState("lagrer");
+    const started = Date.now();
     try {
       const { id, ...rest } = p;
-      const saved = await api<Note>(`/api/notes/${id}`, "PATCH", rest);
+      const saved = await api<Note>(`/api/notes/${id}`, "PATCH", rest, true);
       setNotes((all) => all.map((n) => (n.id === saved.id ? { ...n, updated_at: new Date(saved.updated_at).toISOString() } : n)));
+      clearDraft(saved.id, started);
+      rebaseDraft(saved.id, new Date(saved.updated_at).toISOString());
       setSaveState("lagret");
-    } catch {
-      setSaveState("feil");
+    } catch (e) {
+      // Teksten ligger fortsatt i utkastet i nettleseren. Legg endringene tilbake i køen, så de ikke glemmes.
+      pending.current = { ...p, ...pending.current };
+      if (e instanceof LoggedOut) {
+        setSaveState("utlogget");
+      } else {
+        setSaveState("feil");
+        if (timer.current) clearTimeout(timer.current);
+        timer.current = setTimeout(() => void flush(), 5000); // nytt forsøk om litt (f.eks. ved nettbrudd)
+      }
     }
   }, []);
+
+  // Ulagret tekst fra forrige gang: lagres automatisk hvis notatet ikke er endret et annet sted i mellomtiden
+  useEffect(() => {
+    const drafts = listDrafts();
+    if (!drafts.length) return;
+    const byId = new Map(initial.notes.map((n) => [n.id, n]));
+    const same = (d: Draft, n: Note) =>
+      d.title === n.title && d.body === n.body && d.folder_id === n.folder_id && d.symbol === n.symbol && d.pinned === n.pinned;
+    const later: Draft[] = [];
+    const safe: Draft[] = [];
+    for (const d of drafts) {
+      const n = byId.get(d.id);
+      if (n && same(d, n)) clearDraft(d.id);
+      else if (n && new Date(n.updated_at).getTime() <= new Date(d.base).getTime() + 1000) safe.push(d);
+      else later.push(d);
+    }
+    setConflicts(later);
+    if (!safe.length) return;
+    setNotes((all) => all.map((n) => {
+      const d = safe.find((x) => x.id === n.id);
+      return d ? { ...n, title: d.title, body: d.body, folder_id: d.folder_id, symbol: d.symbol, pinned: d.pinned } : n;
+    }));
+    void (async () => {
+      let ok = 0;
+      for (const d of safe) {
+        const started = Date.now();
+        try {
+          const { id, title, body, folder_id, symbol, pinned } = d;
+          const saved = await api<Note>(`/api/notes/${id}`, "PATCH", { title, body, folder_id, symbol, pinned }, true);
+          setNotes((all) => all.map((n) => (n.id === saved.id ? { ...n, updated_at: new Date(saved.updated_at).toISOString() } : n)));
+          clearDraft(id, started);
+          rebaseDraft(id, new Date(saved.updated_at).toISOString());
+          ok += 1;
+        } catch (e) {
+          if (e instanceof LoggedOut) setSaveState("utlogget");
+        }
+      }
+      setRestored(ok);
+    })();
+  }, [initial.notes]);
+
+  // Lagre før automatisk låsing eller utlogging
+  useEffect(() => {
+    const h = () => { if (timer.current) clearTimeout(timer.current); if (pending.current.id) void flush(); };
+    window.addEventListener("tfc-before-lock", h);
+    return () => window.removeEventListener("tfc-before-lock", h);
+  }, [flush]);
+
+  async function resolve(d: Draft, how: "mine" | "append" | "discard" | "new") {
+    try {
+      if (how === "discard") {
+        clearDraft(d.id);
+      } else if (how === "new") {
+        const n = await api<Note>("/api/notes", "POST", { folder_id: d.folder_id, title: d.title, body: d.body });
+        setNotes((all) => [{ ...n, updated_at: new Date(n.updated_at).toISOString() }, ...all]);
+        clearDraft(d.id);
+      } else {
+        const server = notes.find((n) => n.id === d.id);
+        const body = how === "append" && server
+          ? `${server.body}\n\n--- Ulagret tekst fra denne PC-en (${when(new Date(d.ts).toISOString())}) ---\n${d.body}`
+          : d.body;
+        const patch = how === "append" ? { body } : { title: d.title, body, folder_id: d.folder_id, symbol: d.symbol, pinned: d.pinned };
+        const saved = await api<Note>(`/api/notes/${d.id}`, "PATCH", patch);
+        setNotes((all) => all.map((n) => (n.id === saved.id ? { ...saved, updated_at: new Date(saved.updated_at).toISOString() } : n)));
+        clearDraft(d.id);
+      }
+      setConflicts((all) => all.filter((x) => x.id !== d.id));
+    } catch (e) {
+      setErr((e as Error).message);
+    }
+  }
 
   useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
   useEffect(() => {
@@ -73,6 +162,8 @@ export default function NotesApp({ initial }: { initial: { folders: Folder[]; no
   function edit(patch: Partial<Note>) {
     if (!note) return;
     setNotes((all) => all.map((n) => (n.id === note.id ? { ...n, ...patch } : n)));
+    const m = { ...note, ...patch };
+    putDraft({ id: m.id, title: m.title, body: m.body, folder_id: m.folder_id, symbol: m.symbol, pinned: m.pinned, base: note.updated_at });
     if (pending.current.id && pending.current.id !== note.id) void flush();
     pending.current = { ...pending.current, ...patch, id: note.id };
     setSaveState("lagrer");
@@ -102,6 +193,7 @@ export default function NotesApp({ initial }: { initial: { folders: Folder[]; no
     if (!note) return;
     await api(`/api/notes/${note.id}`, "DELETE");
     pending.current = {};
+    clearDraft(note.id);
     setNotes((all) => all.filter((n) => n.id !== note.id));
     setSel(null);
     setConfirmDel(false);
@@ -145,7 +237,52 @@ export default function NotesApp({ initial }: { initial: { folders: Folder[]; no
 
   const folderName = typeof view === "number" ? folders.find((f) => f.id === view)?.name : view === "none" ? "Uten mappe" : "Alle notater";
 
+  const banner = { padding: "10px 12px", borderRadius: 8, marginBottom: 12, border: "1px solid var(--line2)", background: "var(--inset)" } as const;
+
   return (
+    <>
+    {saveState === "utlogget" && (
+      <div role="alert" style={{ ...banner, borderColor: "#F5C451" }}>
+        Du er logget ut. Det du skrev er tatt vare på i denne nettleseren og lagres automatisk når du logger inn igjen.{" "}
+        <a href="/login?neste=/notater" style={{ color: "#FF8A5B" }}>Logg inn igjen</a>
+      </div>
+    )}
+    {restored > 0 && (
+      <div role="status" style={banner}>
+        Ulagret tekst fra forrige gang ble funnet og lagret ({restored} {restored === 1 ? "notat" : "notater"}).{" "}
+        <button type="button" className="src" style={{ background: "none", border: 0, color: "var(--muted)" }} onClick={() => setRestored(0)}>Lukk</button>
+      </div>
+    )}
+    {conflicts.map((d) => {
+      const n = notes.find((x) => x.id === d.id);
+      return (
+        <div key={d.id} role="alert" style={{ ...banner, borderColor: "#F5C451" }}>
+          {n ? (
+            <>Du har ulagret tekst fra denne PC-en i «{d.title || "Uten tittel"}» ({when(new Date(d.ts).toISOString())}), men notatet er endret et annet sted etterpå ({when(n.updated_at)}).</>
+          ) : (
+            <>Du har ulagret tekst fra denne PC-en i «{d.title || "Uten tittel"}», men notatet er slettet.</>
+          )}
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 8 }}>
+            {n ? (
+              <>
+                <button type="button" className="btn" onClick={() => void resolve(d, "append")}>Legg teksten til nederst</button>
+                <button type="button" className="btn" onClick={() => void resolve(d, "mine")}>Bruk teksten fra denne PC-en</button>
+                <button type="button" className="btn" onClick={() => void resolve(d, "discard")}>Behold versjonen i terminalen</button>
+              </>
+            ) : (
+              <>
+                <button type="button" className="btn" onClick={() => void resolve(d, "new")}>Gjenopprett som nytt notat</button>
+                <button type="button" className="btn" onClick={() => void resolve(d, "discard")}>Forkast</button>
+              </>
+            )}
+          </div>
+          <details style={{ marginTop: 6 }}>
+            <summary className="src" style={{ cursor: "pointer" }}>Vis den ulagrede teksten</summary>
+            <pre style={{ whiteSpace: "pre-wrap", fontSize: 13, marginTop: 6 }}>{d.body || "(tom)"}</pre>
+          </details>
+        </div>
+      );
+    })}
     <div style={{ display: "flex", flexWrap: "wrap", gap: 16, alignItems: "stretch" }}>
       <section className="panel" style={{ flex: "1 1 200px", maxWidth: 260 }} aria-label="Mapper">
         <div className="ph"><h2>Mapper</h2></div>
@@ -213,7 +350,7 @@ export default function NotesApp({ initial }: { initial: { folders: Folder[]; no
               </select>
               <button type="button" className="btn" aria-pressed={note.pinned} onClick={() => edit({ pinned: !note.pinned })}>{note.pinned ? "Løsne" : "Fest øverst"}</button>
               <span className="src" style={{ marginLeft: "auto" }} aria-live="polite">
-                {saveState === "lagrer" ? "Lagrer …" : saveState === "lagret" ? "Lagret" : saveState === "feil" ? "Kunne ikke lagre, prøv igjen" : ""}
+                {saveState === "lagrer" ? "Lagrer …" : saveState === "lagret" ? "Lagret" : saveState === "feil" ? "Ikke lagret ennå, teksten er tatt vare på i nettleseren" : saveState === "utlogget" ? "Logget ut, teksten er tatt vare på" : ""}
               </span>
             </div>
             <input value={note.title} onChange={(e) => edit({ title: e.target.value })} placeholder="Tittel" aria-label="Tittel"
@@ -236,5 +373,6 @@ export default function NotesApp({ initial }: { initial: { folders: Folder[]; no
         {err && <p className="note" style={{ color: "#FF6B6B" }}>{err}</p>}
       </section>
     </div>
+    </>
   );
 }

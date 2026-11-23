@@ -42,7 +42,9 @@ export default function LoginPage() {
       });
       const d = await r.json().catch(() => ({}));
       if (r.ok) {
-        window.location.href = "/";
+        // Tilbake til siden du var på (bare interne adresser)
+        const next = new URLSearchParams(window.location.search).get("neste") ?? "/";
+        window.location.href = /^\/(?!\/)[\w\-/æøåÆØÅ%.]*$/.test(next) ? next : "/";
         return;
       }
       setPin("");

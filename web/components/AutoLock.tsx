@@ -12,10 +12,12 @@ export default function AutoLock({ idleMinutes }: { idleMinutes: number }) {
     const lock = async () => {
       if (done) return;
       done = true;
+      window.dispatchEvent(new Event("tfc-before-lock")); // f.eks. notater lagrer det siste
+      await new Promise((r) => setTimeout(r, 800));
       try {
         await fetch("/api/logout", { method: "POST" });
       } finally {
-        window.location.href = "/login";
+        window.location.href = `/login?neste=${encodeURIComponent(window.location.pathname)}`;
       }
     };
     const touch = () => { last = Date.now(); };

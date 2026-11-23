@@ -19,6 +19,8 @@ export default function Sidebar({ changes }: { changes: Change }) {
   const path = usePathname();
 
   async function lock() {
+    window.dispatchEvent(new Event("tfc-before-lock")); // la notater lagre det siste før utlogging
+    await new Promise((r) => setTimeout(r, 600));
     await fetch("/api/logout", { method: "POST" });
     window.location.href = "/login";
   }
