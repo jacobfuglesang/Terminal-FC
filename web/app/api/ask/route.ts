@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { bookingLines } from "@/lib/bookingdata";
 import { sql } from "@/lib/db";
 import { searchKnowledge } from "@/lib/knowledge";
+import { societyReports } from "@/lib/society";
 import { authed, deny } from "@/lib/notes";
 
 export const runtime = "nodejs";
@@ -51,18 +52,19 @@ export async function POST(req: Request) {
     return `- ${r.symbol} ${r.period}: ${d.headline ?? ""}${bk ? ` Booket: ${bk}.` : ""}${be ? ` Dødpunkt: ${be}.` : ""}${dv ? ` ${dv}.` : ""}${d.outlook ? ` Utsikter: ${d.outlook}` : ""}`;
   }).join("\n").slice(0, 3500);
   // Bookingtabellen (samme regning som på bookingsiden) og kunnskapsbanken (notater som passer til spørsmålet)
-  const [books, notes] = await Promise.all([bookingLines().catch(() => [] as string[]), searchKnowledge(question, 6)]);
+  const [books, notes, soc] = await Promise.all([bookingLines().catch(() => [] as string[]), searchKnowledge(question, 6), societyReports(1)]);
   const noteText = notes.map((n) => `### ${n.title} (${n.source || n.kind})\n${n.body.slice(0, 900)}`).join("\n\n").slice(0, 4500);
   // Morgenrapportens datagrunnlag har egne avsnitt for bookinger og kunnskap; de hentes ferskt over, så de kuttes her
   const snapText = snap ? snap.snapshot.replace(/\n## (Bookinger|Bakgrunn fra kunnskapsbanken)[\s\S]*?(?=\n## |$)/g, "") : "";
   const context = [
-    noteText ? `Fra kunnskapsbanken (bakgrunn lest tidligere, ikke dagens tall):\n${noteText}` : "",
+    soc[0] ? `Ukens samfunnssituasjon (uke ${soc[0].week}, skrevet lørdag):\n${soc[0].text.slice(0, 2500)}` : "",
+    noteText ? `\nFra kunnskapsbanken (bakgrunn lest tidligere, ikke dagens tall):\n${noteText}` : "",
     books.length ? `\nBookinger og anslått inntjening (grovt anslag fra kvartalsrapportene, resten av dagene antatt til samme rate):\n${books.join("\n")}` : "",
     snap ? `\nDatagrunnlag fra ${snap.day}:\n${snapText}` : "Ingen morgenrapport ennå.",
     "\nSiste kurser:\n" + quotes.map((q) => `- ${q.name} (${q.symbol}): ${q.price} (${q.change_pct === null ? "–" : q.change_pct.toFixed(2)} % i dag)`).join("\n"),
     repText ? `\nSiste kvartalsrapporter (lest av KI):\n${repText}` : "",
     "\nNyheter siste 3 dager:\n" + news.map((n) => `- ${n.title} (${n.source}): ${(n.s ?? "").trim()}`).join("\n"),
-  ].join("\n").slice(0, 17000);
+  ].join("\n").slice(0, 19000);
 
   const system =
     "Du er analytiker i en privat shippingterminal. Svar på norsk bokmål, kort og konkret, ut fra dataene du får. " +

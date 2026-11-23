@@ -147,6 +147,9 @@ WIKI_SEARCHES = [
     ("structured analytic techniques intelligence", 0), ("superforecasting Tetlock", 0), ("equity research analyst", 0),
 ]
 
+# Søkene som handler om situasjonen nå: artiklene de finner leses på nytt hver lørdag
+NOW_QUERIES = {q for q, _ in WIKI_SEARCHES[:20]}
+
 WIKI_ANALYSIS = [
     ("Financial analyst", 0), ("Securities research", 0), ("Fundamental analysis", 0), ("Valuation (finance)", 1), ("Discounted cash flow", 1),
     ("Sum-of-the-parts analysis", 1), ("Valuation using multiples", 1), ("Sensitivity analysis", 1), ("Scenario analysis", 0),
@@ -279,6 +282,18 @@ def seed(conn) -> int:
         # Offentlige sider som oppdateres (EIA, UNCTAD) leses på nytt hver måned
         cur.execute("""UPDATE kb_sources SET status = 'pending', tries = 0 WHERE status = 'done' AND kind = 'rapport'
                        AND done_at < now() - interval '30 days'""")
+        if ai.knowledge_day():
+            # Lørdag (Groq satt av): les situasjonen nå på nytt, og skriv om notater den lokale modellen laget
+            world = [u for u, *_ in WORLD_DOCS] + [u for u, *_ in WEB_PAGES]
+            cur.execute("""UPDATE kb_sources SET status = 'pending', tries = 0, priority = 0 WHERE status IN ('done', 'error', 'skip')
+                           AND done_at < now() - interval '5 days'
+                           AND (url = ANY(%s) OR url = ANY(%s) OR topic = 'nå' OR url LIKE 'intern:hendelser:%%')""",
+                        (world, [f"wikisearch:en:{q}" for q in NOW_QUERIES]))
+            print(f"  Lørdagsoppfrisking: {cur.rowcount} kilder om situasjonen nå leses på nytt")
+            cur.execute("""UPDATE kb_sources s SET status = 'pending', tries = 0, priority = greatest(s.priority, 3)
+                           FROM knowledge k WHERE k.url = s.url AND k.model LIKE 'lokal/%%' AND s.status = 'done'
+                           AND s.url NOT LIKE 'intern:mønster:%%'""")
+            print(f"  {cur.rowcount} notater fra den lokale modellen skrives på nytt med Groq når det er kvote igjen")
         cur.execute("SELECT count(*) FROM kb_sources WHERE status = 'pending'")
         n = cur.fetchone()[0]
     conn.commit()
@@ -417,14 +432,14 @@ def arxiv_text(query: str, n: int = 12) -> tuple[str, str]:
 # ---------------------------------------------------------------- KI-notater
 CHUNK_PROMPT = """Du leser del {i} av {n} av «{title}». Skriv 5–12 korte stikkpunkter på norsk bokmål med det viktigste for en
 privatinvestor som handler shippingaksjer på Oslo Børs (holder fra 1 dag til 1 måned): begreper og hva de betyr, årsakssammenhenger,
-og tall med enhet og årstall. Bruk BARE det som står i teksten. Ikke finn på tall eller fakta. Ingen kjøps- eller salgsråd.
+og tall med enhet og årstall. Bruk BARE det som står i teksten. Ikke finn på tall eller fakta. Ingen kjøps- eller salgsråd.{numhint}
 
 TEKST:
 {text}"""
 
 NOTE_PROMPT = """Lag et kunnskapsnotat på norsk bokmål om «{title}» for en privat shippingterminal. Leseren handler shippingaksjer
 på Oslo Børs og holder dem fra 1 dag til 1 måned. Bruk BARE det som står i materialet under. Ikke finn på tall, navn eller årstall.
-Ingen kjøps- eller salgsråd og ingen kursmål.
+Ingen kjøps- eller salgsråd og ingen kursmål.{numhint}
 
 Svar KUN med JSON:
 {{"title": "kort norsk tittel",
@@ -436,6 +451,18 @@ Svar KUN med JSON:
 
 MATERIALE:
 {text}"""
+
+
+LOCAL_NUMHINT = ("\nVIKTIG: Skriv sammenhenger og forklaringer med ord. Ta bare med et tall hvis det er helt sentralt, og kopier det "
+                 "da tegn for tegn fra teksten. Heller ingen tall enn et usikkert tall.")
+
+
+def local_next() -> bool:
+    """Kommer neste KI-kall til å gå til den lokale modellen? (Da bes den om å unngå tall.)"""
+    if not ai.knowledge_day() or not ai.key("groq"):
+        return True
+    models = ai._pick("groq", "knowledge")
+    return not models or all(("groq", m) in ai._exhausted for m in models)
 
 
 def chunks_of(text: str, max_chunks: int = MAX_CHUNKS) -> list[str]:
@@ -496,11 +523,14 @@ def write_note(title: str, text: str, kind: str, url: str, source_title: str, to
     else:
         notes = []
         for i, ch in enumerate(parts):
-            out, model = ai.chat(CHUNK_PROMPT.format(i=i + 1, n=len(parts), title=title, text=ch), PURPOSE, 700, temperature=0.1)
+            hint = LOCAL_NUMHINT if local_next() else ""
+            out, model = ai.chat(CHUNK_PROMPT.format(i=i + 1, n=len(parts), title=title, text=ch, numhint=hint), PURPOSE, 700,
+                                 temperature=0.1)
             notes.append(out)
         per = max(800, 14000 // len(notes))  # holder sluttsteget under Groqs grense per forespørsel
         material = "\n\n".join(n[:per] for n in notes)
-    raw, model = ai.chat(NOTE_PROMPT.format(title=title, text=material, topics=", ".join(TOPICS)), PURPOSE, 1600,
+    hint = LOCAL_NUMHINT if local_next() else ""
+    raw, model = ai.chat(NOTE_PROMPT.format(title=title, text=material, topics=", ".join(TOPICS), numhint=hint), PURPOSE, 1600,
                          json_mode=True, temperature=0.1)
     data = parse_json(raw)
     pool = numbers_in(text)
@@ -745,7 +775,8 @@ def synthesize() -> int:
             continue
         material = "\n\n".join(f"### {t}\n{b[:1400]}" for t, b, _ in notes)[:14000]
         try:
-            raw, model = ai.chat(SYN_PROMPT.format(title=title, text=material), PURPOSE, 1800, json_mode=True, temperature=0.2)
+            raw, model = ai.chat(SYN_PROMPT.format(title=title, text=material), PURPOSE, 1800, json_mode=True, temperature=0.2,
+                                 local_ok=False)
             data = parse_json(raw)
         except Exception as e:  # noqa: BLE001
             print(f"  ! sammenfatning {title}: {str(e)[:120]}")
@@ -809,13 +840,15 @@ def process(url: str, kind: str, title: str) -> dict | None:
     if url.startswith("wikisearch:"):
         _, lang, q = url.split(":", 2)
         titles = wiki_search(q)
+        now = q in NOW_QUERIES
         with db.connect() as c, c.cursor() as cur:
             cur.execute("SELECT priority FROM kb_sources WHERE url = %s", (url,))
             prio = (cur.fetchone() or [2])[0]
             for t in titles:
-                cur.execute("""INSERT INTO kb_sources (url, kind, title, priority) VALUES (%s, 'begrep', %s, %s)
-                               ON CONFLICT (url) DO UPDATE SET priority = least(kb_sources.priority, EXCLUDED.priority)""",
-                            (f"wiki:{lang}:{t}", t, prio))
+                cur.execute("""INSERT INTO kb_sources (url, kind, title, topic, priority) VALUES (%s, 'begrep', %s, %s, %s)
+                               ON CONFLICT (url) DO UPDATE SET priority = least(kb_sources.priority, EXCLUDED.priority),
+                                 topic = coalesce(EXCLUDED.topic, kb_sources.topic)""",
+                            (f"wiki:{lang}:{t}", t, "nå" if now else None, prio))
             cur.execute("UPDATE kb_sources SET status = 'done', done_at = now(), error = %s WHERE url = %s",
                         (("fant: " + "; ".join(titles))[:300], url))
             c.commit()
@@ -867,21 +900,32 @@ def run(conn, minutes: float = 30) -> int:
     print(f"  Kunnskapsbank: {pending} kilder i kø. Database {size / 1e6:.0f} MB av {LIMIT_MB:.0f} MB "
           f"(tak {CAP:.0%} = {CAP * LIMIT_MB:.0f} MB). Leser i {minutes:.0f} minutter med {ai.LOCAL_MODEL}.")
     done = failed = skipped = expanded = 0
-    synth_at = budget - min(1500, budget * 0.15)  # siste del av tiden: sammenfatninger
-    synthesized = False
+    # Sammenfatninger og ukens samfunnsrapport skrives bare med Groq (lørdager): når den beste modellen er tom for kvote,
+    # eller mot slutten av tiden. Den lokale modellen skriver dem ikke, fordi de er viktige og tallrike.
+    synth_at = budget - min(1500, budget * 0.15)
+    synthesized = not ai.knowledge_day()
     while time.time() - t0 < budget - 120:
-        if not synthesized and time.time() - t0 > synth_at and done >= 10:
+        best_empty = ("groq", "openai/gpt-oss-120b") in ai._exhausted
+        if not synthesized and done >= 5 and (best_empty or time.time() - t0 > synth_at):
             synthesized = True
-            print(f"  Skriver sammenfatninger ({len(SYNTHESES)} temaer) …")
-            done += synthesize()
+            print(f"  Skriver sammenfatninger ({len(SYNTHESES)} temaer) og ukens samfunnsrapport …")
+            try:
+                done += synthesize()
+                import society
+
+                done += society.run()
+            except Exception as e:  # noqa: BLE001
+                print(f"  ! Sammenfatninger/samfunnsrapport: {str(e)[:200]}")
             continue
         with db.connect() as c:
             if not room(c):
                 print(f"  Stopper: databasen er nær {CAP:.0%} av grensen ({db_bytes(c) / 1e6:.0f} MB).")
                 break
             with c.cursor() as cur:
-                cur.execute("""SELECT url, kind, title FROM kb_sources WHERE status = 'pending' AND tries < 2
-                               ORDER BY priority, added LIMIT 1""")
+                # Den lokale modellen leser bare nye kilder (og egne data). Notater som finnes, skrives bare om med Groq.
+                cur.execute("""SELECT url, kind, title FROM kb_sources s WHERE status = 'pending' AND tries < 2
+                               AND (%s = false OR url LIKE 'intern:%%' OR NOT EXISTS (SELECT 1 FROM knowledge k WHERE k.url = s.url))
+                               ORDER BY priority, added LIMIT 1""", (local_next(),))
                 row = cur.fetchone()
             if not row and expanded < 1:
                 expanded += 1

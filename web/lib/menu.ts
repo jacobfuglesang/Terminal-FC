@@ -1,3 +1,4 @@
+import { THEMES } from "@/lib/themes";
 import { COMPANIES as UNIVERSE } from "@/lib/universe";
 
 export type MenuItem = { href: string; label: string; icon: string; phase?: number; sub: string };
@@ -18,6 +19,12 @@ export const MARKET: MenuItem[] = [
   { href: "/kalender", label: "Kalender", sub: "Rapporter, utbytte og faste datautgivelser", icon: "M4 6h16v14H4zM4 10h16M8 3v4M16 3v4" },
 ];
 
+// Samfunnssituasjon: det lesejobben finner ut om verden, økonomien og analyse, pluss ukens rapport
+export const SOCIETY: MenuItem[] = [
+  { href: "/samfunn", label: "Oversikt", sub: "Ukens samfunnsrapport, indikatorer og nyheter om verden", icon: "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z" },
+  ...THEMES.map((t) => ({ href: `/samfunn/${t.id}`, label: t.label, sub: t.sub, icon: t.icon })),
+];
+
 export const TOOLS: MenuItem[] = [
   { href: "/portefolje", label: "Portefølje", sub: "Dine posisjoner, gevinst/tap, eksponering og stresstest", icon: "M4 7h16v12H4zM9 7V5h6v2M4 12h16" },
   { href: "/rapporter", label: "Kvartalsrapporter", sub: "Rapportene lest av KI: booking, dagrater, dødpunkt og utsikter", icon: "M7 3h8l4 4v14H7zM15 3v4h4M10 12h6M10 16h6M10 8h2" },
@@ -33,7 +40,9 @@ export const TOOLS: MenuItem[] = [
 export const COMPANY_ICON = "M3 17h18l-2 4H5zM6 17V9h12v8M9 9V5h6v4";
 
 export function findPage(pathname: string): { label: string; sub: string } {
-  const all = [...MARKET, ...TOOLS];
+  const all = [...MARKET, ...SOCIETY, ...TOOLS];
+  const soc = SOCIETY.find((m) => m.href === pathname);
+  if (soc) return { label: soc.href === "/samfunn" ? "Samfunnssituasjon" : `Samfunnssituasjon · ${soc.label}`, sub: soc.sub };
   const hit = all.find((m) => m.href === pathname);
   if (hit) return hit;
   if (pathname.startsWith("/nyheter/")) return { label: "Nyheter", sub: "Hele saken" };

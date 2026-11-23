@@ -1,7 +1,9 @@
 name: Kunnskapsbank
 
 # Den lokale KI-modellen leser om shipping, fraktmarkeder, råvarer og aksjemarkedet og lagrer korte notater.
-# Kjøres for hånd (Actions > Kunnskapsbank > Run workflow) og én time hver søndag natt.
+# Hver lørdag kl. 06:05 norsk tid leser den i 5,5 timer med Groq (hele lørdagens kvote er satt av) og den lokale modellen,
+# frisker opp det som handler om situasjonen nå, og skriver sammenfatninger og ukens samfunnsrapport.
+# Kan også startes for hånd (Actions > Kunnskapsbank > Run workflow) eller ved å endre .github/kunnskap-start.txt.
 # Stopper av seg selv hvis databasen nærmer seg 80 % av gratisgrensen.
 on:
   workflow_dispatch:
@@ -11,7 +13,7 @@ on:
         type: string
         default: "300"
   schedule:
-    - cron: "17 1 * * 0"     # hver søndag natt, 60 minutter med den lokale modellen
+    - cron: "5 5 * * 6"      # hver lørdag 06:05 norsk vintertid (07:05 sommertid)
     - cron: "5 5 24 11 *"    # 24.11.2026 kl. 06:05 norsk tid: stor lesing med Groq (hele dagens kvote) og lokal modell
   push:
     branches: [main]
@@ -55,7 +57,7 @@ jobs:
         run: |
           M="$IN"
           if [ "${{ github.event_name }}" = "schedule" ]; then
-            M=60
+            M=330
             if [ "${{ github.event.schedule }}" = "5 5 24 11 *" ]; then
               if [ "$(date -u +%F)" = "2026-11-24" ]; then M=330; else M=0; fi
             fi

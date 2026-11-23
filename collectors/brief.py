@@ -11,6 +11,7 @@ import requests
 
 import ai
 import earnings
+import numcheck
 import knowledge
 from universe import COMPANIES, MARKET
 
@@ -152,6 +153,16 @@ def snapshot(conn) -> str:
             conn.rollback()
             print(f"  ! Bookingtabellen: {e}")
 
+        # Ukens samfunnssituasjon (skrevet lørdag): bare «Kort fortalt»
+        import society
+
+        sr = society.latest(conn)
+        if sr:
+            m = re.search(r"## Kort fortalt\s*(.*?)(?=\n## |\Z)", sr[1], re.S)
+            short = (m.group(1) if m else sr[1])[:900].strip()
+            out.append(f"\n## Samfunnssituasjonen (ukens rapport, uke {int(sr[0].split('-')[1])})")
+            out.append(short)
+
         cur.execute("SELECT title FROM alerts WHERE created_at > now() - interval '2 days' ORDER BY created_at DESC LIMIT 12")
         al = [r[0] for r in cur.fetchall()]
         if al:
@@ -182,15 +193,49 @@ PROMPT = (
     "Gi ingen kjøps- eller salgsråd, ingen kursmål og ikke gjengi analytikeres anbefalinger. "
     "Bruk disse overskriftene (markdown ##): «Kort fortalt» (tre punkter), «Tank», «Tørrbulk», «Container, bil og gass», "
     "«Geopolitikk og trafikk», «Følg med på» (kommende rapporter og datapunkter). Har KI lest nye kvartalsrapporter, "
-    "nevn det viktigste fra dem (booking for neste kvartal og dødpunkt) under riktig segment. Bruk bookingtabellen til å si "
+    "nevn det viktigste fra dem (booking for neste kvartal og dødpunkt) under riktig segment. Bruk samfunnssituasjonen som bakgrunn under «Geopolitikk og trafikk». Bruk bookingtabellen til å si "
     "kort hva bookingene betyr for inntjeningen dette kvartalet, og si at det er grove anslag. Bruk kunnskapsbanken bare som "
     "bakgrunn for å forklare sammenhenger; dagens tall skal komme fra dataene. Maks 450 ord. "
     "Oppgi tall med enhet og retning. Si det kort hvis data mangler for et område. Skriv enkelt og konkret.\n\nDATA:\n"
 )
 
 
+LOCAL_PROMPT = (
+    "Du er analytiker for en privat shippingterminal. Skriv en kort morgenrapport på norsk bokmål for en privatinvestor som holder "
+    "shippingaksjer på Oslo Børs i uker til måneder. VIKTIG: Tallene vises allerede i en egen tabell over teksten din. Skriv derfor "
+    "INGEN tall selv (ingen prosenter, priser, rater eller datoer). Beskriv retning og betydning med ord, for eksempel «steg kraftig», "
+    "«falt litt», «uendret», «høyere enn i fjor». Bruk bare det som står i dataene, og ikke finn på noe. Ingen kjøps- eller salgsråd. "
+    "Bruk overskriftene (markdown ##): «Kort fortalt» (tre punkter), «Tank», «Tørrbulk», «Container, bil og gass», "
+    "«Geopolitikk og trafikk», «Følg med på». Maks 300 ord.\n\nDATA:\n"
+)
+
+NUMBER_SECTIONS = ("Frakt", "Råvarer og valuta", "Bookinger og anslått inntjening")
+
+
+def sections(snap: str, names: tuple[str, ...]) -> str:
+    """Henter hele avsnitt fra datagrunnlaget, ord for ord (ingen KI), så tallene alltid er riktige."""
+    out = []
+    for block in re.split(r"\n(?=## )", snap):
+        head = block.split("\n", 1)[0]
+        if any(head.startswith(f"## {n}") for n in names):
+            out.append(block.strip())
+    return "\n\n".join(out)
+
+
 def write(snap: str, local_ok: bool = True) -> tuple[str, str]:
-    return ai.chat(PROMPT + snap[:16500], "quality", 2500, temperature=0.3, local_ok=local_ok)
+    """Skymodell først. Den lokale modellen skriver uten tall; tallene settes inn fra dataene, og tall den likevel
+    skriver som ikke står i dataene, fjernes."""
+    try:
+        return ai.chat(PROMPT + snap[:16500], "quality", 2500, temperature=0.3, local_ok=False)
+    except ai.RateLimited:
+        if not local_ok or not ai.local_ready():
+            raise
+    text, model = ai.chat(LOCAL_PROMPT + snap[:16500], "local", 1200, temperature=0.2)
+    text, removed = numcheck.scrub(text, snap)
+    numbers = sections(snap, NUMBER_SECTIONS).replace("## ", "### ")
+    head = ("## Tallene i dag\nHentet direkte fra dataene. Teksten under er skrevet av den lokale KI-modellen uten egne tall"
+            + (f"; {removed} setninger med tall som ikke stod i dataene ble fjernet" if removed else "") + ".\n\n")
+    return head + numbers + "\n\n" + text, model
 
 
 def run(conn) -> int:

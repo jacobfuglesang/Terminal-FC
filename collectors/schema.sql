@@ -226,3 +226,7 @@ CREATE TABLE IF NOT EXISTS knowledge (id SERIAL PRIMARY KEY, url TEXT NOT NULL, 
   tsv tsvector GENERATED ALWAYS AS (to_tsvector('norwegian'::regconfig, coalesce(title, '') || ' ' || coalesce(topic, '') || ' ' || body)) STORED);
 CREATE INDEX IF NOT EXISTS knowledge_tsv_idx ON knowledge USING gin (tsv);
 CREATE INDEX IF NOT EXISTS knowledge_url_idx ON knowledge (url);
+
+-- Ukens samfunnssituasjon (skrives lørdager av KI ut fra kunnskapsbanken, nyheter og markedsdata)
+CREATE TABLE IF NOT EXISTS society_reports (week TEXT PRIMARY KEY, text TEXT NOT NULL, model TEXT, sources JSONB, removed INT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now());

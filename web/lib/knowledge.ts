@@ -55,3 +55,24 @@ export async function knowledgeStats() {
     return null;
   }
 }
+
+/** Nyeste notater innen gitte temaer (og eventuelt typer). */
+export async function notesByTopic(topics: string[], limit = 20, kinds?: string[]): Promise<Note[]> {
+  try {
+    const rows = await sql()`SELECT * FROM knowledge WHERE (topic = ANY(${topics}) OR kind = ANY(${kinds ?? []}))
+      ORDER BY created_at DESC LIMIT ${limit}`;
+    return (rows as Row[]).map(toNote);
+  } catch {
+    return [];
+  }
+}
+
+export async function noteByUrl(url: string): Promise<Note | null> {
+  try {
+    const rows = await sql()`SELECT * FROM knowledge WHERE url = ${url} ORDER BY created_at DESC LIMIT 1`;
+    const r = (rows as Row[])[0];
+    return r ? toNote(r) : null;
+  } catch {
+    return null;
+  }
+}

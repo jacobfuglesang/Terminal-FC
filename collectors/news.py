@@ -280,18 +280,23 @@ def ai_summary(item: dict) -> str | None:
     prompt = (
         "Oppsummer nyhetssaken under på norsk bokmål i én eller to korte setninger (maks 40 ord). "
         "Få med det viktigste: hva som skjedde, hvem det gjelder og eventuelle sentrale tall. "
-        "Bruk bare informasjon som står i teksten, ikke finn på noe. "
+        "Bruk bare informasjon som står i teksten, ikke finn på noe. Ta bare med tall som står i teksten, og skriv dem nøyaktig likt. "
         "Ikke nevn analytikeres anbefalinger, kursmål eller kjøps- og salgsråd. "
         "Svar bare med sammendraget, uten innledning.\n\n"
         f"Tittel: {item['title']}\nKilde: {item.get('source') or ''}\nTekst: {text[:2500] or '(bare tittel)'}"
     )
     try:
         # Den lokale modellen er treg: maks 8 sammendrag fra den per kjøring, så markedskjøringene ikke drar ut
-        out, _ = ai.chat(prompt, "small", 900, local_ok=ai.used.get("lokal", 0) < 8)
+        out, model = ai.chat(prompt, "small", 900, local_ok=ai.used.get("lokal", 0) < 8)
     except Exception as e:  # noqa: BLE001
         print(f"  ! KI-sammendrag: {e}")
         return None
     out = BLOCK.sub("", _clean_ai(out)).strip()
+    if model.startswith("lokal/"):
+        # Den lokale modellen kan finne på tall: fjern setninger med tall som ikke står i saken
+        import numcheck
+
+        out, _ = numcheck.scrub(out, f"{item['title']} {text}")
     return out[:400] or None
 
 

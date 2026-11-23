@@ -76,9 +76,11 @@ ROUTE = {
     "knowledge": ["groq", "lokal"],
 }
 
-# Dager (norsk dato) der Groq-kvoten er satt av til kunnskapsbanken. Andre jobber bruker da den lokale modellen
-# eller venter (Big J godkjente dette for 24.11.2026).
+# Dager der Groq-kvoten er satt av til kunnskapsbanken: hver lørdag (norsk tid) og 24.11.2026.
+# Andre jobber bruker da den lokale modellen eller venter. Big J har godkjent at morgenrapporten disse dagene
+# skrives av den lokale modellen.
 GROQ_KNOWLEDGE_DAYS = {"2026-11-24"}
+GROQ_KNOWLEDGE_WEEKDAYS = {5}  # 5 = lørdag
 
 
 def _today_oslo() -> str:
@@ -87,8 +89,14 @@ def _today_oslo() -> str:
     return datetime.now(ZoneInfo("Europe/Oslo")).date().isoformat()
 
 
+def knowledge_day() -> bool:
+    from datetime import date
+    today = _today_oslo()
+    return today in GROQ_KNOWLEDGE_DAYS or date.fromisoformat(today).weekday() in GROQ_KNOWLEDGE_WEEKDAYS
+
+
 def groq_reserved(purpose: str) -> bool:
-    return purpose != "knowledge" and _today_oslo() in GROQ_KNOWLEDGE_DAYS
+    return purpose != "knowledge" and knowledge_day()
 
 
 def local_ready(wait_s: float = 0) -> bool:
@@ -207,7 +215,7 @@ def chat(prompt: str, purpose: str = "quality", max_out: int = 1500, json_mode: 
             tried += 1
             limited += 1
             continue
-        if provider == "groq" and purpose == "knowledge" and _today_oslo() not in GROQ_KNOWLEDGE_DAYS:
+        if provider == "groq" and purpose == "knowledge" and not knowledge_day():
             continue  # vanlige dager leser kunnskapsbanken bare med den lokale modellen, så Groq spares til rapportene
         cfg = PROVIDERS[provider]
         if len(prompt) > cfg["max_chars"]:

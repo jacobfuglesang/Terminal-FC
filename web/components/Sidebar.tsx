@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { COMPANIES, COMPANY_ICON, MARKET, TOOLS } from "@/lib/menu";
+import { COMPANIES, COMPANY_ICON, MARKET, SOCIETY, TOOLS } from "@/lib/menu";
 import { SEGMENTS } from "@/lib/universe";
 
 type Change = Record<string, number | null>;
@@ -41,6 +41,15 @@ export default function Sidebar({ changes }: { changes: Change }) {
               <Icon d={m.icon} />
               {m.label}
               {m.phase ? <span className="badge" style={{ color: "#8A919C" }}>fase {m.phase}</span> : null}
+            </Link>
+          ))}
+        </div>
+        <div className="navgroup">
+          <div className="navtitle">Samfunnssituasjon</div>
+          {SOCIETY.map((m) => (
+            <Link key={m.href} href={m.href} className={`navlink${path === m.href ? " on" : ""}`} aria-current={path === m.href ? "page" : undefined}>
+              <Icon d={m.icon} />
+              {m.label}
             </Link>
           ))}
         </div>
