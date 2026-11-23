@@ -188,17 +188,22 @@ PROMPT = (
 )
 
 
-def write(snap: str) -> tuple[str, str]:
-    return ai.chat(PROMPT + snap[:16500], "quality", 2500, temperature=0.3)
+def write(snap: str, local_ok: bool = True) -> tuple[str, str]:
+    return ai.chat(PROMPT + snap[:16500], "quality", 2500, temperature=0.3, local_ok=local_ok)
 
 
 def run(conn) -> int:
+    # Finnes det allerede en rapport i dag fra en skymodell, skal den ikke byttes ut med en svakere fra den lokale modellen
+    with conn.cursor() as cur:
+        cur.execute("SELECT model FROM briefs WHERE day = CURRENT_DATE AND text <> ''")
+        r = cur.fetchone()
+    local_ok = not (r and r[0] and not str(r[0]).startswith("lokal/"))
     snap = snapshot(conn)
     with conn.cursor() as cur:
         cur.execute("""INSERT INTO briefs (day, text, model, snapshot) VALUES (CURRENT_DATE, '', '', %s)
                        ON CONFLICT (day) DO UPDATE SET snapshot = EXCLUDED.snapshot""", (snap,))
     conn.commit()
-    text, model = write(snap)
+    text, model = write(snap, local_ok)
     with conn.cursor() as cur:
         cur.execute("UPDATE briefs SET text = %s, model = %s, created_at = now() WHERE day = CURRENT_DATE", (text, model))
     conn.commit()
