@@ -3,7 +3,10 @@ import { CAP, knowledgeStats, searchKnowledge } from "@/lib/knowledge";
 
 export const dynamic = "force-dynamic";
 
-const KINDS: Record<string, string> = { selskap: "Selskaper", mønster: "Kursmønstre", hendelser: "Siste 30 dager", begrep: "Begreper og bakgrunn", rapport: "Offentlige rapporter" };
+const KINDS: Record<string, string> = {
+  syntese: "Sammenfatninger", selskap: "Selskaper", mønster: "Kursmønstre", hendelser: "Siste 30 dager", rapport: "Rapporter (IMF, IEA, SEC …)",
+  begrep: "Begreper, verden og metode", forskning: "Forskning",
+};
 const mb = (b: number) => `${(b / 1024 / 1024).toLocaleString("nb-NO", { maximumFractionDigits: 1 })} MB`;
 
 export default async function Kunnskap({ searchParams }: { searchParams: Promise<{ q?: string; type?: string }> }) {
@@ -24,7 +27,7 @@ export default async function Kunnskap({ searchParams }: { searchParams: Promise
           <span className="src">{total} notater{stats?.last ? ` · sist skrevet ${stats.last.slice(0, 16).replace("T", " ")} UTC` : ""}</span>
         </div>
         <p className="note" style={{ marginTop: 0 }}>
-          En lokal KI-modell (Qwen3 4B) leser om shipping, fraktmarkeder, råvarer og aksjemarkedet og skriver korte notater med kilde.
+          KI leser om shipping og shippingtrading, verdensøkonomien og geopolitikken, råvarer, aksjemarkedet og hvordan proffe analytikere jobber, og skriver korte notater med kilde. Kildene er blant annet IMF, IEA, WTO, Verdensbanken, UNCTAD, årsrapporter hos SEC, forskning (arXiv) og Wikipedia.
           Hvert notat sjekkes mot kilden, og punkter med tall som ikke står der fjernes. Kursmønstrene er regnet ut fra kursdataene, ikke skrevet av KI.
           Morgenrapporten og analytikeren søker her for å forklare sammenhenger.
         </p>

@@ -11,7 +11,8 @@ on:
         type: string
         default: "300"
   schedule:
-    - cron: "17 1 * * 0"
+    - cron: "17 1 * * 0"     # hver søndag natt, 60 minutter med den lokale modellen
+    - cron: "5 5 24 11 *"    # 24.11.2026 kl. 06:05 norsk tid: stor lesing med Groq (hele dagens kvote) og lokal modell
   push:
     branches: [main]
     paths: [".github/kunnskap-start.txt"]   # endre denne filen for å starte en lang lesing
@@ -53,13 +54,19 @@ jobs:
           IN: ${{ inputs.minutes }}
         run: |
           M="$IN"
-          if [ "${{ github.event_name }}" = "schedule" ]; then M=60; fi
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            M=60
+            if [ "${{ github.event.schedule }}" = "5 5 24 11 *" ]; then
+              if [ "$(date -u +%F)" = "2026-11-24" ]; then M=330; else M=0; fi
+            fi
+          fi
           if [ "${{ github.event_name }}" = "push" ]; then M=$(grep -Eo '^[0-9]{1,3}' .github/kunnskap-start.txt | head -1); fi
           if ! echo "$M" | grep -Eq '^[0-9]{1,3}$'; then M=60; fi
           if [ "$M" -gt 330 ]; then M=330; fi
           echo "minutes=$M" >> "$GITHUB_OUTPUT"
 
       - name: Les i ${{ steps.t.outputs.minutes }} minutter
+        if: steps.t.outputs.minutes != '0'
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           KNOWLEDGE_MINUTES: ${{ steps.t.outputs.minutes }}

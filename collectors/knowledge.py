@@ -33,8 +33,12 @@ UA = {"User-Agent": "TerminalFC/1.0 (privat kunnskapsbank; https://github.com/ja
 WIKI = "https://{lang}.wikipedia.org/w/api.php"
 CHUNK = 6500
 MAX_CHUNKS = 2
-TOPICS = ["shippingbegrep", "skipstyper", "fraktmarked", "råvarer", "geopolitikk", "regulering og miljø", "selskap",
-          "aksjemarked", "trading og risiko", "makro", "historie", "mønster", "hendelser"]
+# Groq først (bedre og raskere, når kvoten er satt av), ellers den lokale modellen
+PURPOSE = "knowledge"
+SEC_UA = {"User-Agent": "TerminalFC private research terminalfc-bot@users.noreply.github.com"}
+TOPICS = ["shippingbegrep", "skipstyper", "fraktmarked", "shippingtrading", "råvarer", "geopolitikk", "verdensøkonomi",
+          "regulering og miljø", "selskap", "aksjemarked", "analysemetode", "trading og risiko", "makro", "historie", "mønster",
+          "hendelser", "syntese"]
 
 # ---------------------------------------------------------------- kilder
 # (tittel, prioritet). Lavere tall leses først.
@@ -110,6 +114,74 @@ WEB_PAGES = [
     ("https://www.pancanal.com/en/maritime-services/", "Panama Canal: maritime services", 4),
 ]
 
+# ---- Utvidet lesing (prioritet 0–2 leses først): verden og makro, shippingtrading og hvordan proffe analytikere jobber.
+# Offentlige rapporter fra IMF, IEA, WTO, Verdensbanken og UNCTAD (åpne for alle). PDF-er leses jevnt fordelt gjennom dokumentet.
+WORLD_DOCS = [
+    ("https://www.imf.org/-/media/files/publications/weo/2026/october/english/execsum.pdf", "IMF World Economic Outlook okt. 2026: sammendrag", 0, 3),
+    ("https://www.imf.org/-/media/files/publications/weo/2026/october/english/ch1.pdf", "IMF World Economic Outlook okt. 2026: kapittel 1", 0, 8),
+    ("https://iea.org/reports/oil-market-report-november-2026", "IEA Oil Market Report november 2026", 0, 3),
+    ("https://www.wto.org/english/news_e/news26_e/stat_08oct26_510_e.htm", "WTO handelsprognose oktober 2026", 0, 3),
+    ("https://www.wto.org/english/res_e/publications_e/global-trade-outlook-and-statistics_execsum_e.htm", "WTO Global Trade Outlook: sammendrag", 0, 3),
+    ("https://www.worldbank.org/en/news/press-release/2026/10/28/commodity-markets-outlook-october-2026-press-release", "Verdensbanken Commodity Markets Outlook okt. 2026", 0, 3),
+    ("https://www.worldbank.org/en/research/commodity-markets", "Verdensbanken: råvaremarkedene", 1, 2),
+    ("https://unctad.org/system/files/official-document/rmt2025overview_en.pdf", "UNCTAD Review of Maritime Transport 2025: oversikt", 0, 6),
+    ("https://unctad.org/system/files/official-document/rmt2025ch1_en.pdf", "UNCTAD RMT 2025 kap. 1: verdens sjøhandel", 1, 6),
+    ("https://unctad.org/system/files/official-document/rmt2025ch2_en.pdf", "UNCTAD RMT 2025 kap. 2: verdensflåten og fraktmarkedene", 1, 6),
+    ("https://www.cia.gov/resources/csi/static/Pyschology-of-Intelligence-Analysis.pdf", "Heuer: Psychology of Intelligence Analysis (CIA, offentlig)", 1, 10),
+]
+
+# Wikipedia-søk: finner de mest relevante artiklene om det som skjer nå (2026) og om trading og analyse
+WIKI_SEARCHES = [
+    # Verden nå
+    ("2026 Iran war", 0), ("Strait of Hormuz 2026 shipping", 0), ("2026 oil price shock", 0), ("Middle East war 2026 shipping attacks", 0),
+    ("Red Sea shipping crisis Houthi", 0), ("Russia sanctions shadow fleet tankers", 0), ("2026 tariffs trade war United States China", 0),
+    ("Economy of China 2026", 0), ("Venezuela oil sanctions", 1), ("Black Sea shipping grain 2026", 1), ("El Niño 2026", 1),
+    ("OPEC+ production cuts 2026", 0), ("Global economy 2026 recession risk", 0), ("Taiwan Strait shipping risk", 1),
+    ("Arctic shipping Northern Sea Route", 2), ("Energy crisis 2026 Europe LNG", 1), ("India Russia oil imports", 1),
+    ("Geopolitics of oil", 1), ("Deglobalization", 1), ("Friendshoring nearshoring supply chains", 2),
+    # Shippingtrading
+    ("freight derivatives trading", 0), ("tanker freight rates market", 0), ("dry bulk shipping market", 0), ("shipping cycle boom bust", 0),
+    ("tonne-mile demand shipping", 0), ("ship valuation second hand", 1), ("time charter equivalent", 1), ("Baltic Exchange indices", 1),
+    ("commodity trading house", 1), ("oil trader physical", 1), ("floating storage contango tankers", 0),
+    # Analyse og metode
+    ("structured analytic techniques intelligence", 0), ("superforecasting Tetlock", 0), ("equity research analyst", 0),
+]
+
+WIKI_ANALYSIS = [
+    ("Financial analyst", 0), ("Securities research", 0), ("Fundamental analysis", 0), ("Valuation (finance)", 1), ("Discounted cash flow", 1),
+    ("Sum-of-the-parts analysis", 1), ("Valuation using multiples", 1), ("Sensitivity analysis", 1), ("Scenario analysis", 0),
+    ("Scenario planning", 1), ("Earnings call", 1), ("Earnings guidance", 1), ("Expected value", 1), ("Base rate fallacy", 0),
+    ("Confirmation bias", 0), ("Overconfidence effect", 0), ("Anchoring effect", 1), ("Hindsight bias", 1), ("Survivorship bias", 1),
+    ("Superforecaster", 0), ("Good Judgment Project", 1), ("Brier score", 1), ("Pre-mortem", 0), ("Red team", 1),
+    ("Analysis of competing hypotheses", 0), ("Intelligence analysis", 1), ("Global macro", 0), ("Event-driven investing", 1),
+    ("Pairs trade", 1), ("Statistical arbitrage", 2), ("Trend following", 1), ("Value at risk", 1), ("Sharpe ratio", 1),
+    ("Sortino ratio", 2), ("Backtesting", 1), ("Overfitting", 1), ("Data dredging", 2), ("Market sentiment", 1),
+    ("Commitments of Traders", 1), ("Open interest", 2), ("Implied volatility", 1), ("Put–call ratio", 2), ("Black swan theory", 1),
+    ("Tail risk", 1), ("Reflexivity (social theory)", 1), ("Margin of safety (financial)", 1), ("Catalyst (finance)", 2),
+    ("Geopolitical risk", 0), ("Supply and demand", 2), ("Price elasticity of demand", 2), ("Commodity trading advisor", 2),
+]
+
+# Industridelen i årsrapportene (20-F/10-K) til USA-noterte rederier. Den er skrevet av maritime konsulenter
+# (Drewry, Clarksons o.l.) og forklarer markedet grundig. Offentlig hos SEC EDGAR.
+SEC_TICKERS = [("FRO", 0), ("STNG", 0), ("SBLK", 0), ("DHT", 1), ("INSW", 1), ("TNK", 1), ("GNK", 1), ("HAFN", 1), ("BWLP", 1),
+               ("LPG", 1), ("DAC", 1), ("ZIM", 2), ("HSHP", 1), ("CMBT", 1), ("TRMD", 2), ("NAT", 2)]
+
+# Forskning (arXiv): sammendrag av artikler, ett notat per søk
+ARXIV_QUERIES = [("freight rate forecasting", 1), ("tanker market", 1), ("dry bulk shipping", 1), ("shipping stock returns", 1),
+                 ("oil price shocks stock returns", 1), ("geopolitical risk commodity prices", 1), ("commodity futures momentum", 2),
+                 ("time series momentum", 2), ("earnings announcement drift", 2), ("maritime trade network disruption", 2)]
+
+# Til slutt skriver KI-en sammenfatninger som binder notatene sammen (bygger bare på notatene)
+SYNTHESES = [
+    ("Slik jobber proffe analytikere: metode for terminalen", "analytiker metode hypoteser skjevhet scenario sannsynlighet verdsetting prognose"),
+    ("Verdensøkonomien og geopolitikken: hva driver fraktratene nå", "krig Iran Hormuz olje handel vekst sanksjoner tollsatser frakt etterspørsel"),
+    ("Sjekkliste: analyse av et tankrederi", "tank VLCC Suezmax LR2 rater booking dødpunkt utbytte flåte ordrebok"),
+    ("Sjekkliste: analyse av et tørrbulkrederi", "tørrbulk Capesize Newcastlemax jernmalm kull Kina BDI flåte"),
+    ("Shippingtrading: hvordan kursene reagerer på rater, rapporter og nyheter", "aksje kurs reagerer rapport rater futures momentum korrelasjon"),
+    ("Risikostyring når du holder aksjer fra 1 dag til 1 måned", "risiko posisjon stopp volatilitet fall størrelse diversifisering"),
+    ("Sykluser i shipping: tegn på topp og bunn", "syklus ordrebok nybygg opphugging rater verdier tilbud etterspørsel"),
+]
+
 SEG_WORDS = {
     "Tank": r"tanker|vlcc|suezmax|aframax|lr2|crude|råolje|product tanker|mr tanker|opec|oil",
     "Tørrbulk": r"bulk|capesize|panamax|kamsarmax|supramax|iron ore|jernmalm|coal|kull|grain|bdi|baltic dry",
@@ -144,7 +216,7 @@ def prune(conn) -> int:
     deleted = 0
     with conn.cursor() as cur:
         for _ in range(40):
-            cur.execute("""DELETE FROM knowledge WHERE id IN (SELECT id FROM knowledge WHERE kind NOT IN ('selskap', 'mønster')
+            cur.execute("""DELETE FROM knowledge WHERE id IN (SELECT id FROM knowledge WHERE kind NOT IN ('selskap', 'mønster', 'syntese')
                            ORDER BY created_at LIMIT 25)""")
             n = cur.rowcount
             conn.commit()
@@ -187,9 +259,19 @@ def seed(conn) -> int:
         rows.append((f"wiki:en:{title}", "begrep", title, None, prio))
     for url, title, prio in WEB_PAGES:
         rows.append((url, "rapport", title, None, prio))
+    for url, title, prio, _ in WORLD_DOCS:
+        rows.append((url, "rapport", title, "verdensøkonomi", prio))
+    for q, prio in WIKI_SEARCHES:
+        rows.append((f"wikisearch:en:{q}", "søk", q, None, prio))
+    for t, prio in WIKI_ANALYSIS:
+        rows.append((f"wiki:en:{t}", "begrep", t, "analysemetode", prio))
+    for t, prio in SEC_TICKERS:
+        rows.append((f"sec:{t}", "rapport", f"Årsrapport (SEC) {t}: markedet", "shippingtrading", prio))
+    for q, prio in ARXIV_QUERIES:
+        rows.append((f"arxiv:{q}", "forskning", f"Forskning: {q}", None, prio))
     with conn.cursor() as cur:
         cur.executemany("""INSERT INTO kb_sources (url, kind, title, topic, priority) VALUES (%s,%s,%s,%s,%s)
-                           ON CONFLICT (url) DO NOTHING""", rows)
+                           ON CONFLICT (url) DO UPDATE SET priority = least(kb_sources.priority, EXCLUDED.priority)""", rows)
         # Egne data endrer seg: selskapsprofiler leses på nytt hver måned, mønstre og hendelser hver uke
         cur.execute("""UPDATE kb_sources SET status = 'pending', tries = 0 WHERE status IN ('done', 'error')
                        AND ((url LIKE 'intern:selskap:%%' AND done_at < now() - interval '30 days')
@@ -243,9 +325,93 @@ def wiki_text(title: str, lang: str = "en") -> tuple[str, str]:
 def web_text(url: str) -> str:
     import trafilatura
 
-    r = requests.get(url, headers=UA, timeout=40)
+    r = requests.get(url, headers={**UA, "Accept": "text/html,application/pdf;q=0.9,*/*;q=0.8"}, timeout=90)
     r.raise_for_status()
+    if r.content[:4] == b"%PDF" or url.lower().endswith(".pdf"):
+        return pdf_text(r.content)
     return (trafilatura.extract(r.text, include_tables=True) or "").strip()
+
+
+def pdf_text(data: bytes, max_pages: int = 220, max_chars: int = 400_000) -> str:
+    import io
+
+    from pypdf import PdfReader
+
+    if len(data) > 40_000_000:
+        raise ValueError("PDF-en er for stor")
+    reader = PdfReader(io.BytesIO(data))
+    out, n = [], 0
+    for page in reader.pages[:max_pages]:
+        t = page.extract_text() or ""
+        t = re.sub(r"[ \t]+", " ", t)
+        out.append(t)
+        n += len(t)
+        if n > max_chars:
+            break
+    # Linjer blir til avsnitt, så tekstbitene får naturlige skiller
+    return re.sub(r"\n{3,}", "\n\n", "\n\n".join(out)).strip()
+
+
+def wiki_search(query: str, n: int = 3) -> list[str]:
+    r = requests.get(WIKI.format(lang="en"), headers=UA, timeout=30, params={
+        "action": "query", "list": "search", "srsearch": query, "srlimit": n, "srnamespace": 0, "format": "json"})
+    r.raise_for_status()
+    return [h["title"] for h in r.json().get("query", {}).get("search", []) if "(disambiguation)" not in h["title"]]
+
+
+_sec_tickers: dict[str, int] = {}
+
+
+def sec_industry(ticker: str) -> tuple[str, str, str]:
+    """Industridelen av siste årsrapport (20-F eller 10-K). Returnerer (tekst, lenke, rapporttype og dato)."""
+    if not _sec_tickers:
+        r = requests.get("https://www.sec.gov/files/company_tickers.json", headers=SEC_UA, timeout=30)
+        r.raise_for_status()
+        _sec_tickers.update({v["ticker"].upper(): int(v["cik_str"]) for v in r.json().values()})
+    cik = _sec_tickers.get(ticker.upper())
+    if not cik:
+        raise ValueError(f"404 fant ikke {ticker} hos SEC")
+    time.sleep(0.5)
+    sub_ = requests.get(f"https://data.sec.gov/submissions/CIK{cik:010d}.json", headers=SEC_UA, timeout=30).json()
+    rec = sub_.get("filings", {}).get("recent", {})
+    for form, acc, doc, day in zip(rec.get("form", []), rec.get("accessionNumber", []), rec.get("primaryDocument", []), rec.get("filingDate", [])):
+        if form in ("20-F", "10-K"):
+            break
+    else:
+        raise ValueError(f"404 ingen årsrapport for {ticker}")
+    url = f"https://www.sec.gov/Archives/edgar/data/{cik}/{acc.replace('-', '')}/{doc}"
+    time.sleep(0.5)
+    r = requests.get(url, headers=SEC_UA, timeout=120)
+    r.raise_for_status()
+    from lxml import html as lh
+
+    tree = lh.fromstring(r.content)
+    for bad in tree.xpath("//script|//style"):
+        bad.drop_tree()
+    text = re.sub(r"[ \t\xa0]+", " ", tree.text_content())
+    text = re.sub(r"\n\s*\n+", "\n\n", text)
+    # Finn industrikapittelet: overskriften forekommer også i innholdsfortegnelsen, så velg den med mest markedstekst etter seg
+    heads = [m.start() for m in re.finditer(
+        r"(?i)(the international [a-z /-]{0,40}(?:industry|market)s?|industry overview|the [a-z /-]{0,30}shipping (?:industry|market)|"
+        r"the (?:crude )?tanker (?:industry|market)|the dry ?bulk (?:shipping )?(?:industry|market)|the (?:lpg|container) shipping)", text)]
+    def score(i: int) -> int:
+        w = text[i:i + 8000].lower()
+        return sum(w.count(k) for k in ("demand", "supply", "fleet", "rates", "tonne", "charter", "orderbook", "deliveries"))
+    if not heads:
+        raise ValueError("fant ikke industridelen i årsrapporten")
+    start = max(heads, key=score)
+    return text[start:start + 70_000], url, f"{form} {day}"
+
+
+def arxiv_text(query: str, n: int = 12) -> tuple[str, str]:
+    import feedparser
+
+    url = "https://export.arxiv.org/api/query"
+    r = requests.get(url, headers=UA, timeout=40, params={"search_query": f'all:"{query}"', "max_results": n, "sortBy": "relevance"})
+    r.raise_for_status()
+    feed = feedparser.parse(r.content)
+    parts = [f"Artikkel: {e.title} ({e.get('published', '')[:4]})\n{re.sub(r'\s+', ' ', e.summary)}" for e in feed.entries]
+    return "\n\n".join(parts), f"https://arxiv.org/a?query={requests.utils.quote(query)}"
 
 
 # ---------------------------------------------------------------- KI-notater
@@ -272,16 +438,24 @@ MATERIALE:
 {text}"""
 
 
-def chunks_of(text: str) -> list[str]:
+def chunks_of(text: str, max_chunks: int = MAX_CHUNKS) -> list[str]:
+    """Deler teksten i biter. Er den lengre enn max_chunks biter, velges biter jevnt fordelt gjennom hele teksten."""
     paras, out, cur = re.split(r"\n{2,}", text), [], ""
     for p in paras:
+        while len(p) > CHUNK * 2:  # PDF-er uten avsnitt
+            out.append(cur + p[:CHUNK]) if cur else out.append(p[:CHUNK])
+            cur, p = "", p[CHUNK:]
         if len(cur) + len(p) > CHUNK and cur:
             out.append(cur)
             cur = ""
         cur += p + "\n\n"
     if cur.strip():
         out.append(cur)
-    return [c[:CHUNK + 1500] for c in out][:MAX_CHUNKS]
+    out = [c[:CHUNK + 1500] for c in out]
+    if len(out) <= max_chunks:
+        return out
+    step = len(out) / max_chunks
+    return [out[int(i * step)] for i in range(max_chunks)]
 
 
 def parse_json(raw: str) -> dict:
@@ -312,8 +486,8 @@ def checked_points(points: list, pool: set[float]) -> tuple[list[str], int, int]
 
 
 def write_note(title: str, text: str, kind: str, url: str, source_title: str, topic: str | None = None,
-               symbols: list[str] | None = None) -> dict:
-    parts = chunks_of(text)
+               symbols: list[str] | None = None, max_chunks: int = MAX_CHUNKS) -> dict:
+    parts = chunks_of(text, max_chunks)
     if not parts:
         raise ValueError("ingen tekst")
     model = ""
@@ -322,10 +496,11 @@ def write_note(title: str, text: str, kind: str, url: str, source_title: str, to
     else:
         notes = []
         for i, ch in enumerate(parts):
-            out, model = ai.chat(CHUNK_PROMPT.format(i=i + 1, n=len(parts), title=title, text=ch), "local", 700, temperature=0.1)
+            out, model = ai.chat(CHUNK_PROMPT.format(i=i + 1, n=len(parts), title=title, text=ch), PURPOSE, 700, temperature=0.1)
             notes.append(out)
-        material = "\n\n".join(notes)
-    raw, model = ai.chat(NOTE_PROMPT.format(title=title, text=material, topics=", ".join(TOPICS)), "local", 1400,
+        per = max(800, 14000 // len(notes))  # holder sluttsteget under Groqs grense per forespørsel
+        material = "\n\n".join(n[:per] for n in notes)
+    raw, model = ai.chat(NOTE_PROMPT.format(title=title, text=material, topics=", ".join(TOPICS)), PURPOSE, 1600,
                          json_mode=True, temperature=0.1)
     data = parse_json(raw)
     pool = numbers_in(text)
@@ -546,6 +721,58 @@ def events_material(conn, seg: str) -> str:
     return "\n".join(out)
 
 
+SYN_PROMPT = """Du skriver et sammenfattende notat på norsk bokmål til en privat shippingterminal: «{title}».
+Leseren handler shippingaksjer på Oslo Børs og holder dem fra 1 dag til 1 måned. Bygg BARE på notatene under (de er lest fra kilder
+tidligere). Ikke finn på tall. Ingen kjøps- eller salgsråd og ingen kursmål. Gjør det praktisk: hva man ser etter, i hvilken rekkefølge,
+og hvilke feil man skal unngå.
+
+Svar KUN med JSON:
+{{"title": "{title}", "topic": "syntese", "summary": "2–3 setninger",
+ "points": ["8–14 konkrete punkter (fremgangsmåte, sammenhenger, sjekkpunkter)"],
+ "trading": ["2–5 punkter om hva dette betyr for kortsiktig handel i shippingaksjer"], "tags": []}}
+
+NOTATER:
+{text}"""
+
+
+def synthesize() -> int:
+    done = 0
+    for title, q in SYNTHESES:
+        with db.connect() as c:
+            notes = search(c, q, limit=10)
+        notes = [n for n in notes if not n[2].startswith("intern:syntese:")]
+        if len(notes) < 4:
+            continue
+        material = "\n\n".join(f"### {t}\n{b[:1400]}" for t, b, _ in notes)[:14000]
+        try:
+            raw, model = ai.chat(SYN_PROMPT.format(title=title, text=material), PURPOSE, 1800, json_mode=True, temperature=0.2)
+            data = parse_json(raw)
+        except Exception as e:  # noqa: BLE001
+            print(f"  ! sammenfatning {title}: {str(e)[:120]}")
+            continue
+        pool = numbers_in(material)
+        points, c1, d1 = checked_points(data.get("points") or [], pool)
+        trading, c2, d2 = checked_points(data.get("trading") or [], pool)
+        if not points:
+            continue
+        body = (data.get("summary") or "") + "\n\n" + "\n".join(f"- {p}" for p in points)
+        if trading:
+            body += "\n\nBetydning for shippingaksjer:\n" + "\n".join(f"- {p}" for p in trading)
+        body += "\n\nBygger på: " + "; ".join(t for t, _, _ in notes)
+        url = "intern:syntese:" + re.sub(r"[^a-zæøå0-9]+", "-", title.lower()).strip("-")
+        with db.connect() as c, c.cursor() as cur:
+            cur.execute("INSERT INTO kb_sources (url, kind, title, priority) VALUES (%s, 'syntese', %s, 9) ON CONFLICT (url) DO NOTHING",
+                        (url, title))
+            c.commit()
+        save_note({"url": url, "kind": "syntese", "topic": "syntese", "title": title, "body": body.strip(),
+                   "facts": {"points": points, "trading": trading, "based_on": [u for _, _, u in notes]}, "symbols": [],
+                   "source_title": "Sammenfatning av notater i kunnskapsbanken", "model": model, "checked": c1 + c2,
+                   "unverified": d1 + d2, "chars": len(material)})
+        done += 1
+        print(f"  ✓ Sammenfatning: {title} ({len(points)} punkter, {d1 + d2} fjernet)")
+    return done
+
+
 # ---------------------------------------------------------------- jobben
 def process(url: str, kind: str, title: str) -> dict | None:
     # Databasen brukes bare i korte tilkoblinger: KI-en kan bruke minutter, og Neon lukker tilkoblinger som står ubrukt.
@@ -579,6 +806,36 @@ def process(url: str, kind: str, title: str) -> dict | None:
         n = write_note(f"Hva har skjedd siste 30 dager: {seg}", text, "hendelser", url, "Nyheter og meglerrapporter i terminalen", "hendelser")
         n["title"] = f"Siste 30 dager: {seg} ({date.today():%d.%m.%Y})"
         return n
+    if url.startswith("wikisearch:"):
+        _, lang, q = url.split(":", 2)
+        titles = wiki_search(q)
+        with db.connect() as c, c.cursor() as cur:
+            cur.execute("SELECT priority FROM kb_sources WHERE url = %s", (url,))
+            prio = (cur.fetchone() or [2])[0]
+            for t in titles:
+                cur.execute("""INSERT INTO kb_sources (url, kind, title, priority) VALUES (%s, 'begrep', %s, %s)
+                               ON CONFLICT (url) DO UPDATE SET priority = least(kb_sources.priority, EXCLUDED.priority)""",
+                            (f"wiki:{lang}:{t}", t, prio))
+            cur.execute("UPDATE kb_sources SET status = 'done', done_at = now(), error = %s WHERE url = %s",
+                        (("fant: " + "; ".join(titles))[:300], url))
+            c.commit()
+        print(f"  · søk «{q}»: {', '.join(titles) or 'ingen treff'}")
+        return "expanded"
+    if url.startswith("sec:"):
+        t = url.split(":", 1)[1]
+        text, link, what = sec_industry(t)
+        n = write_note(f"Markedet ifølge årsrapporten til {t} ({what})", text, "rapport", url, f"SEC EDGAR {t} {what}",
+                       "shippingtrading", max_chunks=8)
+        n["facts"]["link"] = link
+        return n
+    if url.startswith("arxiv:"):
+        q = url.split(":", 1)[1]
+        text, link = arxiv_text(q)
+        if len(text) < 500:
+            return None
+        n = write_note(f"Forskning om {q}", text, "forskning", url, f"arXiv: {q}", "shippingtrading", max_chunks=2)
+        n["facts"]["link"] = link
+        return n
     if url.startswith("wiki:"):
         _, lang, t = url.split(":", 2)
         text, link = wiki_text(t, lang)
@@ -590,7 +847,8 @@ def process(url: str, kind: str, title: str) -> dict | None:
     text = web_text(url)
     if len(text) < 500:
         return None
-    n = write_note(title, text, kind, url, title)
+    mc = next((m for u, _, _, m in WORLD_DOCS if u == url), MAX_CHUNKS)
+    n = write_note(title, text, kind, url, title, max_chunks=mc)
     n["facts"]["link"] = url
     return n
 
@@ -609,7 +867,14 @@ def run(conn, minutes: float = 30) -> int:
     print(f"  Kunnskapsbank: {pending} kilder i kø. Database {size / 1e6:.0f} MB av {LIMIT_MB:.0f} MB "
           f"(tak {CAP:.0%} = {CAP * LIMIT_MB:.0f} MB). Leser i {minutes:.0f} minutter med {ai.LOCAL_MODEL}.")
     done = failed = skipped = expanded = 0
+    synth_at = budget - min(1500, budget * 0.15)  # siste del av tiden: sammenfatninger
+    synthesized = False
     while time.time() - t0 < budget - 120:
+        if not synthesized and time.time() - t0 > synth_at and done >= 10:
+            synthesized = True
+            print(f"  Skriver sammenfatninger ({len(SYNTHESES)} temaer) …")
+            done += synthesize()
+            continue
         with db.connect() as c:
             if not room(c):
                 print(f"  Stopper: databasen er nær {CAP:.0%} av grensen ({db_bytes(c) / 1e6:.0f} MB).")
@@ -629,6 +894,8 @@ def run(conn, minutes: float = 30) -> int:
         t1 = time.time()
         try:
             note = process(url, kind, title)
+            if note == "expanded":
+                continue
             if note is None:
                 mark(url, "skip", "for lite tekst")
                 skipped += 1

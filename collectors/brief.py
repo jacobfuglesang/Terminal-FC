@@ -164,7 +164,8 @@ def snapshot(conn) -> str:
         nw = cur.fetchall()
         # Kunnskapsbanken: bakgrunn som passer til dagens nyheter, pluss sektormønstrene
         bg = knowledge.search(conn, " ".join(t for t, _, _ in nw) + " tankrater tørrbulk fraktrater", limit=4)
-        pat = knowledge.get(conn, "intern:mønster:marked")
+        pat = knowledge.get(conn, "intern:mønster:marked") + knowledge.get(
+            conn, "intern:syntese:verdensøkonomien-og-geopolitikken-hva-driver-fraktratene-nå")
         if bg or pat:
             out.append("\n## Bakgrunn fra kunnskapsbanken (lest tidligere, ikke dagens tall)")
             for title, body, _ in pat + [b for b in bg if b not in pat]:

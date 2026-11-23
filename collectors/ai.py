@@ -40,6 +40,8 @@ PROVIDERS = {
             "quality": ["openai/gpt-oss-120b", "qwen/qwen3.8-27b", "openai/gpt-oss-20b"],
             "big": [],
             "small": ["openai/gpt-oss-20b", "qwen/qwen3.8-27b", "openai/gpt-oss-120b"],
+            # Kunnskapsbanken: beste modell først, så de andre (hver modell har egen dagskvote)
+            "knowledge": ["openai/gpt-oss-120b", "qwen/qwen3.8-27b", "llama-3.3-70b-versatile", "openai/gpt-oss-20b"],
         },
     },
     "mistral": {
@@ -71,7 +73,22 @@ ROUTE = {
     "big": ["mistral", "gemini"],
     "small": ["groq", "mistral", "gemini", "lokal"],
     "local": ["lokal"],
+    "knowledge": ["groq", "lokal"],
 }
+
+# Dager (norsk dato) der Groq-kvoten er satt av til kunnskapsbanken. Andre jobber bruker da den lokale modellen
+# eller venter (Big J godkjente dette for 24.11.2026).
+GROQ_KNOWLEDGE_DAYS = {"2026-11-24"}
+
+
+def _today_oslo() -> str:
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+    return datetime.now(ZoneInfo("Europe/Oslo")).date().isoformat()
+
+
+def groq_reserved(purpose: str) -> bool:
+    return purpose != "knowledge" and _today_oslo() in GROQ_KNOWLEDGE_DAYS
 
 
 def local_ready(wait_s: float = 0) -> bool:
@@ -186,6 +203,12 @@ def chat(prompt: str, purpose: str = "quality", max_out: int = 1500, json_mode: 
             continue
         if not key(provider):
             continue
+        if provider == "groq" and groq_reserved(purpose):
+            tried += 1
+            limited += 1
+            continue
+        if provider == "groq" and purpose == "knowledge" and _today_oslo() not in GROQ_KNOWLEDGE_DAYS:
+            continue  # vanlige dager leser kunnskapsbanken bare med den lokale modellen, så Groq spares til rapportene
         cfg = PROVIDERS[provider]
         if len(prompt) > cfg["max_chars"]:
             continue
