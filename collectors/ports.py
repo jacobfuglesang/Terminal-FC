@@ -18,7 +18,7 @@ KEY_PORTS = [
     ("Rotterdam", "Netherlands"), ("Houston", "United States"), ("Corpus Christi", "United States"), ("Qingdao", "China"),
     ("Ningbo", "China"), ("Shanghai", "China"), ("Port Hedland", "Australia"), ("Dampier", "Australia"), ("Newcastle", "Australia"),
     ("Tubarao", "Brazil"), ("Santos", "Brazil"), ("Richards Bay", "South Africa"), ("Los Angeles", "United States"),
-    ("Primorsk", "Russia"), ("Novorossiysk", "Russia"), ("Jamnagar", "India"),
+    ("Primorsk", "Russia"), ("Novorossiysk", "Russia"), ("Sikka", "India"), ("Ust-Luga", "Russia"), ("Antwerp", "Belgium"),
 ]
 
 
@@ -27,7 +27,8 @@ def lookup() -> dict[str, tuple[str, str]]:
     out = {}
     for name, country in KEY_PORTS:
         try:
-            r = requests.get(DB, params={"where": f"portname LIKE '%{name}%' AND country = '{country}'",
+            land = country.split()[0] if country != "United States" else "United States"
+            r = requests.get(DB, params={"where": f"portname LIKE '%{name}%' AND country LIKE '%{land}%'",
                                          "outFields": "portid,portname,vessel_count_total", "orderByFields": "vessel_count_total DESC",
                                          "resultRecordCount": 1, "returnGeometry": "false", "f": "json"}, headers=H, timeout=40)
             f = r.json().get("features", [])

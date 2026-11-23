@@ -87,11 +87,27 @@ def discover(conn) -> int:
 
 
 def article_text(url: str) -> str:
+    """Teksten i saken. Mange meglere legger rapporten som PDF; da leser vi PDF-en i stedet."""
     import trafilatura
 
     r = requests.get(url, headers=UA, timeout=40)
     r.raise_for_status()
-    return (trafilatura.extract(r.text, include_tables=True) or "").strip()
+    text = (trafilatura.extract(r.text, include_tables=True) or "").strip()
+    if len(text) >= 400:
+        return text
+    pdfs = [u for u in re.findall(r'href="(https?://[^"]+\.pdf)"', r.text, re.I) if "hellenicshippingnews.com/wp-content" in u]
+    if not pdfs:
+        return text
+    import io
+
+    from pypdf import PdfReader
+
+    time.sleep(CRAWL_DELAY)  # samme nettsted: vent før neste forespørsel
+    p = requests.get(pdfs[0], headers=UA, timeout=60)
+    if p.content[:4] != b"%PDF" or len(p.content) > 25_000_000:
+        return text
+    pages = [(pg.extract_text() or "") for pg in PdfReader(io.BytesIO(p.content)).pages[:12]]
+    return (text + "\n\n" + "\n".join(pages)).strip()
 
 
 def run(conn, backfill: bool = False, max_reports: int = 3, quick: bool = False) -> int:
