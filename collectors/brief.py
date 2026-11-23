@@ -203,7 +203,13 @@ def run(conn) -> int:
         cur.execute("""INSERT INTO briefs (day, text, model, snapshot) VALUES (CURRENT_DATE, '', '', %s)
                        ON CONFLICT (day) DO UPDATE SET snapshot = EXCLUDED.snapshot""", (snap,))
     conn.commit()
-    text, model = write(snap, local_ok)
+    try:
+        text, model = write(snap, local_ok)
+    except ai.RateLimited:
+        if not local_ok:
+            print("  Skymodellene er tomme for kvote. Beholder dagens rapport (bare datagrunnlaget er oppdatert).")
+            return 0
+        raise
     with conn.cursor() as cur:
         cur.execute("UPDATE briefs SET text = %s, model = %s, created_at = now() WHERE day = CURRENT_DATE", (text, model))
     conn.commit()
