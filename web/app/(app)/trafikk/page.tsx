@@ -1,6 +1,7 @@
-import AisMap from "@/components/AisMap";
+import Link from "next/link";
 import ChokeExplorer, { type ChokeSeries } from "@/components/ChokeExplorer";
-import { getAis, getAisZones, getChokepoints } from "@/lib/db";
+import GlobalAisMap from "@/components/GlobalAisMap";
+import { getChokepoints, getPanama, getPortActivity, getZoneStats } from "@/lib/db";
 import { fmt, osloTime, pct, up } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
@@ -20,7 +21,7 @@ const WHY: Record<string, string> = {
 };
 
 export default async function Trafikk() {
-  const [chokes, ships, zones] = await Promise.all([getChokepoints(800), getAis(), getAisZones()]);
+  const [chokes, zones, portDays, panama] = await Promise.all([getChokepoints(800), getZoneStats(), getPortActivity(420), getPanama(60)]);
   const by = new Map<string, ChokeSeries>();
   for (const c of chokes) {
     if (!by.has(c.portid)) by.set(c.portid, { id: c.portid, name: c.name, pts: [] });
@@ -40,8 +41,27 @@ export default async function Trafikk() {
     const tankShare = t7.length ? (t7.reduce((s, x) => s + x.tanker, 0) / Math.max(1, t7.reduce((s, x) => s + x.total, 0))) * 100 : null;
     return { ...s, lastDay, a7, a28, aly, tankShare };
   });
-  const latestZoneTs = zones.length ? zones[zones.length - 1].ts : null;
-  const zoneNow = latestZoneTs ? zones.filter((z) => z.ts === latestZoneTs) : [];
+  const latestZoneTs = zones[0]?.ts ?? null;
+
+  // Havner: snitt anløp og vareanslag siste 7 dager mot 4 uker før og samme tid i fjor
+  const ports = new Map<string, typeof portDays>();
+  for (const d of portDays) (ports.get(d.portid) ?? ports.set(d.portid, []).get(d.portid)!).push(d);
+  const mean = (a: number[]) => (a.length ? a.reduce((x, y) => x + y, 0) / a.length : null);
+  const portRows = [...ports.values()].map((p) => {
+    const last = p[p.length - 1]?.day;
+    const ly = last ? p.filter((x) => { const d = (new Date(last).getTime() - new Date(x.day).getTime()) / 864e5; return d >= 358 && d <= 372; }) : [];
+    const w = p.slice(-7), prev = p.slice(-35, -7);
+    return {
+      name: p[0].portname, country: p[0].country, last,
+      c7: mean(w.map((x) => x.calls)), c28: mean(prev.map((x) => x.calls)), cly: mean(ly.map((x) => x.calls)),
+      e7: mean(w.map((x) => x.exp)), e28: mean(prev.map((x) => x.exp)), i7: mean(w.map((x) => x.imp)), i28: mean(prev.map((x) => x.imp)),
+      tank: mean(w.map((x) => x.tanker)), bulk: mean(w.map((x) => x.bulk)),
+    };
+  }).sort((a, b) => (b.c7 ?? 0) - (a.c7 ?? 0));
+  const pan = panama[panama.length - 1];
+  const pan30 = panama.find((x) => (new Date(pan?.day ?? 0).getTime() - new Date(x.day).getTime()) / 864e5 >= 28);
+  const chg = (a: number | null, b: number | null) => (a !== null && b ? (a / b - 1) * 100 : null);
+  const cls = (c: number | null, lim = 15) => (c === null ? "m" : Math.abs(c) >= lim ? (up(c) ? "m upc" : "m downc") : "m");
 
   return (
     <>
@@ -82,27 +102,94 @@ export default async function Trafikk() {
         <ChokeExplorer series={series} />
       </section>
 
-      <section className="panel" aria-labelledby="h-kart">
+      <section className="panel" aria-labelledby="h-ko">
         <div className="ph">
-          <h2 id="h-kart">Skip i nøkkelområder nå</h2>
-          <span className="src">aisstream.io · {ships.length} skip · {latestZoneTs ? `oppdatert ${osloTime(latestZoneTs)}` : "venter på første henting"}</span>
+          <h2 id="h-ko">Kø og trengsel</h2>
+          <span className="src">AIS (aisstream.io) {latestZoneTs ? `· oppdatert ${osloTime(latestZoneTs)}` : ""}</span>
         </div>
-        {ships.length === 0 ? (
-          <div className="empty">Kartet fylles når AIS-nøkkelen (AISSTREAM_API_KEY) er lagt inn i GitHub og neste kjøring er ferdig.</div>
-        ) : (
+        {zones.length === 0 ? <div className="empty">Fylles etter neste AIS-henting.</div> : (
+          <div style={{ overflowX: "auto" }}>
+            <table className="tbl" style={{ minWidth: 640 }}>
+              <thead><tr><th>Område</th><th>Skip nå</th><th>Ligger stille</th><th>Andel stille</th><th>Stille, snitt 7 d</th><th>Endring</th><th>Stille tank / last</th></tr></thead>
+              <tbody>
+                {zones.map((z) => {
+                  const c = z.avgStill7 ? (z.still / z.avgStill7 - 1) * 100 : null;
+                  return (
+                    <tr key={z.zone}>
+                      <td>{z.zone}</td>
+                      <td className="m">{z.total}</td>
+                      <td className="m">{z.still}</td>
+                      <td className="m">{z.total ? `${fmt((z.still / z.total) * 100, 0)} %` : "–"}</td>
+                      <td className="m" style={{ color: "#A0A7B2" }}>{fmt(z.avgStill7, 0)}</td>
+                      <td className={cls(c, 25)}>{pct(c)}</td>
+                      <td className="m" style={{ color: "#A0A7B2" }}>{z.stillTank} / {z.stillLast}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
+        <p className="note">«Ligger stille» = fart under 0,7 knop (ankret, fortøyd eller venter). Flere stillestående skip enn normalt kan bety kø,
+          som binder opp flåten og kan presse ratene opp. Tellingen bygger på et par minutters AIS-lytting per kjøring, så enkeltmålinger hopper; se på snittet.</p>
+
+        <div className="ph" style={{ marginTop: 14 }}>
+          <h2>Havner: anløp og varer</h2>
+          <span className="src">IMF PortWatch · snitt per dag · siste dato {portRows[0]?.last ?? "–"}</span>
+        </div>
+        {portRows.length === 0 ? <div className="empty">Havnedata hentes ved neste daglige kjøring.</div> : (
+          <div style={{ overflowX: "auto" }}>
+            <table className="tbl" style={{ minWidth: 760 }}>
+              <thead><tr><th>Havn</th><th>Anløp 7 d</th><th>Mot 4 uker før</th><th>Mot i fjor</th><th>Tank / bulk</th><th>Eksport (tonn/d)</th><th>Endring</th><th>Import (tonn/d)</th><th>Endring</th></tr></thead>
+              <tbody>
+                {portRows.map((r) => {
+                  const a = chg(r.c7, r.c28), b = chg(r.c7, r.cly), e = chg(r.e7, r.e28), i = chg(r.i7, r.i28);
+                  return (
+                    <tr key={r.name + r.country}>
+                      <td>{r.name} <span className="src">{r.country}</span></td>
+                      <td className="m">{fmt(r.c7, 1)}</td>
+                      <td className={cls(a)}>{pct(a)}</td>
+                      <td className={cls(b)}>{pct(b)}</td>
+                      <td className="m" style={{ color: "#A0A7B2" }}>{fmt(r.tank, 1)} / {fmt(r.bulk, 1)}</td>
+                      <td className="m">{r.e7 ? Math.round(r.e7).toLocaleString("nb-NO") : "–"}</td>
+                      <td className={cls(e)}>{pct(e)}</td>
+                      <td className="m">{r.i7 ? Math.round(r.i7).toLocaleString("nb-NO") : "–"}</td>
+                      <td className={cls(i)}>{pct(i)}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
+        <p className="note">Anløp og vareanslag bygger på AIS og kommer med rundt en ukes forsinkelse. Færre anløp i en eksporthavn kan bety stans eller kø
+          utenfor; flere kan bety høy eksport. Vareanslagene er beregnet av IMF ut fra skipenes dypgang og er usikre for enkeltdager.</p>
+
+        {pan && (
           <>
-            <AisMap ships={ships} />
-            {zoneNow.length > 0 && (
-              <div style={{ overflowX: "auto", marginTop: 12 }}>
-                <table className="tbl" style={{ minWidth: 420 }}>
-                  <thead><tr><th>Område</th><th>Skip sett</th><th>Tankskip</th><th>Lasteskip</th></tr></thead>
-                  <tbody>{zoneNow.map((z) => <tr key={z.zone}><td>{z.zone}</td><td className="m">{z.total}</td><td className="m">{z.tankers}</td><td className="m">{z.cargo}</td></tr>)}</tbody>
-                </table>
-              </div>
-            )}
+            <div className="ph" style={{ marginTop: 14 }}>
+              <h2>Panamakanalen</h2>
+              <Link href="/vaer" className="src" style={{ color: "#FF8A5B" }}>Mer om vær og vannstand →</Link>
+            </div>
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+              <div className="kpi"><div className="l">Vannstand Gatun-sjøen</div><div className="v m">{fmt(pan.gatun, 1)} fot</div>
+                {pan30 && <div className="src">{fmt(pan.gatun - pan30.gatun, 1)} fot siste 4 uker</div>}</div>
+              <div className="kpi"><div className="l">Maks dypgang Neopanamax</div><div className="v m">{fmt(pan.neo, 1)} fot</div></div>
+              <div className="kpi"><div className="l">Maks dypgang Panamax</div><div className="v m">{fmt(pan.panamax, 1)} fot</div></div>
+            </div>
           </>
         )}
-        <p className="note">Øyeblikksbilde fra rundt ett minutt med AIS-meldinger fra mottakere på land. Dekningen er god nær kysten, men har hull på åpent hav, og noen skip slår av AIS. Bruk PortWatch-tabellen over for trender.</p>
+      </section>
+
+      <section className="panel" aria-labelledby="h-kart">
+        <div className="ph">
+          <h2 id="h-kart">Skipskart (AIS)</h2>
+          <span className="src">Tank- og lasteskip i hele verden · oppdateres hvert 15. minutt i børstiden</span>
+        </div>
+        <GlobalAisMap />
+        <p className="note">Posisjoner fra aisstream.io, som bygger på mottakere på land: god dekning nær kysten, i sund og ved havner, men hull ute på åpent hav.
+          Type og lengde kommer fra skipenes egne AIS-data. Størrelse er anslått ut fra lengde, og lastet/ballast ut fra dypgang mot typisk dypgang for
+          skipets lengde, så begge er grove anslag. Skip uten kjent type vises grått til skipsdataene kommer inn.</p>
       </section>
     </>
   );

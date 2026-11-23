@@ -296,3 +296,79 @@ export const getReportQueue = () =>
     const rows = await sql()`SELECT status, count(*)::int AS n FROM reports GROUP BY status`;
     return Object.fromEntries((rows as Row[]).map((r) => [String(r.status), Number(r.n)])) as Record<string, number>;
   }, {} as Record<string, number>);
+
+// ---- Kø og trengsel: AIS-tellinger per område (siste snapshot + snitt siste 7 dager)
+export type ZoneStat = { zone: string; ts: string; total: number; tank: number; last: number; still: number; stillTank: number; stillLast: number;
+  avgTotal7: number | null; avgStill7: number | null };
+export const getZoneStats = () =>
+  safe(async () => {
+    const rows = await sql()`
+      WITH last AS (SELECT max(ts) AS ts FROM ais_zone),
+      cur AS (SELECT z.* FROM ais_zone z, last WHERE z.ts = last.ts),
+      hist AS (SELECT zone, avg(total)::float AS a_total, avg(still)::float AS a_still FROM ais_zone
+               WHERE ts > now() - interval '7 days' AND still IS NOT NULL GROUP BY zone)
+      SELECT cur.*, hist.a_total, hist.a_still FROM cur LEFT JOIN hist USING (zone) ORDER BY cur.total DESC`;
+    return (rows as Row[]).map((r) => ({
+      zone: String(r.zone), ts: new Date(String(r.ts)).toISOString(), total: Number(r.total ?? 0), tank: Number(r.tankers ?? 0), last: Number(r.cargo ?? 0),
+      still: Number(r.still ?? 0), stillTank: Number(r.still_tank ?? 0), stillLast: Number(r.still_last ?? 0),
+      avgTotal7: r.a_total === null ? null : Number(r.a_total), avgStill7: r.a_still === null ? null : Number(r.a_still),
+    }));
+  }, [] as ZoneStat[]);
+
+export type PortDay = { day: string; portid: string; portname: string; country: string; calls: number; tanker: number; bulk: number; container: number;
+  imp: number; exp: number };
+export const getPortActivity = (days = 420) =>
+  safe(async () => {
+    const rows = await sql()`SELECT day::text AS day, portid, portname, country, calls, calls_tanker, calls_dry_bulk, calls_container, import, export
+      FROM port_activity WHERE day > now() - make_interval(days => ${days}) ORDER BY day`;
+    return (rows as Row[]).map((r) => ({
+      day: String(r.day), portid: String(r.portid), portname: String(r.portname ?? ""), country: String(r.country ?? ""),
+      calls: Number(r.calls ?? 0), tanker: Number(r.calls_tanker ?? 0), bulk: Number(r.calls_dry_bulk ?? 0), container: Number(r.calls_container ?? 0),
+      imp: Number(r.import ?? 0), exp: Number(r.export ?? 0),
+    }));
+  }, [] as PortDay[]);
+
+// ---- Bunkers
+export type BunkerRow = { day: string; port: string; grade: string; price: number; change: number | null };
+export const getBunkers = (days = 400) =>
+  safe(async () => {
+    const rows = await sql()`SELECT day::text AS day, port, grade, price, change FROM bunkers WHERE day > now() - make_interval(days => ${days}) ORDER BY day`;
+    return (rows as Row[]).map((r) => ({ day: String(r.day), port: String(r.port), grade: String(r.grade), price: Number(r.price),
+      change: r.change === null ? null : Number(r.change) }));
+  }, [] as BunkerRow[]);
+
+// ---- Vær
+export type Storm = { id: string; name: string; alert: string; country: string; lat: number; lon: number; from: string; to: string;
+  near: string | null; nearKm: number | null; url: string | null };
+export const getStorms = () =>
+  safe(async () => {
+    const rows = await sql()`SELECT * FROM weather_events WHERE to_date > now() - interval '30 days' ORDER BY to_date DESC`;
+    return (rows as Row[]).map((r) => ({
+      id: String(r.id), name: String(r.name ?? ""), alert: String(r.alert ?? ""), country: String(r.country ?? ""), lat: Number(r.lat), lon: Number(r.lon),
+      from: new Date(String(r.from_date)).toISOString(), to: new Date(String(r.to_date)).toISOString(), near: r.near ? String(r.near) : null,
+      nearKm: r.near_km === null ? null : Number(r.near_km), url: r.url ? String(r.url) : null,
+    }));
+  }, [] as Storm[]);
+
+export type PanamaDay = { day: string; gatun: number; neo: number; panamax: number; surcharge: number | null };
+export const getPanama = (days = 800) =>
+  safe(async () => {
+    const rows = await sql()`SELECT day::text AS day, gatun_ft, draft_neo_ft, draft_panamax_ft, surcharge_pct FROM panama
+      WHERE day > now() - make_interval(days => ${days}) ORDER BY day`;
+    return (rows as Row[]).map((r) => ({ day: String(r.day), gatun: Number(r.gatun_ft), neo: Number(r.draft_neo_ft), panamax: Number(r.draft_panamax_ft),
+      surcharge: r.surcharge_pct === null ? null : Number(r.surcharge_pct) }));
+  }, [] as PanamaDay[]);
+
+// ---- Meglerrapporter
+export type BrokerData = {
+  broker?: string; week?: string | null; headline?: string; sentiment?: string; summary?: string[];
+  segments?: { segment?: string; direction?: string; comment?: string; rates?: { label?: string; value?: number | null; unit?: string }[] }[];
+  sale_purchase?: string | null; newbuilding?: string | null; demolition?: string | null;
+};
+export type BrokerReport = { url: string; title: string; broker: string; published: string; data: BrokerData; model: string };
+export const getBrokerReports = (limit = 80) =>
+  safe(async () => {
+    const rows = await sql()`SELECT url, title, broker, published, data, model FROM broker_reports WHERE status = 'ok' ORDER BY published DESC LIMIT ${limit}`;
+    return (rows as Row[]).map((r) => ({ url: String(r.url), title: String(r.title ?? ""), broker: String(r.broker ?? ""),
+      published: new Date(String(r.published)).toISOString(), data: (r.data as BrokerData) ?? {}, model: String(r.model ?? "") }));
+  }, [] as BrokerReport[]);
