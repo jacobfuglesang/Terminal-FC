@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { CAP, knowledgeStats, searchKnowledge } from "@/lib/knowledge";
+import NoteList from "@/components/NoteList";
+import { CAP, CRED, knowledgeStats, searchKnowledge } from "@/lib/knowledge";
 
 export const dynamic = "force-dynamic";
 
@@ -29,7 +30,9 @@ export default async function Kunnskap({ searchParams }: { searchParams: Promise
         <p className="note" style={{ marginTop: 0 }}>
           KI leser om shipping og shippingtrading, verdensøkonomien og geopolitikken, råvarer, aksjemarkedet og hvordan proffe analytikere jobber, og skriver korte notater med kilde. Kildene er blant annet IMF, IEA, WTO, Verdensbanken, UNCTAD, årsrapporter hos SEC, forskning (arXiv) og Wikipedia.
           Hvert notat sjekkes mot kilden, og punkter med tall som ikke står der fjernes. Kursmønstrene er regnet ut fra kursdataene, ikke skrevet av KI.
-          Morgenrapporten og analytikeren søker her for å forklare sammenhenger.
+          Morgenrapporten og analytikeren søker her for å forklare sammenhenger. Hvert notat er merket med kildetype:{" "}
+          {Object.values(CRED).map((c) => <span key={c.label} title={c.help} style={{ color: c.color, marginRight: 8 }}>{c.label}</span>)}
+          Offisielle kilder leses først og veier tyngst. Wikipedia brukes til begreper og bakgrunn.
         </p>
         {stats && (
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 10 }}>
@@ -61,19 +64,7 @@ export default async function Kunnskap({ searchParams }: { searchParams: Promise
         <div className="ph"><h2 id="h-notes">{q ? `Treff for «${q}»` : "Nyeste notater"}</h2><span className="src">{notes.length} vist</span></div>
         {notes.length === 0 ? (
           <div className="empty">{total === 0 ? "Ingen notater ennå. Kunnskapsbanken fylles når den lokale modellen har lest." : "Ingen treff."}</div>
-        ) : notes.map((n) => (
-          <details key={n.id} style={{ borderTop: "1px solid var(--line2)", padding: "8px 0" }}>
-            <summary style={{ cursor: "pointer" }}>
-              <b>{n.title}</b> <span className="src">· {KINDS[n.kind] ?? n.kind}{n.topic ? ` · ${n.topic}` : ""} · {n.created.slice(0, 10)}</span>
-            </summary>
-            <div style={{ whiteSpace: "pre-wrap", marginTop: 6, lineHeight: 1.5 }}>{n.body}</div>
-            <div className="src" style={{ marginTop: 6 }}>
-              Kilde: {n.link ? <a href={n.link} target="_blank" rel="noreferrer" style={{ color: "#FF8A5B" }}>{n.source}</a> : n.source}
-              {" · "}{n.model === "utregnet" ? "regnet ut fra data" : `skrevet av ${n.model}`}
-              {n.unverified > 0 ? ` · ${n.unverified} punkter fjernet fordi tallene ikke stod i kilden` : ""}
-            </div>
-          </details>
-        ))}
+        ) : <NoteList notes={notes} empty="" />}
       </section>
     </>
   );

@@ -21,6 +21,8 @@ PROMPT = """Du skriver «Samfunnssituasjonen uke {week}» på norsk bokmål for 
 på Oslo Børs og holder dem fra 1 dag til 1 måned. Bruk BARE materialet under (kunnskapsbanken, ukens nyheter og markedsdata).
 Skriv tall nøyaktig slik de står i materialet, og ikke finn på noe. Ingen kjøps- eller salgsråd og ingen kursmål.
 Skill tydelig mellom det som har skjedd, og det som er usikkert. Skriv enkelt og konkret.
+Notatene er merket med kildetype: stol mest på [offisiell kilde], deretter [forskning]. Bruk [oppslagsverk] (Wikipedia) bare
+som bakgrunn, aldri når det strider mot en offisiell kilde. Nyheter er ferske, men kan være ubekreftet: si «ifølge nyhetene».
 
 Bruk disse overskriftene (markdown ##):
 ## Kort fortalt (4–5 punkter)
@@ -43,9 +45,11 @@ def material(conn) -> tuple[str, list[str]]:
     with conn.cursor() as cur:
         cur.execute("""SELECT title, body, url FROM knowledge WHERE kind = 'syntese' ORDER BY created_at DESC LIMIT 7""")
         syn = cur.fetchall()
-        cur.execute("""SELECT title, body, url FROM knowledge
-                       WHERE topic IN ('geopolitikk', 'verdensøkonomi', 'makro', 'råvarer', 'hendelser') AND kind <> 'syntese'
-                       ORDER BY created_at DESC LIMIT 16""")
+        # Offisielle kilder først, så forskning, Wikipedia sist
+        cur.execute("""SELECT title || ' [' || CASE credibility WHEN 'A' THEN 'offisiell kilde' WHEN 'B' THEN 'forskning' ELSE 'oppslagsverk' END || ']',
+                              body, url FROM knowledge
+                       WHERE topic IN ('geopolitikk', 'verdensøkonomi', 'makro', 'råvarer', 'hendelser', 'nå') AND kind <> 'syntese'
+                       ORDER BY CASE credibility WHEN 'A' THEN 0 WHEN 'B' THEN 1 ELSE 2 END, created_at DESC LIMIT 16""")
         notes = cur.fetchall()
         cur.execute("""SELECT published::date, title, coalesce(summary, left(coalesce(nullif(excerpt,''), body, ''), 260)) FROM news
                        WHERE published > now() - interval '7 days' AND body_status IS DISTINCT FROM 'blocked'

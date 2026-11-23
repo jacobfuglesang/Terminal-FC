@@ -230,3 +230,5 @@ CREATE INDEX IF NOT EXISTS knowledge_url_idx ON knowledge (url);
 -- Ukens samfunnssituasjon (skrives lørdager av KI ut fra kunnskapsbanken, nyheter og markedsdata)
 CREATE TABLE IF NOT EXISTS society_reports (week TEXT PRIMARY KEY, text TEXT NOT NULL, model TEXT, sources JSONB, removed INT,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now());
+-- Troverdighet per notat: A offisiell kilde/primærkilde, B forskning/fagmiljø, C oppslagsverk (Wikipedia)
+ALTER TABLE knowledge ADD COLUMN IF NOT EXISTS credibility TEXT;

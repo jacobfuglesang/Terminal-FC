@@ -164,6 +164,57 @@ WIKI_ANALYSIS = [
     ("Geopolitical risk", 0), ("Supply and demand", 2), ("Price elasticity of demand", 2), ("Commodity trading advisor", 2),
 ]
 
+# ---- Troverdighet. A: offisielle kilder og primærkilder (IMF, IEA, EIA, WTO, Verdensbanken, UNCTAD, sentralbanker, SEC,
+# selskapenes egne rapporter, Rederiforbundet, DNV, egne data). B: forskning og fagmiljø. C: oppslagsverk (Wikipedia).
+# Når kildene er uenige, stoler terminalen mest på A. Wikipedia brukes til begreper og bakgrunn og leses etter de andre.
+A_DOMAINS = ("imf.org", "iea.org", "eia.gov", "wto.org", "worldbank.org", "unctad.org", "federalreserve.gov", "ecb.europa.eu",
+             "norges-bank.no", "bis.org", "oecd.org", "opec.org", "imo.org", "europa.eu", "sec.gov", "investor.gov", "rederi.no",
+             "dnv.com", "ssb.no", "finanstilsynet.no", "pancanal.com", "portwatch.imf.org", "cftc.gov")
+B_DOMAINS = ("arxiv.org", "fedinprint.org", "newyorkfed.org", "cia.gov", "nber.org", "stlouisfed.org")
+CRED_LABEL = {"A": "offisiell kilde", "B": "forskning", "C": "oppslagsverk"}
+
+
+def credibility(url: str) -> str:
+    u = url.lower()
+    if u.startswith("intern:hendelser:"):
+        return "B"  # bygger på nyheter fra mange medier
+    if u.startswith(("intern:", "sec:", "secrisk:")):
+        return "A"
+    if u.startswith("arxiv:"):
+        return "B"
+    if u.startswith(("wiki:", "wikisearch:")) or "wikipedia.org" in u:
+        return "C"
+    host = re.sub(r"^https?://", "", u).split("/")[0]
+    if any(host == d or host.endswith("." + d) for d in A_DOMAINS):
+        return "A"
+    if any(host == d or host.endswith("." + d) for d in B_DOMAINS):
+        return "B"
+    return "B"
+
+
+# Offisielle dokumenter og fagsider (A): leses før Wikipedia
+OFFICIAL_DOCS = [
+    ("https://www.eia.gov/finance/markets/crudeoil/", "EIA: Hva driver oljeprisen", 0, 4),
+    ("https://www.eia.gov/energyexplained/oil-and-petroleum-products/prices-and-outlook.php", "EIA: Oljepriser og utsikter", 0, 3),
+    ("https://www.eia.gov/energyexplained/oil-and-petroleum-products/imports-and-exports.php", "EIA: Olje – import og eksport", 1, 2),
+    ("https://www.eia.gov/energyexplained/natural-gas/liquefied-natural-gas.php", "EIA: LNG", 1, 2),
+    ("https://www.rederi.no/globalassets/dokumenter/alle/rapporter/kr2026-no.pdf", "Norges Rederiforbund: Konjunkturrapport 2026", 0, 8),
+    ("https://www.dnv.com/publications/maritime-forecast-edition-2026/", "DNV Maritime Forecast to 2050 (2026)", 1, 2),
+    ("https://www.dnv.com/expert-story/maritime-impact/new-research-shows-how-regulation-could-reshape-shipping/", "DNV: hvordan regulering kan endre shipping", 1, 2),
+    ("https://www.investor.gov/news-alerts/trading-basics-understanding-different-ways-buy-sell-stock", "SEC Investor.gov: ordretyper", 0, 2),
+    ("https://www.investor.gov/additional-resources/news-alerts/alerts-bulletins/investor-bulletin-stop-stop-limit-trailing-stop", "SEC Investor.gov: stopp-ordrer", 1, 2),
+    ("https://www.investor.gov/additional-resources/news-alerts/alerts-bulletins/investor-bulletin-introduction-short-sales", "SEC Investor.gov: shortsalg", 1, 2),
+]
+
+# Faste nyhetsstrømmer fra offisielle kilder: de nyeste sakene leses hver lørdag
+RSS_FEEDS = [
+    ("https://www.eia.gov/rss/todayinenergy.xml", "EIA Today in Energy", 0, 8),
+    ("https://www.eia.gov/petroleum/weekly/includes/week_in_petroleum_rss.xml", "EIA This Week in Petroleum", 0, 4),
+    ("https://www.federalreserve.gov/feeds/press_monetary.xml", "Federal Reserve: pengepolitikk", 1, 3),
+    ("https://www.federalreserve.gov/feeds/speeches.xml", "Federal Reserve: taler", 2, 3),
+    ("https://fedinprint.org/rss/newyork.rss", "New York Fed: forskning (Liberty Street)", 2, 4),
+]
+
 # Generelt om trading og aksjehandel: strategier, hva som driver prisene og hvordan markedet reagerer på hendelser
 WIKI_TRADING = [
     # Hva som driver prisene
@@ -289,11 +340,12 @@ def prune(conn, target: float = 0.88, cap: float = CAP) -> int:
 def save_note(note: dict) -> None:
     with db.connect() as c, c.cursor() as cur:
         cur.execute("DELETE FROM knowledge WHERE url = %s", (note["url"],))
-        cur.execute("""INSERT INTO knowledge (url, kind, topic, title, body, facts, symbols, source_title, model, checked, unverified)
-                       VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",
+        cred = note.get("credibility") or credibility((note.get("facts") or {}).get("link") or note["url"])
+        cur.execute("""INSERT INTO knowledge (url, kind, topic, title, body, facts, symbols, source_title, model, checked, unverified, credibility)
+                       VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",
                     (note["url"], note["kind"], note.get("topic"), note["title"][:200], note["body"][:6000],
                      json.dumps(note.get("facts") or {}, ensure_ascii=False), note.get("symbols") or [], note.get("source_title"),
-                     note.get("model"), note.get("checked", 0), note.get("unverified", 0)))
+                     note.get("model"), note.get("checked", 0), note.get("unverified", 0), cred))
         cur.execute("UPDATE kb_sources SET status = 'done', done_at = now(), error = NULL, chars = %s WHERE url = %s",
                     (note.get("chars"), note["url"]))
         c.commit()
@@ -320,6 +372,10 @@ def seed(conn) -> int:
         rows.append((url, "rapport", title, None, prio))
     for url, title, prio, _ in WORLD_DOCS:
         rows.append((url, "rapport", title, "verdensøkonomi", prio))
+    for url, title, prio, _ in OFFICIAL_DOCS:
+        rows.append((url, "rapport", title, None, prio))
+    for url, title, prio, _ in RSS_FEEDS:
+        rows.append((f"rss:{url}", "strøm", title, None, prio))
     for q, prio in WIKI_SEARCHES:
         rows.append((f"wikisearch:en:{q}", "søk", q, None, prio))
     for t, prio in WIKI_ANALYSIS:
@@ -335,7 +391,11 @@ def seed(conn) -> int:
         rows.append((f"sec:{t}", "rapport", f"Årsrapport (SEC) {t}: markedet", "shippingtrading", prio))
     for q, prio in ARXIV_QUERIES:
         rows.append((f"arxiv:{q}", "forskning", f"Forskning: {q}", None, prio))
+    # Wikipedia (oppslagsverk) leses etter offisielle kilder og forskning: to trinn lenger bak i køen
+    rows = [(u, k, t, tp, min(9, p + 2) if credibility(u) == "C" else p) for u, k, t, tp, p in rows]
     with conn.cursor() as cur:
+        cur.execute("""UPDATE kb_sources SET priority = least(9, priority + 2) WHERE (url LIKE 'wiki:%%' OR url LIKE 'wikisearch:%%')
+                       AND priority < 2 AND status = 'pending'""")
         cur.executemany("""INSERT INTO kb_sources (url, kind, title, topic, priority) VALUES (%s,%s,%s,%s,%s)
                            ON CONFLICT (url) DO UPDATE SET priority = least(kb_sources.priority, EXCLUDED.priority)""", rows)
         # Egne data endrer seg: selskapsprofiler leses på nytt hver måned, mønstre og hendelser hver uke
@@ -347,7 +407,7 @@ def seed(conn) -> int:
                        AND done_at < now() - interval '30 days'""")
         if ai.knowledge_day():
             # Lørdag (Groq satt av): les situasjonen nå på nytt, og skriv om notater den lokale modellen laget
-            world = [u for u, *_ in WORLD_DOCS] + [u for u, *_ in WEB_PAGES]
+            world = [u for u, *_ in WORLD_DOCS] + [u for u, *_ in WEB_PAGES] + [f"rss:{u}" for u, *_ in RSS_FEEDS]
             cur.execute("""UPDATE kb_sources SET status = 'pending', tries = 0, priority = 0 WHERE status IN ('done', 'error', 'skip')
                            AND done_at < now() - interval '5 days'
                            AND (url = ANY(%s) OR url = ANY(%s) OR topic = 'nå' OR url LIKE 'intern:hendelser:%%')""",
@@ -357,6 +417,10 @@ def seed(conn) -> int:
                            FROM knowledge k WHERE k.url = s.url AND k.model LIKE 'lokal/%%' AND s.status = 'done'
                            AND s.url NOT LIKE 'intern:mønster:%%'""")
             print(f"  {cur.rowcount} notater fra den lokale modellen skrives på nytt med Groq når det er kvote igjen")
+        # Merk eldre notater med troverdighet
+        cur.execute("SELECT id, url FROM knowledge WHERE credibility IS NULL")
+        for nid, u in cur.fetchall():
+            cur.execute("UPDATE knowledge SET credibility = %s WHERE id = %s", (credibility(u), nid))
         cur.execute("SELECT count(*) FROM kb_sources WHERE status = 'pending'")
         n = cur.fetchone()[0]
     conn.commit()
@@ -901,7 +965,8 @@ def events_material(conn, seg: str) -> str:
 
 SYN_PROMPT = """Du skriver et sammenfattende notat på norsk bokmål til en privat shippingterminal: «{title}».
 Leseren handler shippingaksjer på Oslo Børs og holder dem fra 1 dag til 1 måned. Bygg BARE på notatene under (de er lest fra kilder
-tidligere). Ikke finn på tall. Ingen kjøps- eller salgsråd og ingen kursmål. Gjør det praktisk: hva man ser etter, i hvilken rekkefølge,
+tidligere). Hvert notat er merket med kildetype: stol mest på [offisiell kilde], deretter [forskning]. Bruk [oppslagsverk]
+(Wikipedia) bare til begreper og bakgrunn, og aldri når det strider mot en offisiell kilde. Ikke finn på tall. Ingen kjøps- eller salgsråd og ingen kursmål. Gjør det praktisk: hva man ser etter, i hvilken rekkefølge,
 og hvilke feil man skal unngå.
 
 Svar KUN med JSON:
@@ -1004,6 +1069,24 @@ def process(url: str, kind: str, title: str) -> dict | None:
             c.commit()
         print(f"  · søk «{q}»: {', '.join(titles) or 'ingen treff'}")
         return "expanded"
+    if url.startswith("rss:"):
+        import feedparser
+
+        feed_url = url[4:]
+        r = requests.get(feed_url, headers=UA, timeout=40)
+        r.raise_for_status()
+        n_items = next((n for u, _, _, n in RSS_FEEDS if u == feed_url), 5)
+        prio = next((p for u, _, p, _ in RSS_FEEDS if u == feed_url), 2)
+        items = [(e.get("title", ""), e.get("link", "")) for e in feedparser.parse(r.content).entries[:n_items] if e.get("link")]
+        with db.connect() as c, c.cursor() as cur:
+            for t, link in items:
+                cur.execute("""INSERT INTO kb_sources (url, kind, title, topic, priority) VALUES (%s, 'rapport', %s, 'nå', %s)
+                               ON CONFLICT (url) DO NOTHING""", (link, f"{title}: {t}"[:200], prio))
+            cur.execute("UPDATE kb_sources SET status = 'done', done_at = now(), error = %s WHERE url = %s",
+                        (f"{len(items)} saker", url))
+            c.commit()
+        print(f"  · {title}: {len(items)} nye saker i køen")
+        return "expanded"
     if url.startswith("sec:"):
         t = url.split(":", 1)[1]
         text, link, what = sec_industry(t)
@@ -1037,7 +1120,7 @@ def process(url: str, kind: str, title: str) -> dict | None:
     text = web_text(url)
     if len(text) < 500:
         return None
-    mc = next((m for u, _, _, m in WORLD_DOCS if u == url), MAX_CHUNKS)
+    mc = next((m for u, _, _, m in WORLD_DOCS + OFFICIAL_DOCS if u == url), MAX_CHUNKS)
     n = write_note(title, text, kind, url, title, max_chunks=mc)
     n["facts"]["link"] = url
     return n
@@ -1157,9 +1240,11 @@ def search(conn, text: str, limit: int = 5, kinds: tuple[str, ...] | None = None
     q = " | ".join(re.sub(r"[^a-zæøå0-9]", "", w) for w in words if re.sub(r"[^a-zæøå0-9]", "", w))
     try:
         with conn.cursor() as cur:
-            cur.execute(f"""SELECT title, body, url FROM knowledge, to_tsquery('norwegian', %s) q
+            cur.execute(f"""SELECT title || ' [' || CASE credibility WHEN 'A' THEN 'offisiell kilde' WHEN 'B' THEN 'forskning'
+                                   ELSE 'oppslagsverk' END || ']', body, url FROM knowledge, to_tsquery('norwegian', %s) q
                             WHERE tsv @@ q {"AND kind = ANY(%s)" if kinds else ""}
-                            ORDER BY ts_rank_cd(tsv, q) DESC LIMIT %s""", (q, list(kinds), limit) if kinds else (q, limit))
+                            ORDER BY ts_rank_cd(tsv, q) * CASE credibility WHEN 'A' THEN 1.6 WHEN 'B' THEN 1.25 ELSE 1 END DESC
+                            LIMIT %s""", (q, list(kinds), limit) if kinds else (q, limit))
             return cur.fetchall()
     except Exception:  # noqa: BLE001 - tabellen finnes ikke ennå
         conn.rollback()

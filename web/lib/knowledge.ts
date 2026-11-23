@@ -2,7 +2,14 @@ import { sql } from "@/lib/db";
 
 // Kunnskapsbanken: notater den lokale KI-modellen har skrevet (se collectors/knowledge.py).
 export type Note = { id: number; url: string; kind: string; topic: string; title: string; body: string; source: string; link: string | null;
-  model: string; created: string; symbols: string[]; unverified: number };
+  model: string; created: string; symbols: string[]; unverified: number; credibility: "A" | "B" | "C" };
+
+// Kildetype: A offisiell kilde/primærkilde, B forskning/fagmiljø, C oppslagsverk (Wikipedia)
+export const CRED: Record<string, { label: string; color: string; help: string }> = {
+  A: { label: "Offisiell kilde", color: "#3DDC97", help: "IMF, IEA, EIA, WTO, Verdensbanken, UNCTAD, sentralbanker, SEC, selskapenes egne rapporter, Rederiforbundet, DNV eller egne data" },
+  B: { label: "Forskning", color: "#5BC0FF", help: "Forskningsartikler, fagmiljø eller samlet fra flere nyhetskilder" },
+  C: { label: "Oppslagsverk", color: "#F5C451", help: "Wikipedia: brukes til begreper og bakgrunn, ikke når det strider mot offisielle kilder" },
+};
 
 const LIMIT_MB = Number(process.env.DB_LIMIT_MB ?? 1024); // Neon Free: 1 GB per prosjekt
 export const CAP = 0.9;
@@ -20,6 +27,7 @@ const toNote = (r: Row): Note => {
     id: Number(r.id), url: String(r.url), kind: String(r.kind), topic: String(r.topic ?? ""), title: String(r.title), body: String(r.body),
     source: String(r.source_title ?? ""), link: facts.link ?? null, model: String(r.model ?? ""), created: new Date(String(r.created_at)).toISOString(),
     symbols: (r.symbols as string[] | null) ?? [], unverified: Number(r.unverified ?? 0),
+    credibility: (["A", "B", "C"].includes(String(r.credibility)) ? String(r.credibility) : String(r.url).startsWith("wiki:") ? "C" : "B") as Note["credibility"],
   };
 };
 
@@ -28,7 +36,7 @@ export async function searchKnowledge(text: string, limit = 6, kind?: string): P
   try {
     const rows = q
       ? await sql()`SELECT k.*, ts_rank_cd(k.tsv, q) AS rank FROM knowledge k, to_tsquery('norwegian', ${q}) q
-          WHERE k.tsv @@ q AND (${kind ?? null}::text IS NULL OR k.kind = ${kind ?? null}) ORDER BY rank DESC, k.created_at DESC LIMIT ${limit}`
+          WHERE k.tsv @@ q AND (${kind ?? null}::text IS NULL OR k.kind = ${kind ?? null}) ORDER BY rank * CASE k.credibility WHEN 'A' THEN 1.6 WHEN 'B' THEN 1.25 ELSE 1 END DESC, k.created_at DESC LIMIT ${limit}`
       : await sql()`SELECT * FROM knowledge WHERE (${kind ?? null}::text IS NULL OR kind = ${kind ?? null}) ORDER BY created_at DESC LIMIT ${limit}`;
     return (rows as Row[]).map(toNote);
   } catch {
@@ -60,7 +68,7 @@ export async function knowledgeStats() {
 export async function notesByTopic(topics: string[], limit = 20, kinds?: string[]): Promise<Note[]> {
   try {
     const rows = await sql()`SELECT * FROM knowledge WHERE (topic = ANY(${topics}) OR kind = ANY(${kinds ?? []}))
-      ORDER BY created_at DESC LIMIT ${limit}`;
+      ORDER BY CASE credibility WHEN 'A' THEN 0 WHEN 'B' THEN 1 ELSE 2 END, created_at DESC LIMIT ${limit}`;
     return (rows as Row[]).map(toNote);
   } catch {
     return [];
