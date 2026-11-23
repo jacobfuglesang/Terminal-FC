@@ -5,7 +5,7 @@ export type Note = { id: number; url: string; kind: string; topic: string; title
   model: string; created: string; symbols: string[]; unverified: number };
 
 const LIMIT_MB = Number(process.env.DB_LIMIT_MB ?? 1024); // Neon Free: 1 GB per prosjekt
-export const CAP = 0.8;
+export const CAP = 0.9;
 
 /** Gjør fritekst om til et OR-søk for Postgres (bare bokstaver og tall, så ingen spesialtegn slipper gjennom). */
 export function toQuery(text: string): string {

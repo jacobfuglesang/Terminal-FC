@@ -8,7 +8,7 @@ Kilder (bare åpne kilder, lest i rolig tempo):
 - Offentlige rapporter og sider fra EIA, IMO, EU og lignende.
 
 Kvalitet: hvert notat sjekkes mot kildeteksten. Punkter med tall som ikke står i kilden fjernes.
-Lagring: notatene er små (noen kB). Det skrives aldri når databasen er over 80 % av grensen (Neon gratis: 1 GB).
+Lagring: notatene er små (noen kB). Det skrives aldri når databasen er over 90 % av grensen (Neon gratis: 1 GB).
 """
 from __future__ import annotations
 
@@ -28,7 +28,7 @@ from reports import found, numbers_in, numbers_pos
 from universe import COMPANIES
 
 LIMIT_MB = float(os.environ.get("DB_LIMIT_MB", "1024"))  # Neon Free: 1 GB per prosjekt
-CAP = 0.80  # aldri fyll databasen mer enn dette
+CAP = 0.90  # kunnskapsbanken skriver aldri når databasen er fullere enn dette (Big J valgte 90 %)
 UA = {"User-Agent": "TerminalFC/1.0 (privat kunnskapsbank; https://github.com/jacobfuglesang/Terminal-FC)"}
 WIKI = "https://{lang}.wikipedia.org/w/api.php"
 CHUNK = 6500
@@ -164,13 +164,48 @@ WIKI_ANALYSIS = [
     ("Geopolitical risk", 0), ("Supply and demand", 2), ("Price elasticity of demand", 2), ("Commodity trading advisor", 2),
 ]
 
+# Generelt om trading og aksjehandel: strategier, hva som driver prisene og hvordan markedet reagerer på hendelser
+WIKI_TRADING = [
+    # Hva som driver prisene
+    ("Stock market", 1), ("Stock valuation", 1), ("Supply and demand", 1), ("Price discovery", 1), ("Market liquidity", 1),
+    ("Volatility clustering", 2), ("Risk-on risk-off", 0), ("Flight-to-quality", 1), ("Safe haven", 2), ("Carry trade", 2),
+    ("Currency risk", 2), ("Oil price shock", 0), ("Interest rate risk", 2), ("Business cycle", 1), ("Sector rotation", 1),
+    ("Cyclical stock", 1), ("Commodity price", 1),
+    # Hvordan markedet reagerer
+    ("Event study", 0), ("Earnings announcement", 1), ("Dividend signaling hypothesis", 1), ("Share repurchase", 1),
+    ("Rights issue", 1), ("Follow-on offering", 1), ("Insider trading", 1), ("Index fund", 2), ("Buy the rumor, sell the news", 0),
+    ("Dead cat bounce", 1), ("Short covering", 1), ("Herd behavior", 1), ("Overreaction hypothesis", 0), ("Underreaction", 1),
+    ("Momentum (finance)", 0), ("Contrarian investing", 1), ("Calendar effect", 1), ("January effect", 2), ("Turn-of-the-month effect", 2),
+    ("Window dressing", 2), ("Stock market crash", 1), ("Flash crash", 2), ("Market anomaly", 1), ("Adaptive market hypothesis", 1),
+    ("Noise trader", 2), ("Loss aversion", 1), ("Disposition effect", 1), ("Fear of missing out", 2), ("VIX", 1),
+    # Strategier og gjennomføring
+    ("Trading strategy", 0), ("Position trading", 1), ("Breakout (technical analysis)", 1), ("Gap (chart pattern)", 1),
+    ("Bollinger Bands", 2), ("Average true range", 1), ("Volume-weighted average price", 2), ("Trading volume", 1),
+    ("Order (exchange)", 1), ("Limit order", 2), ("Slippage (finance)", 1), ("Transaction cost", 2), ("Risk–return spectrum", 1),
+    ("Modern portfolio theory", 2), ("Trading psychology", 1), ("Trade journal", 2), ("Risk of ruin", 1), ("Expectancy (trading)", 2),
+    ("Aksjesparekonto", 1),
+]
+
+# Wikipedia-søk om shipping og prisdrivere (finner de beste artiklene automatisk)
+WIKI_SEARCHES_MORE = [
+    ("shipping stocks volatility freight rates", 1), ("tanker rates oil supply OPEC relationship", 0), ("dry bulk freight China steel demand", 0),
+    ("container freight rates pandemic surge", 1), ("newbuilding prices secondhand ship values", 1), ("ship scrapping demolition market", 1),
+    ("fleet growth orderbook shipping supply", 0), ("seasonality freight rates winter", 1), ("oil tanker floating storage", 1),
+    ("market reaction to geopolitical events", 0), ("stock market reaction to war", 0), ("oil price and stock market relationship", 0),
+    ("interest rates effect on stock prices", 1), ("dollar strength commodities", 1), ("earnings surprise stock reaction", 1),
+]
+
 # Industridelen i årsrapportene (20-F/10-K) til USA-noterte rederier. Den er skrevet av maritime konsulenter
 # (Drewry, Clarksons o.l.) og forklarer markedet grundig. Offentlig hos SEC EDGAR.
 SEC_TICKERS = [("FRO", 0), ("STNG", 0), ("SBLK", 0), ("DHT", 1), ("INSW", 1), ("TNK", 1), ("GNK", 1), ("HAFN", 1), ("BWLP", 1),
                ("LPG", 1), ("DAC", 1), ("ZIM", 2), ("HSHP", 1), ("CMBT", 1), ("TRMD", 2), ("NAT", 2)]
 
+# Risikoavsnittet i årsrapportene: hva rederiene selv sier kan påvirke inntjening og aksjekurs
+SEC_RISK_TICKERS = [("FRO", 1), ("SBLK", 1), ("STNG", 1), ("BWLP", 2), ("ZIM", 2)]
+
 # Forskning (arXiv): sammendrag av artikler, ett notat per søk
-ARXIV_QUERIES = [("freight rate forecasting", 1), ("tanker market", 1), ("dry bulk shipping", 1), ("shipping stock returns", 1),
+ARXIV_QUERIES = [("news sentiment stock returns", 1), ("market reaction geopolitical events", 1), ("oil supply shock", 1),
+                 ("stock price reaction announcements", 2), ("freight rate forecasting", 1), ("tanker market", 1), ("dry bulk shipping", 1), ("shipping stock returns", 1),
                  ("oil price shocks stock returns", 1), ("geopolitical risk commodity prices", 1), ("commodity futures momentum", 2),
                  ("time series momentum", 2), ("earnings announcement drift", 2), ("maritime trade network disruption", 2)]
 
@@ -212,7 +247,7 @@ def room(conn) -> bool:
 
 
 def prune(conn) -> int:
-    """Er databasen over 80 %: slett de eldste vanlige notatene (ikke selskapsprofiler og mønstre) til den er under 78 %."""
+    """Er databasen over taket: slett de eldste vanlige notatene (ikke profiler, mønstre og sammenfatninger) til den er under 88 %."""
     limit = CAP * LIMIT_MB * 1024 * 1024
     if db_bytes(conn) < limit:
         return 0
@@ -224,7 +259,7 @@ def prune(conn) -> int:
             n = cur.rowcount
             conn.commit()
             deleted += n
-            if not n or db_bytes(conn) < 0.78 * LIMIT_MB * 1024 * 1024:
+            if not n or db_bytes(conn) < 0.88 * LIMIT_MB * 1024 * 1024:
                 break
     print(f"  Databasen var over {CAP:.0%} av grensen: slettet {deleted} eldre notater")
     return deleted
@@ -268,6 +303,13 @@ def seed(conn) -> int:
         rows.append((f"wikisearch:en:{q}", "søk", q, None, prio))
     for t, prio in WIKI_ANALYSIS:
         rows.append((f"wiki:en:{t}", "begrep", t, "analysemetode", prio))
+    for t, prio in WIKI_TRADING:
+        rows.append((f"wiki:{'no' if t == 'Aksjesparekonto' else 'en'}:{t}", "begrep", t, "trading og risiko", prio))
+    for q, prio in WIKI_SEARCHES_MORE:
+        rows.append((f"wikisearch:en:{q}", "søk", q, None, prio))
+    for t, prio in SEC_RISK_TICKERS:
+        rows.append((f"secrisk:{t}", "rapport", f"Risikofaktorer (SEC) {t}", "shippingtrading", prio))
+    rows.append(("intern:mønster:reaksjoner", "mønster", "Hvordan aksjene reagerer på store bevegelser", "mønster", 1))
     for t, prio in SEC_TICKERS:
         rows.append((f"sec:{t}", "rapport", f"Årsrapport (SEC) {t}: markedet", "shippingtrading", prio))
     for q, prio in ARXIV_QUERIES:
@@ -377,8 +419,8 @@ def wiki_search(query: str, n: int = 3) -> list[str]:
 _sec_tickers: dict[str, int] = {}
 
 
-def sec_industry(ticker: str) -> tuple[str, str, str]:
-    """Industridelen av siste årsrapport (20-F eller 10-K). Returnerer (tekst, lenke, rapporttype og dato)."""
+def sec_industry(ticker: str, part: str = "industry") -> tuple[str, str, str]:
+    """Industridelen (eller risikoavsnittet) av siste årsrapport (20-F eller 10-K). Returnerer (tekst, lenke, rapporttype og dato)."""
     if not _sec_tickers:
         r = requests.get("https://www.sec.gov/files/company_tickers.json", headers=SEC_UA, timeout=30)
         r.raise_for_status()
@@ -406,16 +448,22 @@ def sec_industry(ticker: str) -> tuple[str, str, str]:
     text = re.sub(r"[ \t\xa0]+", " ", tree.text_content())
     text = re.sub(r"\n\s*\n+", "\n\n", text)
     # Finn industrikapittelet: overskriften forekommer også i innholdsfortegnelsen, så velg den med mest markedstekst etter seg
-    heads = [m.start() for m in re.finditer(
-        r"(?i)(the international [a-z /-]{0,40}(?:industry|market)s?|industry overview|the [a-z /-]{0,30}shipping (?:industry|market)|"
-        r"the (?:crude )?tanker (?:industry|market)|the dry ?bulk (?:shipping )?(?:industry|market)|the (?:lpg|container) shipping)", text)]
+    if part == "risk":
+        pat = r"(?i)(risks? (?:related|relating) to (?:our|the) industry|risk factors)"
+        words = ("could", "adversely", "charter rates", "volatil", "decline", "demand", "geopolitical", "sanction")
+    else:
+        pat = (r"(?i)(the international [a-z /-]{0,40}(?:industry|market)s?|industry overview|the [a-z /-]{0,30}shipping (?:industry|market)|"
+               r"the (?:crude )?tanker (?:industry|market)|the dry ?bulk (?:shipping )?(?:industry|market)|the (?:lpg|container) shipping)")
+        words = ("demand", "supply", "fleet", "rates", "tonne", "charter", "orderbook", "deliveries")
+    heads = [m.start() for m in re.finditer(pat, text)]
+
     def score(i: int) -> int:
         w = text[i:i + 8000].lower()
-        return sum(w.count(k) for k in ("demand", "supply", "fleet", "rates", "tonne", "charter", "orderbook", "deliveries"))
+        return sum(w.count(k) for k in words)
     if not heads:
         raise ValueError("fant ikke industridelen i årsrapporten")
     start = max(heads, key=score)
-    return text[start:start + 70_000], url, f"{form} {day}"
+    return text[start:start + (45_000 if part == "risk" else 70_000)], url, f"{form} {day}"
 
 
 def arxiv_text(query: str, n: int = 12) -> tuple[str, str]:
@@ -731,6 +779,55 @@ def market_pattern(conn) -> dict | None:
             "checked": 0, "unverified": 0, "chars": 0}
 
 
+def reactions_note(conn) -> dict | None:
+    """Hendelsesstudie på egne data: hvordan aksjene beveget seg dagen etter og uken etter store bevegelser i
+    fraktfutures, Brent og Oslo Børs. Regnet ut, ikke KI."""
+    tank = {"Råoljetank", "Produkttank", "Kjemikalietank", "Diversifisert", "Gass (LPG)"}
+    dry = {"Tørrbulk", "Kombinasjon", "Diversifisert"}
+    seg = {c["symbol"]: c["segment"] for c in COMPANIES}
+    shocks = [("BWET", "tankfrakten (BWET)", 0.05, tank), ("BDRY", "tørrbulkfrakten (BDRY)", 0.05, dry), ("BZ=F", "Brent", 0.04, None),
+              ("OSEBX.OL", "Oslo Børs (OSEBX)", 0.02, None)]
+    stocks = {c["symbol"]: (c["name"], price_series(conn, c["symbol"])) for c in COMPANIES}
+    pts = []
+    for fac, lab, lim, segs in shocks:
+        f = price_series(conn, fac)
+        if len(f) < 60:
+            continue
+        for sign, word in ((1, "steg"), (-1, "falt")):
+            days = [f[i][0] for i in range(1, len(f)) if f[i - 1][1] > 0 and sign * (f[i][1] / f[i - 1][1] - 1) >= lim]
+            if len(days) < 3:
+                continue
+            res = []
+            for sym, (name, s) in stocks.items():
+                if segs and seg[sym] not in segs:
+                    continue
+                idx = {d: i for i, (d, _) in enumerate(s)}
+                same, after = [], []
+                for d in days:
+                    i = idx.get(d)
+                    if i is None or i < 1 or i + 5 >= len(s):
+                        continue
+                    same.append(s[i][1] / s[i - 1][1] - 1)
+                    after.append(s[i + 5][1] / s[i][1] - 1)
+                if len(same) >= 3:
+                    res.append((name, statistics.mean(same), statistics.mean(after), len(same)))
+            if not res:
+                continue
+            res.sort(key=lambda r: -sign * r[1])
+            top = ", ".join(f"{n} {a * 100:+.1f} % samme dag og {b * 100:+.1f} % neste uke" for n, a, b, _ in res[:4])
+            pts.append(f"Når {lab} {word} minst {lim * 100:.0f} % på en dag ({len(days)} ganger): sterkest reaksjon hadde {top}.")
+            drift = statistics.mean(b for _, _, b, _ in res)
+            pts.append(f"Etter slike dager der {lab} {word}, gikk aksjene i snitt {drift * 100:+.1f} % de neste fem handelsdagene "
+                       f"({'fortsatte i samme retning' if drift * sign > 0 else 'snudde delvis'}).")
+    if not pts:
+        return None
+    body = ("Utregnet fra egne kursdata siste to år (sluttkurser, ikke justert for utbytte). Viser hvordan aksjene har reagert "
+            "på store bevegelser før, ikke hva de vil gjøre neste gang.\n\n" + "\n".join(f"- {p}" for p in pts))
+    return {"url": "intern:mønster:reaksjoner", "kind": "mønster", "topic": "mønster", "title": "Hvordan aksjene reagerer på store bevegelser",
+            "body": body, "facts": {"points": pts}, "symbols": [], "source_title": "Egne kursdata (Yahoo Finance)", "model": "utregnet",
+            "checked": 0, "unverified": 0, "chars": 0}
+
+
 def events_material(conn, seg: str) -> str:
     pat = SEG_WORDS[seg]
     out = []
@@ -810,6 +907,8 @@ def process(url: str, kind: str, title: str) -> dict | None:
     if url.startswith("intern:mønster:"):
         sym = url.split(":", 2)[2]
         with db.connect() as conn:
+            if sym == "reaksjoner":
+                return reactions_note(conn)
             return market_pattern(conn) if sym == "marked" else pattern_note(conn, sym)
     if url.startswith("intern:selskap:"):
         sym = url.split(":", 2)[2]
@@ -859,6 +958,13 @@ def process(url: str, kind: str, title: str) -> dict | None:
         text, link, what = sec_industry(t)
         n = write_note(f"Markedet ifølge årsrapporten til {t} ({what})", text, "rapport", url, f"SEC EDGAR {t} {what}",
                        "shippingtrading", max_chunks=8)
+        n["facts"]["link"] = link
+        return n
+    if url.startswith("secrisk:"):
+        t = url.split(":", 1)[1]
+        text, link, what = sec_industry(t, "risk")
+        n = write_note(f"Hva kan påvirke inntjening og aksjekurs ifølge {t} ({what})", text, "rapport", url,
+                       f"SEC EDGAR {t} {what}: risikofaktorer", "shippingtrading", max_chunks=6)
         n["facts"]["link"] = link
         return n
     if url.startswith("arxiv:"):

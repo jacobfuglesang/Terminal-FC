@@ -26,6 +26,7 @@ import weather
 import reports
 import shorts
 import knowledge
+import storage
 
 JOBS = {
     "prices": ("Yahoo Finance (kurser og fraktfutures)", lambda c, bf: prices.run(c, backfill=bf)),
@@ -45,16 +46,17 @@ JOBS = {
     "ports": ("IMF PortWatch (havner)", lambda c, bf: ports.run(c, bf)),
     "brief": ("KI-analytiker (morgenrapport)", lambda c, bf: brief.run(c)),
     # Egen arbeidsflyt (kunnskap.yml): lokal KI leser i KNOWLEDGE_MINUTES minutter
+    "storage": ("Lagring (databasestørrelse)", lambda c, bf: storage.run(c)),
     "knowledge": ("Kunnskapsbank (lokal KI)", lambda c, bf: knowledge.run(c, minutes=float(os.environ.get("KNOWLEDGE_MINUTES", "30")))),
 }
 GROUPS = {
     "market": ["prices", "announcements", "news", "ais", "weather", "alerts", "reports", "brokers"],
-    "daily": ["prices", "shorts", "fundamentals", "freight", "portwatch", "ports", "bunkers", "weather", "ais", "alerts"],
+    "daily": ["prices", "shorts", "fundamentals", "freight", "portwatch", "ports", "bunkers", "weather", "ais", "alerts", "storage"],
     # Morgenrapporten skrives før rapportleseren, så den alltid får den beste KI-modellen
     "morning": ["prices", "announcements", "news", "shorts", "fundamentals", "freight", "portwatch", "ports", "bunkers", "weather", "ais",
-                "alerts", "brief", "reports", "brokers"],
+                "alerts", "brief", "reports", "brokers", "storage"],
     "all": ["prices", "announcements", "news", "shorts", "fundamentals", "freight", "portwatch", "ports", "bunkers", "weather", "ais",
-            "alerts", "brief", "reports", "brokers"],
+            "alerts", "brief", "reports", "brokers", "storage"],
 }
 QUICK = False  # markedskjøringer hvert 15. minutt: korte KI-jobber, så kjøringen blir ferdig før neste starter
 

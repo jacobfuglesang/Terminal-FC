@@ -36,7 +36,7 @@ export default async function Kunnskap({ searchParams }: { searchParams: Promise
             <div className="kpi"><div className="l">Database brukt</div><div className="v m">{mb(stats.dbBytes)}</div>
               <div style={{ height: 6, background: "var(--inset)", borderRadius: 3, marginTop: 6, position: "relative" }}>
                 <div style={{ width: `${Math.min(100, used * 100)}%`, height: 6, background: used > CAP ? "#FF6B6B" : "#3DDC97", borderRadius: 3 }} />
-                <div title="Tak: 80 %" style={{ position: "absolute", left: `${CAP * 100}%`, top: -3, height: 12, width: 2, background: "#F5C451" }} />
+                <div title={`Tak: ${Math.round(CAP * 100)} %`} style={{ position: "absolute", left: `${CAP * 100}%`, top: -3, height: 12, width: 2, background: "#F5C451" }} />
               </div>
               <div className="src">{(used * 100).toFixed(0)} % av {mb(stats.limitBytes)}, tak {Math.round(CAP * 100)} %</div>
             </div>
