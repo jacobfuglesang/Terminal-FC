@@ -18,7 +18,6 @@ on:
         default: "300"
   schedule:
     - cron: "7 0 * * 6"      # hver lørdag 00:07 UTC, like etter at Groqs dagskvote er nullstilt
-    - cron: "5 5 24 11 *"    # 24.11.2026 kl. 06:05 norsk tid: stor lesing med Groq (hele dagens kvote)
   push:
     branches: [main]
     paths: [".github/kunnskap-start.txt"]   # endre denne filen for å starte en lesing
@@ -46,9 +45,6 @@ jobs:
           M="$IN"
           if [ "${{ github.event_name }}" = "schedule" ]; then
             M=600
-            if [ "${{ github.event.schedule }}" = "5 5 24 11 *" ]; then
-              if [ "$(date -u +%F)" = "2026-11-24" ]; then M=330; else M=0; fi
-            fi
           fi
           if [ "${{ github.event_name }}" = "push" ]; then M=$(grep -Eo '^[0-9]{1,3}' .github/kunnskap-start.txt | head -1); fi
           if ! echo "$M" | grep -Eq '^[0-9]{1,3}$'; then M=60; fi

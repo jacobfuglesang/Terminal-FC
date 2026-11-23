@@ -76,10 +76,10 @@ ROUTE = {
     "knowledge": ["groq", "lokal"],
 }
 
-# Dager der Groq-kvoten er satt av til kunnskapsbanken: hver lørdag (norsk tid) og 24.11.2026.
+# Dager der Groq-kvoten er satt av til kunnskapsbanken: hver lørdag (norsk tid), pluss eventuelle enkeltdager under.
 # Andre jobber bruker da den lokale modellen eller venter. Big J har godkjent at morgenrapporten disse dagene
-# skrives av den lokale modellen.
-GROQ_KNOWLEDGE_DAYS = {"2026-11-24"}
+# skrives av den lokale modellen. (24.11.2026 ble i stedet gjort av Claude, så Groq går som normalt den dagen.)
+GROQ_KNOWLEDGE_DAYS: set[str] = set()
 GROQ_KNOWLEDGE_WEEKDAYS = {5}  # 5 = lørdag
 
 

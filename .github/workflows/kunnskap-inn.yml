@@ -1,0 +1,30 @@
+name: Kunnskapsbank – hent inn notater fra Claude
+
+# Claude skriver notater som JSON i kb-inbox/ (Claude har ingen databasenøkkel).
+# Denne jobben lagrer dem i databasen med nøkkelen som bare ligger i GitHub Secrets.
+on:
+  push:
+    branches: [main]
+    paths: ["kb-inbox/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: collectors/requirements.txt
+      - run: pip install -r collectors/requirements.txt
+      - name: Hent inn
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        working-directory: collectors
+        run: python -u kb_import.py ../kb-inbox

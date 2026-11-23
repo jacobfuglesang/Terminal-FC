@@ -78,6 +78,12 @@ def material(conn) -> tuple[str, list[str]]:
 def run() -> int:
     week = f"{date.today().isocalendar()[0]}-{date.today().isocalendar()[1]:02d}"
     with db.connect() as conn:
+        with conn.cursor() as cur:
+            cur.execute("SELECT model FROM society_reports WHERE week = %s", (week,))
+            r = cur.fetchone()
+        if r and str(r[0] or "").startswith("claude/"):
+            print(f"  Samfunnsrapport uke {week}: Claude har allerede skrevet den, beholdes")
+            return 0
         text, used = material(conn)
     if len(text) < 1500:
         print("  Samfunnsrapport: for lite materiale ennå")

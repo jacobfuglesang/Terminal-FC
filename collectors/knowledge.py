@@ -986,7 +986,12 @@ NOTATER:
 def synthesize() -> int:
     done = 0
     for title, q in SYNTHESES:
-        with db.connect() as c:
+        url_ = "intern:syntese:" + re.sub(r"[^a-zæøå0-9]+", "-", title.lower()).strip("-")
+        with db.connect() as c, c.cursor() as cur:
+            # En sammenfatning skrevet av Claude de siste 14 dagene beholdes (den er grundigere)
+            cur.execute("SELECT 1 FROM knowledge WHERE url = %s AND model LIKE 'claude/%%' AND created_at > now() - interval '14 days'", (url_,))
+            if cur.fetchone():
+                continue
             notes = search(c, q, limit=10)
         notes = [n for n in notes if not n[2].startswith("intern:syntese:")]
         if len(notes) < 4:
