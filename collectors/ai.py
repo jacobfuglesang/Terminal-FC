@@ -96,7 +96,8 @@ def local_ready(wait_s: float = 0) -> bool:
 def _local_chat(prompt: str, max_out: int, json_mode: bool, temperature: float) -> str:
     payload = {"model": LOCAL_MODEL, "stream": False, "think": False, "keep_alive": "30m",
                "messages": [{"role": "user", "content": prompt}],
-               "options": {"temperature": temperature, "num_predict": max_out, "num_ctx": 12288}}
+               "options": {"temperature": temperature, "num_predict": max_out, "num_ctx": 12288,
+                           "num_thread": os.cpu_count() or 4}}
     if json_mode:
         payload["format"] = "json"
     r = requests.post(f"{LOCAL_URL}/api/chat", json=payload, timeout=1200)

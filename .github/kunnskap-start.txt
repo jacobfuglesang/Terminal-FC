@@ -1,2 +1,2 @@
-12
-# Endre tallet (minutter, maks 330) og lagre for å starte en lesing i kunnskapsbanken. Prøvekjøring 2026-11-23.
+310
+# Endre tallet (minutter, maks 330) og lagre for å starte en lesing i kunnskapsbanken. Første store lesing 2026-11-23.

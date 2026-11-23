@@ -31,8 +31,8 @@ LIMIT_MB = float(os.environ.get("DB_LIMIT_MB", "1024"))  # Neon Free: 1 GB per p
 CAP = 0.80  # aldri fyll databasen mer enn dette
 UA = {"User-Agent": "TerminalFC/1.0 (privat kunnskapsbank; https://github.com/jacobfuglesang/Terminal-FC)"}
 WIKI = "https://{lang}.wikipedia.org/w/api.php"
-CHUNK = 7000
-MAX_CHUNKS = 3
+CHUNK = 6500
+MAX_CHUNKS = 2
 TOPICS = ["shippingbegrep", "skipstyper", "fraktmarked", "råvarer", "geopolitikk", "regulering og miljø", "selskap",
           "aksjemarked", "trading og risiko", "makro", "historie", "mønster", "hendelser"]
 
@@ -637,6 +637,9 @@ def run(conn, minutes: float = 30) -> int:
             done += 1
             print(f"  ✓ {note['title'][:70]} [{note['topic']}] {len(note['body'])} tegn, "
                   f"{note['unverified']} punkter fjernet, {time.time() - t1:.0f} s")
+            first = next((ln[2:] for ln in note["body"].splitlines() if ln.startswith("- ")), "")
+            if first:
+                print(f"      f.eks.: {first[:160]}")
         except ai.RateLimited as e:
             print(f"  ! {e}")
             break
