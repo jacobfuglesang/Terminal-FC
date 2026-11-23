@@ -3,6 +3,8 @@
 Tallene bygger på AIS og kommer med omtrent en ukes forsinkelse. Brukes til «kø og trengsel» og varestrømmer:
 færre anløp i en eksporthavn kan bety kø eller stans; flere anløp i en importhavn kan bety høy etterspørsel.
 """
+import time
+
 import requests
 
 BASE = "https://services9.arcgis.com/weJ1QsnbMYJlCHdG/arcgis/rest/services"
@@ -44,35 +46,48 @@ def run(conn, backfill: bool = False) -> int:
     with conn.cursor() as cur:
         cur.execute("SELECT max(day) FROM port_activity")
         last = cur.fetchone()[0]
-    start = "2024-06-01" if backfill or not last else last.isoformat()
-    where = "portid IN (" + ",".join(f"'{p}'" for p in ports) + f") AND date >= '{start}'"
-    offset = rows = 0
+    start = "2025-01-01" if backfill or not last else last.isoformat()
+    rows = 0
     with conn.cursor() as cur:
-        while True:
-            r = requests.get(DATA, params={"where": where, "outFields": "*", "orderByFields": "date ASC", "resultOffset": offset,
-                                           "resultRecordCount": 1000, "f": "json"}, headers=H, timeout=90)
-            r.raise_for_status()
-            feats = [f["attributes"] for f in r.json().get("features", [])]
-            if not feats:
-                break
-            cur.executemany(
-                """INSERT INTO port_activity (day, portid, portname, country, calls, calls_tanker, calls_dry_bulk, calls_container,
-                     import, export, import_tanker, export_tanker, import_dry_bulk, export_dry_bulk)
-                   VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
-                   ON CONFLICT (day, portid) DO UPDATE SET calls=EXCLUDED.calls, calls_tanker=EXCLUDED.calls_tanker,
-                     calls_dry_bulk=EXCLUDED.calls_dry_bulk, calls_container=EXCLUDED.calls_container, import=EXCLUDED.import,
-                     export=EXCLUDED.export, import_tanker=EXCLUDED.import_tanker, export_tanker=EXCLUDED.export_tanker,
-                     import_dry_bulk=EXCLUDED.import_dry_bulk, export_dry_bulk=EXCLUDED.export_dry_bulk""",
-                [(a["date"][:10], a["portid"], a.get("portname"), a.get("country"), a.get("portcalls"), a.get("portcalls_tanker"),
-                  a.get("portcalls_dry_bulk"), a.get("portcalls_container"), a.get("import"), a.get("export"), a.get("import_tanker"),
-                  a.get("export_tanker"), a.get("import_dry_bulk"), a.get("export_dry_bulk")) for a in feats],
-            )
-            conn.commit()
-            rows += len(feats)
-            offset += len(feats)
-            if len(feats) < 1000:
-                break
+        # Én havn om gangen: store spørringer får tidsavbrudd (504) hos PortWatch
+        for pid in ports:
+            where = f"portid = '{pid}' AND date >= '{start}'"
+            offset = 0
+            while True:
+                feats = None
+                for attempt in range(3):
+                    try:
+                        r = requests.get(DATA, params={"where": where, "outFields": "*", "orderByFields": "date ASC", "resultOffset": offset,
+                                                       "resultRecordCount": 1000, "f": "json"}, headers=H, timeout=90)
+                        r.raise_for_status()
+                        feats = [f["attributes"] for f in r.json().get("features", [])]
+                        break
+                    except Exception as e:  # noqa: BLE001
+                        if attempt == 2:
+                            print(f"  ! {ports[pid][0]}: {e}")
+                        time.sleep(5 * (attempt + 1))
+                if not feats:
+                    break
+                cur.executemany(
+                    """INSERT INTO port_activity (day, portid, portname, country, calls, calls_tanker, calls_dry_bulk, calls_container,
+                         import, export, import_tanker, export_tanker, import_dry_bulk, export_dry_bulk)
+                       VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
+                       ON CONFLICT (day, portid) DO UPDATE SET calls=EXCLUDED.calls, calls_tanker=EXCLUDED.calls_tanker,
+                         calls_dry_bulk=EXCLUDED.calls_dry_bulk, calls_container=EXCLUDED.calls_container, import=EXCLUDED.import,
+                         export=EXCLUDED.export, import_tanker=EXCLUDED.import_tanker, export_tanker=EXCLUDED.export_tanker,
+                         import_dry_bulk=EXCLUDED.import_dry_bulk, export_dry_bulk=EXCLUDED.export_dry_bulk""",
+                    [(a["date"][:10], a["portid"], a.get("portname"), a.get("country"), a.get("portcalls"), a.get("portcalls_tanker"),
+                      a.get("portcalls_dry_bulk"), a.get("portcalls_container"), a.get("import"), a.get("export"), a.get("import_tanker"),
+                      a.get("export_tanker"), a.get("import_dry_bulk"), a.get("export_dry_bulk")) for a in feats],
+                )
+                conn.commit()
+                rows += len(feats)
+                offset += len(feats)
+                if len(feats) < 1000:
+                    break
         cur.execute("SELECT max(day) FROM port_activity")
         newest = cur.fetchone()[0]
+    if not rows and not newest:
+        raise RuntimeError("Fikk ingen havnedata fra PortWatch")
     print(f"  Havner: {len(ports)} funnet ({', '.join(n for n, _ in list(ports.values())[:20])}), {rows} rader, siste dato {newest}")
     return rows

@@ -35,12 +35,14 @@ def km(a: tuple[float, float], b: tuple[float, float]) -> float:
 
 
 def storms(cur) -> int:
-    since = (date.today() - timedelta(days=14)).isoformat()
-    r = requests.get(GDACS, params={"eventlist": "TC", "fromdate": since}, headers=UA, timeout=40)
+    since = (datetime.now(timezone.utc) - timedelta(days=21)).isoformat()[:10]
+    r = requests.get(GDACS, params={"eventlist": "TC"}, headers={**UA, "Accept": "application/json"}, timeout=40)
     r.raise_for_status()
     n = 0
     for f in r.json().get("features", []):
         p = f.get("properties", {})
+        if str(p.get("todate") or "")[:10] < since:
+            continue
         lon, lat = (f.get("geometry") or {}).get("coordinates", [None, None])[:2]
         if lat is None:
             continue

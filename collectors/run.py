@@ -35,8 +35,9 @@ JOBS = {
     "portwatch": ("IMF PortWatch (sund)", lambda c, bf: portwatch.run(c, backfill=bf)),
     "ais": ("aisstream.io (skip i nøkkelområder)", lambda c, bf: ais.run(c, seconds=150)),
     "alerts": ("Varsler", lambda c, bf: alerts.run(c)),
-    "reports": ("KI-rapportleser (kvartalsrapporter)", lambda c, bf: reports.run(c)),
-    "brokers": ("KI-meglerrapporter (ukentlige)", lambda c, bf: brokers.run(c, bf)),
+    "reports": ("KI-rapportleser (kvartalsrapporter)",
+                lambda c, bf: reports.run(c, max_reports=2, budget_s=200) if QUICK else reports.run(c)),
+    "brokers": ("KI-meglerrapporter (ukentlige)", lambda c, bf: brokers.run(c, bf, max_reports=2 if QUICK else 3, quick=QUICK)),
     "bunkers": ("Bunkerpriser (BunkerEx via Hellenic Shipping News)", lambda c, bf: bunkers.run(c, bf)),
     "weather": ("Vær (GDACS stormer, Panamakanalen)", lambda c, bf: weather.run(c, bf)),
     "ports": ("IMF PortWatch (havner)", lambda c, bf: ports.run(c, bf)),
@@ -51,6 +52,8 @@ GROUPS = {
     "all": ["prices", "announcements", "news", "shorts", "fundamentals", "freight", "portwatch", "ports", "bunkers", "weather", "ais",
             "alerts", "brief", "reports", "brokers"],
 }
+QUICK = False  # markedskjøringer hvert 15. minutt: korte KI-jobber, så kjøringen blir ferdig før neste starter
+
 SOFT = (ais.MissingKey, brief.MissingKey, reports.MissingKey, brokers.MissingKey)
 
 
@@ -61,6 +64,8 @@ def main() -> int:
     for part in (args[0] if args else "all").split(","):
         names += GROUPS.get(part.strip(), [part.strip()])
     names = list(dict.fromkeys(n for n in names if n in JOBS))
+    global QUICK
+    QUICK = (args[0] if args else "") == "market"
     failed = 0
     with db.connect() as conn:
         db.ensure_schema(conn)

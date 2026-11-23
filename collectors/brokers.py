@@ -94,9 +94,10 @@ def article_text(url: str) -> str:
     return (trafilatura.extract(r.text, include_tables=True) or "").strip()
 
 
-def run(conn, backfill: bool = False, max_reports: int = 3) -> int:
+def run(conn, backfill: bool = False, max_reports: int = 3, quick: bool = False) -> int:
     ai.require()
-    added = discover(conn)
+    # I raske kjøringer ser vi etter nye rapporter bare én gang i timen (det tar et minutt pga. pausene nettstedet ber om)
+    added = discover(conn) if not quick or datetime.now(timezone.utc).minute < 15 else 0
     big = ai.has("big")
     limit = 6 if big else max_reports
     with conn.cursor() as cur:
