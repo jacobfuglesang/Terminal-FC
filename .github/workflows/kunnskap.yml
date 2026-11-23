@@ -1,26 +1,23 @@
 name: Kunnskapsbank
 
-# Den lokale KI-modellen og Groq leser om shipping, shippingtrading, aksjehandel, verdensøkonomien og geopolitikken,
-# og lagrer korte notater.
+# Lørdagsresearchen gjøres av Claude (planlagt oppgave kl. 01:32 norsk tid, med Big J sin Claude-konto).
+# Denne arbeidsflyten forbereder den: fredag kl. 23:07 UTC regnes kursmønstrene ut på nytt (ingen KI), og hele
+# datagrunnlaget eksporteres til grenen kb-data, som Claude leser. Claudes notater hentes inn av «kunnskap-inn.yml».
 #
-# Hver lørdag rett etter at Groqs dagskvote er nullstilt (midnatt UTC, dvs. kl. 01:07 norsk vintertid / 02:07 sommertid):
-# leser så lenge det er noe å finne, men maks 10 timer, så den er ferdig tidlig på dagen.
-# GitHub tillater maks 6 timer per jobb, så lesingen er delt i to deler etter hverandre:
-#   del 1: inntil 340 minutter. Del 2 starter bare hvis det fortsatt er mer å lese, og bruker resten (til sammen maks 10 timer).
-# Groq er satt av til dette hele lørdagen. Sammenfatninger og ukens samfunnsrapport skrives mens Groq har kvote.
-# Kan også startes for hånd (Actions > Kunnskapsbank > Run workflow) eller ved å endre .github/kunnskap-start.txt.
+# Den gamle lesingen med den lokale modellen kan fortsatt startes for hånd: Actions > Kunnskapsbank > Run workflow
+# med antall minutter, eller ved å skrive et tall i .github/kunnskap-start.txt. Skriv «data» der for bare eksport.
 on:
   workflow_dispatch:
     inputs:
       minutes:
-        description: "Maks minutter til sammen (inntil 600 = 10 timer)"
+        description: "«data» for bare eksport, eller maks minutter lesing med lokal modell (inntil 600)"
         type: string
-        default: "300"
+        default: "data"
   schedule:
-    - cron: "7 0 * * 6"      # hver lørdag 00:07 UTC, like etter at Groqs dagskvote er nullstilt
+    - cron: "7 23 * * 5"     # fredag 23:07 UTC: datagrunnlag klart før Claude starter lørdag natt
   push:
     branches: [main]
-    paths: [".github/kunnskap-start.txt"]   # endre denne filen for å starte en lesing
+    paths: [".github/kunnskap-start.txt"]
 
 permissions:
   contents: read
@@ -33,6 +30,7 @@ jobs:
   plan:
     runs-on: ubuntu-latest
     outputs:
+      data: ${{ steps.t.outputs.data }}
       first: ${{ steps.t.outputs.first }}
       second: ${{ steps.t.outputs.second }}
     steps:
@@ -43,10 +41,13 @@ jobs:
           IN: ${{ inputs.minutes }}
         run: |
           M="$IN"
-          if [ "${{ github.event_name }}" = "schedule" ]; then
-            M=600
+          if [ "${{ github.event_name }}" = "schedule" ]; then M=data; fi
+          if [ "${{ github.event_name }}" = "push" ]; then M=$(head -1 .github/kunnskap-start.txt | grep -Eo '^(data|[0-9]{1,3})'); fi
+          if [ "$M" = "data" ]; then
+            echo "data=true" >> "$GITHUB_OUTPUT"; echo "first=0" >> "$GITHUB_OUTPUT"; echo "second=0" >> "$GITHUB_OUTPUT"
+            echo "Bare egne data og eksport"; exit 0
           fi
-          if [ "${{ github.event_name }}" = "push" ]; then M=$(grep -Eo '^[0-9]{1,3}' .github/kunnskap-start.txt | head -1); fi
+          echo "data=false" >> "$GITHUB_OUTPUT"
           if ! echo "$M" | grep -Eq '^[0-9]{1,3}$'; then M=60; fi
           if [ "$M" -gt 600 ]; then M=600; fi
           FIRST=$(( M > 340 ? 340 : M ))
@@ -55,6 +56,39 @@ jobs:
           echo "first=$FIRST" >> "$GITHUB_OUTPUT"
           echo "second=$SECOND" >> "$GITHUB_OUTPUT"
           echo "Del 1: $FIRST min, del 2: $SECOND min (bare hvis det er mer å lese)"
+
+  data:
+    needs: plan
+    if: needs.plan.outputs.data == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: collectors/requirements.txt
+      - run: pip install -r collectors/requirements.txt
+      - name: Kursmønstre og eksport
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          KNOWLEDGE_SCOPE: data
+          KB_DATA_DIR: /tmp/kb-data
+        working-directory: collectors
+        run: python -u run.py knowledge,export
+      - name: Legg datagrunnlaget i grenen kb-data
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd /tmp/kb-data
+          printf '# Datagrunnlag for Claude\n\nEksportert av arbeidsflyten Kunnskapsbank. Bare markedsdata.\n' > README.md
+          git init -q -b kb-data
+          git add -A
+          git -c user.name=terminal-fc-bot -c user.email=terminal-fc-bot@users.noreply.github.com commit -qm "Datagrunnlag $(date -u +%F)"
+          git push -qf "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" kb-data
 
   read1:
     needs: plan

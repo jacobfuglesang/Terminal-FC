@@ -181,6 +181,13 @@ def snapshot(conn) -> str:
             out.append("\n## Bakgrunn fra kunnskapsbanken (lest tidligere, ikke dagens tall)")
             for title, body, _ in pat + [b for b in bg if b not in pat]:
                 out.append(f"- {title}: {re.sub(r'\s+', ' ', body)[:450]}")
+        # Fundamentet: kjerneprinsippene og avsnittene som passer best til dagens nyheter
+        import foundation
+
+        fnd = foundation.relevant(" ".join(t for t, _, _ in nw) + " tank tørrbulk frakt", 1800)
+        if fnd:
+            out.append("\n## Fra fundamentet (fast rammeverk for analyse av shippingaksjer)")
+            out.append(fnd)
         if nw:
             out.append("\n## Nyheter siste 36 timer")
             out += [f"- {t} ({s}): {(x or '').strip()[:240]}" for t, s, x in nw]
@@ -193,7 +200,7 @@ PROMPT = (
     "Gi ingen kjøps- eller salgsråd, ingen kursmål og ikke gjengi analytikeres anbefalinger. "
     "Bruk disse overskriftene (markdown ##): «Kort fortalt» (tre punkter), «Tank», «Tørrbulk», «Container, bil og gass», "
     "«Geopolitikk og trafikk», «Følg med på» (kommende rapporter og datapunkter). Har KI lest nye kvartalsrapporter, "
-    "nevn det viktigste fra dem (booking for neste kvartal og dødpunkt) under riktig segment. Bruk samfunnssituasjonen som bakgrunn under «Geopolitikk og trafikk». Bruk bookingtabellen til å si "
+    "nevn det viktigste fra dem (booking for neste kvartal og dødpunkt) under riktig segment. Bruk fundamentet som rammeverk for vurderingene. Bruk samfunnssituasjonen som bakgrunn under «Geopolitikk og trafikk». Bruk bookingtabellen til å si "
     "kort hva bookingene betyr for inntjeningen dette kvartalet, og si at det er grove anslag. Bruk kunnskapsbanken bare som "
     "bakgrunn for å forklare sammenhenger; dagens tall skal komme fra dataene. Maks 450 ord. "
     "Oppgi tall med enhet og retning. Si det kort hvis data mangler for et område. Skriv enkelt og konkret.\n\nDATA:\n"

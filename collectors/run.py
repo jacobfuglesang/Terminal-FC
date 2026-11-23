@@ -27,6 +27,7 @@ import reports
 import shorts
 import knowledge
 import storage
+import export
 
 JOBS = {
     "prices": ("Yahoo Finance (kurser og fraktfutures)", lambda c, bf: prices.run(c, backfill=bf)),
@@ -47,6 +48,7 @@ JOBS = {
     "brief": ("KI-analytiker (morgenrapport)", lambda c, bf: brief.run(c)),
     # Egen arbeidsflyt (kunnskap.yml): lokal KI leser i KNOWLEDGE_MINUTES minutter
     "storage": ("Lagring (databasestørrelse)", lambda c, bf: storage.run(c)),
+    "export": ("Eksport av datagrunnlag til Claude", lambda c, bf: export.run(c, os.environ.get("KB_DATA_DIR", "../kb-data"))),
     "knowledge": ("Kunnskapsbank (lokal KI)", lambda c, bf: knowledge.run(c, minutes=float(os.environ.get("KNOWLEDGE_MINUTES", "30")))),
 }
 GROUPS = {

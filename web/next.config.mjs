@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   poweredByHeader: false,
+  // Fundamentet (content/fundament.md) leses fra fil ved kjøring: ta det med i serverpakken
+  outputFileTracingIncludes: { "/fundament": ["./content/**"], "/api/ask": ["./content/**"] },
   async headers() {
     return [
       {

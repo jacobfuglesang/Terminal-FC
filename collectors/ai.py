@@ -80,7 +80,8 @@ ROUTE = {
 # Andre jobber bruker da den lokale modellen eller venter. Big J har godkjent at morgenrapporten disse dagene
 # skrives av den lokale modellen. (24.11.2026 ble i stedet gjort av Claude, så Groq går som normalt den dagen.)
 GROQ_KNOWLEDGE_DAYS: set[str] = set()
-GROQ_KNOWLEDGE_WEEKDAYS = {5}  # 5 = lørdag
+# Lørdagsresearchen gjøres nå av Claude (planlagt oppgave), så Groq er ikke lenger satt av på lørdager.
+GROQ_KNOWLEDGE_WEEKDAYS: set[int] = set()
 
 
 def _today_oslo() -> str:

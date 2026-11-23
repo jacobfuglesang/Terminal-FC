@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { bookingLines } from "@/lib/bookingdata";
+import { relevantSections } from "@/lib/foundation";
 import { sql } from "@/lib/db";
 import { searchKnowledge } from "@/lib/knowledge";
 import { societyReports } from "@/lib/society";
@@ -57,6 +58,7 @@ export async function POST(req: Request) {
   // Morgenrapportens datagrunnlag har egne avsnitt for bookinger og kunnskap; de hentes ferskt over, så de kuttes her
   const snapText = snap ? snap.snapshot.replace(/\n## (Bookinger|Bakgrunn fra kunnskapsbanken)[\s\S]*?(?=\n## |$)/g, "") : "";
   const context = [
+    (() => { const f = relevantSections(question, 3000); return f ? `Fra fundamentet (fast grunnlag om trading i shipping):\n${f}\n` : ""; })(),
     soc[0] ? `Ukens samfunnssituasjon (uke ${soc[0].week}, skrevet lørdag):\n${soc[0].text.slice(0, 2500)}` : "",
     noteText ? `\nFra kunnskapsbanken (bakgrunn lest tidligere, ikke dagens tall):\n${noteText}` : "",
     books.length ? `\nBookinger og anslått inntjening (grovt anslag fra kvartalsrapportene, resten av dagene antatt til samme rate):\n${books.join("\n")}` : "",
@@ -71,7 +73,7 @@ export async function POST(req: Request) {
     "Hvis dataene ikke dekker spørsmålet, si det tydelig i stedet for å gjette. Ikke finn på tall. " +
     "Gi aldri kjøps- eller salgsråd, kursmål eller personlige investeringsråd, og ikke gjengi analytikeres anbefalinger. " +
     "Du kan forklare sammenhenger, hva tallene betyr og hva som kan påvirke dem. " +
-    "Bruk kunnskapsbanken til å forklare begreper og mønstre, og si fra når noe bygger på den. Bookinganslagene er grove; si det når du bruker dem.";
+    "Bruk fundamentet som rammeverk for analysen. Bruk kunnskapsbanken til å forklare begreper og mønstre, og si fra når noe bygger på den. Bookinganslagene er grove; si det når du bruker dem.";
 
   for (const model of await models(key)) {
     const payload: Record<string, unknown> = {

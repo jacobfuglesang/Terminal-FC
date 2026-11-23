@@ -1,2 +1,2 @@
-310
-# Endre tallet (minutter, maks 330) og lagre for å starte en lesing i kunnskapsbanken. Første store lesing 2026-11-23.
+data
+# Skriv «data» for bare eksport av datagrunnlaget til Claude, eller et tall (minutter) for lesing med den lokale modellen.

@@ -1138,8 +1138,30 @@ def process(url: str, kind: str, title: str) -> dict | None:
     return n
 
 
+def run_data(conn) -> int:
+    """Bare egne data (ingen KI): kursmønstre og reaksjoner regnes ut på nytt. Brukes på lørdager, når Claude gjør researchen."""
+    done = 0
+    urls = [f"intern:mønster:{c['symbol']}" for c in COMPANIES] + ["intern:mønster:marked", "intern:mønster:reaksjoner"]
+    with conn.cursor() as cur:
+        cur.executemany("""INSERT INTO kb_sources (url, kind, title, priority) VALUES (%s, 'mønster', %s, 1) ON CONFLICT (url) DO NOTHING""",
+                        [(u, u) for u in urls])
+    conn.commit()
+    for u in urls:
+        try:
+            note = process(u, "mønster", u)
+            if note and note != "expanded":
+                save_note(note)
+                done += 1
+        except Exception as e:  # noqa: BLE001
+            print(f"  ! {u}: {str(e)[:150]}")
+    print(f"  Egne data: {done} mønsternotater regnet ut på nytt")
+    return done
+
+
 def run(conn, minutes: float = 30) -> int:
     """Leser kilder i køen til tiden er brukt opp. Den lokale modellen brukes, så skykvotene ikke røres."""
+    if os.environ.get("KNOWLEDGE_SCOPE") == "data":
+        return run_data(conn)
     t0 = time.time()
     budget = minutes * 60
     pending = seed(conn)
