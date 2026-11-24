@@ -124,9 +124,11 @@ def run(conn, seconds: int = 150) -> int:
     key = os.environ.get("AISSTREAM_API_KEY", "").strip()
     if not key:
         raise MissingKey("Venter på aisstream-nøkkel (AISSTREAM_API_KEY)")
+    from websockets.exceptions import WebSocketException
+
     try:
         pos, static = asyncio.run(listen(key, seconds))
-    except (TimeoutError, OSError, asyncio.TimeoutError) as e:
+    except (TimeoutError, OSError, asyncio.TimeoutError, WebSocketException) as e:
         # aisstream er av og til nede; da hopper vi over denne gangen i stedet for å melde feil
         raise MissingKey(f"aisstream svarte ikke ({type(e).__name__}), prøver igjen neste kjøring") from e
     now = datetime.now(timezone.utc)
