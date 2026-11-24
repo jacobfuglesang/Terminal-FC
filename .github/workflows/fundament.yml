@@ -1,0 +1,33 @@
+name: Fundament – tak på 5 % av lagringen
+
+# Fundamentet (web/content/fundament.md) får bruke høyst 5 % av terminalens lagringsgrense.
+# Blir det større, slettes de eldste månedene i arkivet først (collectors/foundation_guard.py).
+on:
+  push:
+    branches: [main]
+    paths: ["web/content/fundament.md"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Sjekk størrelsen
+        working-directory: collectors
+        run: python -u foundation_guard.py
+      - name: Lagre hvis noe ble slettet
+        run: |
+          if ! git diff --quiet web/content/fundament.md; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898299+github-actions[bot]@users.noreply.github.com"
+            git commit -am "Fundament: eldste arkivavsnitt slettet (tak 5 % av lagringen)"
+            git push
+          fi

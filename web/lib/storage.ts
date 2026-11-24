@@ -1,8 +1,11 @@
+import fs from "node:fs";
+import path from "node:path";
 import { sql } from "@/lib/db";
 
 // Lagringsbruk i databasen (Neon gratis: 1 GB per prosjekt). Over grensen stopper all skriving i terminalen.
 export const LIMIT_BYTES = Number(process.env.DB_LIMIT_MB ?? 1024) * 1024 * 1024;
 export const RESEARCH_CAP = 0.9; // kunnskapsbanken skriver ikke over dette
+export const FOUNDATION_SHARE = 0.05; // fundamentet (i koden) får bruke høyst 5 % av grensen, eldste arkivmåned slettes først
 export const ALARM = 0.92; // lagringsvakten rydder over dette (eldste notater fra lesingen først)
 
 const GROUPS: { id: string; label: string; color: string; tables: RegExp; about: string }[] = [
@@ -16,7 +19,7 @@ const GROUPS: { id: string; label: string; color: string; tables: RegExp; about:
 
 export type StorageInfo = {
   total: number; limit: number; groups: { id: string; label: string; color: string; about: string; bytes: number; tables: { name: string; bytes: number }[] }[];
-  other: number;
+  other: number; foundation: number;
 };
 
 export async function storageInfo(): Promise<StorageInfo | null> {
@@ -38,8 +41,17 @@ export async function storageInfo(): Promise<StorageInfo | null> {
       g.tables.push(t);
     }
     const sum = groups.reduce((a, g) => a + g.bytes, 0);
-    return { total, limit: LIMIT_BYTES, groups: groups.filter((g) => g.bytes > 0).sort((a, b) => b.bytes - a.bytes), other: Math.max(0, total - sum) };
+    return { total, limit: LIMIT_BYTES, groups: groups.filter((g) => g.bytes > 0).sort((a, b) => b.bytes - a.bytes), other: Math.max(0, total - sum), foundation: foundationBytes() };
   } catch {
     return null;
+  }
+}
+
+/** Størrelsen på fundamentet (web/content/fundament.md). Ligger i koden, ikke i databasen. */
+export function foundationBytes(): number {
+  try {
+    return fs.statSync(path.join(process.cwd(), "content", "fundament.md")).size;
+  } catch {
+    return 0;
   }
 }

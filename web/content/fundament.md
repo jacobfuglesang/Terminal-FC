@@ -5,7 +5,8 @@ Sist oppdatert: 24.11.2026 (versjon 1, skrevet av Claude). Neste oppdatering: f�
 ## Om dette dokumentet
 - Dette er terminalens faste grunnlag for å analysere shippingaksjer. Både KI-modellene (morgenrapporten og KI-analytikeren) og du selv skal kunne bruke det som en felles «lærebok».
 - Dokumentet slettes aldri. Det ligger i koden (web/content/fundament.md), så alle gamle versjoner finnes i historikken på GitHub.
-- Claude oppdaterer det én gang i måneden (første lørdag). Prinsippene står fast. Avsnittet **Situasjonen nå** skrives om hver gang.
+- Claude oppdaterer det én gang i måneden (første lørdag). Prinsippene står fast. Avsnittet **Situasjonen nå** skrives nytt hver gang, og det gamle flyttes til **Arkiv: tidligere situasjonsbilder**.
+- Dokumentet får bruke høyst 5 prosent av terminalens lagringsgrense. Blir det større, slettes de eldste månedene i arkivet først. Kjerneprinsippene og de andre avsnittene røres ikke, og alle gamle versjoner finnes i historikken på GitHub.
 - Kildene er valgt etter troverdighet: **A** = offisielle kilder (IEA, EIA, IMF, Verdensbanken, WTO, sentralbanker, Skatteetaten, SEC/investor.gov, Baltic Exchange). **B** = bransjeorganisasjoner, forskning og fagmedier (BIMCO, Norges Rederiforbund, fagfellevurderte artikler, Lloyd's List, S&P Global). **C** = alt annet. Tall fra B- og C-kilder skal alltid sjekkes mot en annen kilde før de brukes i en vurdering.
 - Dokumentet gir ingen kjøps- eller salgsråd og ingen kursmål. Det beskriver hvordan markedet virker og hvordan en god analyse bygges. Beslutningen er alltid din.
 
@@ -232,6 +233,9 @@ Dette avsnittet skrives om hver måned. Tallene er hentet 24.11.2026.
 - Tank: krigen gir høye rater og lange ruter nå, men ordreboken er historisk stor og leveransene topper seg i 2028. Det er klassiske tegn på at syklusen er sen. Gjenåpning av Hormuz kan gi en kort topp (lageroppfylling) før tilbudet tar over.
 - Tørrbulk: sterkt nå, men BIMCO venter svakere balanse fra 2027.
 - Renter: både Norges Bank og Fed er i en strammende fase. Det kan dempe risikoviljen i aksjemarkedet.
+
+## Arkiv: tidligere situasjonsbilder
+- Her flyttes «Situasjonen nå» fra tidligere måneder, ett ###-avsnitt per måned (for eksempel «### November 2026»). Eldste måned slettes først hvis dokumentet når taket på 5 prosent av lagringen.
 
 ## Kilder
 - IEA Oil Market Report (A): https://iea.org/reports/oil-market-report-november-2026

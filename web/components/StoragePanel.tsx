@@ -1,4 +1,4 @@
-import { ALARM, RESEARCH_CAP, type StorageInfo } from "@/lib/storage";
+import { ALARM, FOUNDATION_SHARE, RESEARCH_CAP, type StorageInfo } from "@/lib/storage";
 
 const mb = (b: number) => `${(b / 1024 / 1024).toLocaleString("nb-NO", { maximumFractionDigits: b < 10 * 1024 * 1024 ? 1 : 0 })} MB`;
 const pct = (v: number) => `${(v * 100).toLocaleString("nb-NO", { maximumFractionDigits: 1 })} %`;
@@ -37,6 +37,9 @@ export default function StoragePanel({ info }: { info: StorageInfo | null }) {
             ))}
             <tr><td><span style={{ display: "inline-block", width: 10, height: 10, borderRadius: 2, background: "#4A4F58", marginRight: 6 }} />Postgres (system)</td>
               <td className="m">{mb(info.other)}</td><td className="m">{pct(info.other / info.limit)}</td><td className="src">Databasens egne tabeller og oversikter</td></tr>
+            <tr><td><span style={{ display: "inline-block", width: 10, height: 10, borderRadius: 2, background: "#7FD1C7", marginRight: 6 }} />Fundamentet (i koden)</td>
+              <td className="m">{mb(info.foundation)}</td><td className="m">{pct(info.foundation / info.limit)}</td>
+              <td className="src">Fast dokument på GitHub, ikke i databasen. Tak {mb(info.limit * FOUNDATION_SHARE)} ({Math.round(FOUNDATION_SHARE * 100)} %): eldste måned i arkivet slettes først.</td></tr>
           </tbody>
         </table>
       </div>
