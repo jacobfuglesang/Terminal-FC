@@ -1,0 +1,285 @@
+{
+ "model": "claude-opus-5-5",
+ "date": "2026-11-24",
+ "notes": [
+  {
+   "id": "tce-worldscale",
+   "kind": "begrep",
+   "topic": "shippingbegrep",
+   "title": "TCE og Worldscale: slik leses tankratene",
+   "body": "Tankrater oppgis enten i Worldscale (WS) eller som TCE (time charter equivalent) i dollar per dag. TCE er tallet som kan sammenlignes direkte med rederiets dødpunkt og med timecharter-rater.\n- Worldscale er en prisliste der WS 100 er en standardpris for en bestemt rute. WS 80 betyr 80 prosent av standarden.\n- TCE regnes ut ved å trekke drivstoff, havne- og kanalavgifter fra inntekten på turen og dele på antall dager.\n- Baltic Exchange publiserer tankrater både i Worldscale og som TCE, for eksempel VLCC TCE (snitt av TD3C, TD15 og TD22).\n- Høyere drivstoffpris gir lavere TCE ved samme Worldscale.\nBetydning for shippingaksjer: Se alltid på TCE, ikke Worldscale, når du sammenligner med dødpunkt og bookinger i terminalen.",
+   "source_title": "Baltic Exchange: Indices",
+   "link": "https://balticexchange.com/en/data-services/market-information0/indices.html",
+   "credibility": "A",
+   "symbols": []
+  },
+  {
+   "id": "ffa-terminkurve",
+   "kind": "begrep",
+   "topic": "fraktmarked",
+   "title": "FFA og terminkurven: markedets forventning til ratene",
+   "body": "En FFA (forward freight agreement) er en finansiell kontrakt på fremtidige fraktrater som gjøres opp mot Baltic Exchange sine indekser. Prisene på FFA viser hva markedet venter at ratene blir de neste månedene og kvartalene.\n- FFA handles for tørrbulk, tank, LPG, LNG og container (Baltic Exchange).\n- Clearinghus bruker Baltic sine terminkurver til daglig verdivurdering av kontraktene.\n- Studier finner at spot- og terminrater henger sammen over tid, og at spot har en tendens til å nærme seg terminene (Journal of Asset Management).\n- I terminalen følger BWET (tankterminer) og BDRY (tørrbulkterminer) terminkurven.\nBetydning for shippingaksjer: Aksjene priser fremtiden, så terminkurven sier ofte mer om kursen enn dagens spotrate. Når spot stiger, men terminene ikke følger etter, venter markedet at oppgangen er midlertidig.",
+   "source_title": "Baltic Exchange: Forward Freight Agreements",
+   "link": "https://www.balticexchange.com/en/FFAS.html",
+   "credibility": "A",
+   "symbols": []
+  },
+  {
+   "id": "tonnmil",
+   "kind": "begrep",
+   "topic": "shippingbegrep",
+   "title": "Tonnmil: hvorfor distanse betyr like mye som volum",
+   "body": "Etterspørselen etter skip måles i tonnmil, altså tonn last ganget med distansen den fraktes. Lengre ruter binder opp skipene lenger, slik at det trengs flere skip for samme volum.\n- Omveier rundt Kapp det gode håp i stedet for Suez gir flere tonnmil.\n- Når Europa kjøper olje fra USA i stedet for Russland, blir rutene lengre.\n- BIMCO venter at gjennomsnittlig seilingsdistanse i tørrbulk øker med 0,5–1,5 prosent i året til 2027.\nBetydning for shippingaksjer: Nyheter om nye handelsmønstre, sanksjoner og stengte kanaler må alltid oversettes til tonnmil før du vurderer effekten på ratene.",
+   "source_title": "gCaptain om BIMCO (januar 2026)",
+   "link": "https://gcaptain.com/longer-sailing-distances-set-to-bolster-dry-bulk-demand-through-2026-bimco-says",
+   "credibility": "B",
+   "symbols": []
+  },
+  {
+   "id": "dodpunkt-booking",
+   "kind": "begrep",
+   "topic": "shippingtrading",
+   "title": "Dødpunkt og bookinger: de viktigste tallene i en kvartalsrapport",
+   "body": "Dødpunktet (cash breakeven) er dagraten et skip må tjene for å dekke drift, renter og avdrag. Bookingene viser hvor stor del av neste kvartal som allerede er leid ut, og til hvilken rate.\n- Inntjening ≈ (rate − dødpunkt) × antall skipsdager.\n- Når mer enn halvparten av kvartalet er booket, er resultatet stort sett kjent før kvartalet er over.\n- Lav gjeld og moderne skip gir lavt dødpunkt og tåler lavere rater.\n- Terminalens bookingtabell regner ut et anslag med booket andel × booket rate + resten × antatt rate − dødpunkt.\nBetydning for shippingaksjer: Aksjene reagerer ofte mer på bookingene for neste kvartal enn på kvartalet som er ferdig. Sammenlign terminalens estimat med det markedet venter.",
+   "source_title": "Terminalens egen metode (bookingtabellen)",
+   "link": "https://fuglesang-five.vercel.app/bookinger",
+   "credibility": "B",
+   "symbols": [
+    "FRO.OL",
+    "OET.OL",
+    "HAFNI.OL"
+   ]
+  },
+  {
+   "id": "nav-pnav",
+   "kind": "begrep",
+   "topic": "shippingtrading",
+   "title": "NAV og P/NAV: verdien av flåten minus gjeld",
+   "body": "NAV (net asset value) er markedsverdien av skipene pluss kontanter minus gjeld. P/NAV er aksjekursen delt på NAV per aksje.\n- P/NAV under 1 betyr at aksjen priser selskapet lavere enn skipene er verdt.\n- Skipsverdier kommer fra meglere og verdsettelsesfirmaer og følger ratene og forventningene.\n- Lloyd's List har pekt på at større shippingaksjer i New York handlet med rabatt til NAV selv i gode år, mens de handlet med stor premie på midten av 2000-tallet.\nBetydning for shippingaksjer: P/NAV er et nyttig sammenligningsmål mellom like rederier, men ikke et kjøpssignal alene. NAV kan falle raskt når ratene og skipsverdiene faller.",
+   "source_title": "Lloyd's List",
+   "link": "https://www.lloydslist.com/LL1149181/Wall-Street-may-be-overvalued-That-doesnt-mean-shipping-equities-are",
+   "credibility": "B",
+   "symbols": []
+  },
+  {
+   "id": "utbytte-eksdato",
+   "kind": "begrep",
+   "topic": "shippingtrading",
+   "title": "Utbytte og eks-dato i shippingaksjer",
+   "body": "Mange rederier betaler ut store deler av overskuddet hvert kvartal. Utbyttet varierer derfor mye med ratene.\n- På eks-utbytte-dagen faller kursen omtrent like mye som utbyttet. Det er en flytting av verdi, ikke et tap.\n- Historisk utbytteavkastning bygger på fortidens rater. Spør hva utbyttet blir med dagens rater og bookinger.\n- På aksjesparekonto (ASK) er utbytte på aksjer skattefritt mens det står på kontoen, ifølge Skatte-ABC. Skatten kommer når du tar ut mer enn innskuddet.\nBetydning for shippingaksjer: Ikke tolk fallet på eks-dagen som et negativt signal. Sjekk alltid eks-dato før du vurderer en kortsiktig handel.",
+   "source_title": "Skatteetaten, Skatte-ABC: Aksjesparekonto",
+   "link": "https://www.skatteetaten.no/en/rettskilder/type/handboker/skatte-abc/gjeldende/a-10-aksjesparekonto/A-10.001/",
+   "credibility": "A",
+   "symbols": []
+  },
+  {
+   "id": "ask-regler",
+   "kind": "begrep",
+   "topic": "trading og risiko",
+   "title": "Aksjesparekonto (ASK): regler som påvirker kortsiktig handel",
+   "body": "På en aksjesparekonto kan du kjøpe og selge aksjer notert i EØS uten at det utløser skatt underveis. Du kan når som helst ta ut det du har satt inn skattefritt.\n- Uttak utover kostprisen (innskuddet) skattlegges etter fradrag for skjermingsfradrag.\n- Skattepliktige uttak i 2025 og 2026 beskattes med en effektiv sats på 37,84 prosent.\n- Tap kan bare trekkes fra når kontoen avvikles.\n- Kontanter på kontoen får ikke rente.\n- Aksjer notert utenfor EØS (for eksempel mange rederier i New York) kan ikke stå på ASK.\nBetydning for shippingaksjer: Mange korte handler på ASK gir ingen skatt før uttak. Det gjør det lettere å handle ofte, men tap kan ikke brukes før kontoen avsluttes.",
+   "source_title": "Skatteetaten: Aksjesparekonto",
+   "link": "https://www.skatteetaten.no/aksjesparekonto/",
+   "credibility": "A",
+   "symbols": []
+  },
+  {
+   "id": "ordretyper",
+   "kind": "begrep",
+   "topic": "trading og risiko",
+   "title": "Ordretyper: markedsordre, limitordre og stoppordre",
+   "body": "Hvordan du legger inn en ordre avgjør hvilken pris du får. Det amerikanske finanstilsynet SEC forklarer de vanligste ordretypene på investor.gov.\n- Markedsordre: kjøp eller salg med en gang til beste tilgjengelige pris. I et raskt marked kan deler av ordren bli utført til dårligere pris.\n- Limitordre: kjøp bare til en gitt pris eller lavere (salg til en gitt pris eller høyere). Prisen er sikret, men handelen er ikke garantert.\n- Stoppordre: blir en markedsordre når kursen når stoppnivået. Prisen kan avvike mye fra stoppnivået.\n- Stopp-limit: blir en limitordre ved stoppnivået. Unngår dårlig pris, men kan bli stående uutført.\nBetydning for shippingaksjer: Shippingaksjer svinger mye og kan åpne langt unna gårsdagens sluttkurs. Bruk limitordre i små og lite likvide rederier.",
+   "source_title": "SEC investor.gov: Types of Orders",
+   "link": "https://www.investor.gov/introduction-investing/investing-basics/how-stock-markets-work/types-orders",
+   "credibility": "A",
+   "symbols": []
+  },
+  {
+   "id": "oslo-auksjoner",
+   "kind": "begrep",
+   "topic": "aksjemarked",
+   "title": "Åpnings- og sluttauksjon på Oslo Børs",
+   "body": "Oslo Børs åpner og stenger med auksjoner der alle kjøps- og salgsordrer samles og handles til én felles pris (likevektspris).\n- Ordrene vises i ordreboken fra kl. 08:45.\n- Åpningsauksjon kl. 09:00:00–09:00:30.\n- Sluttauksjon fra kl. 16:25, og alt stenger kl. 16:30.\n- Kilde: Nordnet (C), sjekk mot Euronext ved tvil.\nBetydning for shippingaksjer: Mye av dagens volum skjer i sluttauksjonen. Store fond handler ofte der. En ordre i auksjonen kan få en annen pris enn siste handel før auksjonen.",
+   "source_title": "Nordnet: Åpnings- og sluttauksjon på Oslo Børs",
+   "link": "https://www.nordnet.no/faq/handel/handelsplassene-vare/apnings-og-sluttauksjon-pa-oslo-bors",
+   "credibility": "C",
+   "symbols": []
+  },
+  {
+   "id": "momentum-reversering",
+   "kind": "forskning",
+   "topic": "analysemetode",
+   "title": "Momentum og kortsiktig reversering i aksjer",
+   "body": "Forskning over mange tiår viser at aksjer som har steget mye siste måned, ofte går litt tilbake neste måned, mens trender over 3–12 måneder har en tendens til å fortsette. Jegadeesh, Luo, Subrahmanyam og Titman (Review of Financial Studies, 2025) forklarer dette med ulike typer investorer.\n- Kortsiktig reversering (1 måned) skyldes ofte støyhandel og kortsiktig prispress.\n- Momentum (3–12 måneder) skyldes at investorer reagerer for sakte på ny informasjon om fundamentale forhold.\n- Reverseringen er svakere i måneder etter kvartalsrapporter.\n- Jegadeesh og Titman (1993) dokumenterte momentum-effekten.\nBetydning for shippingaksjer: For en holdetid på 1 dag til 1 måned betyr det at en aksje som har steget kraftig uten nyheter, har økt risiko for tilbakefall, mens en oppgang drevet av en rapport eller varige rateendringer oftere holder.",
+   "source_title": "Jegadeesh m.fl., Review of Financial Studies 2025",
+   "link": "https://ideas.repec.org/a/oup/rfinst/v38y2025i12p3673-3728..html",
+   "credibility": "B",
+   "symbols": []
+  },
+  {
+   "id": "pead",
+   "kind": "forskning",
+   "topic": "analysemetode",
+   "title": "Etter-rapport-drift (PEAD)",
+   "body": "Post-earnings announcement drift betyr at aksjer som overrasker positivt (eller negativt) i en rapport, har en tendens til å fortsette i samme retning i uker etterpå. Forklaringen er at investorer reagerer for sakte på ny informasjon.\n- Effekten er godt dokumentert i forskning, men har blitt svakere etter hvert som flere kjenner den.\n- Correia og Barbosa (2019) viser at PEAD og momentum henger sammen med senere reversering over lengre tid.\n- Overraskelsen må måles mot det markedet ventet, ikke mot fjoråret.\nBetydning for shippingaksjer: I shipping er bookingene for neste kvartal ofte den viktigste overraskelsen i rapporten. Terminalens bookingestimat kan brukes til å vurdere om rapporten var bedre eller dårligere enn ventet.",
+   "source_title": "Correia og Barbosa, MPRA 2019",
+   "link": "https://mpra.ub.uni-muenchen.de/97458/",
+   "credibility": "B",
+   "symbols": []
+  },
+  {
+   "id": "raavarer-aksjer-bulk",
+   "kind": "forskning",
+   "topic": "shippingtrading",
+   "title": "Råvarepriser og avkastning i tørrbulkaksjer",
+   "body": "En studie i Journal of Shipping and Trade (2024) undersøkte 45 børsnoterte tørrbulkselskaper og 15 tørrbulkråvarer. Hypotesen er at råvarepriser påvirker fraktratene, som igjen påvirker aksjene.\n- Studien bygger på tidligere funn om at metall- og malmpriser leder fraktratene.\n- Rederier kan tjene penger både på å leie ut skip og på å kjøpe og selge skip (asset play).\n- FFA brukes lite til sikring i praksis fordi det er krevende å måle prisen riktig.\nBetydning for shippingaksjer: Jernmalm- og kullpriser kan være et tidlig signal for Capesize-ratene og dermed for tørrbulkaksjene.",
+   "source_title": "Journal of Shipping and Trade (2024)",
+   "link": "https://jshippingandtrade.springeropen.com/articles/10.1186/s41072-024-00178-9",
+   "credibility": "B",
+   "symbols": [
+    "2020.OL",
+    "HSHP.OL",
+    "JIN.OL"
+   ]
+  },
+  {
+   "id": "shippingfinans-oversikt",
+   "kind": "forskning",
+   "topic": "shippingtrading",
+   "title": "Hva forskningen sier om shippingfinans",
+   "body": "Alexandridis, Kavussanos, Kim, Tsouknidis og Visvikis har laget en oversikt over forskningen på shippingfinans. De peker på trekk som gjør shipping spesiell som investering.\n- Etterspørselen er avledet: den kommer fra handel med varer.\n- Fraktjenesten kan ikke lagres.\n- Ratene og skipsverdiene har svært høy volatilitet, klynger av store bevegelser, sykluser og sesong.\n- Næringen er svært følsom for internasjonal etterspørsel, tilbud og regler.\nBetydning for shippingaksjer: Disse trekkene forklarer hvorfor shippingaksjer svinger mer enn de fleste andre aksjer, og hvorfor risikostyring er så viktig.",
+   "source_title": "Alexandridis m.fl., A Survey of Shipping Finance Research",
+   "link": "https://core.ac.uk/download/155776106.pdf",
+   "credibility": "B",
+   "symbols": []
+  },
+  {
+   "id": "heuer-ach",
+   "kind": "metode",
+   "topic": "analysemetode",
+   "title": "Heuer: analyse av konkurrerende hypoteser (ACH)",
+   "body": "Richards Heuer arbeidet i CIA i 45 år og skrev boken Psychology of Intelligence Analysis (1999). Han viser hvordan hjernen bygger mentale modeller som gjør at vi lett overser informasjon som ikke passer.\n- ACH: skriv opp alle rimelige forklaringer (hypoteser) samtidig.\n- Vurder hvert bevis mot alle hypotesene. Det viktigste er bevis som skiller dem (diagnostisk verdi).\n- Forsøk å motbevise hypoteser i stedet for å bekrefte favoritten.\n- Boken har egne kapitler om kognitive skjevheter i vurdering av bevis.\nBetydning for shippingaksjer: Bruk ACH når en shippingaksje beveger seg uten klar grunn: er det rater, en nyhet, hele sektoren, eller én stor selger? Se etter det som skiller forklaringene.",
+   "source_title": "Heuer, Psychology of Intelligence Analysis (CIA)",
+   "link": "https://www.cia.gov/resources/csi/static/Pyschology-of-Intelligence-Analysis.pdf",
+   "credibility": "A",
+   "symbols": []
+  },
+  {
+   "id": "superforecasting",
+   "kind": "metode",
+   "topic": "analysemetode",
+   "title": "Superforecasting: hva som kjennetegner gode prognosemakere",
+   "body": "Good Judgment Project, ledet av Philip Tetlock og Barbara Mellers, vant en stor prognosekonkurranse for amerikansk etterretning i 2011–2015. Forskningen viser hvilke vaner som gir mer treffsikre prognoser.\n- Bruk utsiden først: start med grunnraten for slike hendelser, juster så for det spesielle.\n- Gi presise sannsynligheter (for eksempel 65 prosent), ikke bare «kanskje».\n- Juster ofte og i små steg når ny informasjon kommer.\n- Samle vurderinger fra flere: lag var i snitt mer treffsikre enn enkeltpersoner.\n- Mål treffsikkerheten med Brier-skår (lavere er bedre).\nBetydning for shippingaksjer: Terminalen kan bruke dette ved å be KI-analytikeren gi sannsynligheter for scenarier og senere sjekke hvor godt de traff.",
+   "source_title": "AI Impacts: Evidence on good forecasting practices from the Good Judgment Project",
+   "link": "https://aiimpacts.org/evidence-on-good-forecasting-practices-from-the-good-judgment-project/",
+   "credibility": "B",
+   "symbols": []
+  },
+  {
+   "id": "brier",
+   "kind": "metode",
+   "topic": "analysemetode",
+   "title": "Brier-skår: slik måles treffsikkerheten i prognoser",
+   "body": "Brier-skåren er summen av kvadrerte avvik mellom sannsynligheten du ga og det som faktisk skjedde (0 eller 1). Lavere skår betyr bedre prognoser.\n- Eksempel fra Mellers m.fl.: du gir 40 prosent sjanse for at en leder blir kastet. Blir han sittende, er skåren (1−0,6)² + (0−0,4)² = 0,16. Blir han kastet, er skåren 0,36.\n- Skåren straffer både å være for sikker og for usikker.\n- Den kan brukes til å sammenligne analytikere eller modeller over tid.\nBetydning for shippingaksjer: Hvis terminalen lagrer sannsynlighetene i morgenrapporten, kan treffsikkerheten måles over tid.",
+   "source_title": "Mellers, Tetlock m.fl., Improving the Accuracy of Geopolitical Risk Assessments",
+   "link": "https://scholar.harvard.edu/sites/scholar.harvard.edu/files/rzeckhauser/files/improving_the_accuracy_of_geopolitical_risk_assessments.pdf",
+   "credibility": "B",
+   "symbols": []
+  },
+  {
+   "id": "posisjonsstorrelse",
+   "kind": "metode",
+   "topic": "trading og risiko",
+   "title": "Posisjonsstørrelse: bestem tapet før du kjøper",
+   "body": "Profesjonelle tradere bestemmer først hvor mye de kan tape på én idé, og regner deretter ut hvor stor posisjonen kan være. Det gjør at én feil ikke ødelegger porteføljen.\n- Formel: posisjon = beløpet du tåler å tape ÷ avstanden i prosent til nivået der du innrømmer feil.\n- Eksempel: tåler 500 kr tap og stopp 10 prosent under kjøpskurs gir en posisjon på 5 000 kr.\n- Shippingaksjer svinger ofte flere prosent på en vanlig dag, så stoppnivåer som ligger for nært treffes av støy.\n- En stoppordre beskytter ikke mot at aksjen åpner langt lavere etter nyheter om natten (gap).\nBetydning for shippingaksjer: Tre tankaksjer beveger seg nesten som én. Regn samlet risiko per segment, ikke bare per aksje.",
+   "source_title": "SEC investor.gov: Stop, stop-limit og trailing stop",
+   "link": "https://www.investor.gov/additional-resources/news-alerts/alerts-bulletins/investor-bulletin-stop-stop-limit-trailing-stop",
+   "credibility": "A",
+   "symbols": []
+  },
+  {
+   "id": "sesong-shipping",
+   "kind": "begrep",
+   "topic": "fraktmarked",
+   "title": "Sesongmønstre i tank og tørrbulk",
+   "body": "Fraktmarkedene har sesongmønstre som gjentar seg mange år, men som ofte blir overstyrt av politikk og sjokk.\n- Tank: ofte sterkere i fjerde og første kvartal (vinter, lageroppbygging). Svakere om sommeren med vedlikehold på raffinerier.\n- Tørrbulk: ofte svakt rundt kinesisk nyttår og i første kvartal når Brasil har regntid. Sterkere i andre halvår.\n- De fleste rederier rapporterer i februar, mai, august og november.\n- Forskningen beskriver sesong som et av kjennetegnene ved fraktratene (Alexandridis m.fl.).\nBetydning for shippingaksjer: Sesong er et svakt signal. Bruk det bare som støtte til andre tegn, og sjekk om årets mønster ligner tidligere år.",
+   "source_title": "Alexandridis m.fl., A Survey of Shipping Finance Research",
+   "link": "https://core.ac.uk/download/155776106.pdf",
+   "credibility": "B",
+   "symbols": []
+  },
+  {
+   "id": "sykluser-tegn",
+   "kind": "begrep",
+   "topic": "fraktmarked",
+   "title": "Shippingsyklusen: fra høye rater til mange nye skip",
+   "body": "Shipping går i sykluser fordi det tar to til fire år fra et skip bestilles til det leveres. Høye rater fører til mange bestillinger, som gir mange nye skip og lavere rater senere.\n- Tegn på sen syklus: rekordbestillinger, stor ordrebok mot flåten, brukte skip dyrere enn nye, emisjoner og nye børsnoteringer.\n- Tegn på tidlig syklus: rater under dødpunkt over tid, mye opphugging, få bestillinger, aksjer langt under NAV.\n- Gammel flåte kan dempe nedturen fordi gamle skip hugges opp når ratene faller.\n- I 2026 er VLCC-ordreboken rundt 38 prosent av flåten (Veson via Seatrade), og brukte VLCC-er har vært dyrere enn nye (S&P Global CERA).\nBetydning for shippingaksjer: Tank har i 2026 flere tegn på sen syklus. Det sier lite om neste uke, men mye om risikoen de neste to årene.",
+   "source_title": "Seatrade Maritime",
+   "link": "https://seatrade-maritime.com/tankers/vlcc-newbuild-order-surge-set-to-stall-as-yards-max-out",
+   "credibility": "B",
+   "symbols": []
+  },
+  {
+   "id": "skyggeflate",
+   "kind": "begrep",
+   "topic": "geopolitikk",
+   "title": "Skyggeflåten og sanksjoner",
+   "body": "Skyggeflåten er gamle tankskip som frakter sanksjonert olje (fra Russland, Iran og Venezuela) utenom vanlige forsikringer og eierskap. Den påvirker både tilbudet av skip og opphuggingen.\n- Skip som går i skyggeflåten, er borte fra det vanlige markedet. Det strammer markedet for andre.\n- Gamle skip blir solgt til skyggeflåten i stedet for å bli hugget opp. Det holder den totale flåten større.\n- Nye sanksjoner kan føre til at olje blir liggende på skip mens kjøperne vurderer reglene (IEA, november 2025).\nBetydning for shippingaksjer: Strengere sanksjoner er ofte positivt for vanlige tankrederier på kort sikt. Hvis sanksjonene løftes, kan mange skip komme tilbake til det vanlige markedet.",
+   "source_title": "IEA Oil Market Report November 2025",
+   "link": "https://www.iea.org/reports/oil-market-report-november-2025",
+   "credibility": "A",
+   "symbols": [
+    "FRO.OL",
+    "OET.OL"
+   ]
+  },
+  {
+   "id": "lagre-tank",
+   "kind": "begrep",
+   "topic": "råvarer",
+   "title": "Oljelagre og tankmarkedet",
+   "body": "Når land bygger opp oljelagre, trengs det flere tankskip. Når lagrene tappes, trengs det færre. Lagrene er derfor en egen driver for tankratene i tillegg til forbruket.\n- IEA melder at lagrene på land er lave, mens olje på skip steg kraftig i oktober 2026.\n- BIMCO peker på at gjenåpning av Hormuz kan gi kraftig økning i etterspørselen fordi lagrene må fylles opp.\n- Contango i oljeprisen (terminpris over spot) kan gjøre det lønnsomt å lagre olje på skip (flytende lager).\nBetydning for shippingaksjer: Følg IEAs lagertall hver måned. En periode med lageroppfylling er historisk gode tider for råoljetank.",
+   "source_title": "IEA Oil Market Report November 2026",
+   "link": "https://iea.org/reports/oil-market-report-november-2026",
+   "credibility": "A",
+   "symbols": [
+    "FRO.OL",
+    "OET.OL",
+    "CMBTO.OL"
+   ]
+  },
+  {
+   "id": "valuta-rente",
+   "kind": "begrep",
+   "topic": "makro",
+   "title": "Dollar, krone og renter for Oslo-noterte rederier",
+   "body": "Rederiene tjener og rapporterer i dollar, men handles i kroner på Oslo Børs. Valuta og renter påvirker derfor kursen selv om ratene står stille.\n- Sterkere dollar (svakere krone) gir høyere verdi i kroner av samme overskudd.\n- Høyere renter øker finanskostnadene for rederier med mye flytende gjeld.\n- Høyere renter gjør fremtidige kontantstrømmer mindre verdt i dag og kan dempe risikoviljen.\n- Norges Bank hadde 4,5 prosent og Federal Reserve 3,75–4 prosent i november 2026.\nBetydning for shippingaksjer: Sjekk USD/NOK når en Oslo-notert shippingaksje beveger seg uten nyheter. Noe av bevegelsen kan være valuta.",
+   "source_title": "Norges Bank",
+   "link": "https://www.norges-bank.no/tema/pengepolitikk/Rentemoter/2026/november-2026/",
+   "credibility": "A",
+   "symbols": []
+  },
+  {
+   "id": "hendelsesreaksjon",
+   "kind": "begrep",
+   "topic": "shippingtrading",
+   "title": "Slik reagerer shippingaksjer på typiske hendelser",
+   "body": "Markedet reagerer ulikt på ulike typer nyheter. Det viktigste er om nyheten var ventet, og om den endrer forventet inntjening de neste 6–12 månedene.\n- Kvartalsrapport: bookingene for neste kvartal og utbyttet betyr mest.\n- Geopolitisk sjokk: kraftig første reaksjon, deretter ofte delvis tilbakegang når situasjonen avklares.\n- Emisjon: kursen faller ofte på kort sikt på grunn av utvanning.\n- Tilbakekjøp og innsidekjøp: tegn på at ledelsen synes aksjen er billig.\n- Store skipsbestillinger: kan tolkes negativt for ratene om to–tre år.\nBetydning for shippingaksjer: Spør alltid: hva var ventet, hva er nytt, og hvor lenge varer effekten?",
+   "source_title": "Terminalens fundament (samlet fra kildene i fundamentet)",
+   "link": "https://fuglesang-five.vercel.app/fundament",
+   "credibility": "B",
+   "symbols": []
+  },
+  {
+   "id": "sund-oversikt",
+   "kind": "begrep",
+   "topic": "geopolitikk",
+   "title": "De viktigste sundene for shipping",
+   "body": "Noen få smale sund og kanaler bærer en stor del av verdenshandelen. Når ett stenger, endres rutene og tonnmilene over hele verden.\n- Hormuz: olje og LNG fra Gulfen.\n- Bab el-Mandeb og Suezkanalen: Asia–Europa. Angrep i Rødehavet har tidligere sendt skip rundt Afrika.\n- Panamakanalen: USA–Asia. Tørke har tidligere begrenset passeringene.\n- Malaccastredet: inn til Øst-Asia. Bosporos: Svartehavet. De danske stredene: Østersjøen.\nBetydning for shippingaksjer: En stengning gir ikke automatisk høyere rater. Hvis lasten forsvinner (som ved Hormuz), kan effekten bli negativ for noen segmenter og positiv for andre.",
+   "source_title": "BIMCO via InterManager (Hormuz og tørrbulk)",
+   "link": "https://intermanager.org/?p=4624",
+   "credibility": "B",
+   "symbols": []
+  }
+ ]
+}

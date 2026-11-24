@@ -1,0 +1,204 @@
+{
+ "model": "claude-opus-5-5",
+ "date": "2026-11-24",
+ "notes": [
+  {
+   "id": "iea-omr-2026-11",
+   "kind": "rapport",
+   "topic": "råvarer",
+   "title": "IEA Oil Market Report november 2026: overskudd tilbake fra fjerde kvartal",
+   "body": "IEA publiserte sin månedlige oljerapport 13. november 2026. Byrået venter at etterspørselen faller kraftig i 2026 på grunn av krigen og høye priser, mens tilbudet fra Gulfen henter seg inn. Lagrene steg igjen i oktober for første gang siden juni.\n- Etterspørselen ventes å falle med 2,7 millioner fat per dag i 2026 til 102,3 millioner, og øke med 2 millioner fat per dag i 2027.\n- Tilbudet steg med 2,3 millioner fat per dag i oktober til 105,4 millioner.\n- Observerte lagre steg med 52 millioner fat i oktober. Økningen kom av at olje på skip steg med 86 millioner fat, til høyeste nivå siden januar.\n- IEA venter overskudd fra fjerde kvartal 2026 og et større overskudd i 2027.\nBetydning for shippingaksjer: Mer olje på sjøen og flere fat som skal fraktes er positivt for råoljetank på kort sikt. Et stort overskudd i 2027 kan gi lageroppbygging (positivt for tank) men også lavere oljepris og lavere produksjon senere. Følg om lagrene på land fylles opp igjen.",
+   "source_title": "IEA Oil Market Report November 2026",
+   "link": "https://iea.org/reports/oil-market-report-november-2026",
+   "credibility": "A",
+   "symbols": [
+    "FRO.OL",
+    "OET.OL",
+    "CMBTO.OL"
+   ]
+  },
+  {
+   "id": "eia-steo-2026-11",
+   "kind": "rapport",
+   "topic": "råvarer",
+   "title": "EIA Short-Term Energy Outlook november 2026: Brent rundt 100 dollar ut året",
+   "body": "Det amerikanske energibyrået EIA publiserte sin korttidsprognose 10. november 2026. EIA venter at Brent holder seg nær 100 dollar fatet ut 2026 og faller i 2027 når produksjonen i Midtøsten henter seg inn og lagrene bygges opp igjen.\n- Brent ventes i snitt 97 dollar i 2026 og 86 dollar i 2027, ifølge Oil & Gas Journal sin gjengivelse.\n- EIA skriver at lagrene ligger under femårssnittet til midten av neste år, og at et stramt tankmarked holder forskjellen mellom Brent og WTI bred.\n- Gassprisen i USA (Henry Hub) ventes lavere enn før på grunn av mild novembervær.\n- Neste rapport kommer 8. desember 2026.\nBetydning for shippingaksjer: EIA bekrefter at tankmarkedet er stramt. En bred Brent–WTI-forskjell gjør det lønnsomt å eksportere amerikansk olje over lange avstander, som gir tonnmil for VLCC og Suezmax.",
+   "source_title": "EIA Short-Term Energy Outlook (november 2026)",
+   "link": "https://www.eia.gov/outlooks/steo/report/?r=electricity",
+   "credibility": "A",
+   "symbols": [
+    "FRO.OL",
+    "OET.OL"
+   ]
+  },
+  {
+   "id": "wb-cmo-2026-10",
+   "kind": "rapport",
+   "topic": "råvarer",
+   "title": "Verdensbanken: råvarepriser opp 23 prosent i 2026",
+   "body": "Verdensbankens Commodity Markets Outlook fra 28. oktober 2026 venter en kraftig økning i råvareprisene i 2026 på grunn av krigen i Midtøsten, problemer med kornskiping i Svartehavet og høy etterspørsel etter gull. Banken venter en delvis tilbakegang i 2027.\n- Samlet råvareindeks: +23 prosent i 2026 og −7 prosent i 2027.\n- Energi: +32 prosent i 2026 og −12 prosent i 2027. Brent ventes i snitt 91 dollar i 2026 og 79 dollar i 2027.\n- Gjødsel: +14 prosent i 2026. Mat: +10 prosent i 2026 og +7 prosent i 2027.\n- Banken advarer om at tømte oljelagre gjør verden mer sårbar for nye forsyningssjokk.\nBetydning for shippingaksjer: Høye priser på energi og gjødsel betyr dyrere last og ofte mindre volum. Problemer i Svartehavet flytter kornhandelen til lengre ruter fra Amerika, som kan hjelpe Panamax og Supramax.",
+   "source_title": "World Bank Commodity Markets Outlook, oktober 2026 (via The Policy Edge og Reuters)",
+   "link": "https://www.policyedge.in/p/world-bank-sees-commodity-prices-jump-23-in-2026-but-food-prices-rising-again-in-2027",
+   "credibility": "B",
+   "symbols": []
+  },
+  {
+   "id": "wto-gtos-2026-10",
+   "kind": "rapport",
+   "topic": "verdensøkonomi",
+   "title": "WTO: varehandelen vokser 3,9 prosent i 2026 tross krigen",
+   "body": "WTO oppjusterte 8. oktober 2026 prognosen for varehandelen kraftig, fra 1,9 til 3,9 prosent i 2026. Hovedårsaken er store investeringer i KI-utstyr som halvledere og servere. Tjenestehandelen ble nedjustert fordi krigen rammer reiser og drivstoffkostnader.\n- Varehandel: 3,9 prosent i 2026 og 4,1 prosent i 2027.\n- Verdens BNP: 2,6 prosent i 2026 og 2,9 prosent i 2027.\n- KI-relaterte varer sto for nær 47 prosent av veksten i varehandelen i første halvår 2026.\n- WTO peker på at forskjellen mellom prisen på råolje og ferdige oljeprodukter tærer på husholdningenes kjøpekraft.\nBetydning for shippingaksjer: Sterk varehandel støtter container og bilskip. KI-varer er små i volum og fraktes mye med fly og container, så de hjelper lite for tank og tørrbulk.",
+   "source_title": "WTO Global Trade Outlook and Statistics, oktober 2026",
+   "link": "https://www.wto.org/english/news_e/news26_e/stat_08oct26_510_e.htm",
+   "credibility": "A",
+   "symbols": [
+    "MPCC.OL",
+    "WAWI.OL",
+    "HAUTO.OL"
+   ]
+  },
+  {
+   "id": "norges-bank-2026-11",
+   "kind": "rapport",
+   "topic": "makro",
+   "title": "Norges Bank holder renten på 4,5 prosent (november 2026)",
+   "body": "Norges Bank holdt styringsrenten uendret på 4,5 prosent på møtet 4. november 2026, etter en heving fra 4,25 prosent i september. Sentralbanken sier at prisveksten er for høy og at komiteen er klar til å heve renten mer.\n- Renten gjelder fra 6. november 2026.\n- Det ble ikke laget nye prognoser. Pengepolitisk rapport 4/26 kommer med rentemøtet 17. desember 2026.\n- Norges Bank har hevet renten to ganger siden krigen i Midtøsten startet, ifølge Dow Jones.\nBetydning for shippingaksjer: Høyere norsk rente kan styrke kronen. Rederier tjener i dollar, så en sterkere krone gir litt lavere verdi i kroner for Oslo-noterte aksjer. Høyere renter kan også dempe investorenes risikovilje.",
+   "source_title": "Norges Bank: Rentebeslutning november 2026",
+   "link": "https://www.norges-bank.no/tema/pengepolitikk/Rentemoter/2026/november-2026/",
+   "credibility": "A",
+   "symbols": []
+  },
+  {
+   "id": "fed-2026-10",
+   "kind": "rapport",
+   "topic": "makro",
+   "title": "Federal Reserve holder renten på 3,75–4 prosent (oktober 2026)",
+   "body": "Den amerikanske sentralbanken holdt renten i intervallet 3,75–4 prosent 28. oktober 2026, etter en heving i september. To av medlemmene (Cook og Hammack) ville heve igjen.\n- Vedtaket fikk ti mot to stemmer.\n- Neste møte er 8.–9. desember 2026, med ny renteprognose.\n- Den tiårige amerikanske statsrenten lå rundt 5 prosent etter møtet, ifølge StockAnalysis (C-kilde, sjekk mot offisiell kilde).\nBetydning for shippingaksjer: Høye amerikanske renter øker lånekostnadene for rederier med flytende rente og gjør utbytteaksjer relativt mindre attraktive. En sterk dollar er positiv for Oslo-noterte rederier målt i kroner.",
+   "source_title": "Federal Reserve: FOMC statement 28. oktober 2026",
+   "link": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm",
+   "credibility": "A",
+   "symbols": []
+  },
+  {
+   "id": "hormuz-ukmto-2026-11",
+   "kind": "hendelser",
+   "topic": "geopolitikk",
+   "title": "Hormuz i november 2026: trafikk under normalen og nye angrep",
+   "body": "Trafikken gjennom Hormuzstredet er fortsatt langt under nivået før krigen, og angrepene på skip fortsetter. De fleste skipene bruker en rute som USA hjelper til med å sikre.\n- UKMTO har registrert 88 treff av prosjektiler siden kampene startet igjen i juli, og minst 11 skip ble angrepet i uken til 6. november, tre av dem sank (Gulf News).\n- UKMTO telte 170 utgående og 155 inngående passeringer i ukesrapporten per 10. november.\n- Amerikanske data viste om lag 30 passeringer per dag med amerikansk hjelp 5.–7. november. UKMTO kan ikke bekrefte alle.\n- Minst 10 skip ble truffet de første ti dagene av november, etter 37 angrep i oktober, ifølge Washington Institute (gjengitt av Devdiscourse).\nBetydning for shippingaksjer: Angrep øker forsikringspremiene og gjør rederier mindre villige til å seile i Gulfen. Det holder ratene høye for skip som tør, men reduserer volumene. En våpenhvile kan gi både rateras (kortere risiko) og senere oppgang (lagre som skal fylles).",
+   "source_title": "Gulf News om UKMTO, november 2026",
+   "link": "https://gulfnews.com/world/mena/hormuz-shipping-below-normal-but-not-stalled-ukmto-1.500741839",
+   "credibility": "B",
+   "symbols": [
+    "FRO.OL",
+    "OET.OL",
+    "HAFNI.OL"
+   ]
+  },
+  {
+   "id": "hormuz-lli-2026-11",
+   "kind": "rapport",
+   "topic": "geopolitikk",
+   "title": "Lloyd's List Intelligence: Hormuz-passeringer i oktober 2026",
+   "body": "Lloyd's List Intelligence følger passeringene gjennom Hormuz uke for uke. Tallene gjelder skip uten tilknytning til Iran.\n- 550 passeringer i oktober mot 504 i september.\n- 442 av passeringene i oktober var tank- og gasskip, mot 419 i september.\n- Minst 321 passeringer av råoljetankere i de fire ukene til 1. november, mot 329 i september.\n- Selskaper med hovedkontor i Kina sto for 29 prosent av passeringene i oktober.\n- Trafikken av bulkskip i Gulfen nådde det høyeste nivået i konfliktperioden.\nBetydning for shippingaksjer: Trafikken øker sakte, men er langt under normalen. Kinesiske aktører tar en større del av handelen, som kan bety at vestlige rederier får mindre av lasten fra Gulfen.",
+   "source_title": "Lloyd's List Intelligence: Strait of Hormuz Brief 19. november 2026",
+   "link": "https://www.lloydslistintelligence.com/resources/blog/strait-of-hormuz-brief-19-november-2026",
+   "credibility": "B",
+   "symbols": []
+  },
+  {
+   "id": "crs-iran-2026",
+   "kind": "rapport",
+   "topic": "geopolitikk",
+   "title": "Kongressens forskningstjeneste: tidslinje for krigen med Iran 2026",
+   "body": "Den amerikanske kongressens forskningstjeneste (CRS) oppsummerer konflikten. Iran stengte Hormuz for skip som ikke fulgte Irans krav, USA svarte med blokade av iranske havner, og en våpenhvile i april holdt ikke.\n- Våpenhvile 7. april 2026. Iran dirigerte skip gjennom egne farvann og angrep skip som ikke fulgte reglene.\n- USA innførte blokade av iranske havner.\n- En avtale (MOU) i juni ble fulgt av at konflikten startet igjen i juli.\nBetydning for shippingaksjer: Konflikten har gått i bølger: våpenhvile, avtale, ny krig. Shippingaksjene har reagert kraftig på hver bølge. Tenk i scenarier og ikke anta at en ny våpenhvile varer.",
+   "source_title": "Congressional Research Service",
+   "link": "https://www.congress.gov/crs-product/R45281",
+   "credibility": "A",
+   "symbols": []
+  },
+  {
+   "id": "bimco-tank-2026",
+   "kind": "rapport",
+   "topic": "fraktmarked",
+   "title": "BIMCO om tankmarkedet 2026: to scenarier for Hormuz",
+   "body": "BIMCO lager to scenarier for tankmarkedet: ett der Hormuz gradvis åpner, og ett der forstyrrelsene varer ut 2026 og gjennom 2027. BIMCO peker på at land har tappet oljelagre i rekordfart for å dekke tapt forsyning.\n- Hvis forstyrrelsene varer, kan tanketterspørselen svekkes mer i 2027 fordi lagrene tømmes mens flåten vokser raskere.\n- Gjenåpning av sundet kan gi en kraftig økning i tanketterspørselen, fordi lagrene må fylles opp igjen.\n- BIMCO venter at produkttank får svakere år enn råoljetank, fordi leveransene av nye produkttankere er høye.\nBetydning for shippingaksjer: Gjenåpning av Hormuz er ikke bare negativt for tank: lageroppfylling kan gi en ny topp. Samtidig vokser flåten. Følg BIMCOs neste tankrapport (februar).",
+   "source_title": "BIMCO Tanker Shipping Market Overview & Outlook (mai og august 2026)",
+   "link": "https://www.bimco.org/news-insights/market-analysis/shipping-market-overview-and-outlook/2026/20260528-smoo-tanker/",
+   "credibility": "B",
+   "symbols": [
+    "FRO.OL",
+    "OET.OL",
+    "HAFNI.OL",
+    "CMBTO.OL"
+   ]
+  },
+  {
+   "id": "bimco-bulk-2026-11",
+   "kind": "rapport",
+   "topic": "fraktmarked",
+   "title": "BIMCO om tørrbulk november 2026: svakere balanse i 2027 og 2028",
+   "body": "BIMCO sin tørrbulkrapport fra november 2026 sier at angrep på skip øker usikkerheten. BIMCO venter at balansen mellom tilbud og etterspørsel svekkes gradvis i 2027 og 2028, fra et høyt nivå.\n- Lastevolumene ventes å vokse lite, mens leveransene av nye skip øker, særlig Capesize.\n- Problemer i Svartehavet er en ekstra risiko. Hvis russisk og ukrainsk korn ikke kan skipes i 2027 heller, kan veksten i korn bli opptil 4 prosentpoeng svakere.\n- Rundt 4 prosent av tørrbulklasten går normalt gjennom Hormuz, og rundt 210 bulkskip ble fanget i Gulfen (BIMCO, tidligere rapport).\nBetydning for shippingaksjer: Tørrbulkratene er sterke nå, men BIMCO venter at Capesize-leveranser presser markedet fra 2027. Det er relevant for 2020 Bulkers, Himalaya Shipping og CMB.TECH.",
+   "source_title": "BIMCO Dry Bulk Shipping Market Overview & Outlook (via Cyprus Shipping News, 2. november 2026)",
+   "link": "https://cyprusshippingnews.com/2026/11/02/bimco-dry-bulk-shipping-market-overview-outlook-3/",
+   "credibility": "B",
+   "symbols": [
+    "2020.OL",
+    "HSHP.OL",
+    "JIN.OL",
+    "CMBTO.OL"
+   ]
+  },
+  {
+   "id": "vlcc-ordrebok-2026",
+   "kind": "rapport",
+   "topic": "fraktmarked",
+   "title": "VLCC-ordreboken i 2026: rekordbestillinger og leveransetopp i 2028",
+   "body": "Rederiene har bestilt rekordmange VLCC-er i 2026 etter svært høye rater. Ordreboken er nå en av de største i historien målt mot flåten.\n- Ifølge Veson Nautical (Seatrade, september) er VLCC-ordreboken rundt 38 prosent av flåten, og verftene har lite ledig kapasitet.\n- MSI anslår at om lag 83 prosent av VLCC-ene bestilt i første halvår 2026 leveres i 2028 og 2029.\n- Megleren BRS har VLCC-leveranser på 60 i 2027, 127 i 2028 og 125 i 2029 og senere.\n- Flåten er gammel: rundt 20 prosent av VLCC-ene er 20 år eller eldre, ifølge Xclusiv (Lloyd's List).\nBetydning for shippingaksjer: En stor ordrebok er et klassisk tegn på sen syklus. Det betyr ikke at ratene faller i morgen, men at risikoen øker fra 2027–2028. Gammel flåte og opphugging kan dempe effekten.",
+   "source_title": "Seatrade Maritime / Veson Nautical / MSI / BRS",
+   "link": "https://www.seatrade-maritime.com/tankers/record-vlcc-orders-raise-fears-of-2028-tanker-squeeze",
+   "credibility": "B",
+   "symbols": [
+    "FRO.OL",
+    "OET.OL",
+    "CMBTO.OL"
+   ]
+  },
+  {
+   "id": "spg-cera-tank-2026",
+   "kind": "rapport",
+   "topic": "fraktmarked",
+   "title": "S&P Global CERA: skipsverdiene i tank ventes å falle",
+   "body": "S&P Global Energy CERA publiserte 28. oktober 2026 en flåteprognose for tank. Analysen sier at markedet går fra styrke drevet av mangel på skip til en periode der etterspørselen må jobbe hardere for å ta unna tilbudet.\n- Et fem år gammelt VLCC ble anslått til om lag 185 millioner dollar, opp 57 prosent på ni måneder og rundt 40 millioner over nybyggingsprisen på 145 millioner.\n- Tankflåten ventes å vokse fra 704 millioner dødvekttonn ved utgangen av 2025 til 778 millioner i 2027.\n- CERA venter at skipsverdiene faller, særlig for VLCC og Suezmax, når leveransene kommer.\nBetydning for shippingaksjer: Når brukte skip koster mer enn nye, er det et tegn på svært høy optimisme. Fall i skipsverdier gir lavere NAV, som ofte trekker aksjene ned selv om ratene fortsatt er gode.",
+   "source_title": "S&P Global, 3. november 2026",
+   "link": "https://www.spglobal.com/energy/en/news-research/latest-news/shipping/110326-tanker-fleet-growth-threatens-freight-boom-bullish-secondhand-markets-analysts",
+   "credibility": "B",
+   "symbols": [
+    "FRO.OL",
+    "OET.OL",
+    "CMBTO.OL"
+   ]
+  },
+  {
+   "id": "rederiforbundet-kr2026",
+   "kind": "rapport",
+   "topic": "shippingtrading",
+   "title": "Norges Rederiforbund: Konjunkturrapport 2026",
+   "body": "Norges Rederiforbund publiserte konjunkturrapporten i mars 2026. Den viser at flere norske rederier blir rammet av geopolitisk uro og må tilpasse ruter og investeringer.\n- Inntektene til medlemmene økte med 2 prosent i 2025 til 348 milliarder kroner.\n- USA har falt fra tredje til sjette viktigste marked for norske rederier (TU).\n- Rapporten har egne kapitler om skipsfart som brikke i et geopolitisk spill og om veien mot nullutslipp.\nBetydning for shippingaksjer: Rapporten er nyttig for å forstå norske rederiers forventninger og hvordan de tilpasser seg sanksjoner og toll. Den kom ut like etter at krigen startet, så forventningene kan være utdaterte.",
+   "source_title": "Norges Rederiforbund, Konjunkturrapport 2026",
+   "link": "https://www.rederi.no/globalassets/dokumenter/alle/rapporter/kr2026-no.pdf",
+   "credibility": "B",
+   "symbols": []
+  },
+  {
+   "id": "unctad-rmt-2026",
+   "kind": "rapport",
+   "topic": "shippingtrading",
+   "title": "UNCTAD Review of Maritime Transport 2026 lanseres 26. november",
+   "body": "FNs handels- og utviklingsorganisasjon UNCTAD lanserer sin årlige rapport om sjøtransport 26. november 2026. Rapporten har kommet ut hvert år siden 1968 og er en av de viktigste kildene til statistikk om sjøhandel, flåte og havner.\n- Rapporten er under embargo til 26. november kl. 10:00 (CET).\n- Fjorårets rapport (2025) anslo at sjøhandelen ville vokse bare 0,5 prosent i 2025, og i snitt 2 prosent i året i 2026–2030.\n- Mer enn 80 prosent av verdens varehandel fraktes sjøveien.\nBetydning for shippingaksjer: Les rapporten når den kommer for oppdaterte tall om tonnmil, flåtevekst og frakt. Den neste lørdagsresearchen bør oppsummere den.",
+   "source_title": "UNCTAD",
+   "link": "https://unctad.org/meeting/launch-review-maritime-transport-2026",
+   "credibility": "A",
+   "symbols": []
+  }
+ ]
+}
