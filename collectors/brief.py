@@ -37,6 +37,16 @@ def series_change(cur, table_sql: str, params: tuple, days: int):
     return last_day, last, pct(last, ref)
 
 
+def age_note(d, max_days: int) -> str:
+    """Merker tall som er eldre enn normalt, så KI-en og leseren ikke tror de er ferske."""
+    try:
+        dd = d if isinstance(d, date) else date.fromisoformat(str(d)[:10])
+    except Exception:  # noqa: BLE001
+        return ""
+    days = (date.today() - dd).days
+    return f" – GAMLE TALL ({days} dager)" if days > max_days else ""
+
+
 def snapshot(conn) -> str:
     out = [f"Dato: {date.today():%d.%m.%Y}"]
     with conn.cursor() as cur:
@@ -46,12 +56,12 @@ def snapshot(conn) -> str:
             d, v, w = series_change(cur, q, (sym,), 7)
             _, _, m = series_change(cur, q, (sym,), 30)
             if v:
-                out.append(f"- {MARKET[sym][0]}: {v:.2f} USD ({d}), 1 uke {fp(w)}, 1 mnd {fp(m)}")
+                out.append(f"- {MARKET[sym][0]}: {v:.2f} USD ({d}), 1 uke {fp(w)}, 1 mnd {fp(m)}{age_note(d, 4)}")
         for s, label in (("BDI", "Baltic Dry Index"), ("WCI", "Drewry WCI (USD/40ft)"), ("SCFI", "SCFI"), ("US_CRUDE", "USAs kommersielle oljelagre (mill. fat)")):
             q = "SELECT day, value FROM freight WHERE series = %s ORDER BY day DESC LIMIT 60"
             d, v, w = series_change(cur, q, (s,), 6)
             if v:
-                out.append(f"- {label}: {v:,.1f} ({d}), endring siste uke {fp(w)}")
+                out.append(f"- {label}: {v:,.1f} ({d}), endring siste uke {fp(w)}{age_note(d, 4 if s == 'BDI' else 10)}")
 
         out.append("\n## Råvarer og valuta (endring 1 uke)")
         for sym in ("BZ=F", "TTF=F", "TIO=F", "HG=F", "NOK=X"):
@@ -73,7 +83,7 @@ def snapshot(conn) -> str:
             ly = cur.fetchone()[0]
             out.append(f"- {name}: snitt siste 7 dager {last7:.0f} (forrige 3 uker {prev:.0f}, samme tid i fjor {float(ly):.0f}" if ly else
                        f"- {name}: snitt siste 7 dager {last7:.0f} (forrige 3 uker {prev:.0f}")
-            out[-1] += f"), siste dato {r[0][0]}"
+            out[-1] += f"), siste dato {r[0][0]}{age_note(r[0][0], 5)}"
 
         out.append("\n## Rederiene (kurs i NOK, endring 1 uke / 1 mnd)")
         for c in COMPANIES:
@@ -203,7 +213,10 @@ PROMPT = (
     "nevn det viktigste fra dem (booking for neste kvartal og dødpunkt) under riktig segment. Bruk fundamentet som rammeverk for vurderingene. Bruk samfunnssituasjonen som bakgrunn under «Geopolitikk og trafikk». Bruk bookingtabellen til å si "
     "kort hva bookingene betyr for inntjeningen dette kvartalet, og si at det er grove anslag. Bruk kunnskapsbanken bare som "
     "bakgrunn for å forklare sammenhenger; dagens tall skal komme fra dataene. Maks 450 ord. "
-    "Oppgi tall med enhet og retning. Si det kort hvis data mangler for et område. Skriv enkelt og konkret.\n\nDATA:\n"
+    "Oppgi tall med enhet og retning. Si det kort hvis data mangler for et område. Skriv enkelt og konkret. "
+    "VIKTIG om begreper: BWET og BDRY er kursen på fond som følger fraktfutures (i dollar per andel), ikke fraktrater. "
+    "Skriv «BWET-kursen» eller «tankfraktfondet BWET», aldri «BWET-rate». Merknader merket [egen beregning] er terminalens egne "
+    "utregninger, ikke offisielle tall. Står det at et tall er gammelt (eldre enn noen dager), si det.\n\nDATA:\n"
 )
 
 

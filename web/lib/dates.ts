@@ -18,3 +18,10 @@ export function completeWeekIndex(rows: { reported: number }[]): number {
   }
   return rows.length - 1;
 }
+
+/** «6 dager gamle tall» når siste datapunkt er eldre enn normalt, ellers null. Brukes for å vise at tall ikke er ferske. */
+export function staleLabel(iso: string | null | undefined, maxDays = 4): string | null {
+  if (!iso) return null;
+  const days = Math.floor((Date.now() - new Date(iso.slice(0, 10) + "T00:00:00Z").getTime()) / 86400000);
+  return days > maxDays ? `${days} dager gamle tall` : null;
+}

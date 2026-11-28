@@ -1,8 +1,10 @@
 name: Kunnskapsbank
 
 # Lørdagsresearchen gjøres av Claude (planlagt oppgave kl. 01:32 norsk tid, med Big J sin Claude-konto).
-# Denne arbeidsflyten forbereder den: fredag kl. 23:07 UTC regnes kursmønstrene ut på nytt (ingen KI), og hele
-# datagrunnlaget eksporteres til grenen kb-data, som Claude leser. Claudes notater hentes inn av «kunnskap-inn.yml».
+# Denne arbeidsflyten forbereder den: kursmønstrene regnes ut på nytt (ingen KI), og hele datagrunnlaget eksporteres
+# til grenen kb-data, som Claude leser. Claudes notater hentes inn av «kunnskap-inn.yml».
+# Viktig: GitHubs tidsplan kan komme flere timer for sent (28.11.2026 startet den 5,5 timer etter 23:07). Claude starter
+# derfor selv eksporten ved å skrive til .github/kunnskap-start.txt, og venter på at den er ferdig. Tidsplanen er bare reserve.
 #
 # Den gamle lesingen med den lokale modellen kan fortsatt startes for hånd: Actions > Kunnskapsbank > Run workflow
 # med antall minutter, eller ved å skrive et tall i .github/kunnskap-start.txt. Skriv «data» der for bare eksport.

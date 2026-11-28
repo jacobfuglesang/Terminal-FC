@@ -1,0 +1,18 @@
+{
+  "_om": "Fast reserve for bookinganslaget: antall skip og dødpunkt per rederi og segment, fra selskapenes egne rapporter. Brukes bare når kvartalsrapporten i terminalen mangler tallet. Dine egne tall på Bookinger-siden går alltid foran. breakeven_kind: cash = kontant dødpunkt (drift, renter og avdrag), opex = bare driftskostnad (nedre grense, gir for høyt overskudd). Oppdateres av Claude på lørdager.",
+  "updated": "2026-11-28",
+  "rows": [
+    {"symbol": "OET.OL", "segment": "VLCC", "vessels": 8, "breakeven": 9936, "breakeven_kind": "opex",
+     "source": "Okeanis Q3 2026 (flåte) og Q2 2026 (daglig opex 9 936 USD)", "url": "https://www.stocktitan.net/sec-filings/ECO/6-k-okeanis-eco-tankers-corp-current-report-foreign-issuer-51cc7bde5eaf.html"},
+    {"symbol": "OET.OL", "segment": "Suezmax", "vessels": 10, "breakeven": 9936, "breakeven_kind": "opex",
+     "source": "Okeanis Q3 2026 (flåte) og Q2 2026 (daglig opex 9 936 USD)", "url": "https://www.stocktitan.net/sec-filings/ECO/6-k-okeanis-eco-tankers-corp-current-report-foreign-issuer-51cc7bde5eaf.html"},
+    {"symbol": "HAFNI.OL", "segment": "flåtesnitt", "vessels": 112, "breakeven": 13000, "breakeven_kind": "cash",
+     "source": "Hafnia Q3 2026: 101 eide og 11 innleide skip. Dødpunkt under 13 000 USD (HC Andersen Capital, betalt analyse)", "url": "https://www.businesswire.com/news/home/20261117261551/en/Hafnia-Limited-Announces-Financial-Results-For-The-Three-and-Nine-Months-Ended-30-September-2026"},
+    {"symbol": "BWLPG.OL", "segment": "flåtesnitt", "vessels": 46, "breakeven": 24900, "breakeven_kind": "cash",
+     "source": "BW LPG Q3 2026: 46 VLGC (inkl. 7 i BW LPG India), all-in kontant dødpunkt ca. 24 900 USD", "url": "https://storage.mfn.se/f998eb44-a643-4ff1-968a-12778b34affc/bw-lpg-q3-2026-interim-financial-report.pdf"},
+    {"symbol": "CMBTO.OL", "segment": "VLCC", "vessels": 4, "breakeven": null, "breakeven_kind": null,
+     "source": "CMB.TECH Q3 2026: 4 VLCC (+1 nybygg) på vannet. Dødpunkt ikke oppgitt", "url": "https://cmb.tech/public/Q3-2026-Earnings-release.pdf"},
+    {"symbol": "CMBTO.OL", "segment": "Suezmax", "vessels": 14, "breakeven": null, "breakeven_kind": null,
+     "source": "CMB.TECH Q3 2026: 14 Suezmax på vannet, noen solgt med levering i Q4. Dødpunkt ikke oppgitt", "url": "https://cmb.tech/public/Q3-2026-Earnings-release.pdf"}
+  ]
+}

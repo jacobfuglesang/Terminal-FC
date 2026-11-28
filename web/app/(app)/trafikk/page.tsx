@@ -1,6 +1,7 @@
 import Link from "next/link";
 import ChokeExplorer, { type ChokeSeries } from "@/components/ChokeExplorer";
 import GlobalAisMap from "@/components/GlobalAisMap";
+import { staleLabel } from "@/lib/dates";
 import { getChokepoints, getPanama, getPortActivity, getZoneStats } from "@/lib/db";
 import { fmt, osloTime, pct, up } from "@/lib/format";
 
@@ -68,7 +69,7 @@ export default async function Trafikk() {
       <section className="panel" aria-labelledby="h-sund">
         <div className="ph">
           <h2 id="h-sund">Skip gjennom sundene</h2>
-          <span className="src">IMF PortWatch · snitt per dag · siste dato {rows[0]?.lastDay ?? "–"}</span>
+          <span className="src">IMF PortWatch · snitt per dag · siste dato {rows[0]?.lastDay ?? "–"}{staleLabel(rows[0]?.lastDay, 5) && <b style={{ color: "#F5C451" }}> · {staleLabel(rows[0]?.lastDay, 5)} (PortWatch kommer med forsinkelse)</b>}</span>
         </div>
         {rows.length === 0 ? <div className="empty">PortWatch-dataene hentes ved neste daglige kjøring.</div> : (
           <div style={{ overflowX: "auto" }}>
@@ -135,7 +136,7 @@ export default async function Trafikk() {
 
         <div className="ph" style={{ marginTop: 14 }}>
           <h2>Havner: anløp og varer</h2>
-          <span className="src">IMF PortWatch · snitt per dag · siste dato {portRows[0]?.last ?? "–"}</span>
+          <span className="src">IMF PortWatch · snitt per dag · siste dato {portRows[0]?.last ?? "–"}{staleLabel(portRows[0]?.last, 7) && <b style={{ color: "#F5C451" }}> · {staleLabel(portRows[0]?.last, 7)}</b>}</span>
         </div>
         {portRows.length === 0 ? <div className="empty">Havnedata hentes ved neste daglige kjøring.</div> : (
           <div style={{ overflowX: "auto" }}>

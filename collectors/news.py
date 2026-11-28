@@ -138,15 +138,25 @@ def keep(text: str, rule) -> bool:
 
 
 def collect() -> tuple[list[dict], int]:
-    items, blocked, seen = [], 0, set()
-    for feed_name, url, needs_relevance in FEEDS:
+    from concurrent.futures import ThreadPoolExecutor
+
+    def get(feed):
         try:
-            r = requests.get(url, headers=UA, timeout=(10, 25))
+            r = requests.get(feed[1], headers=UA, timeout=(10, 25))
             r.raise_for_status()
+            return feed, r.content, None
         except requests.RequestException as e:
-            print(f"  ! {feed_name}: {e}")
+            return feed, None, e
+
+    # Strømmene hentes samtidig (før: én og én), rekkefølgen beholdes
+    with ThreadPoolExecutor(max_workers=6) as pool:
+        results = list(pool.map(get, FEEDS))
+    items, blocked, seen = [], 0, set()
+    for (feed_name, url, needs_relevance), content, err in results:
+        if err is not None:
+            print(f"  ! {feed_name}: {err}")
             continue
-        parsed = feedparser.parse(r.content)
+        parsed = feedparser.parse(content)
         for e in parsed.entries:
             src = e.get("source", {}).get("title") if isinstance(e.get("source"), dict) else None
             title, src = _split_source(_clean(e.get("title", "")), src)
@@ -300,7 +310,7 @@ def ai_summary(item: dict) -> str | None:
     return out[:400] or None
 
 
-def enrich(conn, max_fetch: int = 15, max_ai: int = 12) -> tuple[int, int, int]:
+def enrich(conn, max_fetch: int = 15, max_ai: int = 12, quick: bool = False) -> tuple[int, int, int]:
     """Henter hele artikkelen og lager sammendrag for saker som mangler det."""
     import time
 
@@ -308,6 +318,9 @@ def enrich(conn, max_fetch: int = 15, max_ai: int = 12) -> tuple[int, int, int]:
 
     if ai.key("mistral") or ai.key("gemini"):
         max_fetch, max_ai = 30, 30  # mer kapasitet: flere hele artikler og sammendrag per kjøring
+    if quick:
+        # Markedskjøringene hvert 15. minutt: litt om gangen, så kjøringen blir ferdig raskt (morgenen tar resten)
+        max_fetch, max_ai = min(max_fetch, 8), min(max_ai, 6)
 
     fetched = blocked = summarized = 0
     with conn.cursor() as cur:
@@ -359,7 +372,7 @@ def enrich(conn, max_fetch: int = 15, max_ai: int = 12) -> tuple[int, int, int]:
                 if summarized <= 3:
                     print(f"  Eksempel på sammendrag: «{title[:70]}» → {s}")
             # Holder oss innenfor Groqs gratisgrense per minutt (KI-laget venter selv for Mistral og Gemini)
-            time.sleep(1 if (ai.key("mistral") or ai.key("gemini")) else 6)
+            time.sleep(1 if (ai.key("mistral") or ai.key("gemini")) else 6)  # Groqs grense per minutt (tokens), ikke senk
     return fetched, blocked, summarized
 
 
@@ -371,19 +384,21 @@ def purge(conn) -> int:
             rules.setdefault(name, set()).add(rule)
     gone = 0
     with conn.cursor() as cur:
-        cur.execute("SELECT id, title, coalesce(excerpt,''), feed FROM news WHERE feed IN ('Google News', 'Google Nyheter')")
-        for nid, title, excerpt, feed in cur.fetchall():
+        cur.execute("SELECT id, title, coalesce(excerpt,''), feed, companies FROM news WHERE feed IN ('Google News', 'Google Nyheter')")
+        for nid, title, excerpt, feed, old in cur.fetchall():
             text = f"{title} {excerpt}"
             if not any(keep(text, r) for r in rules.get(feed, {True})):
                 cur.execute("DELETE FROM news WHERE id = %s", (nid,))
                 gone += 1
             else:
-                cur.execute("UPDATE news SET companies = %s WHERE id = %s", (companies(text), nid))
+                comp = companies(text)
+                if list(old or []) != comp:  # skriver bare når noe er endret (før: én oppdatering per sak hver gang)
+                    cur.execute("UPDATE news SET companies = %s WHERE id = %s", (comp, nid))
     conn.commit()
     return gone
 
 
-def run(conn) -> int:
+def run(conn, quick: bool = False) -> int:
     items, blocked = collect()
     new = 0
     with conn.cursor() as cur:
@@ -404,7 +419,7 @@ def run(conn) -> int:
         cur.execute("DELETE FROM news WHERE published < now() - interval '7 days'")
     conn.commit()
     purged = purge(conn)
-    fetched, blocked2, summarized = enrich(conn)
+    fetched, blocked2, summarized = enrich(conn, quick=quick)
     with conn.cursor() as cur:
         cur.execute(
             """INSERT INTO news_blocked (day, n) VALUES (CURRENT_DATE, %s)

@@ -171,14 +171,18 @@ A_DOMAINS = ("imf.org", "iea.org", "eia.gov", "wto.org", "worldbank.org", "uncta
              "norges-bank.no", "bis.org", "oecd.org", "opec.org", "imo.org", "europa.eu", "sec.gov", "investor.gov", "rederi.no",
              "dnv.com", "ssb.no", "finanstilsynet.no", "pancanal.com", "portwatch.imf.org", "cftc.gov")
 B_DOMAINS = ("arxiv.org", "fedinprint.org", "newyorkfed.org", "cia.gov", "nber.org", "stlouisfed.org")
-CRED_LABEL = {"A": "offisiell kilde", "B": "forskning", "C": "oppslagsverk"}
+CRED_LABEL = {"A": "offisiell kilde", "B": "forskning", "C": "oppslagsverk", "E": "egen beregning"}
 
 
 def credibility(url: str) -> str:
     u = url.lower()
     if u.startswith("intern:hendelser:"):
         return "B"  # bygger på nyheter fra mange medier
-    if u.startswith(("intern:", "sec:", "secrisk:")):
+    if u.startswith("intern:syntese:"):
+        return "B"  # sammenfatning av flere notater
+    if u.startswith("intern:"):
+        return "E"  # egen beregning fra terminalens data (kursmønstre, reaksjoner, selskapsdata): ikke en offisiell kilde
+    if u.startswith(("sec:", "secrisk:")):
         return "A"
     if u.startswith("arxiv:"):
         return "B"
@@ -970,7 +974,7 @@ def events_material(conn, seg: str) -> str:
 
 SYN_PROMPT = """Du skriver et sammenfattende notat på norsk bokmål til en privat shippingterminal: «{title}».
 Leseren handler shippingaksjer på Oslo Børs og holder dem fra 1 dag til 1 måned. Bygg BARE på notatene under (de er lest fra kilder
-tidligere). Hvert notat er merket med kildetype: stol mest på [offisiell kilde], deretter [forskning]. Bruk [oppslagsverk]
+tidligere). Hvert notat er merket med kildetype: stol mest på [offisiell kilde], deretter [forskning] og [egen beregning] (terminalens egne utregninger). Bruk [oppslagsverk]
 (Wikipedia) bare til begreper og bakgrunn, og aldri når det strider mot en offisiell kilde. Ikke finn på tall. Ingen kjøps- eller salgsråd og ingen kursmål. Gjør det praktisk: hva man ser etter, i hvilken rekkefølge,
 og hvilke feil man skal unngå.
 
@@ -1275,9 +1279,9 @@ def search(conn, text: str, limit: int = 5, kinds: tuple[str, ...] | None = None
     try:
         with conn.cursor() as cur:
             cur.execute(f"""SELECT title || ' [' || CASE credibility WHEN 'A' THEN 'offisiell kilde' WHEN 'B' THEN 'forskning'
-                                   ELSE 'oppslagsverk' END || ']', body, url FROM knowledge, to_tsquery('norwegian', %s) q
+                                   WHEN 'E' THEN 'egen beregning' ELSE 'oppslagsverk' END || ']', body, url FROM knowledge, to_tsquery('norwegian', %s) q
                             WHERE tsv @@ q {"AND kind = ANY(%s)" if kinds else ""}
-                            ORDER BY ts_rank_cd(tsv, q) * CASE credibility WHEN 'A' THEN 1.6 WHEN 'B' THEN 1.25 ELSE 1 END DESC
+                            ORDER BY ts_rank_cd(tsv, q) * CASE credibility WHEN 'A' THEN 1.6 WHEN 'B' THEN 1.25 WHEN 'E' THEN 1.25 ELSE 1 END DESC
                             LIMIT %s""", (q, list(kinds), limit) if kinds else (q, limit))
             return cur.fetchall()
     except Exception:  # noqa: BLE001 - tabellen finnes ikke ennå

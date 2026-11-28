@@ -1,8 +1,27 @@
 import type { CoData } from "@/components/BookingApp";
 import { listBookingInputs } from "@/lib/bookings";
 import { getAllDaily, getAllFundamentals, getQuotes, getReports } from "@/lib/db";
-import { cmpQuarter, estimate, matchRate, matchVessels, nextQuarter, parseQuarter, pickBookings, proxyFor, quarterDays, quarterOf } from "@/lib/earnings";
+import fs from "node:fs";
+import path from "node:path";
+import { cmpQuarter, estimate, isFleet, matchRate, matchVessels, nextQuarter, parseQuarter, pickBookings, proxyFor, quarterDays, quarterOf, segKey } from "@/lib/earnings";
 import { COMPANIES } from "@/lib/universe";
+
+type FleetRef = { symbol: string; segment: string; vessels: number | null; breakeven: number | null; breakeven_kind: string | null; source: string };
+
+/** Fast reserve (content/fleet.json): antall skip og dødpunkt fra selskapenes rapporter, når rapportuttrekket mangler dem. */
+function fleetRefs(): FleetRef[] {
+  try {
+    return JSON.parse(fs.readFileSync(path.join(process.cwd(), "content", "fleet.json"), "utf8")).rows ?? [];
+  } catch {
+    return [];
+  }
+}
+
+function fleetRef(refs: FleetRef[], symbol: string, segment: string): FleetRef | null {
+  const mine = refs.filter((r) => r.symbol === symbol);
+  const k = segKey(segment);
+  return mine.find((r) => segKey(r.segment) === k) ?? (k === "flåtesnitt" ? mine.find((r) => isFleet(r.segment)) ?? null : null);
+}
 
 // Samler alt bookingsiden og analytikeren trenger: siste rapport per selskap, antall aksjer, kurs og dine justeringer.
 export async function loadBookingData() {
@@ -10,6 +29,7 @@ export async function loadBookingData() {
     getReports({ limit: 300 }), getAllFundamentals(), getQuotes(), getAllDaily(["BWET", "BDRY"]), listBookingInputs(),
   ]);
   const quote = (s: string) => quotes.find((q) => q.symbol === s);
+  const refs = fleetRefs();
 
   const cos: CoData[] = COMPANIES.map((c) => {
     // Nyeste leste rapport for selskapet (listen er sortert med nyeste først)
@@ -37,11 +57,16 @@ export async function loadBookingData() {
       const seg = b.segment ?? "flåtesnitt";
       const be = matchRate(d.breakeven, seg);
       const tce = matchRate(d.tce, seg);
+      const ref = fleetRef(refs, c.symbol, seg);
+      let vessels = matchVessels(d.vessels, seg);
+      if (vessels.count == null && vessels.days == null && ref?.vessels) vessels = { count: ref.vessels, days: null, ok: true };
+      const breakeven = be ? { rate: be.rate ?? 0, ok: be.rate_ok !== false, segment: be.segment ?? "" }
+        : ref?.breakeven ? { rate: ref.breakeven, ok: ref.breakeven_kind !== "opex", segment: ref.breakeven_kind === "opex" ? "fast tabell, bare driftskostnad" : "fast tabell" } : null;
       return {
         segment: seg, share: (b.share_pct ?? 0) / 100, rate: b.rate ?? 0, note: b.note ?? "",
         ok: b.rate_ok !== false && b.share_pct_ok !== false,
-        vessels: matchVessels(d.vessels, seg),
-        breakeven: be ? { rate: be.rate ?? 0, ok: be.rate_ok !== false, segment: be.segment ?? "" } : null,
+        vessels,
+        breakeven,
         tce: tce ? { rate: tce.rate ?? 0, period: tce.period ?? rep.period } : null,
         proxy: proxyFor(seg, c.segment),
       };
@@ -85,6 +110,7 @@ export async function bookingLines(): Promise<string[]> {
     out.push(`- ${c.name} ${c.bookPeriod} (${when}, fra rapport ${c.report.period}): ${parts.join("; ")}.` +
       (missing ? " Mangler antall skip eller dødpunkt for fullt anslag." :
         ` Anslått overskudd over dødpunkt ${(sum / 1e6).toFixed(1)} MUSD${ps !== null ? `, ${ps.toFixed(2)} USD per aksje` : ""}${nok !== null && c.price ? ` (${((nok / c.price) * 100).toFixed(1)} % av kursen)` : ""}.`) +
+      (!missing && c.segs.some((s) => s.breakeven?.segment.includes("bare driftskostnad")) ? " Dødpunktet er bare driftskostnad (renter og avdrag mangler), så overskuddet er for høyt." : "") +
       (c.dividend ? ` Siste utbytte ${c.dividend.perShare} ${c.dividend.unit} per aksje.` : ""));
   }
   return out;

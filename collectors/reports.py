@@ -50,12 +50,35 @@ WORD_Q = {"first": 1, "second": 2, "third": 3, "fourth": 4, "1st": 1, "2nd": 2, 
           "første": 1, "andre": 2, "tredje": 3, "fjerde": 4}
 
 
-def period_of(title: str, published) -> str:
+def _quarter_end(q: int, y: int):
+    from datetime import date
+
+    return date(y, 3 * q, 31 if q in (1, 4) else 30)
+
+
+def latest_quarter(published) -> tuple[int, int]:
+    """Siste kvartal som var slutt minst 14 dager før meldingen (rapporter kommer 3–8 uker etter kvartalsslutt)."""
+    d = (published - timedelta(days=14)).date() if hasattr(published, "date") else published - timedelta(days=14)
+    q, y = (d.month - 1) // 3 + 1, d.year
+    if d < _quarter_end(q, y):
+        q, y = (q - 1, y) if q > 1 else (4, y - 1)
+    return q, y
+
+
+# Selskaper med regnskapsår som ikke følger kalenderen (Stolt-Nielsen: kvartaler slutter feb/mai/aug/nov)
+FISCAL_SHIFTED = {"SNI.OL"}
+
+
+def period_of(title: str, published, symbol: str = "") -> str:
     t = title.lower()
     years = [int(y) for y in re.findall(r"\b(20[2-3]\d)\b", t)]  # største år, så «2020 Bulkers» ikke blir året
-    m = re.search(r"\bq([1-4])\b|\b([1-4])q\b", t)
+    q = None
+    m = re.search(r"\bq([1-4])(?:[\s\-/']*(\d{2}))?\b|\b([1-4])q(\d{2})?\b", t)  # Q3, Q3-26, Q3 26, 3Q26
     if m:
-        q = int(m.group(1) or m.group(2))
+        q = int(m.group(1) or m.group(3))
+        yy = m.group(2) or m.group(4)
+        if yy and not years:
+            years = [2000 + int(yy)]
     else:
         w = re.search(r"\b(first|second|third|fourth|1st|2nd|3rd|4th|første|andre|tredje|fjerde)\s+(quarter|kvartal)", t)
         if w:
@@ -66,14 +89,14 @@ def period_of(title: str, published) -> str:
             q = 3
         elif re.search(r"annual|full[- ]year|årsrapport|fourth", t):
             q = 4
-        else:
-            q = None
     if q is None:
-        # Ukjent: rapporter kommer som regel 1–2 måneder etter kvartalsslutt
-        d = published - timedelta(days=45)
-        q, y = (d.month - 1) // 3 + 1, d.year
+        q, y = latest_quarter(published)
         return f"Q{q} {y}"
     y = max(years) if years else (published.year if q < 4 or published.month > 3 else published.year - 1)
+    # Kontroll: en rapport kan ikke komme før kvartalet er slutt. Da brukes siste avsluttede kvartal.
+    pub_d = published.date() if hasattr(published, "date") else published
+    if symbol not in FISCAL_SHIFTED and _quarter_end(q, y) >= pub_d:
+        q, y = latest_quarter(published)
     return f"Q{q} {y}"
 
 
@@ -523,16 +546,16 @@ def discover(conn, days: int = 200) -> int:
         rows = [r for r in cur.fetchall() if REPORTISH.search(r[2]) and not SKIP.search(r[2])]
         groups: dict[tuple[str, str], dict] = {}
         for mid, sym, title, published in rows:
-            g = groups.setdefault((sym, period_of(title, published)), {"ids": [], "titles": [], "published": published})
+            g = groups.setdefault((sym, period_of(title, published, sym)), {"ids": [], "titles": [], "published": published})
             g["ids"].append(mid)
             g["titles"].append(title)
-            g["published"] = min(g["published"], published)
+            g["published"] = max(g["published"], published)  # rapportdato = siste melding i gruppen
         added = 0
         for (sym, period), g in groups.items():
             cur.execute(
                 """INSERT INTO reports (key, symbol, period, published, title, message_ids, status)
                    VALUES (%s,%s,%s,%s,%s,%s,'pending')
-                   ON CONFLICT (key) DO UPDATE SET message_ids = EXCLUDED.message_ids, title = EXCLUDED.title,
+                   ON CONFLICT (key) DO UPDATE SET message_ids = EXCLUDED.message_ids, title = EXCLUDED.title, published = EXCLUDED.published,
                      status = CASE WHEN reports.message_ids <> EXCLUDED.message_ids AND reports.status <> 'pending'
                                    AND reports.tries < 3 THEN 'pending' ELSE reports.status END
                    RETURNING (xmax = 0)""",

@@ -106,6 +106,25 @@ def match_vessels(rows, segment):
     return None, None
 
 
+def fleet_ref(symbol: str, segment: str) -> dict | None:
+    """Fast reserve fra web/content/fleet.json (antall skip og dødpunkt fra selskapenes rapporter)."""
+    import json
+    import pathlib
+
+    try:
+        rows = json.loads((pathlib.Path(__file__).resolve().parent.parent / "web" / "content" / "fleet.json").read_text("utf-8"))["rows"]
+    except Exception:  # noqa: BLE001
+        return None
+    k = seg_key(segment)
+    mine = [r for r in rows if r["symbol"] == symbol]
+    for r in mine:
+        if seg_key(r["segment"]) == k:
+            return r
+    if k == "flåtesnitt":
+        return next((r for r in mine if is_fleet(r["segment"])), None)
+    return None
+
+
 def estimate(share, booked, vessels, days, rest, breakeven, util, qd):
     total = days if days else (vessels * qd * util if vessels else None)
     if total is None:
@@ -157,13 +176,18 @@ def company_estimates(conn) -> list[dict]:
             seg = b.get("segment") or "flåtesnitt"
             o = own.get((c["symbol"], seg), (None, None, None, None))
             vc, vd = match_vessels(d.get("vessels"), seg)
-            be = match_rate(d.get("breakeven"), seg)
+            be = (match_rate(d.get("breakeven"), seg) or {}).get("rate")
+            ref, opex = fleet_ref(c["symbol"], seg), False
+            if ref and not vc and not vd and ref.get("vessels"):
+                vc = ref["vessels"]
+            if ref and not be and ref.get("breakeven"):
+                be, opex = ref["breakeven"], ref.get("breakeven_kind") == "opex"
             share, rate = b["share_pct"] / 100, b["rate"]
             est = estimate(share, rate, o[0] if o[0] is not None else vc, None if o[0] is not None else vd,
-                           o[1] if o[1] is not None else rate, o[2] if o[2] is not None else (be or {}).get("rate"),
+                           o[1] if o[1] is not None else rate, o[2] if o[2] is not None else be,
                            o[3] if o[3] is not None else 0.97, qd)
             segs.append({"segment": seg, "share": share, "rate": rate, "unverified": b.get("rate_ok") is False or b.get("share_pct_ok") is False,
-                         "surplus": est["surplus"] if est else None})
+                         "surplus": est["surplus"] if est else None, "opex": opex and o[2] is None})
             if not est or est["surplus"] is None:
                 missing = True
             else:
@@ -187,6 +211,8 @@ def lines(conn) -> list[str]:
         est = (f" Anslått overskudd over dødpunkt {e['surplus'] / 1e6:,.1f} MUSD" + (f", {e['per_share']:.2f} USD per aksje" if e["per_share"] is not None else "")
                + (f" ({e['of_price'] * 100:.1f} % av kursen)" if e["of_price"] is not None else "") + "."
                if e["surplus"] is not None else " Mangler antall skip eller dødpunkt for fullt anslag.")
+        if e["surplus"] is not None and any(s.get("opex") for s in e["segs"]):
+            est += " Dødpunktet er bare driftskostnad (renter og avdrag mangler), så overskuddet er for høyt."
         div = f" Siste utbytte {e['dividend']} per aksje." if e.get("dividend") else ""
         out.append(f"- {e['name']} {e['period']} ({'kvartalet nå' if e['status'] == 'nå' else e['status']}, fra rapport {e['report']}): {segs}.{est}{div}")
     return out

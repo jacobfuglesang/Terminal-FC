@@ -95,7 +95,10 @@ def article_text(url: str) -> str:
     text = (trafilatura.extract(r.text, include_tables=True) or "").strip()
     if len(text) >= 400:
         return text
-    pdfs = [u for u in re.findall(r'href="(https?://[^"]+\.pdf)"', r.text, re.I) if "hellenicshippingnews.com/wp-content" in u]
+    links = re.findall(r'href="(https?://[^"]+\.pdf)(?:\?[^"]*)?"', r.text, re.I)
+    # Først PDF-er lastet opp på samme nettsted, så PDF-er fra meglerens eget nettsted
+    pdfs = [u for u in links if "hellenicshippingnews.com/wp-content" in u]
+    pdfs += [u for u in links if u not in pdfs and re.search(r"report|weekly|market|lion|shipbrok", u, re.I)]
     if not pdfs:
         return text
     import io
@@ -137,7 +140,9 @@ def run(conn, backfill: bool = False, max_reports: int = 3, quick: bool = False)
             text = article_text(url)
             time.sleep(CRAWL_DELAY)  # pause før neste forespørsel til samme nettsted
             if len(text) < 400:
-                raise RuntimeError("Fant nesten ingen tekst (kan være bare en PDF-lenke eller et bilde)")
+                # Ofte en PDF som bare er bilder. Prøves ikke igjen, så køen ikke låses.
+                write("UPDATE broker_reports SET tries = 3 WHERE url = %s", (url,))
+                raise RuntimeError("Fant nesten ingen tekst (PDF med bare bilder eller ingen PDF). Hoppes over.")
             text = text[:60000] if big else text[:12000]
             raw, model = ai.chat(PROMPT.format(title=title, text=text), "big" if big and len(text) > 12000 else "quality",
                                  1800, json_mode=True, temperature=0.1, local_ok=False)

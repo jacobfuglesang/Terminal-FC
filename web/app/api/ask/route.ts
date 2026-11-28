@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { bookingLines } from "@/lib/bookingdata";
 import { relevantSections } from "@/lib/foundation";
 import { sql } from "@/lib/db";
-import { searchKnowledge } from "@/lib/knowledge";
+import { CRED, searchKnowledge } from "@/lib/knowledge";
 import { societyReports } from "@/lib/society";
 import { authed, deny } from "@/lib/notes";
 
@@ -54,7 +54,7 @@ export async function POST(req: Request) {
   }).join("\n").slice(0, 3500);
   // Bookingtabellen (samme regning som på bookingsiden) og kunnskapsbanken (notater som passer til spørsmålet)
   const [books, notes, soc] = await Promise.all([bookingLines().catch(() => [] as string[]), searchKnowledge(question, 6), societyReports(1)]);
-  const noteText = notes.map((n) => `### ${n.title} (${n.source || n.kind})\n${n.body.slice(0, 900)}`).join("\n\n").slice(0, 4500);
+  const noteText = notes.map((n) => `### ${n.title} (${n.source || n.kind}) [${CRED[n.credibility]?.label ?? "ukjent kilde"}]\n${n.body.slice(0, 900)}`).join("\n\n").slice(0, 4500);
   // Morgenrapportens datagrunnlag har egne avsnitt for bookinger og kunnskap; de hentes ferskt over, så de kuttes her
   const snapText = snap ? snap.snapshot.replace(/\n## (Bookinger|Bakgrunn fra kunnskapsbanken)[\s\S]*?(?=\n## |$)/g, "") : "";
   const context = [
@@ -73,7 +73,9 @@ export async function POST(req: Request) {
     "Hvis dataene ikke dekker spørsmålet, si det tydelig i stedet for å gjette. Ikke finn på tall. " +
     "Gi aldri kjøps- eller salgsråd, kursmål eller personlige investeringsråd, og ikke gjengi analytikeres anbefalinger. " +
     "Du kan forklare sammenhenger, hva tallene betyr og hva som kan påvirke dem. " +
-    "Bruk fundamentet som rammeverk for analysen. Bruk kunnskapsbanken til å forklare begreper og mønstre, og si fra når noe bygger på den. Bookinganslagene er grove; si det når du bruker dem.";
+    "Bruk fundamentet som rammeverk for analysen. Bruk kunnskapsbanken til å forklare begreper og mønstre, og si fra når noe bygger på den. Bookinganslagene er grove; si det når du bruker dem. " +
+    "BWET og BDRY er kursen på fond som følger fraktfutures, ikke fraktrater. Notater merket [Egen beregning] er terminalens egne utregninger, ikke offisielle tall. " +
+    "Hvis et tall er merket som gammelt, si hvor gammelt det er.";
 
   for (const model of await models(key)) {
     const payload: Record<string, unknown> = {

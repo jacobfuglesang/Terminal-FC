@@ -2,13 +2,14 @@ import { sql } from "@/lib/db";
 
 // Kunnskapsbanken: notater den lokale KI-modellen har skrevet (se collectors/knowledge.py).
 export type Note = { id: number; url: string; kind: string; topic: string; title: string; body: string; source: string; link: string | null;
-  model: string; created: string; symbols: string[]; unverified: number; credibility: "A" | "B" | "C" };
+  model: string; created: string; symbols: string[]; unverified: number; credibility: "A" | "B" | "C" | "E" };
 
 // Kildetype: A offisiell kilde/primærkilde, B forskning/fagmiljø, C oppslagsverk (Wikipedia)
 export const CRED: Record<string, { label: string; color: string; help: string }> = {
-  A: { label: "Offisiell kilde", color: "#3DDC97", help: "IMF, IEA, EIA, WTO, Verdensbanken, UNCTAD, sentralbanker, SEC, selskapenes egne rapporter, Rederiforbundet, DNV eller egne data" },
+  A: { label: "Offisiell kilde", color: "#3DDC97", help: "IMF, IEA, EIA, WTO, Verdensbanken, UNCTAD, sentralbanker, SEC, selskapenes egne rapporter, Rederiforbundet eller DNV" },
   B: { label: "Forskning", color: "#5BC0FF", help: "Forskningsartikler, fagmiljø eller samlet fra flere nyhetskilder" },
   C: { label: "Oppslagsverk", color: "#F5C451", help: "Wikipedia: brukes til begreper og bakgrunn, ikke når det strider mot offisielle kilder" },
+  E: { label: "Egen beregning", color: "#B49CFF", help: "Utregnet av terminalen fra egne data (kursmønstre, reaksjoner, selskapstall). Nyttig, men ikke en offisiell kilde" },
 };
 
 const LIMIT_MB = Number(process.env.DB_LIMIT_MB ?? 1024); // Neon Free: 1 GB per prosjekt
@@ -36,7 +37,7 @@ export async function searchKnowledge(text: string, limit = 6, kind?: string): P
   try {
     const rows = q
       ? await sql()`SELECT k.*, ts_rank_cd(k.tsv, q) AS rank FROM knowledge k, to_tsquery('norwegian', ${q}) q
-          WHERE k.tsv @@ q AND (${kind ?? null}::text IS NULL OR k.kind = ${kind ?? null}) ORDER BY rank * CASE k.credibility WHEN 'A' THEN 1.6 WHEN 'B' THEN 1.25 ELSE 1 END DESC, k.created_at DESC LIMIT ${limit}`
+          WHERE k.tsv @@ q AND (${kind ?? null}::text IS NULL OR k.kind = ${kind ?? null}) ORDER BY rank * CASE k.credibility WHEN 'A' THEN 1.6 WHEN 'B' THEN 1.25 WHEN 'E' THEN 1.25 ELSE 1 END DESC, k.created_at DESC LIMIT ${limit}`
       : await sql()`SELECT * FROM knowledge WHERE (${kind ?? null}::text IS NULL OR kind = ${kind ?? null}) ORDER BY created_at DESC LIMIT ${limit}`;
     return (rows as Row[]).map(toNote);
   } catch {

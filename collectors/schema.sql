@@ -232,3 +232,7 @@ CREATE TABLE IF NOT EXISTS society_reports (week TEXT PRIMARY KEY, text TEXT NOT
   created_at TIMESTAMPTZ NOT NULL DEFAULT now());
 -- Troverdighet per notat: A offisiell kilde/primærkilde, B forskning/fagmiljø, C oppslagsverk (Wikipedia)
 ALTER TABLE knowledge ADD COLUMN IF NOT EXISTS credibility TEXT;
+
+-- Terminalens egne utregninger (intern:) merkes «egen beregning» (E), ikke «offisiell kilde» (28.11.2026)
+UPDATE knowledge SET credibility = 'E' WHERE url LIKE 'intern:%' AND url NOT LIKE 'intern:hendelser:%' AND url NOT LIKE 'intern:syntese:%' AND credibility IS DISTINCT FROM 'E';
+UPDATE knowledge SET credibility = 'B' WHERE url LIKE 'intern:syntese:%' AND credibility = 'A';

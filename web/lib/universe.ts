@@ -13,8 +13,8 @@ export const COMPANIES: Company[] = [
     about: "Bergensk rederi med kjemikalietankskip og tankterminaler. Mye går på kontrakter, så inntjeningen svinger mindre enn for råoljetank." },
   { id: "stolt-nielsen", name: "Stolt-Nielsen", symbol: "SNI.OL", ticker: "SNI", segment: "Kjemikalietank",
     about: "Kjemikalietankskip, tankterminaler og tankcontainere, pluss oppdrett av piggvar og sjøtunge. Bredere og mindre syklisk enn rene tankrederier." },
-  { id: "2020-bulkers", name: "2020 Bulkers", symbol: "2020.OL", ticker: "2020", segment: "Tørrbulk",
-    about: "Lite rederi med Newcastlemax-skip, de største bulkskipene (rundt 200 000 tonn), som frakter jernmalm og kull. Betaler utbytte hver måned." },
+  { id: "2020-bulkers", name: "2020 Bulkers", symbol: "2020.OL", ticker: "2020", segment: "Offshore (AHTS)",
+    about: "Tidligere Newcastlemax-rederi. Solgte alle bulkskipene i første halvår 2026 og kjøper nå en flåte på opptil 15 store ankerhåndteringsfartøy (AHTS) for offshore olje og gass. Følger derfor ikke lenger tørrbulkratene." },
   { id: "himalaya", name: "Himalaya Shipping", symbol: "HSHP.OL", ticker: "HSHP", segment: "Tørrbulk",
     about: "Moderne Newcastlemax-skip som kan gå på LNG. Skipene leies ut med rater knyttet til Capesize-indeksen, og selskapet betaler utbytte hver måned." },
   { id: "jinhui", name: "Jinhui Shipping", symbol: "JIN.OL", ticker: "JIN", segment: "Tørrbulk",
@@ -35,7 +35,7 @@ export const COMPANIES: Company[] = [
     about: "Maritime tjenester (skipsservice og agentur) og en stor eierpost i Wallenius Wilhelmsen." },
 ];
 
-export const SEGMENTS = ["Råoljetank", "Produkttank", "Kjemikalietank", "Tørrbulk", "Kombinasjon", "Container", "Bilskip", "Gass (LPG)", "Diversifisert", "Maritime tjenester"];
+export const SEGMENTS = ["Råoljetank", "Produkttank", "Kjemikalietank", "Tørrbulk", "Kombinasjon", "Container", "Bilskip", "Gass (LPG)", "Diversifisert", "Maritime tjenester", "Offshore (AHTS)"];
 
 // Hvilken gratis daglig/ukentlig fraktserie som best speiler segmentet. null = ingen gratis serie.
 export const SEGMENT_PROXY: Record<string, { id: string; name: string; kind: "price" | "freight" } | null> = {
@@ -49,6 +49,7 @@ export const SEGMENT_PROXY: Record<string, { id: string; name: string; kind: "pr
   "Gass (LPG)": null,
   "Diversifisert": { id: "BWET", name: "Tankfrakt (BWET)", kind: "price" },
   "Maritime tjenester": { id: "WAWI.OL", name: "Wallenius Wilhelmsen", kind: "price" },
+  "Offshore (AHTS)": null,
 };
 
 export const SEGMENT_NOTE: Record<string, string> = {
@@ -62,6 +63,7 @@ export const SEGMENT_NOTE: Record<string, string> = {
   "Gass (LPG)": "VLGC-ratene er ikke gratis tilgjengelige. Følg Panamakanalen (USA–Asia), Hormuz og LPG-nyheter.",
   "Diversifisert": "Blanding av tank, tørrbulk og container. Følg BWET, BDRY og SCFI.",
   "Maritime tjenester": "Henger mest sammen med Wallenius Wilhelmsen og aktiviteten i verdensflåten.",
+  "Offshore (AHTS)": "Styres av aktiviteten i offshore olje og gass (riggrater, leting og utbygging) og dagratene for ankerhåndteringsfartøy. Ingen gratis daglig indeks.",
 };
 
 export const MARKET_NAME: Record<string, string> = {

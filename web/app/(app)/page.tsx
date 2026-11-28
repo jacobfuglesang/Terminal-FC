@@ -5,6 +5,7 @@ import ReadAloud from "@/components/ReadAloud";
 import ScreenerTable from "@/components/ScreenerTable";
 import TimeChart from "@/components/TimeChart";
 import { change } from "@/lib/calc";
+import { staleLabel } from "@/lib/dates";
 import { getAlerts, getBriefs, getChokepoints, getDaily, getFreight, getIntraday, getNews, getQuotes, getReports, getStatus } from "@/lib/db";
 import { fmt, osloTime, pct, up } from "@/lib/format";
 import { screenRows } from "@/lib/screen";
@@ -45,7 +46,7 @@ export default async function Oversikt() {
         <Kpi label={`Baltic Dry ${last("BDI") ? new Date(last("BDI")!.day).toLocaleDateString("nb-NO", { day: "numeric", month: "short" }) : ""}`} value={fmt(last("BDI")?.value, 0)} sub={`${pct(change(fpts("BDI"), 7))} på en uke`} ch={change(fpts("BDI"), 7)} />
         <Kpi label="Containerrater (SCFI)" value={fmt(last("SCFI")?.value, 0)} sub={`${pct(change(fpts("SCFI"), 6))} siste uke`} ch={change(fpts("SCFI"), 6)} />
         <Kpi label="Brent" value={`${fmt(q["BZ=F"]?.price, 2)} $`} sub={pct(q["BZ=F"]?.change_pct)} ch={q["BZ=F"]?.change_pct} />
-        <Kpi label="Hormuz, skip per dag" value={hzA === null ? "–" : fmt(hzA, 0)} sub={hzA !== null && hzB ? `${pct((hzA / hzB - 1) * 100)} mot 3 uker før` : "Snitt siste 7 dager"} ch={hzA !== null && hzB ? (hzA / hzB - 1) * 100 : null} />
+        <Kpi label="Hormuz, skip per dag" value={hzA === null ? "–" : fmt(hzA, 0)} sub={(hzA !== null && hzB ? `${pct((hzA / hzB - 1) * 100)} mot 3 uker før` : "Snitt siste 7 dager") + (staleLabel(hz[hz.length - 1]?.day, 5) ? ` · ${staleLabel(hz[hz.length - 1]?.day, 5)}` : "")} ch={hzA !== null && hzB ? (hzA / hzB - 1) * 100 : null} />
       </div>
 
       <div className="row">

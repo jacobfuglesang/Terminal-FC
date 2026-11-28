@@ -32,7 +32,7 @@ import export
 JOBS = {
     "prices": ("Yahoo Finance (kurser og fraktfutures)", lambda c, bf: prices.run(c, backfill=bf)),
     "announcements": ("Oslo Børs Newsweb (børsmeldinger)", lambda c, bf: announcements.run(c, days=200 if bf else 10, max_bodies=300 if bf else 60)),
-    "news": ("Nyheter (RSS)", lambda c, bf: news.run(c)),
+    "news": ("Nyheter (RSS)", lambda c, bf: news.run(c, quick=QUICK)),
     "shorts": ("Finanstilsynet (short)", lambda c, bf: shorts.run(c)),
     "fundamentals": ("Yahoo Finance (konsensus, utbytte og nøkkeltall)", lambda c, bf: fundamentals.run(c)),
     "freight": ("Fraktrater (Drewry, SCFI, BDI, EIA)", lambda c, bf: freight.run(c, backfill=bf)),
@@ -62,7 +62,24 @@ GROUPS = {
 }
 QUICK = False  # markedskjøringer hvert 15. minutt: korte KI-jobber, så kjøringen blir ferdig før neste starter
 
-SOFT = (ais.MissingKey, brief.MissingKey, reports.MissingKey, brokers.MissingKey, knowledge.ai.MissingKey)
+# I markedskjøringene (hvert 15. minutt) trengs ikke alt hver gang. Minutter mellom hver gang jobben kjøres der.
+# Morgen- og dagskjøringene kjører alt som før.
+THROTTLE_MIN = {"ais": 55, "weather": 55, "brokers": 175}
+
+SOFT = (ais.MissingKey, brief.MissingKey, reports.MissingKey, brokers.MissingKey, knowledge.ai.MissingKey, weather.SourceDown)
+
+
+def recently_run(label: str, minutes: int) -> float | None:
+    """Minutter siden jobben sist ble forsøkt, hvis det er mindre enn grensen."""
+    try:
+        with db.connect() as conn, conn.cursor() as cur:
+            cur.execute("SELECT extract(epoch FROM now() - last_run) / 60 FROM source_status WHERE source = %s", (label,))
+            row = cur.fetchone()
+    except Exception:  # noqa: BLE001
+        return None
+    if row and row[0] is not None and row[0] < minutes:
+        return float(row[0])
+    return None
 
 
 def main() -> int:
@@ -81,6 +98,11 @@ def main() -> int:
     for name in names:
         label, fn = JOBS[name]
         print(f"== {label} ==")
+        if QUICK and name in THROTTLE_MIN:
+            ago = recently_run(label, THROTTLE_MIN[name])
+            if ago is not None:
+                print(f"  Hoppet over: kjørt for {ago:.0f} min siden (kjøres hvert {THROTTLE_MIN[name]}. min i markedstiden)")
+                continue
         with db.connect() as conn:
             try:
                 n = fn(conn, backfill)

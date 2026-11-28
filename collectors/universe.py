@@ -13,7 +13,7 @@ COMPANIES = [
     {"symbol": "HAFNI.OL", "name": "Hafnia", "newsweb": "HAFNI", "segment": "Produkttank", "news": r"\bhafnia\b", "ssr": r"hafnia"},
     {"symbol": "ODF.OL", "name": "Odfjell", "newsweb": "ODF", "segment": "Kjemikalietank", "news": r"\bodfjell\b(?!\s+(?:drilling|technology))", "ssr": r"^odfjell se|odfjell ser"},
     {"symbol": "SNI.OL", "name": "Stolt-Nielsen", "newsweb": "SNI", "segment": "Kjemikalietank", "news": r"stolt-nielsen|stolt tankers", "ssr": r"stolt-nielsen"},
-    {"symbol": "2020.OL", "name": "2020 Bulkers", "newsweb": "2020", "segment": "Tørrbulk", "news": r"\b2020 bulkers\b", "ssr": r"2020 bulkers"},
+    {"symbol": "2020.OL", "name": "2020 Bulkers", "newsweb": "2020", "segment": "Offshore (AHTS)", "news": r"\b2020 bulkers\b", "ssr": r"2020 bulkers"},
     {"symbol": "HSHP.OL", "name": "Himalaya Shipping", "newsweb": "HSHP", "segment": "Tørrbulk", "news": r"himalaya shipping", "ssr": r"himalaya shipping"},
     {"symbol": "JIN.OL", "name": "Jinhui Shipping", "newsweb": "JIN", "segment": "Tørrbulk", "news": r"\bjinhui\b", "ssr": r"jinhui"},
     {"symbol": "KCC.OL", "name": "Klaveness Combination Carriers", "newsweb": "KCC", "segment": "Kombinasjon", "news": r"klaveness combination|\bkcc\b(?=.{0,60}(?:ship|bulk|tank|klaveness|combination))", "ssr": r"klaveness"},

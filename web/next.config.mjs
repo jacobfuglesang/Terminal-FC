@@ -2,7 +2,7 @@
 const nextConfig = {
   poweredByHeader: false,
   // Fundamentet (content/fundament.md) leses fra fil ved kjøring: ta det med i serverpakken
-  outputFileTracingIncludes: { "/fundament": ["./content/**"], "/api/ask": ["./content/**"], "/status": ["./content/**"] },
+  outputFileTracingIncludes: { "/fundament": ["./content/**"], "/api/ask": ["./content/**"], "/status": ["./content/**"], "/bookinger": ["./content/**"] },
   async headers() {
     return [
       {

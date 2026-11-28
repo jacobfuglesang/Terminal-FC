@@ -36,7 +36,7 @@ def km(a: tuple[float, float], b: tuple[float, float]) -> float:
 
 def storms(cur) -> int:
     since = (datetime.now(timezone.utc) - timedelta(days=21)).isoformat()[:10]
-    r = requests.get(GDACS, params={"eventlist": "TC"}, headers={**UA, "Accept": "application/json"}, timeout=40)
+    r = requests.get(GDACS, params={"eventlist": "TC"}, headers={**UA, "Accept": "application/json"}, timeout=(8, 15))
     r.raise_for_status()
     n = 0
     for f in r.json().get("features", []):
@@ -64,7 +64,7 @@ def storms(cur) -> int:
 def panama(cur) -> dict | None:
     from pypdf import PdfReader
 
-    r = requests.get(PANAMA, headers=UA, timeout=40)
+    r = requests.get(PANAMA, headers=UA, timeout=(8, 15))
     r.raise_for_status()
     if r.content[:4] != b"%PDF":
         return None
@@ -87,6 +87,10 @@ def panama(cur) -> dict | None:
         (row["day"], row["gatun"], row["neo"], row["panamax"], row["surcharge"]),
     )
     return row
+
+
+class SourceDown(Exception):
+    """Begge værkildene svarte ikke. Ikke en feil i terminalen: prøves igjen ved neste kjøring."""
 
 
 def run(conn, backfill: bool = False) -> int:
@@ -115,5 +119,5 @@ def run(conn, backfill: bool = False) -> int:
     for e in errors:
         print(f"  ! {e}")
     if not out:
-        raise RuntimeError("; ".join(errors) or "Ingen værdata")
+        raise SourceDown("; ".join(errors) or "Ingen værdata")
     return out
