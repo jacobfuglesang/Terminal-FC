@@ -1,0 +1,1352 @@
+[
+ {
+  "url": "intern:mønster:marked",
+  "kind": "mønster",
+  "topic": "mønster",
+  "title": "Kursmønstre: hvem følger fraktratene",
+  "credibility": "A",
+  "model": "utregnet",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:eia-steo-2026-11",
+  "kind": "rapport",
+  "topic": "råvarer",
+  "title": "EIA Short-Term Energy Outlook november 2026: Brent rundt 100 dollar ut året",
+  "credibility": "A",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:fed-2026-10",
+  "kind": "rapport",
+  "topic": "makro",
+  "title": "Federal Reserve holder renten på 3,75–4 prosent (oktober 2026)",
+  "credibility": "A",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:hormuz-ukmto-2026-11",
+  "kind": "hendelser",
+  "topic": "geopolitikk",
+  "title": "Hormuz i november 2026: trafikk under normalen og nye angrep",
+  "credibility": "B",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:hormuz-lli-2026-11",
+  "kind": "rapport",
+  "topic": "geopolitikk",
+  "title": "Lloyd's List Intelligence: Hormuz-passeringer i oktober 2026",
+  "credibility": "B",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:torrbulk-uke48-2026",
+  "kind": "hendelser",
+  "topic": "fraktmarked",
+  "title": "Tørrbulk uke 48 2026: BDI 3 137, Capesize rundt 42 000 dollar per dag",
+  "credibility": "C",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:crs-iran-2026",
+  "kind": "rapport",
+  "topic": "geopolitikk",
+  "title": "Kongressens forskningstjeneste: tidslinje for krigen med Iran 2026",
+  "credibility": "A",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:bimco-tank-2026",
+  "kind": "rapport",
+  "topic": "fraktmarked",
+  "title": "BIMCO om tankmarkedet 2026: to scenarier for Hormuz",
+  "credibility": "B",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:bimco-bulk-2026-11",
+  "kind": "rapport",
+  "topic": "fraktmarked",
+  "title": "BIMCO om tørrbulk november 2026: svakere balanse i 2027 og 2028",
+  "credibility": "B",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:vlcc-ordrebok-2026",
+  "kind": "rapport",
+  "topic": "fraktmarked",
+  "title": "VLCC-ordreboken i 2026: rekordbestillinger og leveransetopp i 2028",
+  "credibility": "B",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:spg-cera-tank-2026",
+  "kind": "rapport",
+  "topic": "fraktmarked",
+  "title": "S&P Global CERA: skipsverdiene i tank ventes å falle",
+  "credibility": "B",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "intern:mønster:reaksjoner",
+  "kind": "mønster",
+  "topic": "mønster",
+  "title": "Hvordan aksjene reagerer på store bevegelser",
+  "credibility": "A",
+  "model": "utregnet",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:rederiforbundet-kr2026",
+  "kind": "rapport",
+  "topic": "shippingtrading",
+  "title": "Norges Rederiforbund: Konjunkturrapport 2026",
+  "credibility": "B",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:tankrater-uke47-48-2026",
+  "kind": "hendelser",
+  "topic": "fraktmarked",
+  "title": "Tankratene i slutten av november 2026: VLCC langt under toppen, Aframax opp",
+  "credibility": "C",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:tank-skipsverdier-ordrebok-2026-11",
+  "kind": "hendelser",
+  "topic": "fraktmarked",
+  "title": "Skipsverdier og ordrebok for tankskip (Compass, 23. november 2026)",
+  "credibility": "C",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:container-marked-2026-11",
+  "kind": "hendelser",
+  "topic": "fraktmarked",
+  "title": "Containermarkedet i november 2026: rater ned, tilbake til Suez, stor ordrebok",
+  "credibility": "C",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:lpg-vlgc-2026-11",
+  "kind": "hendelser",
+  "topic": "fraktmarked",
+  "title": "LPG-frakt (VLGC) i november 2026: svært høye rater, men under press",
+  "credibility": "C",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:bilskip-pctc-2026",
+  "kind": "hendelser",
+  "topic": "fraktmarked",
+  "title": "Bilskip (PCTC) i 2026: høye rater drevet av kinesisk eksport",
+  "credibility": "C",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:cmbtech-q3-2026",
+  "kind": "rapport",
+  "topic": "selskap",
+  "title": "CMB.TECH Q3 2026: resultat 373,9 millioner dollar, VLCC booket til 635 199 dollar per dag",
+  "credibility": "A",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:bwlpg-q3-2026",
+  "kind": "rapport",
+  "topic": "selskap",
+  "title": "BW LPG Q3 2026: resultat 359 millioner dollar, utbytte 1,30 dollar",
+  "credibility": "A",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:mpcc-q3-2026",
+  "kind": "rapport",
+  "topic": "selskap",
+  "title": "MPC Container Ships Q3 2026: stabil drift og lang kontraktsdekning",
+  "credibility": "A",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:okeanis-q3-2026",
+  "kind": "rapport",
+  "topic": "selskap",
+  "title": "Okeanis Eco Tankers Q3 2026: utbytte 7 dollar, VLCC booket til 688 800 dollar per dag",
+  "credibility": "A",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:stolt-nielsen-q3-2026",
+  "kind": "rapport",
+  "topic": "selskap",
+  "title": "Stolt-Nielsen Q3 2026: høyere resultat, men svak kjemikalietank",
+  "credibility": "C",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:2020-bulkers-ahts-2026",
+  "kind": "rapport",
+  "topic": "selskap",
+  "title": "2020 Bulkers er ikke lenger et tørrbulkrederi: blir AHTS Group",
+  "credibility": "A",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:booket-mot-gjenstaende-dager",
+  "kind": "metode",
+  "topic": "analysemetode",
+  "title": "Booket andel og gjenstående dager: slik regnes kvartalsraten grovt",
+  "credibility": "B",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:rate-enheter-ws-fat-tce",
+  "kind": "begrep",
+  "topic": "shippingbegrep",
+  "title": "Worldscale, dollar per fat og TCE: tre enheter som ikke kan sammenlignes direkte",
+  "credibility": "C",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:kildekvalitet-ki-artikler",
+  "kind": "metode",
+  "topic": "analysemetode",
+  "title": "Kildekvalitet: pass på KI-skrevne nyhetsartikler og feil kvartal",
+  "credibility": "B",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:eksdag-utbytte-oslo",
+  "kind": "forskning",
+  "topic": "trading og risiko",
+  "title": "Kursen på eks-dagen: faller aksjen like mye som utbyttet?",
+  "credibility": "C",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:atr-posisjonsstorrelse",
+  "kind": "metode",
+  "topic": "trading og risiko",
+  "title": "Posisjonsstørrelse etter svingninger (ATR)",
+  "credibility": "C",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "intern:syntese:slik-jobber-proffe-analytikere-metode-for-terminalen",
+  "kind": "syntese",
+  "topic": "syntese",
+  "title": "Slik jobber proffe analytikere: metode for terminalen",
+  "credibility": "B",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "intern:syntese:verdensøkonomien-og-geopolitikken-hva-driver-fraktratene-nå",
+  "kind": "syntese",
+  "topic": "syntese",
+  "title": "Verdensøkonomien og geopolitikken: hva driver fraktratene nå",
+  "credibility": "B",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "intern:syntese:sjekkliste-analyse-av-et-tankrederi",
+  "kind": "syntese",
+  "topic": "syntese",
+  "title": "Sjekkliste: analyse av et tankrederi",
+  "credibility": "B",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "intern:syntese:sjekkliste-analyse-av-et-tørrbulkrederi",
+  "kind": "syntese",
+  "topic": "syntese",
+  "title": "Sjekkliste: analyse av et tørrbulkrederi",
+  "credibility": "B",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "intern:syntese:shippingtrading-hvordan-kursene-reagerer-på-rater-rapporter-og-nyheter",
+  "kind": "syntese",
+  "topic": "syntese",
+  "title": "Shippingtrading: hvordan kursene reagerer på rater, rapporter og nyheter",
+  "credibility": "B",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "intern:syntese:risikostyring-når-du-holder-aksjer-fra-1-dag-til-1-måned",
+  "kind": "syntese",
+  "topic": "syntese",
+  "title": "Risikostyring når du holder aksjer fra 1 dag til 1 måned",
+  "credibility": "B",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "intern:syntese:sykluser-i-shipping-tegn-på-topp-og-bunn",
+  "kind": "syntese",
+  "topic": "syntese",
+  "title": "Sykluser i shipping: tegn på topp og bunn",
+  "credibility": "B",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:hormuz-uke48-2026",
+  "kind": "hendelser",
+  "topic": "geopolitikk",
+  "title": "Hormuz uke 48 2026: miner, angrep og USAs blokade",
+  "credibility": "C",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:houthi-saudi-havner-2026-11",
+  "kind": "hendelser",
+  "topic": "geopolitikk",
+  "title": "Houthiene angriper Saudi-Arabias havner ved Rødehavet (november 2026)",
+  "credibility": "C",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:svartehavet-krig-til-sjos-2026-11",
+  "kind": "hendelser",
+  "topic": "geopolitikk",
+  "title": "Krigen mellom Russland og Ukraina flytter seg til sjøs (november 2026)",
+  "credibility": "C",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:opec-pluss-29-november-2026",
+  "kind": "hendelser",
+  "topic": "råvarer",
+  "title": "OPEC+ møtes 29. november 2026 om kvoter for 2027",
+  "credibility": "C",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:brent-uke48-2026",
+  "kind": "hendelser",
+  "topic": "råvarer",
+  "title": "Oljeprisen uke 48 2026: første ukeoppgang i november",
+  "credibility": "C",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:lng-europa-lager-2026-11",
+  "kind": "hendelser",
+  "topic": "råvarer",
+  "title": "Gass og LNG i november 2026: lave lagre i Europa, lite LNG fra Qatar",
+  "credibility": "C",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:jernmalm-2026-11",
+  "kind": "hendelser",
+  "topic": "råvarer",
+  "title": "Jernmalm i november 2026: rundt 90 dollar, høye havnelagre i Kina",
+  "credibility": "C",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:usa-toll-section301-2026-11",
+  "kind": "hendelser",
+  "topic": "verdensøkonomi",
+  "title": "USA varsler ny toll på opptil 20 prosent mot 14 land (25. november 2026)",
+  "credibility": "C",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:fed-referat-oktober-2026",
+  "kind": "rapport",
+  "topic": "makro",
+  "title": "Federal Reserve: referatet fra oktober peker mot renteheving i desember 2026",
+  "credibility": "C",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:norges-bank-2026-11",
+  "kind": "rapport",
+  "topic": "makro",
+  "title": "Norges Bank holder renten på 4,5 prosent (november 2026)",
+  "credibility": "A",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:unctad-rmt-2026",
+  "kind": "rapport",
+  "topic": "verdensøkonomi",
+  "title": "UNCTAD Review of Maritime Transport 2026: sjøhandelen står stille, men reisene blir lengre",
+  "credibility": "A",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "intern:mønster:FRO.OL",
+  "kind": "mønster",
+  "topic": "mønster",
+  "title": "Kursmønstre: Frontline",
+  "credibility": "A",
+  "model": "utregnet",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "intern:mønster:OET.OL",
+  "kind": "mønster",
+  "topic": "mønster",
+  "title": "Kursmønstre: Okeanis Eco Tankers",
+  "credibility": "A",
+  "model": "utregnet",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "intern:mønster:HAFNI.OL",
+  "kind": "mønster",
+  "topic": "mønster",
+  "title": "Kursmønstre: Hafnia",
+  "credibility": "A",
+  "model": "utregnet",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "intern:mønster:ODF.OL",
+  "kind": "mønster",
+  "topic": "mønster",
+  "title": "Kursmønstre: Odfjell",
+  "credibility": "A",
+  "model": "utregnet",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "intern:mønster:SNI.OL",
+  "kind": "mønster",
+  "topic": "mønster",
+  "title": "Kursmønstre: Stolt-Nielsen",
+  "credibility": "A",
+  "model": "utregnet",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "intern:mønster:2020.OL",
+  "kind": "mønster",
+  "topic": "mønster",
+  "title": "Kursmønstre: 2020 Bulkers",
+  "credibility": "A",
+  "model": "utregnet",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "intern:mønster:HSHP.OL",
+  "kind": "mønster",
+  "topic": "mønster",
+  "title": "Kursmønstre: Himalaya Shipping",
+  "credibility": "A",
+  "model": "utregnet",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "intern:mønster:JIN.OL",
+  "kind": "mønster",
+  "topic": "mønster",
+  "title": "Kursmønstre: Jinhui Shipping",
+  "credibility": "A",
+  "model": "utregnet",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "intern:mønster:KCC.OL",
+  "kind": "mønster",
+  "topic": "mønster",
+  "title": "Kursmønstre: Klaveness Combination Carriers",
+  "credibility": "A",
+  "model": "utregnet",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "intern:mønster:MPCC.OL",
+  "kind": "mønster",
+  "topic": "mønster",
+  "title": "Kursmønstre: MPC Container Ships",
+  "credibility": "A",
+  "model": "utregnet",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "intern:mønster:WAWI.OL",
+  "kind": "mønster",
+  "topic": "mønster",
+  "title": "Kursmønstre: Wallenius Wilhelmsen",
+  "credibility": "A",
+  "model": "utregnet",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "intern:mønster:HAUTO.OL",
+  "kind": "mønster",
+  "topic": "mønster",
+  "title": "Kursmønstre: Höegh Autoliners",
+  "credibility": "A",
+  "model": "utregnet",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "intern:mønster:BWLPG.OL",
+  "kind": "mønster",
+  "topic": "mønster",
+  "title": "Kursmønstre: BW LPG",
+  "credibility": "A",
+  "model": "utregnet",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "intern:mønster:CMBTO.OL",
+  "kind": "mønster",
+  "topic": "mønster",
+  "title": "Kursmønstre: CMB.TECH",
+  "credibility": "A",
+  "model": "utregnet",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "intern:mønster:WWI.OL",
+  "kind": "mønster",
+  "topic": "mønster",
+  "title": "Kursmønstre: Wilh. Wilhelmsen",
+  "credibility": "A",
+  "model": "utregnet",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:wb-cmo-2026-10",
+  "kind": "rapport",
+  "topic": "råvarer",
+  "title": "Verdensbanken: råvarepriser opp 23 prosent i 2026",
+  "credibility": "B",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:wto-gtos-2026-10",
+  "kind": "rapport",
+  "topic": "verdensøkonomi",
+  "title": "WTO: varehandelen vokser 3,9 prosent i 2026 tross krigen",
+  "credibility": "A",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:tce-worldscale",
+  "kind": "begrep",
+  "topic": "shippingbegrep",
+  "title": "TCE og Worldscale: slik leses tankratene",
+  "credibility": "A",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:ffa-terminkurve",
+  "kind": "begrep",
+  "topic": "fraktmarked",
+  "title": "FFA og terminkurven: markedets forventning til ratene",
+  "credibility": "A",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:tonnmil",
+  "kind": "begrep",
+  "topic": "shippingbegrep",
+  "title": "Tonnmil: hvorfor distanse betyr like mye som volum",
+  "credibility": "B",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:dodpunkt-booking",
+  "kind": "begrep",
+  "topic": "shippingtrading",
+  "title": "Dødpunkt og bookinger: de viktigste tallene i en kvartalsrapport",
+  "credibility": "B",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:nav-pnav",
+  "kind": "begrep",
+  "topic": "shippingtrading",
+  "title": "NAV og P/NAV: verdien av flåten minus gjeld",
+  "credibility": "B",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:utbytte-eksdato",
+  "kind": "begrep",
+  "topic": "shippingtrading",
+  "title": "Utbytte og eks-dato i shippingaksjer",
+  "credibility": "A",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:ask-regler",
+  "kind": "begrep",
+  "topic": "trading og risiko",
+  "title": "Aksjesparekonto (ASK): regler som påvirker kortsiktig handel",
+  "credibility": "A",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:ordretyper",
+  "kind": "begrep",
+  "topic": "trading og risiko",
+  "title": "Ordretyper: markedsordre, limitordre og stoppordre",
+  "credibility": "A",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:oslo-auksjoner",
+  "kind": "begrep",
+  "topic": "aksjemarked",
+  "title": "Åpnings- og sluttauksjon på Oslo Børs",
+  "credibility": "C",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:momentum-reversering",
+  "kind": "forskning",
+  "topic": "analysemetode",
+  "title": "Momentum og kortsiktig reversering i aksjer",
+  "credibility": "B",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:pead",
+  "kind": "forskning",
+  "topic": "analysemetode",
+  "title": "Etter-rapport-drift (PEAD)",
+  "credibility": "B",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:raavarer-aksjer-bulk",
+  "kind": "forskning",
+  "topic": "shippingtrading",
+  "title": "Råvarepriser og avkastning i tørrbulkaksjer",
+  "credibility": "B",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:shippingfinans-oversikt",
+  "kind": "forskning",
+  "topic": "shippingtrading",
+  "title": "Hva forskningen sier om shippingfinans",
+  "credibility": "B",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:heuer-ach",
+  "kind": "metode",
+  "topic": "analysemetode",
+  "title": "Heuer: analyse av konkurrerende hypoteser (ACH)",
+  "credibility": "A",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:superforecasting",
+  "kind": "metode",
+  "topic": "analysemetode",
+  "title": "Superforecasting: hva som kjennetegner gode prognosemakere",
+  "credibility": "B",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:brier",
+  "kind": "metode",
+  "topic": "analysemetode",
+  "title": "Brier-skår: slik måles treffsikkerheten i prognoser",
+  "credibility": "B",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:posisjonsstorrelse",
+  "kind": "metode",
+  "topic": "trading og risiko",
+  "title": "Posisjonsstørrelse: bestem tapet før du kjøper",
+  "credibility": "A",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:sesong-shipping",
+  "kind": "begrep",
+  "topic": "fraktmarked",
+  "title": "Sesongmønstre i tank og tørrbulk",
+  "credibility": "B",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:sykluser-tegn",
+  "kind": "begrep",
+  "topic": "fraktmarked",
+  "title": "Shippingsyklusen: fra høye rater til mange nye skip",
+  "credibility": "B",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:skyggeflate",
+  "kind": "begrep",
+  "topic": "geopolitikk",
+  "title": "Skyggeflåten og sanksjoner",
+  "credibility": "A",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:lagre-tank",
+  "kind": "begrep",
+  "topic": "råvarer",
+  "title": "Oljelagre og tankmarkedet",
+  "credibility": "A",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:valuta-rente",
+  "kind": "begrep",
+  "topic": "makro",
+  "title": "Dollar, krone og renter for Oslo-noterte rederier",
+  "credibility": "A",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:hendelsesreaksjon",
+  "kind": "begrep",
+  "topic": "shippingtrading",
+  "title": "Slik reagerer shippingaksjer på typiske hendelser",
+  "credibility": "B",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:sund-oversikt",
+  "kind": "begrep",
+  "topic": "geopolitikk",
+  "title": "De viktigste sundene for shipping",
+  "credibility": "B",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "claude:iea-omr-2026-11",
+  "kind": "rapport",
+  "topic": "råvarer",
+  "title": "IEA Oil Market Report november 2026: overskudd tilbake fra fjerde kvartal",
+  "credibility": "A",
+  "model": "claude/claude-opus-5-5",
+  "date": "2026-11-28"
+ },
+ {
+  "url": "intern:selskap:OET.OL",
+  "kind": "selskap",
+  "topic": "selskap",
+  "title": "Selskapsprofil: Okeanis Eco Tankers",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:Baltic Dry Index",
+  "kind": "begrep",
+  "topic": "fraktmarked",
+  "title": "Baltic Dry Index – hva det er og hvorfor det betyr noe",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "intern:selskap:HAFNI.OL",
+  "kind": "selskap",
+  "topic": "selskap",
+  "title": "Selskapsprofil: Hafnia",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "intern:selskap:ODF.OL",
+  "kind": "selskap",
+  "topic": "selskap",
+  "title": "Selskapsprofil: Odfjell",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "intern:selskap:SNI.OL",
+  "kind": "selskap",
+  "topic": "selskap",
+  "title": "Selskapsprofil: Stolt-Nielsen",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "intern:selskap:2020.OL",
+  "kind": "selskap",
+  "topic": "selskap",
+  "title": "Selskapsprofil: 2020 Bulkers",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "intern:selskap:HSHP.OL",
+  "kind": "selskap",
+  "topic": "selskap",
+  "title": "Selskapsprofil: Himalaya Shipping",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "intern:selskap:JIN.OL",
+  "kind": "selskap",
+  "topic": "selskap",
+  "title": "Selskapsprofil: Jinhui Shipping",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "intern:selskap:MPCC.OL",
+  "kind": "selskap",
+  "topic": "selskap",
+  "title": "Selskapsprofil: MPC Container Ships",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "intern:selskap:KCC.OL",
+  "kind": "selskap",
+  "topic": "selskap",
+  "title": "Selskapsprofil: Klaveness Combination Carriers",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "intern:selskap:WAWI.OL",
+  "kind": "selskap",
+  "topic": "selskap",
+  "title": "Selskapsprofil: Wallenius Wilhelmsen",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:Freight rate",
+  "kind": "begrep",
+  "topic": "fraktmarked",
+  "title": "Hva er freight rate?",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "intern:selskap:HAUTO.OL",
+  "kind": "selskap",
+  "topic": "selskap",
+  "title": "Selskapsprofil: Höegh Autoliners",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "intern:selskap:BWLPG.OL",
+  "kind": "selskap",
+  "topic": "selskap",
+  "title": "Selskapsprofil: BW LPG",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:Capesize",
+  "kind": "begrep",
+  "topic": "skipstyper",
+  "title": "Capesize - hva det er og hvorfor det betyr noe",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "intern:selskap:CMBTO.OL",
+  "kind": "selskap",
+  "topic": "selskap",
+  "title": "Selskapsprofil: CMB.TECH",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "intern:selskap:WWI.OL",
+  "kind": "selskap",
+  "topic": "selskap",
+  "title": "Selskapsprofil: Wilh. Wilhelmsen",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:Panama Canal",
+  "kind": "begrep",
+  "topic": "shippingbegrep",
+  "title": "Panama Kanal",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:Frontline plc",
+  "kind": "begrep",
+  "topic": "selskap",
+  "title": "Frontline plc – tanker og aksjer",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "intern:hendelser:Tank",
+  "kind": "hendelser",
+  "topic": "fraktmarked",
+  "title": "Siste 30 dager: Tank (23.11.2026)",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "intern:hendelser:Tørrbulk",
+  "kind": "hendelser",
+  "topic": "fraktmarked",
+  "title": "Siste 30 dager: Tørrbulk (23.11.2026)",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "intern:hendelser:Container og bil",
+  "kind": "hendelser",
+  "topic": "fraktmarked",
+  "title": "Siste 30 dager: Container og bil (23.11.2026)",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "intern:hendelser:Gass",
+  "kind": "hendelser",
+  "topic": "råvarer",
+  "title": "Siste 30 dager: Gass (23.11.2026)",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "intern:hendelser:Geopolitikk",
+  "kind": "hendelser",
+  "topic": "geopolitikk",
+  "title": "Siste 30 dager: Geopolitikk (23.11.2026)",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:Worldscale",
+  "kind": "begrep",
+  "topic": "fraktmarked",
+  "title": "Worldscale – fraktforhold for olje skip",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:Charterparty",
+  "kind": "begrep",
+  "topic": "shippingbegrep",
+  "title": "Hva er en charterparty?",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:Time charter",
+  "kind": "begrep",
+  "topic": "shippingbegrep",
+  "title": "Time Charter - en hest, ikke en aksje",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:Voyage charter",
+  "kind": "begrep",
+  "topic": "shippingbegrep",
+  "title": "Voyage charter",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:Forward freight agreement",
+  "kind": "begrep",
+  "topic": "fraktmarked",
+  "title": "Forward freight agreement",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:Bunker fuel",
+  "kind": "begrep",
+  "topic": "råvarer",
+  "title": "Bunker fuel – hva er det og hvorfor det betyr noe",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:Oil tanker",
+  "kind": "begrep",
+  "topic": "skipstyper",
+  "title": "Oljeklasse og shippingaksjer",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:Very large crude carrier",
+  "kind": "begrep",
+  "topic": "skipstyper",
+  "title": "VLC-kraner",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:Suezmax",
+  "kind": "begrep",
+  "topic": "skipstyper",
+  "title": "Hva er Suezmax?",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:Aframax",
+  "kind": "begrep",
+  "topic": "skipstyper",
+  "title": "Aframax",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:Bulk carrier",
+  "kind": "begrep",
+  "topic": "skipstyper",
+  "title": "Bulk carrier – hva er det?",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:Container ship",
+  "kind": "begrep",
+  "topic": "skipstyper",
+  "title": "Container ship",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:Car carrier",
+  "kind": "begrep",
+  "topic": "skipstyper",
+  "title": "Car carrier og RORO",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:Strait of Hormuz",
+  "kind": "begrep",
+  "topic": "geopolitikk",
+  "title": "Straopen av Hormuz",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:Suez Canal",
+  "kind": "begrep",
+  "topic": "fraktmarked",
+  "title": "Suez Canal – viktig vei for skip",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:Bab-el-Mandeb",
+  "kind": "begrep",
+  "topic": "fraktmarked",
+  "title": "Bab-el-Mandeb – strategisk strait for sjøtransport",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:Red Sea crisis",
+  "kind": "begrep",
+  "topic": "geopolitikk",
+  "title": "Rødseakrisen og handelsskip",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:Shadow fleet",
+  "kind": "begrep",
+  "topic": "regulering og miljø",
+  "title": "Shadow fleet – hva er det og hvorfor det betyr noe",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:Russian oil price cap",
+  "kind": "begrep",
+  "topic": "råvarer",
+  "title": "Russisk oljeprisstopp og shipping",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:Brent Crude",
+  "kind": "begrep",
+  "topic": "råvarer",
+  "title": "Brent Crude – hva det er og hvorfor det betyr noe",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:OPEC",
+  "kind": "begrep",
+  "topic": "fraktmarked",
+  "title": "OPEC og oljemarkedet",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:OPEC+",
+  "kind": "begrep",
+  "topic": "råvarer",
+  "title": "OPEC+ og fraktmarked",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:Price of oil",
+  "kind": "begrep",
+  "topic": "råvarer",
+  "title": "Oljepris og shippingaksjer",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:Crack spread",
+  "kind": "begrep",
+  "topic": "råvarer",
+  "title": "Crack spread",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:Contango",
+  "kind": "begrep",
+  "topic": "fraktmarked",
+  "title": "Hva er contango?",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:Backwardation",
+  "kind": "begrep",
+  "topic": "fraktmarked",
+  "title": "Backwardation",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:Iron ore",
+  "kind": "begrep",
+  "topic": "råvarer",
+  "title": "Jernør og shippingaksjer",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:IMO 2020",
+  "kind": "begrep",
+  "topic": "regulering og miljø",
+  "title": "IMO 2020 og brenselgrense",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:2020 Russia–Saudi Arabia oil price war",
+  "kind": "begrep",
+  "topic": "råvarer",
+  "title": "Oljepris-kamp mellom Saudi og Russland i 2020",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:2021–2023 global supply chain crisis",
+  "kind": "begrep",
+  "topic": "fraktmarked",
+  "title": "Global supply chain crisis 2021–2023",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:Oslo Stock Exchange",
+  "kind": "begrep",
+  "topic": "aksjemarked",
+  "title": "Oslo Børs og shippingaksjer",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:Dividend",
+  "kind": "begrep",
+  "topic": "aksjemarked",
+  "title": "Hva er en dividende?",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:Dividend yield",
+  "kind": "begrep",
+  "topic": "aksjemarked",
+  "title": "Dividendenytelse for shippingaksjer",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:Ex-dividend date",
+  "kind": "begrep",
+  "topic": "aksjemarked",
+  "title": "Ex-dividend dato for shippingaksjer",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:Net asset value",
+  "kind": "begrep",
+  "topic": "aksjemarked",
+  "title": "Nettverdi i shippingaksjer",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "wiki:en:Price–earnings ratio",
+  "kind": "begrep",
+  "topic": "aksjemarked",
+  "title": "P/E-ratio for shippingaksjer",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ },
+ {
+  "url": "intern:selskap:FRO.OL",
+  "kind": "selskap",
+  "topic": "selskap",
+  "title": "Selskapsprofil: Frontline",
+  "credibility": "",
+  "model": "lokal/qwen3:4b-instruct",
+  "date": "2026-11-23"
+ }
+]

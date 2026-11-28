@@ -1,0 +1,5 @@
+- Frontline Q4 2026 (kvartalet nå, fra rapport Q3 2026): VLCC 68 % til 562,600 USD/dag; Suezmax 69 % til 324,300 USD/dag. Anslått overskudd over dødpunkt 1,396.9 MUSD. Siste utbytte 2.38 per aksje.
+- Okeanis Eco Tankers Q4 2026 (kvartalet nå, fra rapport Q3 2026): VLCC 87 % til 430,300 USD/dag; Suezmax 60 % til 410,900 USD/dag. Mangler antall skip eller dødpunkt for fullt anslag. Siste utbytte 7.0 per aksje.
+- Hafnia Q4 2026 (kvartalet nå, fra rapport Q3 2026): flåtesnitt 74 % til 55,148 USD/dag. Mangler antall skip eller dødpunkt for fullt anslag. Siste utbytte 1.2826 per aksje.
+- BW LPG Q4 2026 (kvartalet nå, fra rapport Q3 2026): flåtesnitt 92 % til 102,000 USD/dag. Mangler antall skip eller dødpunkt for fullt anslag. Siste utbytte 1.3 per aksje.
+- CMB.TECH Q4 2026 (kvartalet nå, fra rapport Q3 2026): VLCC 59 % til 635,199 USD/dag (?); Suezmax 68 % til 377,164 USD/dag (?); CSOV 100 % til 16,978 USD/dag. Mangler antall skip eller dødpunkt for fullt anslag. Siste utbytte 0.65 per aksje.
