@@ -1,0 +1,166 @@
+{
+ "model": "claude-opus-5-5",
+ "date": "2026-11-28",
+ "notes": [
+  {
+   "id": "hormuz-uke48-2026",
+   "kind": "hendelser",
+   "topic": "geopolitikk",
+   "title": "Hormuz uke 48 2026: miner, angrep og USAs blokade",
+   "body": "Krigen med Iran preget Hormuzstredet også i uken 21.–28. november 2026. Ifølge nyhetene traff flere tankskip miner, USA satte et nytt skip ut av drift i blokaden av iranske havner, og det finnes ingen våpenhvile. De fleste tallene kommer fra den ene parten og er ikke bekreftet av uavhengige kilder.\n- 25. november: Revolusjonsgarden (IRGC) sa at to oljetankere traff sjøminer, eksploderte og tok fyr (Jerusalem Post).\n- 27. november: IRGC sa at et tankskip traff en mine nord for Ghanem-øya etter å ha prøvd en «ikke godkjent» rute. Et annet skip snudde. IRGC sa at slike passeringer har gått «betydelig ned» de siste dagene. Al Jazeera skriver at påstandene ikke kan bekreftes.\n- 26. november: USAs sentralkommando (CENTCOM) sa at fly skjøt mot akterenden på det Palau-flaggede skipet Pacific Archer, som hadde forlatt Bandar Abbas. Mannskapet var uskadd. Ifølge Al Jazeera er det minst det 15. skipet som er satt ut av drift siden april, og det sjette siden blokaden ble gjenopptatt i juli.\n- USA sier at 158 handelsskip er sendt tilbake siden juli, og to hangarskip er i området (Al Jazeera).\n- Ifølge nyhetene (SeaVantage) ble tre Liberia-flaggede tankskip truffet 22. november, og bulkskipet CTI Helen ble truffet for anker ved Khor Fakkan.\n- Trafikk: terminalens PortWatch-tall viste 2 skip per dag i snitt siste 7 dager til 15. november, mot 73 samme tid i fjor. En Bloomberg-overskrift 26. november sa at tankertrafikken har økt denne måneden selv om angrepene øker (artikkelen kunne ikke leses). President Trump sa 24. november at mer olje går gjennom sundet nå enn før krigen, uten å oppgi tall. Kildene spriker, så trafikktallene er usikre.\n- Bakgrunn (Wikipedia, C-kilde): krigen startet 28. februar 2026, våpenhvile 8. april, blokade fra 13. april, avtale 17. juni, ny krig og ny blokade fra juli.\nBetydning for shippingaksjer: Miner og angrep holder krigspremien og forsikringskostnadene oppe, men tankratene har likevel falt kraftig fra toppen i oktober. Nyheter fra Hormuz gir store dagsbevegelser i FRO, OET, HAFNI, CMBTO og BWLPG, og det er stor risiko for kursgap over natten.",
+   "source_title": "Al Jazeera / Jerusalem Post (nyheter)",
+   "link": "https://www.aljazeera.com/news/2026/11/27/us-military-says-it-disabled-merchant-ship-trying-to-breach-iran-blockade",
+   "credibility": "C",
+   "symbols": [
+    "FRO.OL",
+    "OET.OL",
+    "HAFNI.OL",
+    "CMBTO.OL",
+    "BWLPG.OL"
+   ]
+  },
+  {
+   "id": "houthi-saudi-havner-2026-11",
+   "kind": "hendelser",
+   "topic": "geopolitikk",
+   "title": "Houthiene angriper Saudi-Arabias havner ved Rødehavet (november 2026)",
+   "body": "Rundt 25.–26. november 2026 angrep houthiene i Jemen saudiarabiske mål med raketter og droner, ifølge nyhetene. Det skjer samtidig som containerlinjene er i ferd med å flytte Asia–Europa-trafikken tilbake til Suezkanalen.\n- The National (26. november): Saudi-Arabia skjøt ned to ballistiske raketter mot Riyadh og to droner over Østprovinsen. Et prosjektil falt i Jazan havn med små skader.\n- Houthiene sa de angrep havnene Jeddah og Jazan som svar på koalisjonens angrep på Hodeidah havn. Det var ingen bekreftelse på treff i Jeddah.\n- Houthiene sa også at de angrep raffineriet i Ras Tanura (550 000 fat per dag). Koalisjonen sa at fire droner ble skutt ned.\n- Saudiarabiske myndigheter sa at et prosjektil traff Aramcos Jazan-raffineri 26. november og stanset deler av driften (Political.org).\n- 25. november navnga houthiene Jeddah, Jazan, Yanbu og King Fahd Industrial Port som mål, og ba rederier trekke skip ut (SeaVantage, kommersiell kilde).\n- Bab el-Mandeb: SeaVantage målte 40 passeringer per dag 25. november mot normalt 30. Terminalens PortWatch-tall viste 26 per dag til 15. november.\n- Ifølge Greenworldwide gikk 57 containerskip gjennom Suez i uken til 15. november, opp 73 prosent fra året før, og rundt 60 prosent av Asia–Europa-kapasiteten går nå via Suez.\nBetydning for shippingaksjer: Hvis Rødehavet blir farlig igjen, kan containerlinjene måtte gå rundt Afrika igjen. Det binder opp skip og støtter rater og befraktning for MPCC, men kan skade tørrbulk- og tankskip som bruker Suez. Raffineriangrep i Saudi-Arabia kan påvirke produkttank (HAFNI.OL).",
+   "source_title": "The National",
+   "link": "https://thenationalnews.com/news/gulf/2026/11/26/saudi-arabia-intercepts-wave-of-retaliatory-houthi-attacks",
+   "credibility": "C",
+   "symbols": [
+    "MPCC.OL",
+    "HAFNI.OL",
+    "FRO.OL"
+   ]
+  },
+  {
+   "id": "svartehavet-krig-til-sjos-2026-11",
+   "kind": "hendelser",
+   "topic": "geopolitikk",
+   "title": "Krigen mellom Russland og Ukraina flytter seg til sjøs (november 2026)",
+   "body": "Angrep på skip i Svartehavet, Østersjøen og Middelhavet har økt kraftig i andre halvår 2026, ifølge nyhetene. Begge sider anklager hverandre, og tallene er påstander som ikke er uavhengig bekreftet.\n- The National (27. november), med tall fra Acled: angrep der skip er involvert i Svartehavet og Middelhavet steg fra 11 i første halvår 2026 til 52 siden starten av juli (overskriften sier 54).\n- Ukrainske droner traff det russiske lasteskipet Sparta II i Finskebukta. En russisk korvett og et lasteskip ble truffet utenfor Libya.\n- Ukrainas statsminister sa at Russland angrep to utenlandske skip med over 100 000 tonn korn nær Odesa.\n- I FNs sikkerhetsråd (24. november, Anadolu) sa Russland at Ukraina har angrepet over 200 handelsskip siden juli. Kyiv rapporterte 89 angrep på sivile skip fra juni til august, mot 25 i hele 2025.\n- Russland sa at landet ikke vil godta en ny kornavtale. USA ba begge sider slutte å angripe havner og skip.\n- Terminalens PortWatch-tall: Bosporus 49 skip per dag i snitt til 15. november, mot 98 samme tid i fjor.\nBetydning for shippingaksjer: Færre trygge laster fra Svartehavet kan flytte korn til lengre ruter fra Amerika (bra for Panamax og Supramax, for eksempel KCC.OL og JIN.OL). Angrep på skyggeflåten kan gjøre russisk olje dyrere å frakte og flytte last over på vanlige tankskip.",
+   "source_title": "The National / Anadolu",
+   "link": "https://www.thenationalnews.com/news/2026/11/27/russia-ukraine-war-increasingly-expanding-out-to-sea/",
+   "credibility": "C",
+   "symbols": [
+    "JIN.OL",
+    "KCC.OL",
+    "FRO.OL"
+   ]
+  },
+  {
+   "id": "opec-pluss-29-november-2026",
+   "kind": "hendelser",
+   "topic": "råvarer",
+   "title": "OPEC+ møtes 29. november 2026 om kvoter for 2027",
+   "body": "OPEC+ har et nettmøte søndag 29. november 2026. Gruppens kvoter går ut ved slutten av 2026, og nye kvoter for 2027 skal settes. Ifølge nyhetene ventes uendrede mål for første kvartal 2027.\n- Kvotene for 2027 skal bygge på hvert lands maksimale kapasitet, vurdert uavhengig av DeGolyer and MacNaughton for første gang (Wisevoter, Trading and Investment News med AFP).\n- Tre kilder sa til Bloomberg at gruppen trolig holder målene for første kvartal uendret (Political.org).\n- Strid: Irak godtar ikke en anslått kapasitet på 5,0 millioner fat per dag og sier 5,2 millioner er riktig. Kasakhstan produserte 1,76 millioner fat per dag i oktober mot en kvote på 1,628 millioner (IEA via Wisevoter). Russland produserte 8,4 millioner fat per dag i oktober mot en kvote på nesten 10 millioner (Rystad).\n- Ifølge Trading and Investment News forlot De forente arabiske emirater OPEC 1. mai 2026.\n- Overskudd: IEA venter overskudd fra fjerde kvartal, og Rystad ser 5 millioner fat per dag i overskudd i 2027 (Rigzone via TIN).\nBetydning for shippingaksjer: Høyere produksjon fra OPEC+ gir mer last for tankskip, særlig VLCC fra Midtøsten, men bare hvis oljen kommer ut av Gulfen. Et oljeoverskudd kan gi lageroppbygging og flytende lagring, som støtter tankratene på kort sikt.",
+   "source_title": "Trading and Investment News",
+   "link": "https://www.tradingandinvestmentnews.co.uk/opec-meeting-2027-quotas-preview/",
+   "credibility": "C",
+   "symbols": [
+    "FRO.OL",
+    "OET.OL",
+    "CMBTO.OL"
+   ]
+  },
+  {
+   "id": "brent-uke48-2026",
+   "kind": "hendelser",
+   "topic": "råvarer",
+   "title": "Oljeprisen uke 48 2026: første ukeoppgang i november",
+   "body": "Brent steg i uken til 27. november 2026 etter angrep på tankskip i Hormuz og på saudiarabiske anlegg, men falt nesten 20 prosent i november. Tallene kommer fra nyhetskilder og bør sjekkes mot terminalens egne prisdata.\n- Political.org: Brent stengte på 95,44 dollar fredag 27. november, ned 1,13 dollar (1,2 prosent) på dagen og rundt 3 prosent opp på uken. WTI stengte på 83,08 dollar.\n- Discovery Alert: Brent-terminen for januar stengte på 92,57 dollar fredag 20. november, etter tre uker med fall.\n- Drivere: miner og angrep i Hormuz, angrep på Jazan og Ras Tanura, og OPEC+-møtet 29. november.\n- Datahull: terminalens siste Brent-pris var 86,56 dollar (23. november). Det er langt under terminprisen andre kilder oppga samme uke, så serien i terminalen bør sjekkes (kanskje en annen kontrakt eller gammel dato).\nBetydning for shippingaksjer: Brent har vist svak sammenheng med tankaksjene over tid (korrelasjon 0,14 for Frontline i terminalens data). Store dagsfall i Brent har oftere gitt fall i BW LPG, Stolt-Nielsen og Hafnia.",
+   "source_title": "Political.org (nyheter)",
+   "link": "https://political.org/2026/11/27/oil-posts-first-weekly-gain-of-november-as-attacks-on-tankers-and-saudi-facilities-revive-supply-fears/",
+   "credibility": "C",
+   "symbols": [
+    "FRO.OL",
+    "HAFNI.OL",
+    "BWLPG.OL",
+    "SNI.OL"
+   ]
+  },
+  {
+   "id": "lng-europa-lager-2026-11",
+   "kind": "hendelser",
+   "topic": "råvarer",
+   "title": "Gass og LNG i november 2026: lave lagre i Europa, lite LNG fra Qatar",
+   "body": "Europa går inn i vinteren med lave gasslagre fordi LNG fra Qatar fortsatt er sterkt redusert av krigen. Asia og Europa konkurrerer om lastene.\n- EU-lagrene var 70,15 prosent fulle 17. november, mot 81,89 prosent et år tidligere (GMK Center).\n- TTF var over 100 euro per MWh tidlig i november. Toppen i november var 92,26 euro 12. november (GMK). Oilprice oppga rundt 85 euro 17. november. Terminalens TTF-tall var 91,39 (23. november).\n- QatarEnergy har forlenget force majeure på deler av LNG-leveransene til minst slutten av desember (GMK).\n- Qatar skipet 2,09 millioner tonn LNG i oktober, en tredjedel av rundt 6,09 millioner tonn per måned før krigen (Reuters-spalte med Kpler-data).\n- Spot-LNG i Asia var 31,30 dollar per MMBtu i uken til 13. november, mot 10,40 dollar før krigen (samme kilde).\n- IEA advarer om at lagrene kan falle under 10 prosent innen slutten av mars 2027 i sine beregninger (via GMK).\nBetydning for shippingaksjer: Lite LNG fra Gulfen gir lange ruter fra USA til Asia og Europa. Det støtter også LPG-frakt fra USA, som BW LPG lever av. Høye gasspriser i Europa kan svekke kjemisk industri og dermed kjemikalietank (ODF.OL, SNI.OL).",
+   "source_title": "GMK Center / Reuters via BOE Report",
+   "link": "https://gmk.center/en/news/european-gas-prices-remain-volatile-in-the-first-half-of-november/",
+   "credibility": "C",
+   "symbols": [
+    "BWLPG.OL",
+    "ODF.OL",
+    "SNI.OL"
+   ]
+  },
+  {
+   "id": "jernmalm-2026-11",
+   "kind": "hendelser",
+   "topic": "råvarer",
+   "title": "Jernmalm i november 2026: rundt 90 dollar, høye havnelagre i Kina",
+   "body": "Jernmalmprisen har ligget rundt 90 dollar per tonn i november 2026, med høye lagre i kinesiske havner og svak stålmargin. Kildene er få og delvis gamle.\n- SMM (6. november): mest omsatte SGX-kontrakt steg til 93,50 dollar per tonn, opp 3,6 prosent på uken. Lagre av importert malm i 35 kinesiske havner var 149,13 millioner tonn. SMM ventet 90–95 dollar uken etter.\n- Baird Maritime (27. november): jernmalmprisen hentet inn tidligere tap og handlet litt lavere etter at Beijing lovet mer støtte til markedet.\n- Terminalens jernmalmpris (62 prosent) var 90,67 dollar 23. november, ned 0,9 prosent på uken.\n- Hull: ingen fersk tall for kinesisk stålproduksjon eller Simandou ble funnet denne uken.\nBetydning for shippingaksjer: Jernmalm er den viktigste lasten for Capesize og Newcastlemax (HSHP.OL, CMBTO.OL). Stabil pris og høye havnelagre gir lite ekstra kjøpspress, men vinterlagring av kull og malm har løftet Capesize-ratene i november.",
+   "source_title": "SMM / Baird Maritime",
+   "link": "https://news.metal.com/newscontent/104209664-smm-iron-ore-short-covering-lifts-iron-ore-faster-port-restocking-casts-doubt-on-follow-through",
+   "credibility": "C",
+   "symbols": [
+    "HSHP.OL",
+    "CMBTO.OL",
+    "JIN.OL"
+   ]
+  },
+  {
+   "id": "usa-toll-section301-2026-11",
+   "kind": "hendelser",
+   "topic": "verdensøkonomi",
+   "title": "USA varsler ny toll på opptil 20 prosent mot 14 land (25. november 2026)",
+   "body": "USA varslet 25. november 2026 ny toll mot 14 økonomier etter en undersøkelse av «strukturell overkapasitet» under paragraf 301 i handelsloven fra 1974. Satsene for de fleste land er ikke publisert ennå, og tollen ventes å gjelde fra tidlig 2027.\n- Land: Kina, Bangladesh, Kambodsja, EU, India, Indonesia, Japan, Sør-Korea, Malaysia, Singapore, Sveits, Taiwan, Thailand og Vietnam. Mexico og Norge slapp (Al Jazeera).\n- Kina: 20 prosent i tillegg til rundt 25 prosent fra Trumps første periode. Kan dobles til 40 prosent (MPR/AP).\n- Andre: Vietnam 20 prosent (Al Jazeera) eller opptil 35 prosent (MPR) – kildene spriker. Singapore opptil 20, Japan opptil 15, EU mulig 15, Thailand 18 prosent.\n- Satsene holder seg innenfor tak i handelsavtaler: 15 prosent for EU, Japan og Sør-Korea, 19 prosent for Malaysia og 20 prosent for Kina (Al Jazeera).\n- Våpenhvilen i handelskrigen mellom USA og Kina er forlenget og går ut 10. januar 2027 (MPR).\n- Bakgrunn: USAs høyesterett avviste den tidligere nødfullmakt-tollen i februar 2026 (Al Jazeera).\n- Reaksjoner: Kina vil ta «nødvendige tiltak», Japan har protestert, EU avviser at Europa har overkapasitet.\nBetydning for shippingaksjer: Toll kan gi en rush av import før tollen trer i kraft (bra for container og bil på kort sikt) og svakere volumer etterpå. Norge er unntatt, men Oslo-noterte rederier frakter varer for landene som rammes. Følg med på MPCC.OL, WAWI.OL og HAUTO.OL.",
+   "source_title": "Al Jazeera / MPR News",
+   "link": "https://www.aljazeera.com/news/2026/11/25/trump-announces-new-trade-tariffs-which-countries-will-they-target",
+   "credibility": "C",
+   "symbols": [
+    "MPCC.OL",
+    "WAWI.OL",
+    "HAUTO.OL"
+   ]
+  },
+  {
+   "id": "fed-referat-oktober-2026",
+   "kind": "rapport",
+   "topic": "makro",
+   "title": "Federal Reserve: referatet fra oktober peker mot renteheving i desember 2026",
+   "body": "Referatet fra Feds møte 27.–28. oktober 2026, publisert 18. november, viser at nesten alle medlemmene venter en renteheving på 0,25 prosentpoeng i desember. Neste beslutning kommer 9. desember.\n- Renten ble holdt på 3,75–4,00 prosent med 10 mot 2 stemmer. Lisa Cook og Beth Hammack ville heve (Advisor.ca/AP).\n- «Nesten alle» venter en heving på et kvart prosentpoeng i desember, og to nevnte et halvt prosentpoeng.\n- Et «stort flertall» var bekymret for at inflasjonen kan vare.\n- KPI steg 0,4 prosent i oktober, kjerne-KPI 0,3 prosent (StockAnalysis). Guvernør Waller sa at kjerneinflasjonen har gått med rundt 3,5 prosent årlig takt de siste tre månedene.\n- CME FedWatch priset rundt 95 prosent sannsynlighet for heving 18. november (Advisor.ca).\n- Møtet er 8.–9. desember 2026.\nBetydning for shippingaksjer: Høyere amerikanske renter gjør gjeld dyrere og kan styrke dollaren. Sterk dollar mot krone gir høyere kurser i kroner for rederier som tjener i dollar, men høyere renter kan dempe risikoappetitten i sykliske aksjer.",
+   "source_title": "Advisor.ca (AP)",
+   "link": "https://www.advisor.ca/economy/economic-indicators/fed-minutes-point-to-need-for-higher-interest-rates/",
+   "credibility": "C",
+   "symbols": []
+  },
+  {
+   "id": "norges-bank-2026-11",
+   "kind": "rapport",
+   "topic": "makro",
+   "title": "Norges Bank holder renten på 4,5 prosent (november 2026)",
+   "body": "Norges Bank holdt styringsrenten uendret på 4,50 prosent ved møtet 4. november 2026 (publisert 5. november). Banken sier at renten trolig må holdes høy en stund, og at den er klar til å heve hvis det trengs.\n- Vedtaket var enstemmig. Ny rente gjelder fra 6. november. Ingen nye prognoser på dette møtet.\n- Banken skriver at kronen har styrket seg og er sterkere enn antatt.\n- Neste møte er 17. desember 2026, med Pengepolitisk rapport 4/26.\n- XTB (5. november): renten er hevet 0,5 prosentpoeng i 2026 (sist 0,25 i september). Markedet priser en heving innen utgangen av første halvår 2027.\n- Terminalens USD/NOK var 9,84 (23. november), opp 2,9 prosent på en uke.\nBetydning for shippingaksjer: En sterk krone gir lavere kurser i kroner for rederier som tjener i dollar, alt annet likt. Høy norsk rente påvirker mest selskaper med lån i kroner og investorer som sammenligner utbytte med bankrente.",
+   "source_title": "Norges Bank",
+   "link": "https://www.norges-bank.no/en/topics/monetary-policy/Monetary-policy-meetings/2026/november-2026/",
+   "credibility": "A",
+   "symbols": []
+  },
+  {
+   "id": "unctad-rmt-2026",
+   "kind": "rapport",
+   "topic": "verdensøkonomi",
+   "title": "UNCTAD Review of Maritime Transport 2026: sjøhandelen står stille, men reisene blir lengre",
+   "body": "UNCTAD lanserte Review of Maritime Transport 2026 («Shipping at a crossroads») 26. november 2026. Hovedbudskapet er at sjøhandelen ventes å ha null vekst i 2026, men at lengre ruter øker etterspørselen målt i tonnmil. Flere tall nedenfor kommer fra en omtale (DataPortuaria), fordi rapportteksten ikke kunne leses direkte.\n- UNCTAD: sjøhandelen ventes å få null vekst i 2026 etter 1,9 prosent vekst året før.\n- Fire sund og kanaler er forstyrret samtidig: Hormuz, Rødehavet/Suez, Svartehavet og Panamakanalen (DataPortuaria).\n- Snittdistanse per tonn last: 5 065 nautiske mil (2023), 5 269 (2025) og anslått 5 349 (2026). Tonnmil ventes å vokse 1,5 prosent i 2026 (DataPortuaria).\n- Containerhandelen ventes å vokse 3,3 prosent. Spotratene for container mer enn doblet seg fra januar til august 2026.\n- Containerordreboken er 36 prosent av flåten, mot 11 prosent i 2020–2021. UNCTAD advarer om overkapasitet hvis Rødehavet normaliseres.\n- Flåten vokste 3,5 prosent i 2025. 42 prosent av skipene er over 20 år, og bare 9,4 prosent av tonnasjen kan gå på alternativt drivstoff.\n- Trafikken gjennom Hormuz målt i bruttotonn falt nesten 95 prosent tidlig i mars.\nBetydning for shippingaksjer: Når volumene står stille, kommer veksten i fraktmarkedet fra lengre ruter. Det gjør ratene sårbare for fred eller gjenåpning av sund. Den store containerordreboken er en risiko for MPCC.OL på lengre sikt.",
+   "source_title": "UNCTAD",
+   "link": "https://unctad.org/publication/review-maritime-transport-2026",
+   "credibility": "A",
+   "symbols": [
+    "MPCC.OL",
+    "FRO.OL",
+    "HSHP.OL"
+   ]
+  }
+ ]
+}

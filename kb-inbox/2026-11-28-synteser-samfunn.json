@@ -1,0 +1,225 @@
+{
+ "model": "claude-opus-5-5",
+ "date": "2026-11-28",
+ "notes": [
+  {
+   "id": "booket-mot-gjenstaende-dager",
+   "kind": "metode",
+   "topic": "analysemetode",
+   "title": "Booket andel og gjenstående dager: slik regnes kvartalsraten grovt",
+   "body": "Rederiene oppgir hvor stor andel av neste kvartal som er booket, og til hvilken rate. Resten av dagene får markedsraten. Den samlede kvartalsraten er derfor et vektet snitt, og når spotratene faller, blir den lavere enn den bookede raten.\n- Formel: kvartalsrate ≈ booket andel × booket rate + (1 − booket andel) × forventet rate for resten.\n- Eksempel (bare regneeksempel, ikke prognose): Frontline har booket 68 prosent av VLCC-dagene i Q4 2026 til 562 600 dollar per dag. Hvis resten får 270 000 dollar (nær Compass sine spot-TCE 23. november), blir snittet rundt 0,68 × 562 600 + 0,32 × 270 000 ≈ 469 000 dollar per dag.\n- Bookingene skjer i rekkefølge: de første dagene i kvartalet (ofte de beste) er booket først. En lav booket andel sent i kvartalet betyr mer usikkerhet.\n- Sjekk om raten er «spot» eller «timecharter». Okeanis oppgir både andel av spotdager (48 prosent til 688 800) og av alle driftsdager (87 prosent til 430 300).\n- Trekk fra dødpunktet for å få et grovt overskudd per dag, og gang med antall skipsdager.\n- Terminalens bookingtabell antar at resten får samme rate. Det overdriver når ratene faller og undervurderer når de stiger.\nBetydning for shippingaksjer: Markedet ser fremover. Når de bookede ratene er rekordhøye mens spot og timecharter faller, er neste kvartal ofte svakere selv om dette kvartalet blir rekord.",
+   "source_title": "Claude / selskapsrapporter",
+   "link": "https://compassmar.com/wp-content/uploads/2026/11/Compass-Weekly-Report-Nov-23-26-1.pdf",
+   "credibility": "B",
+   "symbols": [
+    "FRO.OL",
+    "OET.OL",
+    "CMBTO.OL",
+    "HAFNI.OL",
+    "BWLPG.OL"
+   ]
+  },
+  {
+   "id": "rate-enheter-ws-fat-tce",
+   "kind": "begrep",
+   "topic": "shippingbegrep",
+   "title": "Worldscale, dollar per fat og TCE: tre enheter som ikke kan sammenlignes direkte",
+   "body": "Tankratene oppgis i flere enheter. Samme uke kan en kilde skrive WS 308, en annen 29,62 dollar per fat og en tredje 260 000 dollar per dag. Tallene må gjøres om før de sammenlignes.\n- Worldscale (WS): prosent av en fast tabellrate for hver rute. WS 100 er tabellraten, WS 300 er tre ganger tabellraten. Tabellen endres hvert år.\n- Dollar per fat eller per tonn: det lasteeieren betaler for å frakte en enhet last. Baltic Exchange oppgir mange ruter slik (for eksempel TD3C i dollar per fat).\n- TCE (dollar per dag): det skipet tjener per dag etter reisekostnader som bunkers og havneavgifter. Det er den enheten som kan sammenlignes med dødpunkt og rederienes rapporter.\n- Samme frakt i dollar per fat kan gi ulik TCE hvis bunkersprisen eller reisens lengde endres.\n- Timecharter (12 måneder) viser hva markedet tror om ratene det neste året, og svinger mindre enn spot.\nBetydning for shippingaksjer: Bruk TCE når du sammenligner rater med selskapenes bookinger og dødpunkt. En stor prosentendring i WS eller dollar per fat betyr ikke nødvendigvis like stor endring i inntjeningen.",
+   "source_title": "Kpler / Hydrocarbon Processing",
+   "link": "https://www.hydrocarbonprocessing.com/news/2026/11/supertanker-rates-plunge-more-than-60-from-record-highs/",
+   "credibility": "C",
+   "symbols": []
+  },
+  {
+   "id": "kildekvalitet-ki-artikler",
+   "kind": "metode",
+   "topic": "analysemetode",
+   "title": "Kildekvalitet: pass på KI-skrevne nyhetsartikler og feil kvartal",
+   "body": "Denne uken ga flere nyhetssider tall som ikke stemte med selskapenes egne meldinger. Mange sider publiserer automatisk eller KI-skrevne sammendrag, og noen blander år og kvartal.\n- Eksempel: en AAII-artikkel oppga inntekter på 704 millioner dollar og resultat per aksje 0,94 for CMB.TECH, mens selskapets melding sier 802,9 millioner og 1,29.\n- Eksempel: Investing.com (merket som KI-skrevet) oppga en annen timecharter-rate for BW LPG (46 300) enn selskapets melding (54 300).\n- Mange søketreff for «Q3 results» er fra 2025. Sjekk alltid publiseringsdato og hvilket kvartal teksten gjelder.\n- Regel: bruk selskapets egen melding (Newsweb, børsmelding, SEC) som fasit for tall. Bruk nyheter for sammenheng og reaksjoner.\n- Når to kilder spriker, skriv begge tallene og hvem som sa hva, i stedet for å velge ett.\n- Påstander fra en part i en krig (for eksempel IRGC om miner) skal merkes som påstander.\nBetydning for shippingaksjer: Feil tall i en rapport kan gi feil tolkning av en kursreaksjon. Terminalens KI-sammendrag av rapporter bør kryssjekkes mot selskapets melding før de brukes i analyser.",
+   "source_title": "Claude / egne kryssjekker",
+   "link": "https://www.aaii.com/investingideas/article/537469-what-you-need-to-know-about-cmbtech-nvs-q3-earnings",
+   "credibility": "B",
+   "symbols": [
+    "CMBTO.OL",
+    "BWLPG.OL"
+   ]
+  },
+  {
+   "id": "eksdag-utbytte-oslo",
+   "kind": "forskning",
+   "topic": "trading og risiko",
+   "title": "Kursen på eks-dagen: faller aksjen like mye som utbyttet?",
+   "body": "Teorien sier at kursen skal falle omtrent like mye som utbyttet på eks-dagen. Studier fra Oslo Børs (blant annet masteroppgaver ved BI og NTNU) har undersøkt dette, og terminalens egne data viser at fallet ofte avviker fra utbyttet.\n- Terminalens tall (siste to år, sluttkurser): Frontline falt i snitt 1,8 prosent mot et utbytte på 2,6 prosent. Hafnia falt 3,7 mot 3,1. Höegh Autoliners falt 3,9 mot 5,1. Himalaya Shipping falt 0,6 mot 1,2.\n- Avvik kan skyldes skatt (for eksempel kildeskatt, som på deler av CMB.TECHs utbytte), valuta (utbyttet betales i dollar), og at markedet beveger seg samme dag.\n- Utbytte-jakt (kjøpe før eks-dag, selge etter) er sjelden lønnsomt etter kurtasje, spread og skatt for vanlige investorer.\n- På aksjesparekonto (ASK) skattlegges ikke utbyttet før uttak, men kildeskatt fra utlandet kan ikke alltid kreves tilbake.\n- Kommende eks-datoer: CMB.TECH 8. desember (0,65 dollar).\nBetydning for shippingaksjer: Et kursfall på eks-dagen er ikke et negativt signal i seg selv. Juster for utbyttet før du tolker kursen i perioden rundt eks-dagen.",
+   "source_title": "BI Open (masteroppgave om eks-utbytte på Oslo Børs)",
+   "link": "https://biopen.bi.no/bi-xmlui/handle/11250/2577592",
+   "credibility": "C",
+   "symbols": [
+    "FRO.OL",
+    "HAFNI.OL",
+    "HAUTO.OL",
+    "HSHP.OL",
+    "CMBTO.OL"
+   ]
+  },
+  {
+   "id": "atr-posisjonsstorrelse",
+   "kind": "metode",
+   "topic": "trading og risiko",
+   "title": "Posisjonsstørrelse etter svingninger (ATR)",
+   "body": "En vanlig metode er å bestemme størrelsen på en posisjon ut fra hvor mye aksjen svinger. Da tar en urolig aksje like mye risiko som en rolig, selv om beløpet er mindre.\n- ATR (Average True Range) er gjennomsnittlig dagsbevegelse, ofte over 14 dager, i kroner.\n- Stopp-avstand settes ofte til 1,5–3 ganger ATR, slik at vanlig støy ikke utløser stoppen.\n- Antall aksjer ≈ beløpet du tåler å tape ÷ (ATR × multiplikator).\n- Eksempel med terminalens tall: typisk dagsbevegelse er 2,9 prosent for Frontline, 2,0 prosent for Klaveness og 8,8 prosent for 2020 Bulkers. Med samme tapsgrense blir en posisjon i 2020 Bulkers rundt tre ganger mindre enn i Frontline.\n- Metoden beskytter ikke mot gap: hvis aksjen åpner langt under stoppen, blir tapet større.\n- Når svingningene øker (for eksempel i en krig), bør posisjonene bli mindre for å holde samme risiko.\nBetydning for shippingaksjer: Shippingaksjer har ofte 35–45 prosent årlig volatilitet i terminalens data. Å tilpasse størrelsen etter svingningene er en av de enkleste måtene å unngå store tap på.",
+   "source_title": "TradeZero (ATR-metode)",
+   "link": "https://tradezero.com/blog/the-atr-position-sizing-formula-how-to-size-every-trade-around-volatility",
+   "credibility": "C",
+   "symbols": [
+    "FRO.OL",
+    "KCC.OL",
+    "2020.OL"
+   ]
+  },
+  {
+   "id": "slik-jobber-proffe-analytikere-metode-for-terminalen",
+   "url": "intern:syntese:slik-jobber-proffe-analytikere-metode-for-terminalen",
+   "kind": "syntese",
+   "topic": "syntese",
+   "title": "Slik jobber proffe analytikere: metode for terminalen",
+   "body": "Profesjonelle analytikere skiller seg ikke ut ved at de vet mer, men ved at de jobber mer systematisk og er ærlige om usikkerhet. Denne sammenfatningen samler metoden terminalen skal bruke (oppdatert 28. november 2026). Kilder: Heuer (CIA), Good Judgment Project, forskning på momentum og etter-rapport-drift, og bransjekildene i fundamentet.\n- Start med spørsmålet og beslutningen: hva skal analysen avgjøre, og innen hvilken tidshorisont (1 dag til 1 måned)?\n- Bygg kjeden last → skip → rate → inntjening → aksje. Hvert ledd skal ha en kilde.\n- Lag flere hypoteser samtidig (Heuers ACH). Se etter bevis som skiller dem.\n- Start med utsiden: hvor ofte har noe lignende skjedd før? Juster deretter for det spesielle.\n- Gi sannsynligheter for scenarier og juster i små steg.\n- Sammenlign med det markedet allerede vet: terminkurven, timecharter-ratene, konsensus og kursutviklingen.\n- Les primærkilder først (selskapets melding, IEA, Norges Bank, Baltic Exchange), deretter fagmedier, sist sosiale medier.\n- Nytt: sjekk dato og kvartal på alle treff. Mange nyhetssider er KI-skrevne og blander år eller oppgir andre tall enn selskapet (se notatet om kildekvalitet).\n- Nytt: sjekk hva selskapet faktisk gjør. 2020 Bulkers har gått fra tørrbulk til ankerhåndtering, og en analyse med feil segment gir feil svar.\n- Nytt: gjør om rater til samme enhet (TCE) før sammenligning.\n- Merk hvert tall med kilde og dato. Skriv hvem som sa hva når kilder spriker.\n- Skriv ned hva som må skje for at analysen er feil, og følg med.\n- Etterpå: mål treffsikkerheten (Brier-skår) og lær av feilene.\nBetydning for shippingaksjer: Metoden gir vurderinger med kilder, scenarier og tydelige utløsere i stedet for skråsikre spådommer. Ingen kjøps- eller salgsråd, ingen kursmål.",
+   "source_title": "Claude-sammenfatning",
+   "link": "https://fuglesang-five.vercel.app/fundament",
+   "credibility": "B",
+   "symbols": []
+  },
+  {
+   "id": "verdensøkonomien-og-geopolitikken-hva-driver-fraktratene-nå",
+   "url": "intern:syntese:verdensøkonomien-og-geopolitikken-hva-driver-fraktratene-nå",
+   "kind": "syntese",
+   "topic": "syntese",
+   "title": "Verdensøkonomien og geopolitikken: hva driver fraktratene nå",
+   "body": "Per 28. november 2026 er krigen med Iran fortsatt den viktigste enkeltdriveren for fraktratene, men flere nye risikoer har kommet til: angrep på Saudi-Arabia, en sjøkrig mellom Russland og Ukraina, og ny amerikansk toll.\n- Hormuz: ifølge nyhetene traff flere tankskip miner 25. og 27. november, og USA satte et nytt skip ut av drift i blokaden 26. november. Ingen våpenhvile. Trafikktallene spriker mellom kildene.\n- Rødehavet: houthiene angrep saudiarabiske havner og raffinerier 25.–26. november, mens containerlinjene er på vei tilbake til Suez.\n- Svartehavet og Østersjøen: angrep på skip økte fra 11 i første halvår til 52 siden juli (Acled via The National).\n- Olje: Brent rundt 95 dollar 27. november, opp rundt 3 prosent på uken, men ned nesten 20 prosent i november (Political.org). OPEC+ møtes 29. november om kvotene for 2027. IEA venter overskudd.\n- Gass: EU-lagrene 70 prosent fulle midt i november mot 82 prosent i fjor. Qatar skiper rundt en tredjedel av normal LNG.\n- Handel: UNCTAD venter null vekst i sjøhandelen i 2026, men lengre ruter gir 1,5 prosent vekst i tonnmil (via DataPortuaria). USA varslet ny toll på opptil 20 prosent mot 14 land 25. november. Norge er unntatt.\n- Renter: Fed ventes å heve 9. desember. Norges Bank holdt 4,5 prosent og er klar til å heve. Neste møte 17. desember.\n- Fraktratene: VLCC-ratene er over 60 prosent under rekorden fra oktober, og ett-års timecharter falt fra 234 000 til 184 500 dollar per dag på en uke (Compass). Capesize steg til rundt 42 000 dollar per dag.\nBetydning for shippingaksjer: Tank lever av krigspremie og lange ruter, men markedet priser lavere rater fremover. Tørrbulk får hjelp av vinterlagring. Container og bil påvirkes av toll og Rødehavet. Renter og valuta påvirker kursene i kroner.",
+   "source_title": "Claude-sammenfatning",
+   "link": "https://fuglesang-five.vercel.app/fundament",
+   "credibility": "B",
+   "symbols": [
+    "FRO.OL",
+    "OET.OL",
+    "HAFNI.OL",
+    "HSHP.OL",
+    "MPCC.OL",
+    "BWLPG.OL"
+   ]
+  },
+  {
+   "id": "sjekkliste-analyse-av-et-tankrederi",
+   "url": "intern:syntese:sjekkliste-analyse-av-et-tankrederi",
+   "kind": "syntese",
+   "topic": "syntese",
+   "title": "Sjekkliste: analyse av et tankrederi",
+   "body": "Sjekklisten brukes når terminalen eller du vurderer et tankrederi (Frontline, Okeanis, Hafnia, CMB.TECH, og delvis Odfjell og Stolt-Nielsen for kjemikalier). Oppdatert 28. november 2026.\n- Segment: råolje (VLCC, Suezmax, Aframax), produkt (LR2, LR1, MR) eller kjemikalier? De har ulike drivere. Kjemikalietank har ikke fulgt krigsrallyet (Stolt-Nielsen: TCE 24 121 dollar per dag i Q3).\n- Rater: hva er spot-TCE nå og de siste fire ukene? Bruk TCE, ikke Worldscale eller dollar per fat.\n- Timecharter og termin: hva sier ett-års timecharter og BWET? VLCC timecharter falt fra 234 000 til 184 500 dollar per dag på en uke (Compass, 23. november).\n- Bookinger: hvor mye av kvartalet er booket, og hva får resten? Frontline: 68 prosent av VLCC-dagene til 562 600. Okeanis: 48 prosent av spotdagene til 688 800. CMB.TECH: 59 prosent til 635 199. Resten får trolig mye lavere rater.\n- Dødpunkt: Frontline oppga et flåtesnitt på 23 600 dollar per dag.\n- Følsomhet: hvor mye endres resultatet per 10 000 dollar i rate?\n- Lagre og olje: hva sier IEA og OPEC+ om produksjon og lagre?\n- Geopolitikk: Hormuz, miner, blokade, sanksjoner, Rødehavet. Hva er priset inn?\n- Flåte og ordrebok: VLCC 180 skip i bestilling, 107 med levering i 2028 (Compass).\n- Skipsverdier og NAV: fem år gammelt VLCC 215 millioner dollar mot 132 for nybygg (Compass).\n- Skipssalg: gir gevinster og kontanter (CMB.TECH solgte tre skip i Q4 med rundt 190 millioner dollar i gevinst).\n- Utbytte og eks-dato: juster kursen for utbyttet.\n- Hendelser: neste rapport, OPEC+, rentemøter.\nBetydning for shippingaksjer: Jo flere punkter som peker samme vei, jo sterkere er signalet. Rekordbookinger samtidig med fallende timecharter, høy ordrebok og brukte skip dyrere enn nye er tegn på sen syklus.",
+   "source_title": "Claude-sammenfatning",
+   "link": "https://fuglesang-five.vercel.app/fundament",
+   "credibility": "B",
+   "symbols": [
+    "FRO.OL",
+    "OET.OL",
+    "HAFNI.OL",
+    "CMBTO.OL",
+    "ODF.OL",
+    "SNI.OL"
+   ]
+  },
+  {
+   "id": "sjekkliste-analyse-av-et-tørrbulkrederi",
+   "url": "intern:syntese:sjekkliste-analyse-av-et-tørrbulkrederi",
+   "kind": "syntese",
+   "topic": "syntese",
+   "title": "Sjekkliste: analyse av et tørrbulkrederi",
+   "body": "Sjekklisten brukes for tørrbulkrederier (Himalaya Shipping, Jinhui, Klaveness Combination Carriers og tørrbulkdelen av CMB.TECH). Oppdatert 28. november 2026. Viktig: 2020 Bulkers eier ikke lenger bulkskip og blir AHTS Group (ankerhåndtering offshore), så denne sjekklisten passer ikke for det selskapet.\n- Sjekk først at selskapet faktisk er i tørrbulk. Les siste selskapspresentasjon.\n- Størrelse: Capesize og Newcastlemax (jernmalm, kull) svinger mest. Panamax/Kamsarmax (kull, korn) og Supramax er mer stabile.\n- Rater: Capesize-inntjening var 42 055 dollar per dag og Panamax 20 834 den 27. november (Baltic Exchange via Baird). BDI var 3 137.\n- Terminkurve: hva sier BDRY og Capesize-FFA om de neste månedene?\n- Kina: stålproduksjon, jernmalmimport og havnelagre (149 millioner tonn i 35 havner 6. november, SMM). Jernmalm rundt 90 dollar.\n- Bookinger: CMB.TECH har 81 prosent av Newcastlemax-dagene i Q4 til 48 835 dollar per dag.\n- Kontrakter: indeksknyttede kontrakter (Himalaya Shipping) følger Capesize-indeksen direkte.\n- Korn og Svartehavet: angrep på kornskip og ingen kornavtale kan flytte last til lengre ruter fra Amerika.\n- Hormuz og Rødehavet: lengre ruter øker tonnmil.\n- Flåte: BIMCO venter flere Capesize-leveranser fra 2027.\n- Sesong: sterkt i fjerde kvartal (vinterlagring), ofte svakt rundt kinesisk nyttår.\n- Dødpunkt, gjeld og utbytte, som for tank.\nBetydning for shippingaksjer: Tørrbulk er tett koblet til Kina og råvarer. En kraftig kursbevegelse bør alltid sjekkes mot selskapsmeldinger, slik 2020 Bulkers viste: oppgangen der hadde ingenting med tørrbulk å gjøre.",
+   "source_title": "Claude-sammenfatning",
+   "link": "https://fuglesang-five.vercel.app/fundament",
+   "credibility": "B",
+   "symbols": [
+    "HSHP.OL",
+    "JIN.OL",
+    "KCC.OL",
+    "CMBTO.OL",
+    "2020.OL"
+   ]
+  },
+  {
+   "id": "shippingtrading-hvordan-kursene-reagerer-på-rater-rapporter-og-nyheter",
+   "url": "intern:syntese:shippingtrading-hvordan-kursene-reagerer-på-rater-rapporter-og-nyheter",
+   "kind": "syntese",
+   "topic": "syntese",
+   "title": "Shippingtrading: hvordan kursene reagerer på rater, rapporter og nyheter",
+   "body": "Shippingaksjer handler forventninger til inntjening og skipsverdier de neste 6–12 månedene. Det forklarer de fleste reaksjonene. Oppdatert 28. november 2026.\n- Rater: varige bevegelser over flere uker, bekreftet av terminkurven og timecharter, gir de største kursbevegelsene.\n- Kvartalsrapporter: bookingene for neste kvartal og utbyttet betyr mest. Et godt kvartal som var ventet, kan gi kursfall. Eksempel: tankaksjene falt i november selv om Q3 og Q4 ser ut til å bli svært sterke, fordi spot og timecharter falt.\n- Etter-rapport-drift: aksjer som overrasker, har i forskning en tendens til å fortsette i samme retning en tid.\n- Kortsiktig reversering: aksjer som har steget mye uten nye fakta, går ofte litt tilbake.\n- Mønstre fra terminalens data: når BWET har steget minst 5 prosent på en dag, har Frontline i snitt steget 1,6 prosent samme dag og 2,2 prosent neste uke. Når BDRY har steget minst 5 prosent, har Himalaya Shipping steget 2,9 prosent samme dag.\n- Geopolitiske sjokk: kraftig første reaksjon, ofte delvis tilbakegang. Miner og angrep i Hormuz gir nå store dagsbevegelser.\n- Sektoren beveger seg samlet: spør om en bevegelse gjelder ett selskap eller hele segmentet.\n- Selskapsnyheter som endrer virksomheten (som 2020 Bulkers sitt skifte til offshore) gir bevegelser som ikke følger fraktratene.\n- Eks-utbytte: kursen faller omtrent like mye som utbyttet (Okeanis 7 dollar 20. november, CMB.TECH 0,65 dollar 8. desember).\n- Valuta: sterkere krone gir lavere kurser i kroner for rederier som tjener i dollar.\n- Store skipsbestillinger og høye skipsverdier tolkes ofte negativt for ratene om to–tre år.\nBetydning for shippingaksjer: For en holdetid på 1 dag til 1 måned: hva var ventet, hva er nytt, hvor lenge varer effekten, og er bevegelsen bekreftet av terminer, timecharter og bookinger?",
+   "source_title": "Claude-sammenfatning",
+   "link": "https://fuglesang-five.vercel.app/fundament",
+   "credibility": "B",
+   "symbols": [
+    "FRO.OL",
+    "OET.OL",
+    "HSHP.OL",
+    "CMBTO.OL",
+    "2020.OL"
+   ]
+  },
+  {
+   "id": "risikostyring-når-du-holder-aksjer-fra-1-dag-til-1-måned",
+   "url": "intern:syntese:risikostyring-når-du-holder-aksjer-fra-1-dag-til-1-måned",
+   "kind": "syntese",
+   "topic": "syntese",
+   "title": "Risikostyring når du holder aksjer fra 1 dag til 1 måned",
+   "body": "Shippingaksjer svinger mye, og krigen gjør svingningene større. God risikostyring er derfor viktigere enn gode ideer. Oppdatert 28. november 2026.\n- Bestem tapsgrensen per idé før du kjøper (for eksempel 1–2 prosent av hele porteføljen).\n- Posisjonsstørrelse = beløpet du tåler å tape ÷ avstanden til nivået der du innrømmer feil.\n- Bruk svingningene (ATR): typisk dagsbevegelse er rundt 2–3 prosent for de fleste rederiene i terminalen, men 8,8 prosent for 2020 Bulkers. Urolige aksjer skal ha mindre posisjoner.\n- Stoppnivået må ligge utenfor vanlig daglig støy.\n- En stoppordre blir en markedsordre og kan gi dårligere pris. Stopp-limit beskytter prisen, men kan stå uutført.\n- Gap: miner og angrep i Hormuz skjer ofte om natten norsk tid. Ingen ordretype beskytter mot kursgap.\n- Konsentrasjon: tre tankaksjer er nesten én posisjon. Regn risiko per segment.\n- Hendelser de neste ukene: OPEC+ 29. november, CMB.TECH eks-utbytte 8. desember, 2020 Bulkers generalforsamling 8. desember, Fed 9. desember, Norges Bank 17. desember, handelsvåpenhvilen USA–Kina går ut 10. januar.\n- Likviditet: bruk limitordre i små rederier med stor forskjell mellom kjøps- og salgskurs.\n- ASK: gevinster skattlegges først ved uttak over innskudd. Utenlandsk kildeskatt på utbytte kan ikke alltid kreves tilbake.\n- Tidsgrense og logg: bestem hvor lenge du vil vente, og skriv ned grunn, utløsere, inngang og utgang.\nBetydning for shippingaksjer: Risikostyringen bestemmer om du overlever de dårlige ukene. Den sier ingenting om hvilke aksjer du bør velge, og terminalen gir ingen kjøps- eller salgsråd.",
+   "source_title": "Claude-sammenfatning",
+   "link": "https://fuglesang-five.vercel.app/fundament",
+   "credibility": "B",
+   "symbols": [
+    "FRO.OL",
+    "2020.OL"
+   ]
+  },
+  {
+   "id": "sykluser-i-shipping-tegn-på-topp-og-bunn",
+   "url": "intern:syntese:sykluser-i-shipping-tegn-på-topp-og-bunn",
+   "kind": "syntese",
+   "topic": "syntese",
+   "title": "Sykluser i shipping: tegn på topp og bunn",
+   "body": "Shipping går i sykluser fordi det tar to til fire år å bygge et skip. Høye rater gir mange bestillinger, som gir mange nye skip og lavere rater senere. Oppdatert 28. november 2026.\n- Tegn på topp: rekordbestillinger, stor ordrebok, brukte skip dyrere enn nye, mange skipssalg, emisjoner, aksjer som slutter å stige på gode nyheter.\n- Tegn på bunn: rater under dødpunkt over tid, mye opphugging, få bestillinger, aksjer langt under NAV, tilbakekjøp.\n- Status tank: VLCC-ratene har falt over 60 prosent fra rekorden 8. oktober (Baltic via Hydrocarbon Processing). Et fem år gammelt VLCC er verdsatt til 215 millioner dollar mot 132 for nybygg, og over 90 VLCC-er er solgt i 2026 mot over 50 i hele 2025 (Compass). Ordreboken er 180 VLCC-er, de fleste med levering i 2027–2028. Ett VLCC solgt for 210 millioner var kjøpt for 85,8 millioner et år tidligere. Dette er klassiske tegn på sen syklus.\n- Status tørrbulk: Capesize-ratene er sterke nå, men BIMCO venter svakere balanse i 2027 og 2028.\n- Status container: ordreboken er 36 prosent av flåten (UNCTAD via DataPortuaria). En normalisering av Rødehavet kan gi overkapasitet.\n- Status LPG: BW LPG selger skip mens prisene er høye.\n- Sjokk (krig, stengte sund) gir kraftige, men midlertidige topper. Når sjokket går over, kommer ordreboken til syne.\n- Motvekter: gammel flåte (42 prosent av alle skip er over 20 år, UNCTAD), og gjenåpning av Hormuz kan gi lageroppfylling.\nBetydning for shippingaksjer: Syklusen sier lite om neste uke, men mye om risikoen over ett til tre år. I en sen syklus faller aksjene ofte før ratene, fordi markedet priser fremtiden.",
+   "source_title": "Claude-sammenfatning",
+   "link": "https://fuglesang-five.vercel.app/fundament",
+   "credibility": "B",
+   "symbols": [
+    "FRO.OL",
+    "OET.OL",
+    "CMBTO.OL",
+    "MPCC.OL",
+    "BWLPG.OL"
+   ]
+  }
+ ],
+ "society": {
+  "week": "2026-48",
+  "text": "## Kort fortalt\n- Krigen med Iran fortsetter. Ifølge nyhetene traff flere tankskip miner i Hormuz, og USA satte et nytt skip ut av drift i blokaden.\n- Houthiene angrep saudiarabiske havner og raffinerier, akkurat mens containerlinjene er på vei tilbake til Suez.\n- USA varslet ny toll på opptil 20 prosent mot 14 land. Norge er unntatt.\n- Tankratene er langt under toppen fra oktober, og timecharter-ratene falt kraftig. Capesize steg.\n- Rederiene leverte svært sterke tall for tredje kvartal. 2020 Bulkers er ikke lenger et tørrbulkrederi.\n\n## Geopolitikk og konflikter\n- Hormuz: IRGC sa 25. november at to tankskip traff miner og tok fyr, og 27. november at ett til traff en mine. Påstandene er ikke bekreftet (Al Jazeera, Jerusalem Post).\n- USA sa at Pacific Archer ble satt ut av drift 26. november. Det er minst det 15. skipet siden april. USA har sendt tilbake 158 skip siden juli. Det er ingen våpenhvile.\n- Trafikken er usikker: terminalens PortWatch-tall viste 2 skip per dag til 15. november, mot 73 i fjor. Ifølge en Bloomberg-overskrift økte tankertrafikken i november.\n- Rødehavet: ifølge nyhetene angrep houthiene Jeddah og Jazan og prøvde å treffe Ras Tanura. Et prosjektil traff Aramcos Jazan-raffineri 26. november.\n- Svartehavet: angrep på skip økte fra 11 i første halvår til 52 siden juli (Acled via The National). Russland vil ikke godta en ny kornavtale.\n\n## Verdensøkonomi og renter\n- Feds referat fra oktober viste at nesten alle venter en heving på 0,25 prosentpoeng i desember. Møtet er 8.–9. desember (AP).\n- Norges Bank holdt renten på 4,5 prosent 4. november og er klar til å heve. Neste møte er 17. desember (Norges Bank).\n- USD/NOK var 9,84 den 23. november.\n- UNCTAD venter null vekst i sjøhandelen i 2026. Lengre ruter gir likevel vekst i tonnmil.\n\n## Handel og toll\n- USA varslet 25. november ny toll under paragraf 301 mot 14 økonomier, blant dem Kina, EU, Japan og India. Kina får 20 prosent i tillegg til eksisterende toll. Tollen ventes fra tidlig 2027 (Al Jazeera, MPR).\n- Ifølge nyhetene er våpenhvilen i handelskrigen mellom USA og Kina forlenget til 10. januar 2027.\n- Containerratene falt litt i november, og 57 containerskip gikk gjennom Suez i uken til 15. november.\n\n## Energi og råvarer\n- Ifølge nyhetene stengte Brent på 95,44 dollar 27. november, opp rundt 3 prosent på uken, men ned nesten 20 prosent i november. Terminalens Brent-tall (86,56 dollar 23. november) avviker og bør sjekkes.\n- OPEC+ møtes 29. november om kvotene for 2027. Ifølge nyhetene ventes uendrede mål for første kvartal.\n- EU-gasslagrene var 70 prosent fulle 17. november mot 82 prosent i fjor. Qatar skiper rundt en tredjedel av normal LNG.\n- Jernmalm ligger rundt 90 dollar per tonn.\n\n## Hva det betyr for shipping\n- **Råoljetank:** VLCC-ratene er over 60 prosent under rekorden. Ett-års timecharter falt fra 234 000 til 184 500 dollar per dag (Compass). Fjerde kvartal er booket høyt: Okeanis 48 prosent av spotdagene til 688 800, CMB.TECH 59 prosent til 635 199.\n- **Produkttank:** MR-ratene falt, LR2 steg litt (Kpler).\n- **Kjemikalier:** svakt. Stolt-Nielsen og CMB.TECH viser lavere rater.\n- **Tørrbulk:** BDI 3 137, opp 4,6 prosent på uken. Capesize 42 055 dollar per dag.\n- **Container:** MPCC har 90 prosent av 2027 dekket. Rødehavet er en ny risiko.\n- **Bil:** få ferske tall. Ny toll kan endre bilhandelen fra 2027.\n- **LPG:** BW LPG har 92 prosent av fjerde kvartal booket til rundt 102 000 dollar per dag og betaler 1,30 dollar i utbytte.\n\n## Scenarier de neste ukene\n- **Status quo (mest sannsynlig):** miner og angrep i Hormuz uten våpenhvile. Tankratene holder seg høye, men under oktober-nivå og svinger med nyhetene.\n- **Opptrapping:** flere angrep på Saudi-Arabia og i Rødehavet. Oljepris og rater stiger, volumene faller, og containerlinjene går rundt Afrika igjen.\n- **Forhandlinger og nedtrapping:** krigspremien faller raskt. Tankaksjene kan falle før ratene, mens lageroppfylling kan støtte senere.\n\n## Følg med på\n- OPEC+ 29. november.\n- Fed 9. desember og Norges Bank 17. desember.\n- CMB.TECH eks-utbytte 8. desember og 2020 Bulkers generalforsamling 8. desember.\n- Hormuz: miner, blokade og trafikktall.\n- Houthienes trusler mot havner ved Rødehavet.\n- Detaljer og datoer for USAs nye toll.\n",
+  "sources": [
+   "https://www.aljazeera.com/news/2026/11/27/us-military-says-it-disabled-merchant-ship-trying-to-breach-iran-blockade",
+   "https://www.jpost.com/middle-east/iran-news/article-916328",
+   "https://thenationalnews.com/news/gulf/2026/11/26/saudi-arabia-intercepts-wave-of-retaliatory-houthi-attacks",
+   "https://www.thenationalnews.com/news/2026/11/27/russia-ukraine-war-increasingly-expanding-out-to-sea/",
+   "https://www.advisor.ca/economy/economic-indicators/fed-minutes-point-to-need-for-higher-interest-rates/",
+   "https://www.norges-bank.no/en/topics/monetary-policy/Monetary-policy-meetings/2026/november-2026/",
+   "https://unctad.org/publication/review-maritime-transport-2026",
+   "https://www.aljazeera.com/news/2026/11/25/trump-announces-new-trade-tariffs-which-countries-will-they-target",
+   "https://www.mprnews.org/story/2026/11/26/china-and-other-us-trading-partners-hit-back-at-trumps-new-tariff-plans",
+   "https://political.org/2026/11/27/oil-posts-first-weekly-gain-of-november-as-attacks-on-tankers-and-saudi-facilities-revive-supply-fears/",
+   "https://www.tradingandinvestmentnews.co.uk/opec-meeting-2027-quotas-preview/",
+   "https://gmk.center/en/news/european-gas-prices-remain-volatile-in-the-first-half-of-november/",
+   "https://compassmar.com/wp-content/uploads/2026/11/Compass-Weekly-Report-Nov-23-26-1.pdf",
+   "https://www.kpler.com/blog/dirty-freight-stabilises-as-the-market-seeks-a-new-equilibrium",
+   "https://www.bairdmaritime.com/shipping/dry-cargo/bulkers/baltic-index-slips-on-capesize-dip-but-notches-weekly-gain",
+   "https://www.greenworldwide.com/freight-market-update-week-47-2026/",
+   "https://www.financialcontent.com/article/bizwire-2026-11-24-bw-lpg-limited-financial-results-for-q3-2026",
+   "https://www.inderes.fi/en/releases/mpc-container-ships-asa-reports-q3-2026-results",
+   "https://finviz.com/news/426557/press-release-cmbtech-announces-q3-2026-results",
+   "https://www.stocktitan.net/news/ECO/okeanis-eco-tankers-corp-unaudited-condensed-financial-results-for-yg5naqc0e18g.html"
+  ]
+ }
+}
