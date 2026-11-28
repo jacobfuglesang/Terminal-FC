@@ -1,0 +1,115 @@
+== Yahoo Finance (kurser og fraktfutures) ==
+  Frontline                        469.00  +0.21 %
+  Okeanis Eco Tankers              794.00  +0.13 %
+  Hafnia                            88.05  +0.97 %
+  Odfjell                          121.20  +1.34 %
+  Stolt-Nielsen                    321.00  -0.16 %
+  2020 Bulkers                      34.24  +30.09 %
+  Himalaya Shipping                153.20  +0.00 %
+  Jinhui Shipping                    6.80  +1.49 %
+  Klaveness Combination Carrie     109.40  +2.82 %
+  MPC Container Ships               22.25  +1.23 %
+  Wallenius Wilhelmsen             159.60  -0.13 %
+  Höegh Autoliners                 155.70  +0.58 %
+  BW LPG                           224.20  +0.72 %
+  CMB.TECH                         173.60  +1.76 %
+  Wilh. Wilhelmsen                 899.00  +0.67 %
+  Tankfrakt (BWET, VLCC-future     839.80  +1.53 %
+  Tørrbulkfrakt (BDRY, futures      12.84  +2.56 %
+  Brent                             95.44  +0.88 %
+  Gass TTF                          83.20  -4.70 %
+  Gass Henry Hub                     3.49  +6.79 %
+  Jernmalm 62 %                     90.69  +0.06 %
+  Kobber                             5.52  +3.46 %
+  Soyabønner                      1266.25  +1.79 %
+  USD/NOK                            9.81  +0.54 %
+  EUR/NOK                           10.70  -0.43 %
+  Oslo Børs hovedindeks           2073.15  +0.66 %
+  Råolje WTI                        83.08  -0.72 %
+  Bensin RBOB (USD/gallon)           2.44  +0.07 %
+  Diesel/fyringsolje (USD/gall       3.71  +0.32 %
+  LNG Asia JKM (USD/MMBtu)          27.17  -3.19 %
+  EUR/USD                            1.10  +0.02 %
+  Intradag: 2992 punkter
+  OK: 31 rader
+== Oslo Børs Newsweb (børsmeldinger) ==
+  Børsmeldinger: 0 nye
+  OK: 0 rader
+== Nyheter (RSS) ==
+  Eksempel på sammendrag: «(+) Tankskip med millioner av liter diesel skal slepes hit» → En person omkom i forliset av et tankskip med millioner av liter diesel utenfor Ibiza.
+  Eksempel på sammendrag: «“Your membership contribution is £5 and 5 shillings…”» → Marfin Management, som har ni handy‑ og supramax‑skip, feiret 100‑års BIMCO‑medlemskap; CEO Alexandre Albertini har vært på BIMCO‑styret i åtte år (2017‑2025). En 1926‑søknad fra Ante Topić fra Trieste dokumenterer starten.
+  Eksempel på sammendrag: «US Disables Chinese-Owned Bulker Running the Iran Blockade» → US‑styrker deaktiverte den palau‑registrerte, kinesisk‑eide bulkeren *Pacific Archer* (IMO 92225110) i Golfen av Oman 26 nov. 52 400 dwt‑skipet hadde forlatt Bandar Abbas og ignorert advarsler; man brukte presisjonsmunisjoner, mannskapet var uskadd. Dette er sjette skip US‑styrker har deaktivert siden blokaden, mens 158 har overholdt.
+  Nyheter: 262 relevante, 3 nye, 7 hele artikler hentet, 12 KI-sammendrag (groq, lokal), 3 anbefalinger stoppet, 0 irrelevante fjernet
+  OK: 3 rader
+== Finanstilsynet (short) ==
+  Short: 686 hendelser. Uten offentlige posisjoner: CMBTO.OL, FRO.OL, JIN.OL, KCC.OL, ODF.OL, WWI.OL
+  OK: 686 rader
+== Yahoo Finance (konsensus, utbytte og nøkkeltall) ==
+  FRO.OL: EPS i år 13.5325 (4.0 analytikere), neste rapport {'date': '2027-02-26', 'eps_estimate': 7.22}
+  OET.OL: EPS i år 27.65736 (4.0 analytikere), neste rapport {'date': '2027-02-17', 'eps_estimate': 13.51}
+  HAFNI.OL: EPS i år 18.8044 (5.0 analytikere), neste rapport {'date': '2027-02-25', 'eps_estimate': 0.3}
+  ODF.OL: EPS i år 2.01333 (3.0 analytikere), neste rapport {'date': '2027-02-10', 'eps_estimate': 0.48}
+  SNI.OL: EPS i år 3.898 (5.0 analytikere), neste rapport {'date': '2027-01-28', 'eps_estimate': 0.93}
+  2020.OL: EPS i år 0.3 (1.0 analytikere), neste rapport {'date': '2026-11-30', 'eps_estimate': 0.07}
+  HSHP.OL: EPS i år 1.99064 (4.0 analytikere), neste rapport {'date': '2027-02-10', 'eps_estimate': 0.65}
+  JIN.OL: EPS i år None (None analytikere), neste rapport None
+  KCC.OL: EPS i år 1.9015 (4.0 analytikere), neste rapport {'date': '2027-02-19', 'eps_estimate': 0.89}
+  MPCC.OL: EPS i år 0.31055 (2.0 analytikere), neste rapport {'date': '2027-02-23', 'eps_estimate': 0.06}
+  WAWI.OL: EPS i år 1.645 (4.0 analytikere), neste rapport {'date': '2027-02-09', 'eps_estimate': 0.48}
+  HAUTO.OL: EPS i år 1.75667 (3.0 analytikere), neste rapport {'date': '2027-02-24', 'eps_estimate': 0.42}
+  BWLPG.OL: EPS i år 5.48995 (3.0 analytikere), neste rapport {'date': '2027-03-02', 'eps_estimate': 1.73}
+  CMBTO.OL: EPS i år None (None analytikere), neste rapport {'date': '2027-02-25', 'eps_estimate': 1.55}
+  WWI.OL: EPS i år 12.6 (1.0 analytikere), neste rapport {'date': '2027-02-10', 'eps_estimate': 2.52}
+  OK: 15 rader
+== Fraktrater (Drewry, SCFI, BDI, EIA) ==
+  WCI 4,032 (2026-11-26)
+  SCFI 2026-11-27: 3,570, 2026-11-20: 3,504
+  BDI 144 dager, siste 3,137 (2026-11-27)
+  EIA US_CRUDE 418.906, US_GASOLINE 217.682, US_DISTILLATE 105.616 (uke til 2026-11-20)
+  OK: 4 rader
+== IMF PortWatch (sund) ==
+  PortWatch: 10570 rader, siste dato 2026-11-22
+  OK: 10570 rader
+== IMF PortWatch (havner) ==
+  Havner: 22 funnet (Ras Tanura, Fujairah, Al Basrah, Singapore, Rotterdam, Houston (US-TX), Corpus Christi, Qingdao Port, Ningbo, Shanghai, Port Hedland, Dampier, Newcastle, Tubarao, Santos, Richards Bay, Los Angeles-Long Beach, Primorsk, Novorossiysk, Sikka), 15158 rader, siste dato 2026-11-20
+  OK: 15158 rader
+== Bunkerpriser (BunkerEx via Hellenic Shipping News) ==
+  Bunkers 2026-11-27: 21 priser for 7 havner (Fujairah, Houston, Istanbul, Piraeus, Rotterdam, Santos, Singapore)
+  OK: 21 rader
+== Vær (GDACS stormer, Panamakanalen) ==
+  Stormer: 0 siste 14 dager, 0 aktive
+  Panama 2026-11-28: Gatun 86.4 ft, maks dypgang Neopanamax 50.0 ft / Panamax 39.5 ft
+  OK: 1 rader
+== aisstream.io (skip i nøkkelområder) ==
+  AIS: 5735 skip hørt nå, 2099 med skipsdata. I kartet: 18671 (3464 tank, 7473 last) siste 3 døgn
+  Områder: Rotterdam 98 (73 stille), Singapore 90 (55 stille), US Gulf (Houston/Galveston) 47 (34 stille), Gibraltar 35 (21 stille), Kapp det gode håp 25 (14 stille), Dover 11 (0 stille)
+  OK: 5735 rader
+== Varsler ==
+  Varsler: 0 nye
+  OK: 0 rader
+== KI-analytiker (morgenrapport) ==
+  Analytikerrapport skrevet (groq/openai/gpt-oss-120b, 422 ord). Start: '## Kort fortalt  \n- **Tankfrakt**: BWET‑kursen på VLCC‑futures har steget 12,6\u202f% siste uke til 839,8\u202fUSD, men er ned 6,6\u202f% på måneden.  \n- **Tørrbulk**: BDRY‑ku'
+  OK: 1 rader
+== KI-rapportleser (kvartalsrapporter) ==
+  Rapporter: 2 nye i køen, 9 venter, leser 3 nå (KI: groq, lokal)
+  ✓ Odfjell Q3 2026: Odfjell leverte sterk kontantstrøm men resultatet falt mot forrige kvartal. (10/10 tall funnet i kilden)
+      dødpunkt flåtesnitt: 20874 USD/dag
+      skip chemical tankers: 25
+      utbytte 0.0 USD
+      kilde: 39306 tegn fra 51 deler, 4911 tegn nøkkellinjer
+  ✓ Wallenius Wilhelmsen Q3 2026: Sterk etterspørsel gir høy utnyttelse og stabile inntekter i Q3 2026. (9/10 tall funnet i kilden)
+      dødpunkt flåtesnitt: 23600 USD/dag  (?)
+      skip flåtesnitt: 118
+      utbytte 0.61 USD
+      kilde: 40146 tegn fra 81 deler, 4496 tegn nøkkellinjer
+  KI-bruk: groq: 25 kall
+  OK: 2 rader
+== KI-meglerrapporter (ukentlige) ==
+  Meglerrapporter: 0 nye, 1 i kø, leser 1 nå
+  ! Lion Shipbrokers Weekly Market Report, Week 48 2026: Fant nesten ingen tekst (PDF med bare bilder eller ingen PDF). Hoppes over.
+  OK: 0 rader
+== Lagring (databasestørrelse) ==
+  Database 41 MB av 1074 MB (4%). Størst: ais_positions 6.5 MB, ais_ships 4.2 MB, port_activity 4.1 MB, news 4.1 MB, price_daily 3.3 MB, chokepoints 3.2 MB, knowledge 1.4 MB, price_intraday 1.1 MB
+  OK: 0 rader
+== Lokal KI ==
+Lokal modell klar: qwen3:4b-instruct (2.4G)
